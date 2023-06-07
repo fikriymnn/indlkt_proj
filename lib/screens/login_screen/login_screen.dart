@@ -7,21 +7,37 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
         child: Row(
           children: [
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   color: Colors.white,
-                  height: 200,
-                  width: 600,
+                  height: 36,
+                  width: 244,
                   child: Image(
                     image: AssetImage("assets/images/logo.png"),
-                    fit: BoxFit.contain,
                   ),
                 ),
                 Container(
-                  child: Text("Welcome To Inventory Management"),
+                  child: Center(child: Text("Welcome To Inventory Management")),
+                  width: 993,
+                  height: 36,
+                ),
+                Center(
+                  child: Container(
+                    width: 544,
+                    height: 655,
+                    decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                      BoxShadow(
+                          color: const Color.fromARGB(255, 209, 209, 209),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(7.0, 8.0)),
+                    ]),
+                  ),
                 )
               ],
             ),
@@ -33,7 +49,7 @@ class LoginScreen extends StatelessWidget {
                     fit: BoxFit.contain,
                   ),
                   width: 927,
-                  height: 600,
+                  height: 1028,
                 ),
               ],
             )
