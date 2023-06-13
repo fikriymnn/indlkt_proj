@@ -10,11 +10,15 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: SingleChildScrollView(
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
+              Container(
+                width: 700,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -22,15 +26,16 @@ class LoginScreen extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 31),
                       child: Container(
                         color: Colors.white,
-                        width: 244,
-                        height: 36,
+                        width: 170.8,
+                        height: 25.2,
                         child: Image(
                           image: AssetImage("assets/images/logo.png"),
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 131),
+                      padding: const EdgeInsets.only(
+                          left: 91.7, top: 62.3, bottom: 21),
                       child: Container(
                         child: Center(
                           child: Text(
@@ -38,26 +43,27 @@ class LoginScreen extends StatelessWidget {
                             style: GoogleFonts.montserrat(
                               textStyle:
                                   Theme.of(context).textTheme.displayMedium,
-                              fontSize: 40,
+                              fontSize: 28,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                        width: 776,
-                        height: 46,
+                        width: 543.2,
+                        height: 32.2,
                       ),
                     ),
                     Container(
-                      width: 578,
-                      height: 689,
+                      margin: EdgeInsets.only(left: 120),
+                      width: 404.6,
+                      height: 482.3,
                       child: Stack(
                         children: [
                           Positioned(
                             bottom: 0,
                             left: 0,
                             child: Container(
-                              width: 544,
-                              height: 655,
+                              width: 380.8,
+                              height: 458.5,
                               decoration: BoxDecoration(
                                 color: active,
                                 borderRadius: BorderRadius.circular(30),
@@ -72,11 +78,11 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ),
                           Positioned(
-                            bottom: 20,
-                            left: 20,
+                            bottom: 14,
+                            left: 14,
                             child: Container(
-                              width: 544,
-                              height: 655,
+                              width: 380.8,
+                              height: 458.5,
                               decoration: BoxDecoration(
                                 color: blue,
                                 borderRadius: BorderRadius.circular(30),
@@ -94,8 +100,8 @@ class LoginScreen extends StatelessWidget {
                             top: 0,
                             right: 0,
                             child: Container(
-                              width: 544,
-                              height: 655,
+                              width: 380.8,
+                              height: 458.5,
                               decoration: BoxDecoration(
                                 color: light,
                                 borderRadius: BorderRadius.circular(30),
@@ -110,22 +116,32 @@ class LoginScreen extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "Login",
-                                    style: GoogleFonts.montserrat(
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .displayMedium,
-                                      fontSize: 36,
-                                      fontWeight: FontWeight.bold,
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 37.1, top: 28.7),
+                                    child: Text(
+                                      "Login",
+                                      style: GoogleFonts.montserrat(
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .displayMedium,
+                                        fontSize: 25.2,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.all(20),
+                                    padding: const EdgeInsets.only(
+                                        left: 27.937,
+                                        right: 16.905,
+                                        top: 34.59,
+                                        bottom: 16.93),
                                     child: Container(
                                       child: TextField(
                                         obscureText: true,
                                         decoration: InputDecoration(
+                                            prefixIcon: Icon(Icons
+                                                .perm_contact_calendar_outlined),
                                             hintText: 'username',
                                             border: OutlineInputBorder(
                                                 borderRadius:
@@ -134,11 +150,16 @@ class LoginScreen extends StatelessWidget {
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.all(20),
+                                    padding: const EdgeInsets.only(
+                                        left: 27.937,
+                                        right: 16.905,
+                                        bottom: 16.93),
                                     child: Container(
                                       child: TextField(
                                         obscureText: true,
                                         decoration: InputDecoration(
+                                            prefixIcon: Icon(
+                                                Icons.lock_outline_rounded),
                                             hintText: 'password',
                                             border: OutlineInputBorder(
                                                 borderRadius:
@@ -154,8 +175,8 @@ class LoginScreen extends StatelessWidget {
                                         InkWell(
                                           onTap: () {},
                                           child: Container(
-                                              height: 70.38,
-                                              width: 359.4,
+                                              height: 49.266,
+                                              width: 251.426,
                                               padding: const EdgeInsets.only(
                                                 top: 756.71,
                                                 left: 357.18,
@@ -203,13 +224,34 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: Container(
-                  width: 927,
-                  height: 1028,
-                  child: const Image(
-                    image: AssetImage("assets/images/image_32.png"),
-                    fit: BoxFit.contain,
-                  ),
+                child: Column(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      child: Marquee(
+                        text: 'Some sample text that takes some space.',
+
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        scrollAxis: Axis.horizontal,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        blankSpace: 20.0,
+                        velocity: 100.0,
+                        // pauseAfterRound: Duration(seconds: 1),
+                        startPadding: 10.0,
+                        // accelerationDuration: Duration(seconds: 1),
+                        accelerationCurve: Curves.linear,
+                        // decelerationDuration: Duration(milliseconds: 500),
+                        decelerationCurve: Curves.easeOut,
+                      ),
+                    ),
+                    Container(
+                      child: const Image(
+                        image: AssetImage("assets/images/image_32.png"),
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  ],
                 ),
               )
             ],

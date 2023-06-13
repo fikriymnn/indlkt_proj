@@ -37,6 +37,8 @@ dependencies:
   sidebarx: ^0.15.0
   google_fonts: ^5.0.0
   marquee: ^2.2.3
+  flutter_circular_text: ^0.3.1
+  captcha_solver: ^1.0.4
 
 dev_dependencies:
   flutter_test:

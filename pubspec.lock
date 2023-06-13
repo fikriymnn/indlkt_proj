@@ -94,6 +94,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_circular_text:
+    dependency: "direct main"
+    description:
+      name: flutter_circular_text
+      sha256: "8b7a090198dc5f8651d97584e02fc121b51e92f4e3141c147a63243401609021"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.1"
   flutter_lints:
     dependency: "direct dev"
     description:
