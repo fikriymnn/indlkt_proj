@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:local_captcha/local_captcha.dart';
 import 'package:marquee/marquee.dart';
 
 import '../../constants/style.dart';
@@ -58,6 +59,15 @@ class LoginScreen extends StatelessWidget {
                       height: 482.3,
                       child: Stack(
                         children: [
+                          Container(
+                            child: Image(
+                              image: AssetImage("assets/images/cahaya.png"),
+                            ),
+                            // child: RiveAnimation.asset(
+                            //     "assets/RiveAssets/onboard_animation.riv"),
+                            width: 900,
+                            height: 700,
+                          ),
                           Positioned(
                             bottom: 0,
                             left: 0,
@@ -167,6 +177,7 @@ class LoginScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
+                                  Container(),
                                   Container(
                                     child: Row(
                                       mainAxisAlignment:
@@ -224,8 +235,14 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: Column(
+                child: Stack(
                   children: [
+                    Container(
+                      child: const Image(
+                        image: AssetImage("assets/images/image_32.png"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height,
@@ -234,7 +251,7 @@ class LoginScreen extends StatelessWidget {
 
                         style: TextStyle(fontWeight: FontWeight.bold),
                         scrollAxis: Axis.horizontal,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         blankSpace: 20.0,
                         velocity: 100.0,
                         // pauseAfterRound: Duration(seconds: 1),
@@ -245,12 +262,6 @@ class LoginScreen extends StatelessWidget {
                         decelerationCurve: Curves.easeOut,
                       ),
                     ),
-                    Container(
-                      child: const Image(
-                        image: AssetImage("assets/images/image_32.png"),
-                        fit: BoxFit.cover,
-                      ),
-                    )
                   ],
                 ),
               )
