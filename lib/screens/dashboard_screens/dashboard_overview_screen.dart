@@ -1,8 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:indlkt_proj/constants/style.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_card.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_container.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_overview_breakdown.dart';
+import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_overview_chart.dart';
+import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_overview_datepicker.dart';
+import 'package:intl/intl.dart';
 
 class DashboardOverview extends StatefulWidget {
   const DashboardOverview({super.key});
@@ -12,12 +17,9 @@ class DashboardOverview extends StatefulWidget {
 }
 
 class _DashboardOverviewState extends State<DashboardOverview> {
+  int selectedShift = 0;
   int dropdownValue = 1;
-  String timeText = "";
-  String dateText = "";
 
-  DateTime selectedDate = DateTime.now();
-  @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
 
@@ -55,21 +57,9 @@ class _DashboardOverviewState extends State<DashboardOverview> {
           ],
         ),
         SizedBox(height: 15),
-        Container(
-          child: InkWell(
-            onTap: () async {
-              await showDatePicker(
-                  context: context,
-                  initialDate: selectedDate,
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(3000));
-            },
-            child: Text(
-                "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}"),
-          ),
-        ),
+        DatePicker(),
         SizedBox(
-          height: 10,
+          height: 15,
         ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,55 +90,92 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Shift"),
+                                  Text("Shift",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)),
                                   Row(children: [
                                     Container(
                                         decoration: BoxDecoration(
-                                            color: light,
+                                            color: selectedShift == 1
+                                                ? light
+                                                : blue,
                                             border: Border.all(),
                                             borderRadius: BorderRadius.only(
                                                 bottomLeft: Radius.circular(10),
                                                 topLeft: Radius.circular(10))),
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                              right: 8,
-                                              left: 8,
-                                              top: 1.5,
-                                              bottom: 1.5),
-                                          child: Text("1",
-                                              style: TextStyle(color: dark)),
+                                        child: InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              selectedShift = 1;
+                                            });
+                                          },
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                right: 8,
+                                                left: 8,
+                                                top: 1.5,
+                                                bottom: 1.5),
+                                            child: Text("1",
+                                                style: TextStyle(
+                                                    color: selectedShift == 1
+                                                        ? dark
+                                                        : light)),
+                                          ),
                                         )),
                                     Container(
                                         decoration: BoxDecoration(
-                                          color: blue,
+                                          color:
+                                              selectedShift == 2 ? light : blue,
                                           border: Border.all(),
                                         ),
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                              right: 8,
-                                              left: 8,
-                                              top: 1.5,
-                                              bottom: 1.5),
-                                          child: Text("2",
-                                              style: TextStyle(color: light)),
+                                        child: InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              selectedShift = 2;
+                                            });
+                                          },
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                right: 8,
+                                                left: 8,
+                                                top: 1.5,
+                                                bottom: 1.5),
+                                            child: Text("2",
+                                                style: TextStyle(
+                                                    color: selectedShift == 2
+                                                        ? dark
+                                                        : light)),
+                                          ),
                                         )),
                                     Container(
                                         decoration: BoxDecoration(
-                                            color: blue,
+                                            color: selectedShift == 3
+                                                ? light
+                                                : blue,
                                             border: Border.all(),
                                             borderRadius: BorderRadius.only(
                                                 bottomRight:
                                                     Radius.circular(10),
                                                 topRight: Radius.circular(10))),
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                              right: 8,
-                                              left: 8,
-                                              top: 1.5,
-                                              bottom: 1.5),
-                                          child: Text(
-                                            "3",
-                                            style: TextStyle(color: light),
+                                        child: InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              selectedShift = 3;
+                                            });
+                                          },
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                right: 8,
+                                                left: 8,
+                                                top: 1.5,
+                                                bottom: 1.5),
+                                            child: Text(
+                                              "3",
+                                              style: TextStyle(
+                                                  color: selectedShift == 3
+                                                      ? dark
+                                                      : light),
+                                            ),
                                           ),
                                         ))
                                   ]),
@@ -157,7 +184,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                               SizedBox(width: 10),
                               Container(
                                   decoration: BoxDecoration(
-                                    color: blue,
+                                    color: selectedShift == 0 ? light : blue,
                                     boxShadow: [
                                       BoxShadow(
                                           blurRadius: 4,
@@ -167,16 +194,28 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                     border: Border.all(width: 1, color: dark),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 2, bottom: 2, right: 4, left: 4),
-                                    child: Text("all shift",
-                                        style: TextStyle(color: light)),
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedShift = 0;
+                                      });
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 2, bottom: 2, right: 4, left: 4),
+                                      child: Text("all shift",
+                                          style: TextStyle(
+                                              color: selectedShift == 0
+                                                  ? dark
+                                                  : light)),
+                                    ),
                                   )),
-                              SizedBox(width: 15),
+                              SizedBox(width: 20),
                               Column(
                                 children: [
-                                  Text("Line"),
+                                  Text("Line",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)),
                                   Container(
                                     height: 25,
                                     decoration: BoxDecoration(
@@ -222,6 +261,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                 ],
                               ),
                             ]),
+                        OverviewChart()
                       ],
                     ),
                     SizedBox(width: 310),

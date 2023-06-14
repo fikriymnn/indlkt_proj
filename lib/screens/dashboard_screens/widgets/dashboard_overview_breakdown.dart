@@ -13,7 +13,7 @@ class _BreakdownItemState extends State<BreakdownItem> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text('Utility'),
+      title: Text('Utility', style: TextStyle(fontWeight: FontWeight.bold)),
       subtitle: Text('Listrik Trip/Deep Sag'),
       trailing: Container(
           decoration: BoxDecoration(
