@@ -49,6 +49,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  custom_floating_action_button:
+    dependency: "direct main"
+    description:
+      name: custom_floating_action_button
+      sha256: "3d3b58ae5a7fecb32616deed07247dffd39b25757df4f14a44a52d270282e6ed"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
   fake_async:
     dependency: transitive
     description:
@@ -218,4 +226,4 @@ packages:
     version: "2.1.4"
 sdks:
   dart: ">=3.0.2 <4.0.0"
-  flutter: ">=1.17.0"
+  flutter: ">=2.5.0"

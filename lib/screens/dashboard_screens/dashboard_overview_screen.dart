@@ -66,7 +66,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
           children: [
             DashboardContainer(
                 width: 700,
-                height: 400,
+                height: 420,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -76,7 +76,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 10),
+                        SizedBox(height: 15),
                         Text(
                           "Pencapaian dan Performa",
                           style: TextStyle(
@@ -264,7 +264,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                         OverviewChart()
                       ],
                     ),
-                    SizedBox(width: 310),
+                    SizedBox(width: 270),
                     Image(
                       image: AssetImage("assets/images/gears.png"),
                       width: 100,
@@ -273,7 +273,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                 )),
             SizedBox(width: 12),
             DashboardContainer(
-                height: 400,
+                height: 420,
                 width: 375,
                 child: Column(
                   children: [

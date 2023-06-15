@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/dashboard_screen.dart';
 import 'package:sidebarx/sidebarx.dart';
 import '../constants/style.dart';
+import '../screens/product_acv_screens/product_acv_screen.dart';
 
 int selectedIndex = 1;
 
@@ -13,7 +14,7 @@ class SideBar extends StatefulWidget {
 }
 
 class _SideBarState extends State<SideBar> {
-  List list = [DashboardScreen()];
+  List list = [DashboardScreen(), ProductAcvScreen()];
   int selectedIndex = 0;
   bool auth = true;
   @override

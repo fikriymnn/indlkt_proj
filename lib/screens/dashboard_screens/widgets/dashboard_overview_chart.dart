@@ -18,13 +18,20 @@ class _OverviewChartState extends State<OverviewChart> {
 
   @override
   Widget build(BuildContext context) {
-    return SfCircularChart(series: <CircularSeries>[
-      PieSeries<GDPdata, String>(
-          dataSource: _chartData,
-          xValueMapper: (GDPdata data, _) => data.continient,
-          yValueMapper: (GDPdata data, _) => data.gdp,
-          dataLabelSettings: DataLabelSettings(isVisible: true))
-    ], title: ChartTitle(text: 'Sales by sales person'));
+    return SfCircularChart(
+        series: <CircularSeries>[
+          PieSeries<GDPdata, String>(
+              dataSource: _chartData,
+              xValueMapper: (GDPdata data, _) => data.continient,
+              yValueMapper: (GDPdata data, _) => data.gdp,
+              dataLabelSettings: DataLabelSettings(
+                  isVisible: true,
+                  showCumulativeValues: true,
+                  overflowMode: OverflowMode.shift))
+        ],
+        title: ChartTitle(text: 'Sales by sales person'),
+        legend:
+            Legend(isVisible: true, overflowMode: LegendItemOverflowMode.wrap));
   }
 
   List<GDPdata> getChartData() {

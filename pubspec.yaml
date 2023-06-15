@@ -37,6 +37,7 @@ dependencies:
   sidebarx: ^0.15.0
   intl: ^0.18.1
   syncfusion_flutter_charts: ^21.2.10
+  custom_floating_action_button: ^0.0.3
 
 dev_dependencies:
   flutter_test:
