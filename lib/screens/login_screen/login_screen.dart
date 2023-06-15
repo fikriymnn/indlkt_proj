@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:indlkt_proj/screens/login_screen/widgets/chaptcha.dart';
 import 'package:local_captcha/local_captcha.dart';
 import 'package:marquee/marquee.dart';
 
@@ -65,8 +66,8 @@ class LoginScreen extends StatelessWidget {
                             ),
                             // child: RiveAnimation.asset(
                             //     "assets/RiveAssets/onboard_animation.riv"),
-                            width: 900,
-                            height: 700,
+                            width: 1900,
+                            height: 1700,
                           ),
                           Positioned(
                             bottom: 0,
@@ -150,6 +151,9 @@ class LoginScreen extends StatelessWidget {
                                       child: TextField(
                                         obscureText: true,
                                         decoration: InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                                borderSide:
+                                                    BorderSide(color: blue)),
                                             prefixIcon: Icon(Icons
                                                 .perm_contact_calendar_outlined),
                                             hintText: 'username',
@@ -168,6 +172,9 @@ class LoginScreen extends StatelessWidget {
                                       child: TextField(
                                         obscureText: true,
                                         decoration: InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                                borderSide:
+                                                    BorderSide(color: blue)),
                                             prefixIcon: Icon(
                                                 Icons.lock_outline_rounded),
                                             hintText: 'password',
@@ -177,7 +184,7 @@ class LoginScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Container(),
+                                  Container(child: Chaptcha()),
                                   Container(
                                     child: Row(
                                       mainAxisAlignment:

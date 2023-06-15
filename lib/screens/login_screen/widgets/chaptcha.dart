@@ -10,7 +10,7 @@ class Chaptcha extends StatefulWidget {
 
 class _ChaptchaState extends State<Chaptcha> {
   final _captchaFormKey = GlobalKey<FormState>();
-  final _configFormKey = GlobalKey<FormState>();
+
   final _localCaptchaController = LocalCaptchaController();
   final _configFormData = ConfigFormData();
 
@@ -130,7 +130,6 @@ class _ChaptchaState extends State<Chaptcha> {
                     padding: EdgeInsets.symmetric(vertical: 16.0),
                     child: Divider(),
                   ),
-                  _configForm(context),
                 ],
               ),
             ),
@@ -138,143 +137,6 @@ class _ChaptchaState extends State<Chaptcha> {
         ),
       ),
       // body: LocalCaptcha(),
-    );
-  }
-
-  Widget _configForm(BuildContext context) {
-    return Form(
-      key: _configFormKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Basic Configs',
-              style: Theme.of(context).textTheme.titleLarge!,
-            ),
-          ),
-          const SizedBox(height: 16.0),
-          TextFormField(
-            initialValue: _configFormData.chars,
-            decoration: const InputDecoration(
-              labelText: 'Captcha chars',
-              hintText: 'Captcha chars',
-              isDense: true,
-              border: OutlineInputBorder(),
-            ),
-            validator: (value) {
-              if (value != null && value.trim().isNotEmpty) {
-                return null;
-              }
-
-              return '* Required field.';
-            },
-            onSaved: (value) => _configFormData.chars = value?.trim() ?? '',
-          ),
-          const SizedBox(height: 16.0),
-          TextFormField(
-            initialValue: '${_configFormData.length}',
-            decoration: const InputDecoration(
-              labelText: 'Captcha code length',
-              hintText: 'Captcha code length',
-              isDense: true,
-              border: OutlineInputBorder(),
-            ),
-            validator: (value) {
-              if (value != null && value.isNotEmpty) {
-                final length = int.tryParse(value) ?? 0;
-
-                if (length < 1) {
-                  return '* Value must be greater than 0.';
-                }
-
-                return null;
-              }
-
-              return '* Required field.';
-            },
-            onSaved: (value) =>
-                _configFormData.length = int.tryParse(value ?? '1') ?? 1,
-          ),
-          const SizedBox(height: 16.0),
-          TextFormField(
-            initialValue:
-                '${_configFormData.fontSize > 0 ? _configFormData.fontSize : ''}',
-            decoration: const InputDecoration(
-              labelText: 'Font size (optional)',
-              hintText: 'Font size (optional)',
-              isDense: true,
-              border: OutlineInputBorder(),
-            ),
-            onSaved: (value) => _configFormData.fontSize =
-                double.tryParse(value ?? '0.0') ?? 0.0,
-          ),
-          const SizedBox(height: 16.0),
-          DropdownButtonFormField<bool>(
-            value: _configFormData.caseSensitive,
-            isDense: true,
-            decoration: const InputDecoration(
-              labelText: 'Case sensitive',
-              hintText: 'Case sensitive',
-              isDense: true,
-              border: OutlineInputBorder(),
-            ),
-            items: const [
-              DropdownMenuItem(
-                value: false,
-                child: Text('No'),
-              ),
-              DropdownMenuItem(
-                value: true,
-                child: Text('Yes'),
-              ),
-            ],
-            onChanged: (value) =>
-                _configFormData.caseSensitive = value ?? false,
-          ),
-          const SizedBox(height: 16.0),
-          TextFormField(
-            initialValue: '${_configFormData.codeExpireAfter.inMinutes}',
-            decoration: const InputDecoration(
-              labelText: 'Code expire after (minutes)',
-              hintText: 'Code expire after (minutes)',
-              isDense: true,
-              border: OutlineInputBorder(),
-            ),
-            validator: (value) {
-              if (value != null && value.isNotEmpty) {
-                final length = int.tryParse(value) ?? 0;
-
-                if (length < 1) {
-                  return '* Value must be greater than 0.';
-                }
-
-                return null;
-              }
-
-              return '* Required field.';
-            },
-            onSaved: (value) => _configFormData.codeExpireAfter =
-                Duration(minutes: int.tryParse(value ?? '1') ?? 1),
-          ),
-          const SizedBox(height: 16.0),
-          SizedBox(
-            height: 40.0,
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                if (_configFormKey.currentState?.validate() ?? false) {
-                  _configFormKey.currentState!.save();
-
-                  setState(() {});
-                }
-              },
-              child: const Text('Apply'),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
