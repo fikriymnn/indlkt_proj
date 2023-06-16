@@ -6,17 +6,12 @@
 
 #include "generated_plugin_registrant.h"
 
-
 #include <printing/printing_plugin.h>
+#include <rive_common/rive_plugin.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
   PrintingPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("PrintingPlugin"));
-
-#include <rive_common/rive_plugin.h>
-
-void RegisterPlugins(flutter::PluginRegistry* registry) {
   RivePluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("RivePlugin"));
-
 }
