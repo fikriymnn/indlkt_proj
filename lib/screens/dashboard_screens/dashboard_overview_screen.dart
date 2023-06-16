@@ -71,7 +71,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      width: 12,
+                      width: 15,
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +82,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                           style: TextStyle(
                               fontSize: 23, fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(height: 10),
+                        SizedBox(height: 15),
                         Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -277,13 +277,13 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                 width: 375,
                 child: Column(
                   children: [
-                    SizedBox(height: 10),
+                    SizedBox(height: 15),
                     Text(
                       "TOP 5 BREAKDOWN MESIN",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 15),
                     ListView.builder(
                         shrinkWrap: true,
                         itemCount: 5,

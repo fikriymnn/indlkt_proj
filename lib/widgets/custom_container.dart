@@ -13,12 +13,20 @@ class CustomContainer extends StatefulWidget {
 class _CustomContainerState extends State<CustomContainer> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(boxShadow: [
-        BoxShadow(
-            blurRadius: 4, offset: Offset(4, 0), color: dark.withOpacity(0.4))
-      ], color: light, borderRadius: BorderRadius.circular(10)),
-      child: widget.child,
+    double mediaQuery = MediaQuery.of(context).size.width;
+    return Padding(
+      padding: const EdgeInsets.only(right: 20, top: 20, bottom: 20),
+      child: Container(
+          margin: EdgeInsets.only(left: mediaQuery * 0.028),
+          width: mediaQuery * 0.8,
+          height: MediaQuery.of(context).size.height * 0.8,
+          decoration: BoxDecoration(boxShadow: [
+            BoxShadow(
+                blurRadius: 4,
+                offset: Offset(0, 0),
+                color: dark.withOpacity(0.4))
+          ], color: light, borderRadius: BorderRadius.circular(20)),
+          child: widget.child),
     );
   }
 }

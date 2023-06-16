@@ -27,10 +27,10 @@ class _DashboardProductivityState extends State<DashboardProductivity> {
               children: [
                 SizedBox(height: 5),
                 Padding(
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(15),
                   child: Text(
                     "Performance Dashboard",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Center(

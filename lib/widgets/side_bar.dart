@@ -4,8 +4,6 @@ import 'package:sidebarx/sidebarx.dart';
 import '../constants/style.dart';
 import '../screens/product_acv_screens/product_acv_screen.dart';
 
-int selectedIndex = 1;
-
 class SideBar extends StatefulWidget {
   const SideBar({super.key});
 
@@ -15,7 +13,7 @@ class SideBar extends StatefulWidget {
 
 class _SideBarState extends State<SideBar> {
   List list = [DashboardScreen(), ProductAcvScreen()];
-  int selectedIndex = 0;
+  int selectedIndex = 1;
   bool auth = true;
   @override
   Widget build(BuildContext context) {
@@ -35,7 +33,7 @@ class _SideBarState extends State<SideBar> {
               itemPadding: const EdgeInsets.all(11),
               selectedItemPadding: const EdgeInsets.all(11),
               selectedItemMargin:
-                  const EdgeInsets.only(left: 15, right: 15, bottom: 5),
+                  const EdgeInsets.only(left: 13, right: 13, bottom: 5),
               itemTextPadding: const EdgeInsets.only(left: 10),
               selectedItemTextPadding: const EdgeInsets.only(left: 10),
               itemDecoration: BoxDecoration(
