@@ -19,7 +19,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.0.2 <4.0.0"
+  sdk: ">=3.0.1 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -42,6 +42,12 @@ dependencies:
   pluto_grid: ^7.0.2
   animated_floating_buttons: ^0.0.2
   flutter_expandable_fab: ^1.8.1
+  google_fonts: ^4.0.0
+  marquee: ^2.2.3
+  flutter_circular_text: ^0.3.1
+  local_captcha: ^1.0.1
+  rive: ^0.11.3
+
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +73,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/RiveAssets/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
