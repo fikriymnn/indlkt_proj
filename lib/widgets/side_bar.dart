@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/dashboard_screen.dart';
+import 'package:indlkt_proj/screens/product_acv_screens/product_acv_form.dart';
 import 'package:sidebarx/sidebarx.dart';
 import '../constants/style.dart';
 import '../screens/product_acv_screens/product_acv_screen.dart';
@@ -12,16 +14,59 @@ class SideBar extends StatefulWidget {
 }
 
 class _SideBarState extends State<SideBar> {
-  List list = [DashboardScreen(), ProductAcvScreen()];
-  int selectedIndex = 1;
+  List list = [DashboardScreen(), ProductAcvScreen(), '', FormInputData()];
+  int selectedIndexDisplay = 1;
+  int selectedIndex = 3;
   bool auth = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: ExpandableFab.location,
+      floatingActionButton: selectedIndex == 1
+          ? Padding(
+              padding: const EdgeInsets.only(right: 60, bottom: 30),
+              child: ExpandableFab(
+                distance: 80,
+                childrenOffset: Offset(10, 10),
+                backgroundColor: active,
+                child: Icon(Icons.add, color: light),
+                collapsedFabSize: ExpandableFabSize.regular,
+                expandedFabSize: ExpandableFabSize.regular,
+                type: ExpandableFabType.up,
+                children: [
+                  FloatingActionButton.small(
+                    backgroundColor: active,
+                    heroTag: null,
+                    child: ImageIcon(
+                      AssetImage("assets/images/fab_logo1.png"),
+                      color: light,
+                      size: 20,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        selectedIndex = 3;
+                        selectedIndexDisplay = 1;
+                      });
+                    },
+                  ),
+                  FloatingActionButton.small(
+                    backgroundColor: active,
+                    child: ImageIcon(
+                      AssetImage("assets/images/fab_logo2.png"),
+                      color: light,
+                      size: 20,
+                    ),
+                    heroTag: null,
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            )
+          : null,
       body: Row(
         children: [
           SidebarX(
-            controller: SidebarXController(selectedIndex: selectedIndex),
+            controller: SidebarXController(selectedIndex: selectedIndexDisplay),
             theme: SidebarXTheme(
               decoration: BoxDecoration(
                 color: blue,
@@ -128,6 +173,7 @@ class _SideBarState extends State<SideBar> {
                   onTap: () {
                     setState(() {
                       selectedIndex = 0;
+                      selectedIndexDisplay = 0;
                     });
                   }),
               SidebarXItem(
@@ -139,6 +185,7 @@ class _SideBarState extends State<SideBar> {
                   onTap: () {
                     setState(() {
                       selectedIndex = 1;
+                      selectedIndexDisplay = 1;
                     });
                   }),
               SidebarXItem(
@@ -150,6 +197,7 @@ class _SideBarState extends State<SideBar> {
                   onTap: () {
                     setState(() {
                       selectedIndex = 2;
+                      selectedIndexDisplay = 2;
                     });
                   }),
             ],
