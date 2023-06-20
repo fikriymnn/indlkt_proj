@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:indlkt_proj/screens/product_acv_screens/widgets/dropdown.dart';
+import 'package:indlkt_proj/widgets/custom_dropdown.dart';
 import 'package:indlkt_proj/widgets/appbar.dart';
 
 import '../../constants/style.dart';
 import '../../widgets/custom_container.dart';
+import '../../widgets/custom_textfield.dart';
 
 class FormInputData extends StatefulWidget {
   const FormInputData({super.key});
@@ -13,8 +14,13 @@ class FormInputData extends StatefulWidget {
 }
 
 class _FormInputDataState extends State<FormInputData> {
-  String dropdownValue1 = "";
   int dropdownValue = 1;
+  String? dropdownValue1;
+  int? dropDownValue2;
+  int? dropDownValue3;
+  TextEditingController namaProduct = TextEditingController();
+  TextEditingController namaProduct2 = TextEditingController();
+  TextEditingController namaProduct3 = TextEditingController();
   @override
   Widget build(BuildContext context) {
     double mediaQueryHeight = MediaQuery.of(context).size.height;
@@ -46,12 +52,12 @@ class _FormInputDataState extends State<FormInputData> {
                       Text('Laporan Acv/',
                           style: TextStyle(
                               color: Colors.grey,
-                              fontSize: 18,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold)),
                       Text('Tambah Data Baru',
                           style: TextStyle(
                               color: blue,
-                              fontSize: 18,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold))
                     ],
                   ),
@@ -78,6 +84,7 @@ class _FormInputDataState extends State<FormInputData> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 8, right: 8),
                           child: DropdownButton(
+                              hint: Text("Pilih Nama Laporan"),
                               underline: Container(),
                               borderRadius: BorderRadius.circular(10),
                               value: dropdownValue,
@@ -103,22 +110,244 @@ class _FormInputDataState extends State<FormInputData> {
                         ),
                       ),
                     ),
+                    SizedBox(height: 15),
                     Row(
                       children: [
-                        CustomDropdown(value: dropdownValue1!, dropdownItems: [
-                          DropdownMenuItem(
-                            child: Text("Filling_packing_SKM_couch"),
-                            value: "Filling_packing_SKM_couch",
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 30),
+                                child: Text("Shift",
+                                    style: TextStyle(
+                                        color: dark,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                              CustomDropdown(
+                                  hintText: "Pilih Shift...",
+                                  onChange: (e) {
+                                    setState(() {
+                                      dropdownValue1 = e;
+                                    });
+                                  },
+                                  value: dropdownValue1,
+                                  dropdownItems: [
+                                    DropdownMenuItem(
+                                      child: Text("Filling_packing_SKM_couch"),
+                                      value: "Filling_packing_SKM_couch",
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text("2"),
+                                      value: "Filling_packing_SKM_couchdf",
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text("3"),
+                                      value: "Filling_packing_SKM_couchd",
+                                    )
+                                  ]),
+                            ],
                           ),
-                          DropdownMenuItem(
-                            child: Text("2"),
-                            value: "Filling_packing_SKM_couchdf",
+                        ),
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 30),
+                                child: Text("Shift",
+                                    style: TextStyle(
+                                        color: dark,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                              CustomTextField(
+                                hint: "Masukan Keterangan",
+                                controller: namaProduct,
+                              ),
+                            ],
                           ),
-                          DropdownMenuItem(
-                            child: Text("3"),
-                            value: "Filling_packing_SKM_couchd",
-                          )
-                        ])
+                        ),
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 30),
+                                child: Text("Shift",
+                                    style: TextStyle(
+                                        color: dark,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                              CustomTextField(
+                                hint: "Masukan Keterangan",
+                                controller: namaProduct2,
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(height: 15),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 30),
+                                child: Text("Shift",
+                                    style: TextStyle(
+                                        color: dark,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                              CustomDropdown(
+                                  hintText: "Pilih Shift...",
+                                  onChange: (e) {
+                                    setState(() {
+                                      dropdownValue1 = e;
+                                    });
+                                  },
+                                  value: dropdownValue1,
+                                  dropdownItems: [
+                                    DropdownMenuItem(
+                                      child: Text("Filling_packing_SKM_couch"),
+                                      value: "Filling_packing_SKM_couch",
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text("2"),
+                                      value: "Filling_packing_SKM_couchdf",
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text("3"),
+                                      value: "Filling_packing_SKM_couchd",
+                                    )
+                                  ]),
+                            ],
+                          ),
+                        ),
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 30),
+                                child: Text("Shift",
+                                    style: TextStyle(
+                                        color: dark,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                              CustomTextField(
+                                hint: "Masukan Keterangan",
+                                controller: namaProduct,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 30),
+                                child: Text("Shift",
+                                    style: TextStyle(
+                                        color: dark,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                              CustomTextField(
+                                hint: "Masukan Keterangan",
+                                controller: namaProduct2,
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(height: 15),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 30),
+                                child: Text("Shift",
+                                    style: TextStyle(
+                                        color: dark,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                              CustomDropdown(
+                                  hintText: "Pilih Shift...",
+                                  onChange: (e) {
+                                    setState(() {
+                                      dropdownValue1 = e;
+                                    });
+                                  },
+                                  value: dropdownValue1,
+                                  dropdownItems: [
+                                    DropdownMenuItem(
+                                      child: Text("Filling_packing_SKM_couch"),
+                                      value: "Filling_packing_SKM_couch",
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text("2"),
+                                      value: "Filling_packing_SKM_couchdf",
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text("3"),
+                                      value: "Filling_packing_SKM_couchd",
+                                    )
+                                  ]),
+                            ],
+                          ),
+                        ),
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 30),
+                                child: Text("Shift",
+                                    style: TextStyle(
+                                        color: dark,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                              CustomTextField(
+                                hint: "Masukan Keterangan",
+                                controller: namaProduct,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 30),
+                                child: Text("Shift",
+                                    style: TextStyle(
+                                        color: dark,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                              CustomTextField(
+                                hint: "Masukan Keterangan",
+                                controller: namaProduct2,
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ],

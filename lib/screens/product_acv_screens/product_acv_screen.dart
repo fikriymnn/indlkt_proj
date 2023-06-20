@@ -125,7 +125,7 @@ class _ProductAcvScreenState extends State<ProductAcvScreen> {
                   child: Text('Laporan Acv',
                       style: TextStyle(
                           color: blue,
-                          fontSize: 18,
+                          fontSize: 15,
                           fontWeight: FontWeight.bold)),
                 ),
                 CustomContainer(
