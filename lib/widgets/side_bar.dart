@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:indlkt_proj/methods/auth_methods.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/dashboard_screen.dart';
+import 'package:indlkt_proj/screens/login_screen/login_screen.dart';
 import 'package:indlkt_proj/screens/product_acv_screens/product_acv_form.dart';
 import 'package:sidebarx/sidebarx.dart';
 import '../constants/style.dart';
@@ -15,11 +17,9 @@ class SideBar extends StatefulWidget {
 }
 
 class _SideBarState extends State<SideBar> {
-
   List list = [DashboardScreen(), ProductAcvScreen(), DataMasterScreen()];
   int selectedIndex = 2;
-  int selectedIndexDisplay = 1;
-  
+  int selectedIndexDisplay = 2;
 
   bool auth = true;
   @override
@@ -136,6 +136,25 @@ class _SideBarState extends State<SideBar> {
                 ? Padding(
                     padding: const EdgeInsets.only(left: 15, right: 15),
                     child: InkWell(
+                      onTap: () {
+                        AuthMethods().signOut();
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            PageRouteBuilder(pageBuilder: (BuildContext context,
+                                Animation animation,
+                                Animation secondaryAnimation) {
+                              return LoginScreen();
+                            }, transitionsBuilder: (BuildContext context,
+                                Animation<double> animation,
+                                Animation<double> secondaryAnimation,
+                                Widget child) {
+                              return new ScaleTransition(
+                                scale: animation,
+                                child: child,
+                              );
+                            }),
+                            (Route route) => false);
+                      },
                       hoverColor: const Color.fromARGB(255, 188, 187, 187),
                       child: Container(
                         height: 40,
@@ -163,7 +182,6 @@ class _SideBarState extends State<SideBar> {
                           ],
                         ),
                       ),
-                      onTap: () {},
                     ),
                   )
                 : null,
