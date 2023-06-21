@@ -1,6 +1,7 @@
 import 'package:animated_floating_buttons/widgets/animated_floating_action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:indlkt_proj/screens/product_acv_screens/product_acv_form.dart';
 import 'package:indlkt_proj/widgets/custom_container.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
@@ -100,41 +101,6 @@ class _ProductAcvScreenState extends State<ProductAcvScreen> {
     double mediaQueryHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: CustomAppBar(title: "Product Acv"),
-      floatingActionButtonLocation: ExpandableFab.location,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(right: 60, bottom: 30),
-        child: ExpandableFab(
-          distance: 80,
-          childrenOffset: Offset(10, 10),
-          backgroundColor: active,
-          child: Icon(Icons.add, color: light),
-          collapsedFabSize: ExpandableFabSize.regular,
-          expandedFabSize: ExpandableFabSize.regular,
-          type: ExpandableFabType.up,
-          children: [
-            FloatingActionButton.small(
-              backgroundColor: active,
-              heroTag: null,
-              child: ImageIcon(
-                AssetImage("assets/images/fab_logo1.png"),
-                color: light,
-                size: 20,
-              ),
-              onPressed: () {},
-            ),
-            FloatingActionButton.small(
-              backgroundColor: active,
-              child: ImageIcon(
-                AssetImage("assets/images/fab_logo2.png"),
-                color: light,
-                size: 20,
-              ),
-              heroTag: null,
-              onPressed: () {},
-            ),
-          ],
-        ),
-      ),
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
@@ -159,7 +125,7 @@ class _ProductAcvScreenState extends State<ProductAcvScreen> {
                   child: Text('Laporan Acv',
                       style: TextStyle(
                           color: blue,
-                          fontSize: 18,
+                          fontSize: 15,
                           fontWeight: FontWeight.bold)),
                 ),
                 CustomContainer(

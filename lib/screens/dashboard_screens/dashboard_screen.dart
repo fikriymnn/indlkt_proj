@@ -70,9 +70,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       border: Border.all(
                                         color: Color.fromARGB(255, 2, 57, 101),
                                       ),
-                                      color: selectedIndex == 0
-                                          ? blue
-                                          : Color.fromARGB(255, 195, 225, 250),
+                                      color:
+                                          selectedIndex == 0 ? blue : lightBlue,
                                       borderRadius: BorderRadius.circular(10)),
                                   width: 150,
                                   padding: EdgeInsets.all(5),
@@ -103,9 +102,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       border: Border.all(
                                         color: Color.fromARGB(255, 2, 57, 101),
                                       ),
-                                      color: selectedIndex == 1
-                                          ? blue
-                                          : Color.fromARGB(255, 195, 225, 250),
+                                      color:
+                                          selectedIndex == 1 ? blue : lightBlue,
                                       borderRadius: BorderRadius.circular(10)),
                                   width: 150,
                                   padding: EdgeInsets.all(5),
