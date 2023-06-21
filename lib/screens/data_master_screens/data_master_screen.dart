@@ -22,51 +22,51 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
     DashboardOverview(),
     DashboardProductivity(),
   ];
-  TextEditingController search = TextEditingController();
-  late PlutoGridStateManager stateManager;
+  // TextEditingController search = TextEditingController();
+  // late PlutoGridStateManager stateManager;
 
-  final List<PlutoColumn> columns = [
-    PlutoColumn(
-        title: 'Column1',
-        field: 'column_1',
-        type: PlutoColumnType.text(),
-        enableSorting: true),
-    PlutoColumn(
-      title: 'Column2',
-      field: 'column_2',
-      type: PlutoColumnType.text(),
-    ),
-    PlutoColumn(
-      title: 'Column3',
-      field: 'column_3',
-      type: PlutoColumnType.text(),
-    ),
-  ];
+  // final List<PlutoColumn> columns = [
+  //   PlutoColumn(
+  //       title: 'Column1',
+  //       field: 'column_1',
+  //       type: PlutoColumnType.text(),
+  //       enableSorting: true),
+  //   PlutoColumn(
+  //     title: 'Column2',
+  //     field: 'column_2',
+  //     type: PlutoColumnType.text(),
+  //   ),
+  //   PlutoColumn(
+  //     title: 'Column3',
+  //     field: 'column_3',
+  //     type: PlutoColumnType.text(),
+  //   ),
+  // ];
 
-  final List<PlutoRow> rows = [
-    PlutoRow(
-      cells: {
-        'column_1': PlutoCell(value: 'cell 1-1'),
-        'column_2': PlutoCell(value: 'cell 1-2'),
-        'column_3': PlutoCell(value: 'cell 1-3'),
-      },
-    ),
-    PlutoRow(
-      cells: {
-        'column_1': PlutoCell(value: 'cell 2-1'),
-        'column_2': PlutoCell(value: 'cell 2-2'),
-        'column_3': PlutoCell(value: 'cell 2-3'),
-      },
-    ),
-    PlutoRow(
-      cells: {
-        'column_1': PlutoCell(value: 'cell 3-1'),
-        'column_2': PlutoCell(value: 'cell 3-2'),
-        'column_3':
-            PlutoCell(value: InkWell(onTap: () {}, child: Text('hoam'))),
-      },
-    ),
-  ];
+  // final List<PlutoRow> rows = [
+  //   PlutoRow(
+  //     cells: {
+  //       'column_1': PlutoCell(value: 'cell 1-1'),
+  //       'column_2': PlutoCell(value: 'cell 1-2'),
+  //       'column_3': PlutoCell(value: 'cell 1-3'),
+  //     },
+  //   ),
+  //   PlutoRow(
+  //     cells: {
+  //       'column_1': PlutoCell(value: 'cell 2-1'),
+  //       'column_2': PlutoCell(value: 'cell 2-2'),
+  //       'column_3': PlutoCell(value: 'cell 2-3'),
+  //     },
+  //   ),
+  //   PlutoRow(
+  //     cells: {
+  //       'column_1': PlutoCell(value: 'cell 3-1'),
+  //       'column_2': PlutoCell(value: 'cell 3-2'),
+  //       'column_3':
+  //           PlutoCell(value: InkWell(onTap: () {}, child: Text('hoam'))),
+  //     },
+  //   ),
+  // ];
 
 //table plus
   var searchNameList = <dynamic>[];
@@ -90,7 +90,23 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
                 style: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold),
               ),
-              isSearchEnabled ? searchCtrl[i] : Container(),
+              isSearchEnabled
+                  ? searchCtrl[i]
+                  : Container(
+                      height: 25,
+                      width: 135,
+                      decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 212, 212, 212),
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 10, top: 3, bottom: 3, right: 10),
+                        child: TextField(
+                            decoration: InputDecoration.collapsed(
+                          hintText: "search",
+                        )),
+                      ),
+                    ),
             ],
           ),
         ),
@@ -106,7 +122,7 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
           (objData) => DataRow(
             cells: [
               DataCell(
-                Text(objData.Product),
+                Text(objData.product),
                 showEditIcon: false,
                 placeholder: false,
               ),
@@ -132,9 +148,7 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
               ),
               DataCell(InkWell(
                 onTap: () {
-                  setState(() {
-                    selectedIndex = 4;
-                  });
+                  setState(() {});
                 },
                 child: Container(
                     decoration: BoxDecoration(
@@ -172,7 +186,7 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
     super.initState();
     searchNameList = names;
     tableHeading.clear();
-    tableHeading.add("Product");
+    tableHeading.add("product");
     tableHeading.add("Departement");
     tableHeading.add("Shift");
     tableHeading.add("Line");
@@ -190,7 +204,7 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
             for (int i = 0; i < names.length; i++) {
               if (index == 0 || index == 1) {
                 String data =
-                    index == 0 ? names[i].Product : names[i].departement;
+                    index == 0 ? names[i].product : names[i].departement;
                 Name nameData = names[i];
                 if (data.toLowerCase().contains(value.toLowerCase())) {
                   searchList.add(nameData);
@@ -214,7 +228,7 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
                   searchList.add(nameData);
                 }
               }
-              // String data = index == 0 ? names[i].Product : names[i].departement;
+              // String data = index == 0 ? names[i].product : names[i].departement;
               // Name nameData = names[i];
               // if (data.toLowerCase().contains(value.toLowerCase())) {
               //   searchList.add(nameData);
@@ -268,7 +282,7 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
                 //           fontWeight: FontWeight.bold)),
                 // ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 290, top: 35),
+                  padding: const EdgeInsets.only(right: 281, top: 35),
                   child: Container(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -326,270 +340,279 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
                     ),
                   ),
                 ),
-                CustomContainer(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ListTile(
-                      title: Padding(
-                        padding: const EdgeInsets.only(left: 0, top: 10),
-                        child: Container(
-                          margin: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width * 0.028),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: 10),
-                              Container(
-                                  child: Row(
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedIndex = 0;
-                                      });
-                                    },
-                                    child: Container(
-                                        margin: EdgeInsets.only(
-                                            right: 5, top: 10, bottom: 10),
-                                        decoration: BoxDecoration(
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  blurRadius: 4,
-                                                  offset: Offset(0, 0),
-                                                  color: dark.withOpacity(0.65))
-                                            ],
-                                            border: Border.all(
-                                              color: Color.fromARGB(
-                                                  255, 2, 57, 101),
-                                            ),
-                                            color: selectedIndex == 0
-                                                ? Color.fromARGB(
-                                                    255, 195, 225, 250)
-                                                : blue,
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        width: 79,
-                                        height: 38,
-                                        padding: EdgeInsets.all(5),
-                                        child: Center(
-                                            child: Text(
-                                          "Data Shift",
-                                          style: GoogleFonts.montserrat(
-                                              textStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .displayMedium,
-                                              fontSize: 10,
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 80),
+                  child: CustomContainer(
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListTile(
+                        title: Padding(
+                          padding: const EdgeInsets.only(left: 0, top: 10),
+                          child: Container(
+                            margin: EdgeInsets.only(
+                                left:
+                                    MediaQuery.of(context).size.width * 0.028),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 10),
+                                Container(
+                                    child: Row(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedIndex = 0;
+                                        });
+                                      },
+                                      child: Container(
+                                          margin: EdgeInsets.only(
+                                              right: 5, top: 10, bottom: 10),
+                                          decoration: BoxDecoration(
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    blurRadius: 4,
+                                                    offset: Offset(0, 0),
+                                                    color:
+                                                        dark.withOpacity(0.65))
+                                              ],
+                                              border: Border.all(
+                                                color: Color.fromARGB(
+                                                    255, 2, 57, 101),
+                                              ),
                                               color: selectedIndex == 0
-                                                  ? dark
-                                                  : light),
-                                        ))),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedIndex = 1;
-                                      });
-                                    },
-                                    child: Container(
-                                        margin: EdgeInsets.only(
-                                            right: 5, top: 10, bottom: 10),
-                                        decoration: BoxDecoration(
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  blurRadius: 4,
-                                                  offset: Offset(0, 0),
-                                                  color: dark.withOpacity(0.65))
-                                            ],
-                                            border: Border.all(
-                                              color: Color.fromARGB(
-                                                  255, 2, 57, 101),
-                                            ),
-                                            color: selectedIndex == 1
-                                                ? Color.fromARGB(
-                                                    255, 195, 225, 250)
-                                                : blue,
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        width: 144,
-                                        height: 38,
-                                        padding: EdgeInsets.all(5),
-                                        child: Center(
-                                            child: Text(
-                                          "Data Breakdown",
-                                          style: GoogleFonts.montserrat(
-                                              textStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .displayMedium,
-                                              fontSize: 10,
+                                                  ? Color.fromARGB(
+                                                      255, 195, 225, 250)
+                                                  : blue,
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          width: 79,
+                                          height: 38,
+                                          padding: EdgeInsets.all(5),
+                                          child: Center(
+                                              child: Text(
+                                            "Data Shift",
+                                            style: GoogleFonts.montserrat(
+                                                textStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .displayMedium,
+                                                fontSize: 10,
+                                                color: selectedIndex == 0
+                                                    ? dark
+                                                    : light),
+                                          ))),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedIndex = 1;
+                                        });
+                                      },
+                                      child: Container(
+                                          margin: EdgeInsets.only(
+                                              right: 5, top: 10, bottom: 10),
+                                          decoration: BoxDecoration(
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    blurRadius: 4,
+                                                    offset: Offset(0, 0),
+                                                    color:
+                                                        dark.withOpacity(0.65))
+                                              ],
+                                              border: Border.all(
+                                                color: Color.fromARGB(
+                                                    255, 2, 57, 101),
+                                              ),
                                               color: selectedIndex == 1
-                                                  ? dark
-                                                  : light),
-                                        ))),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedIndex = 2;
-                                      });
-                                    },
-                                    child: Container(
-                                        margin: EdgeInsets.only(
-                                            right: 5, top: 10, bottom: 10),
-                                        decoration: BoxDecoration(
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  blurRadius: 4,
-                                                  offset: Offset(0, 0),
-                                                  color: dark.withOpacity(0.65))
-                                            ],
-                                            border: Border.all(
-                                              color: Color.fromARGB(
-                                                  255, 2, 57, 101),
-                                            ),
-                                            color: selectedIndex == 2
-                                                ? Color.fromARGB(
-                                                    255, 195, 225, 250)
-                                                : blue,
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        width: 144,
-                                        height: 38,
-                                        padding: EdgeInsets.all(5),
-                                        child: Center(
-                                            child: Text(
-                                          "Data Down Time",
-                                          style: GoogleFonts.montserrat(
-                                              textStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .displayMedium,
-                                              fontSize: 10,
+                                                  ? Color.fromARGB(
+                                                      255, 195, 225, 250)
+                                                  : blue,
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          width: 144,
+                                          height: 38,
+                                          padding: EdgeInsets.all(5),
+                                          child: Center(
+                                              child: Text(
+                                            "Data Breakdown",
+                                            style: GoogleFonts.montserrat(
+                                                textStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .displayMedium,
+                                                fontSize: 10,
+                                                color: selectedIndex == 1
+                                                    ? dark
+                                                    : light),
+                                          ))),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedIndex = 2;
+                                        });
+                                      },
+                                      child: Container(
+                                          margin: EdgeInsets.only(
+                                              right: 5, top: 10, bottom: 10),
+                                          decoration: BoxDecoration(
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    blurRadius: 4,
+                                                    offset: Offset(0, 0),
+                                                    color:
+                                                        dark.withOpacity(0.65))
+                                              ],
+                                              border: Border.all(
+                                                color: Color.fromARGB(
+                                                    255, 2, 57, 101),
+                                              ),
                                               color: selectedIndex == 2
-                                                  ? dark
-                                                  : light),
-                                        ))),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedIndex = 3;
-                                      });
-                                    },
-                                    child: Container(
-                                        margin: EdgeInsets.only(
-                                            right: 5, top: 10, bottom: 10),
-                                        decoration: BoxDecoration(
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  blurRadius: 4,
-                                                  offset: Offset(0, 0),
-                                                  color: dark.withOpacity(0.65))
-                                            ],
-                                            border: Border.all(
-                                              color: Color.fromARGB(
-                                                  255, 2, 57, 101),
-                                            ),
-                                            color: selectedIndex == 3
-                                                ? Color.fromARGB(
-                                                    255, 195, 225, 250)
-                                                : blue,
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        width: 100,
-                                        height: 38,
-                                        padding: EdgeInsets.all(5),
-                                        child: Center(
-                                            child: Text(
-                                          "Data Idle Time",
-                                          style: GoogleFonts.montserrat(
-                                              textStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .displayMedium,
-                                              fontSize: 10,
+                                                  ? Color.fromARGB(
+                                                      255, 195, 225, 250)
+                                                  : blue,
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          width: 144,
+                                          height: 38,
+                                          padding: EdgeInsets.all(5),
+                                          child: Center(
+                                              child: Text(
+                                            "Data Down Time",
+                                            style: GoogleFonts.montserrat(
+                                                textStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .displayMedium,
+                                                fontSize: 10,
+                                                color: selectedIndex == 2
+                                                    ? dark
+                                                    : light),
+                                          ))),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedIndex = 3;
+                                        });
+                                      },
+                                      child: Container(
+                                          margin: EdgeInsets.only(
+                                              right: 5, top: 10, bottom: 10),
+                                          decoration: BoxDecoration(
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    blurRadius: 4,
+                                                    offset: Offset(0, 0),
+                                                    color:
+                                                        dark.withOpacity(0.65))
+                                              ],
+                                              border: Border.all(
+                                                color: Color.fromARGB(
+                                                    255, 2, 57, 101),
+                                              ),
                                               color: selectedIndex == 3
-                                                  ? dark
-                                                  : light),
-                                        ))),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedIndex = 4;
-                                      });
-                                    },
-                                    child: Container(
-                                        margin: EdgeInsets.only(
-                                            right: 5, top: 10, bottom: 10),
-                                        decoration: BoxDecoration(
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  blurRadius: 4,
-                                                  offset: Offset(0, 0),
-                                                  color: dark.withOpacity(0.65))
-                                            ],
-                                            border: Border.all(
-                                              color: Color.fromARGB(
-                                                  255, 2, 57, 101),
-                                            ),
-                                            color: selectedIndex == 4
-                                                ? Color.fromARGB(
-                                                    255, 195, 225, 250)
-                                                : blue,
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        width: 66,
-                                        height: 38,
-                                        padding: EdgeInsets.all(5),
-                                        child: Center(
-                                            child: Text(
-                                          "All Data",
-                                          style: GoogleFonts.montserrat(
-                                              textStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .displayMedium,
-                                              fontSize: 10,
+                                                  ? Color.fromARGB(
+                                                      255, 195, 225, 250)
+                                                  : blue,
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          width: 100,
+                                          height: 38,
+                                          padding: EdgeInsets.all(5),
+                                          child: Center(
+                                              child: Text(
+                                            "Data Idle Time",
+                                            style: GoogleFonts.montserrat(
+                                                textStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .displayMedium,
+                                                fontSize: 10,
+                                                color: selectedIndex == 3
+                                                    ? dark
+                                                    : light),
+                                          ))),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedIndex = 4;
+                                        });
+                                      },
+                                      child: Container(
+                                          margin: EdgeInsets.only(
+                                              right: 5, top: 10, bottom: 10),
+                                          decoration: BoxDecoration(
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    blurRadius: 4,
+                                                    offset: Offset(0, 0),
+                                                    color:
+                                                        dark.withOpacity(0.65))
+                                              ],
+                                              border: Border.all(
+                                                color: Color.fromARGB(
+                                                    255, 2, 57, 101),
+                                              ),
                                               color: selectedIndex == 4
-                                                  ? dark
-                                                  : light),
-                                        ))),
-                                  )
-                                ],
-                              )),
-                              SizedBox(
-                                height: 15,
-                              ),
-                            ],
+                                                  ? Color.fromARGB(
+                                                      255, 195, 225, 250)
+                                                  : blue,
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          width: 66,
+                                          height: 38,
+                                          padding: EdgeInsets.all(5),
+                                          child: Center(
+                                              child: Text(
+                                            "All Data",
+                                            style: GoogleFonts.montserrat(
+                                                textStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .displayMedium,
+                                                fontSize: 10,
+                                                color: selectedIndex == 4
+                                                    ? dark
+                                                    : light),
+                                          ))),
+                                    )
+                                  ],
+                                )),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    // Flexible(
-                    //   child: PlutoGrid(
-                    //     columns: columns,
-                    //     rows: rows,
-                    //   ),
-                    // ),
-                    Expanded(
-                      child: Container(
-                        width: 1900,
-                        height: 1900,
-                        child: TablePlus(
-                          dataRowColor: MaterialStatePropertyAll(blue),
-                          exportFileName: "MyTableFile",
-                          tabelHeadingList: tableHeading,
-                          isExportCSVEnabled: false,
-                          columnSpacing: 100,
-                          sortColumnIndex: 1,
-                          isSearchEnabled: isSearchEnabled,
-                          rows: dataRowsValues(),
-                          columns: dataColumnValues(),
-                          dataValues: names,
-                          shareWidget: Container(),
+                      // Flexible(
+                      //   child: PlutoGrid(
+                      //     columns: columns,
+                      //     rows: rows,
+                      //   ),
+                      // ),
+                      Expanded(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          child: TablePlus(
+                            exportFileName: "MyTableFile",
+                            tabelHeadingList: tableHeading,
+                            isExportCSVEnabled: false,
+                            columnSpacing: 100,
+                            sortColumnIndex: 1,
+                            isSearchEnabled: isSearchEnabled,
+                            rows: dataRowsValues(),
+                            columns: dataColumnValues(),
+                            dataValues: names,
+                            shareWidget: Container(),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                )),
+                    ],
+                  )),
+                ),
               ]),
             ],
           ),
@@ -601,7 +624,7 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
   var names = List.generate(
       4,
       (index) => Name(
-          Product: "jhbh",
+          product: "jhbh",
           departement: "jnk",
           shift: 9,
           line: 7687,
@@ -609,14 +632,14 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
 }
 
 class Name {
-  String Product;
+  String product;
   String departement;
   int shift;
   int line;
   int tanggal;
 
   Name(
-      {required this.Product,
+      {required this.product,
       required this.departement,
       required this.shift,
       required this.line,

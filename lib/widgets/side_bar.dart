@@ -15,11 +15,9 @@ class SideBar extends StatefulWidget {
 }
 
 class _SideBarState extends State<SideBar> {
-
   List list = [DashboardScreen(), ProductAcvScreen(), DataMasterScreen()];
   int selectedIndex = 2;
-  int selectedIndexDisplay = 1;
-  
+  int selectedIndexDisplay = 2;
 
   bool auth = true;
   @override
