@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:indlkt_proj/screens/login_screen/widgets/chaptcha.dart';
+import 'package:indlkt_proj/widgets/side_bar.dart';
 import 'package:local_captcha/local_captcha.dart';
 import 'package:marquee/marquee.dart';
 import 'package:rive/rive.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:quickalert/quickalert.dart';
 
 import '../../constants/style.dart';
 
@@ -15,6 +19,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final FirebaseAuth authInstance = FirebaseAuth.instance;
   bool _obsecureText = true;
   final _captchaFormKey = GlobalKey<FormState>();
 
@@ -23,11 +28,82 @@ class _LoginScreenState extends State<LoginScreen> {
 
   var _inputCode = '';
 
+  final _emailTextController = TextEditingController();
+  final _passTextController = TextEditingController();
+
+  final _passFocusNode = FocusNode();
+
   @override
   void dispose() {
     _localCaptchaController.dispose();
+    _emailTextController.dispose();
+    _passTextController.dispose();
+    _passFocusNode.dispose();
 
     super.dispose();
+  }
+
+  bool _isLoading = false;
+
+  Future<void> _submitFormOnLogin() async {
+    final isValid = _captchaFormKey.currentState!.validate();
+    User? user = FirebaseAuth.instance.currentUser;
+    FocusScope.of(context).unfocus();
+
+    if (isValid) {
+      _captchaFormKey.currentState!.save();
+      setState(() {
+        _isLoading = true;
+      });
+
+      try {
+        await authInstance.signInWithEmailAndPassword(
+            email: _emailTextController.text.toLowerCase().trim(),
+            password: _passTextController.text.trim());
+
+        // ignore: use_build_context_synchronously
+
+        Navigator.pushAndRemoveUntil(
+            context,
+            PageRouteBuilder(pageBuilder: (BuildContext context,
+                Animation animation, Animation secondaryAnimation) {
+              return SideBar();
+            }, transitionsBuilder: (BuildContext context,
+                Animation<double> animation,
+                Animation<double> secondaryAnimation,
+                Widget child) {
+              return new ScaleTransition(
+                scale: animation,
+                child: child,
+              );
+            }),
+            (Route route) => false);
+
+        print('Successfully logged in');
+      } on FirebaseException catch (error) {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.error,
+          title: '${error.message}',
+        );
+        setState(() {
+          _isLoading = false;
+        });
+      } catch (error) {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.error,
+          title: '$error',
+        );
+        setState(() {
+          _isLoading = false;
+        });
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 
   @override
@@ -91,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Container(
                               margin: EdgeInsets.only(left: 120),
                               width: 404.6,
-                              height: 500.3,
+                              height: 542.3,
                               child: Stack(
                                 children: [
                                   // Positioned(
@@ -109,7 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     left: 0,
                                     child: Container(
                                       width: 380.8,
-                                      height: 476.5,
+                                      height: 511.5,
                                       decoration: BoxDecoration(
                                         color: active,
                                         borderRadius: BorderRadius.circular(30),
@@ -128,7 +204,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     left: 14,
                                     child: Container(
                                       width: 380.8,
-                                      height: 476.5,
+                                      height: 512.5,
                                       decoration: BoxDecoration(
                                         color: blue,
                                         borderRadius: BorderRadius.circular(30),
@@ -147,7 +223,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     right: 0,
                                     child: Container(
                                       width: 380.8,
-                                      height: 476.5,
+                                      height: 512.5,
                                       decoration: BoxDecoration(
                                         color: light,
                                         borderRadius: BorderRadius.circular(30),
@@ -186,8 +262,25 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   top: 20.59,
                                                   bottom: 16.93),
                                               child: Container(
-                                                child: TextField(
-                                                  obscureText: true,
+                                                child: TextFormField(
+                                                  validator: (value) {
+                                                    if (value!.isEmpty ||
+                                                        !value.contains('@')) {
+                                                      return 'Masukkan email dengan benar';
+                                                    } else {
+                                                      return null;
+                                                    }
+                                                  },
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  onEditingComplete: () =>
+                                                      FocusScope.of(context)
+                                                          .requestFocus(
+                                                              _passFocusNode),
+                                                  controller:
+                                                      _emailTextController,
+                                                  keyboardType: TextInputType
+                                                      .emailAddress,
                                                   decoration: InputDecoration(
                                                       enabledBorder:
                                                           OutlineInputBorder(
@@ -197,7 +290,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                           blue)),
                                                       prefixIcon: Icon(Icons
                                                           .perm_contact_calendar_outlined),
-                                                      hintText: 'username',
+                                                      hintText: 'email',
                                                       border:
                                                           OutlineInputBorder(
                                                               borderRadius:
@@ -213,8 +306,22 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   right: 16.905,
                                                   bottom: 16.93),
                                               child: Container(
-                                                child: TextField(
+                                                child: TextFormField(
                                                   obscureText: _obsecureText,
+                                                  textInputAction:
+                                                      TextInputAction.next,
+                                                  controller:
+                                                      _passTextController,
+                                                  focusNode: _passFocusNode,
+                                                  keyboardType: TextInputType
+                                                      .visiblePassword,
+                                                  validator: (value) {
+                                                    if (value!.isEmpty) {
+                                                      return 'Masukkan password dengan benar';
+                                                    } else {
+                                                      return null;
+                                                    }
+                                                  },
                                                   decoration: InputDecoration(
                                                       enabledBorder:
                                                           OutlineInputBorder(
@@ -320,6 +427,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   right: 16.905,
                                                   bottom: 16.93),
                                               child: TextFormField(
+                                                onEditingComplete: () {
+                                                  _submitFormOnLogin();
+                                                },
                                                 decoration: InputDecoration(
                                                     enabledBorder:
                                                         OutlineInputBorder(
@@ -372,35 +482,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 children: [
                                                   InkWell(
                                                     onTap: () {
-                                                      if (_captchaFormKey
-                                                              .currentState
-                                                              ?.validate() ??
-                                                          false) {
-                                                        _captchaFormKey
-                                                            .currentState!
-                                                            .save();
-
-                                                        showDialog(
-                                                          context: context,
-                                                          builder: (context) {
-                                                            return AlertDialog(
-                                                              title: Text(
-                                                                  'Code: "$_inputCode" is valid.'),
-                                                              actions: [
-                                                                TextButton(
-                                                                  onPressed: () =>
-                                                                      Navigator.of(
-                                                                              context)
-                                                                          .pop(),
-                                                                  child:
-                                                                      const Text(
-                                                                          'OK'),
-                                                                ),
-                                                              ],
-                                                            );
-                                                          },
-                                                        );
-                                                      }
+                                                      _submitFormOnLogin();
                                                     },
                                                     child: Container(
                                                         height: 49.266,

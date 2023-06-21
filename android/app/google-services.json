@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "288161488521",
+    "project_id": "indolakto-project",
+    "storage_bucket": "indolakto-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:288161488521:android:99dfa25a62eec5b8a5b058",
+        "android_client_info": {
+          "package_name": "com.example.indlkt_proj"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "288161488521-7p6vetmnqhsorm7mc99dafg43jbj55bp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1j7sLvWI2I8z_NWPGVorOoU_sFfUatag"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "288161488521-7p6vetmnqhsorm7mc99dafg43jbj55bp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

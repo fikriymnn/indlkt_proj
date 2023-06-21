@@ -18,6 +18,7 @@ class ProductAcvScreen extends StatefulWidget {
 class _ProductAcvScreenState extends State<ProductAcvScreen> {
   TextEditingController search = TextEditingController();
   late PlutoGridStateManager stateManager;
+  String tes = "";
 
   final List<PlutoColumn> columns = [
     PlutoColumn(

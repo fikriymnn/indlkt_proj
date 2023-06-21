@@ -49,6 +49,11 @@ dependencies:
   rive: ^0.11.3
   expandable_datatable: ^0.0.7
   table_plus: ^1.0.8
+  firebase_core: ^2.14.0
+  cloud_firestore: ^4.8.1
+  firebase_auth: ^4.6.3
+  quickalert: ^1.0.1
+  provider: ^6.0.5
 
 
 dev_dependencies:
