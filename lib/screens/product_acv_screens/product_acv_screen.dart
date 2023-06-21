@@ -30,10 +30,17 @@ class _ProductAcvScreenState extends State<ProductAcvScreen> {
       type: PlutoColumnType.text(),
     ),
     PlutoColumn(
-      title: 'Column3',
-      field: 'column_3',
-      type: PlutoColumnType.text(),
-    ),
+        renderer: (rendererContext) {
+          return InkWell(
+            onTap: () {
+              print('object');
+            },
+            child: Icon(Icons.abc),
+          );
+        },
+        title: 'Column3',
+        field: 'column_3',
+        type: PlutoColumnType.text()),
   ];
 
   final List<PlutoRow> rows = [
@@ -55,8 +62,7 @@ class _ProductAcvScreenState extends State<ProductAcvScreen> {
       cells: {
         'column_1': PlutoCell(value: 'cell 3-1'),
         'column_2': PlutoCell(value: 'cell 3-2'),
-        'column_3':
-            PlutoCell(value: InkWell(onTap: () {}, child: Text('hoam'))),
+        'column_3': PlutoCell(value: 'hehe'),
       },
     ),
   ];

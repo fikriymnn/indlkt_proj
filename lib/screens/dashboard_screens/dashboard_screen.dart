@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/dashboard_overview_screen.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/dashboard_productivity_screen.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_card.dart';
+import 'package:indlkt_proj/screens/data_master_screens/data_master_screen.dart';
 import 'package:indlkt_proj/widgets/appbar.dart';
 import 'package:sidebarx/sidebarx.dart';
 
@@ -16,7 +17,10 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   int selectedIndex = 0;
-  final List screens = [DashboardOverview(), DashboardProductivity()];
+  final List screens = [
+    DashboardOverview(),
+    DashboardProductivity(),
+  ];
   @override
   Widget build(BuildContext context) {
     double mediaQuery = MediaQuery.of(context).size.width;
