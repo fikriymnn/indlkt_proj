@@ -209,10 +209,10 @@ class _FormInputDataState extends State<FormInputData> {
                                   hintText: "Pilih Shift...",
                                   onChange: (e) {
                                     setState(() {
-                                      dropdownValue1 = e;
+                                      dropDownValue2 = e;
                                     });
                                   },
-                                  value: dropdownValue1,
+                                  value: dropDownValue2,
                                   dropdownItems: [
                                     DropdownMenuItem(
                                       child: Text("Filling_packing_SKM_couch"),
@@ -289,10 +289,10 @@ class _FormInputDataState extends State<FormInputData> {
                                   hintText: "Pilih Shift...",
                                   onChange: (e) {
                                     setState(() {
-                                      dropdownValue1 = e;
+                                      dropDownValue3 = e;
                                     });
                                   },
-                                  value: dropdownValue1,
+                                  value: dropDownValue3,
                                   dropdownItems: [
                                     DropdownMenuItem(
                                       child: Text("Filling_packing_SKM_couch"),
