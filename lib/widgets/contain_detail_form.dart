@@ -260,14 +260,11 @@ class _detail_formState extends State<detail_form> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 30),
-                            child: Text("Shift",
-                                style: TextStyle(
-                                    color: dark,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold)),
-                          ),
+                          Text("Shift",
+                              style: TextStyle(
+                                  color: dark,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold)),
                           CustomDropdown(
                               hintText: "Pilih Shift...",
                               onChange: (e) {

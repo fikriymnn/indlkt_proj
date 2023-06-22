@@ -32,8 +32,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           borderRadius: BorderRadius.circular(5),
         ),
         child: Padding(
-          padding:
-              const EdgeInsets.only(left: 20, right: 20, top: 11, bottom: 11),
+          padding: const EdgeInsets.only(left: 20, right: 20, top: 15),
           child: TextFormField(
             controller: widget.controller,
             decoration: InputDecoration.collapsed(hintText: widget.hint),
