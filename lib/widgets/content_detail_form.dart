@@ -37,15 +37,15 @@ class _detail_formState extends State<detail_form> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  alignment: FractionalOffset.topRight,
+                  alignment: Alignment.topRight,
                   child: IconButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
                     icon: const Icon(
-                      Icons.cancel_sharp,
+                      Icons.cancel_outlined,
                       color: Colors.red,
-                      size: 48,
+                      size: 30,
                     ),
                   ),
                 ),

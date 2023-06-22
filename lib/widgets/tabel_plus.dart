@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:table_plus/table_plus.dart';
 
 import '../constants/style.dart';
-import 'contain_detail_form.dart';
+import 'content_detail_form.dart';
 import '../screens/product_acv_screens/product_acv_form.dart';
 
 class tabel_plus extends StatefulWidget {
@@ -209,7 +209,7 @@ class _tabel_plusState extends State<tabel_plus> {
           exportFileName: "MyTableFile",
           tabelHeadingList: tableHeading,
           isExportCSVEnabled: false,
-          columnSpacing: 100,
+          columnSpacing: MediaQuery.of(context).size.width * 0.07,
           sortColumnIndex: 1,
           isSearchEnabled: isSearchEnabled,
           rows: dataRowsValues(),
@@ -222,7 +222,7 @@ class _tabel_plusState extends State<tabel_plus> {
   }
 
   var names = List.generate(
-      4,
+      20,
       (index) => Name(
           product: "jhbh",
           departement: "jnk",
