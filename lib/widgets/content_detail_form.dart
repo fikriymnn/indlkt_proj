@@ -36,16 +36,19 @@ class _detail_formState extends State<detail_form> {
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  alignment: Alignment.topRight,
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(
-                      Icons.cancel_outlined,
-                      color: Colors.red,
-                      size: 30,
+                Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Container(
+                    alignment: Alignment.topRight,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.cancel_outlined,
+                        color: Colors.red,
+                        size: 35,
+                      ),
                     ),
                   ),
                 ),

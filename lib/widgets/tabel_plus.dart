@@ -76,7 +76,7 @@ class _tabel_plusState extends State<tabel_plus> {
                 placeholder: false,
               ),
               DataCell(
-                Text(objData.tanggal.toString()),
+                Text(objData.date.toString()),
                 showEditIcon: false,
                 placeholder: false,
               ),
@@ -141,7 +141,7 @@ class _tabel_plusState extends State<tabel_plus> {
     tableHeading.add("Departement");
     tableHeading.add("Shift");
     tableHeading.add("Line");
-    tableHeading.add("Tanggal");
+    tableHeading.add("Date");
     tableHeading.add("action");
 
     for (var index = 0; index < tableHeading.length; index++) {
@@ -173,9 +173,9 @@ class _tabel_plusState extends State<tabel_plus> {
                   searchList.add(nameData);
                 }
               } else if (index == 4) {
-                int tanggal = names[i].tanggal;
+                int date = names[i].date;
                 Name nameData = names[i];
-                if (tanggal.toString().contains(value)) {
+                if (date.toString().contains(value)) {
                   searchList.add(nameData);
                 }
               }
@@ -224,11 +224,7 @@ class _tabel_plusState extends State<tabel_plus> {
   var names = List.generate(
       20,
       (index) => Name(
-          product: "jhbh",
-          departement: "jnk",
-          shift: 9,
-          line: 7687,
-          tanggal: 10));
+          product: "jhbh", departement: "jnk", shift: 9, line: 7687, date: 10));
 }
 
 class Name {
@@ -236,12 +232,12 @@ class Name {
   String departement;
   int shift;
   int line;
-  int tanggal;
+  int date;
 
   Name(
       {required this.product,
       required this.departement,
       required this.shift,
       required this.line,
-      required this.tanggal});
+      required this.date});
 }
