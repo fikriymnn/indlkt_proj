@@ -55,8 +55,8 @@ class _exportPageState extends State<exportPage> {
         type: PlutoColumnType.text(),
         enableSorting: true),
     PlutoColumn(
-        title: 'Tanggal',
-        field: 'tanggal',
+        title: 'Date',
+        field: 'date',
         type: PlutoColumnType.text(),
         enableSorting: true),
   ];
@@ -99,6 +99,23 @@ class _exportPageState extends State<exportPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Container(
+              child: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(
+                  Icons.cancel_outlined,
+                  color: Colors.red,
+                  size: 35,
+                ),
+              ),
+            ),
+          ],
+        ),
         InkWell(
           onTap: exportToCsv,
           child: Container(
@@ -139,6 +156,7 @@ class _exportPageState extends State<exportPage> {
                 ],
               ))),
         ),
+
         // Container(
         //   alignment: Alignment.topRight,
         //   child: IconButton(
@@ -150,8 +168,16 @@ class _exportPageState extends State<exportPage> {
         //       color: Colors.red,
         //       size: 48,
         //     ),
+
         //   ),
+
         // ),
+        Padding(
+          padding: const EdgeInsets.only(top: 18, bottom: 10),
+          child: Text(' select data from table',
+              style: TextStyle(
+                  color: dark, fontSize: 15, fontWeight: FontWeight.bold)),
+        ),
         Expanded(
           child: PlutoGrid(
             columns: columns,
@@ -163,7 +189,7 @@ class _exportPageState extends State<exportPage> {
                   'departement': PlutoCell(value: 'cell 1-2'),
                   'shift': PlutoCell(value: 'cell 1-3'),
                   'line': PlutoCell(value: 'cell 1-3'),
-                  'tanggal': PlutoCell(value: 'cell 1-3'),
+                  'date': PlutoCell(value: 'cell 1-3'),
                 },
               ),
             ),

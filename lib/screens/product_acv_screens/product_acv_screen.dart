@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:indlkt_proj/screens/product_acv_screens/product_acv_form.dart';
 import 'package:indlkt_proj/widgets/custom_container.dart';
+import 'package:indlkt_proj/widgets/tabel_plus.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../constants/style.dart';
@@ -141,7 +142,8 @@ class _ProductAcvScreenState extends State<ProductAcvScreen> {
                   children: [
                     ListTile(
                       title: Padding(
-                        padding: const EdgeInsets.only(left: 20, top: 10),
+                        padding: const EdgeInsets.only(
+                            left: 20, top: 20, bottom: 20),
                         child: Text("Data Per Shift",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 18)),
@@ -166,12 +168,7 @@ class _ProductAcvScreenState extends State<ProductAcvScreen> {
                         ),
                       ),
                     ),
-                    Flexible(
-                      child: PlutoGrid(
-                        columns: columns,
-                        rows: rows,
-                      ),
-                    ),
+                    Flexible(child: tabel_plus()),
                   ],
                 )),
               ]),

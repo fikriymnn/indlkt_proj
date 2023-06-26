@@ -65,58 +65,6 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        // InkWell(
-                        //   onTap: () {
-                        //     showDialog(
-                        //       context: context,
-                        //       builder: (BuildContext context) {
-                        //         return AlertDialog(
-                        //           backgroundColor: light,
-                        //           elevation: 0,
-                        //           content: Padding(
-                        //             padding: const EdgeInsets.only(
-                        //                 top: 85, right: 55, left: 38),
-                        //             child: Container(
-                        //                 width:
-                        //                     MediaQuery.of(context).size.width,
-                        //                 height:
-                        //                     MediaQuery.of(context).size.height,
-                        //                 child: exportPage()),
-                        //           ),
-                        //         );
-                        //         ;
-                        //       },
-                        //     );
-                        //   },
-                        //   child: Container(
-                        //       decoration: BoxDecoration(
-                        //           boxShadow: [
-                        //             BoxShadow(
-                        //                 blurRadius: 1,
-                        //                 offset: Offset(0, 0),
-                        //                 color: blue)
-                        //           ],
-                        //           border: Border.all(
-                        //             color: blue,
-                        //           ),
-                        //           color: selectedIndex == 4
-                        //               ? Color.fromARGB(255, 195, 225, 250)
-                        //               : blue,
-                        //           borderRadius: BorderRadius.circular(5)),
-                        //       width: 78,
-                        //       height: 36,
-                        //       child: Center(
-                        //           child: Text(
-                        //         "export",
-                        //         style: GoogleFonts.montserrat(
-                        //             textStyle: Theme.of(context)
-                        //                 .textTheme
-                        //                 .displayMedium,
-                        //             fontSize: 16,
-                        //             fontWeight: FontWeight.w600,
-                        //             color: selectedIndex == 4 ? dark : light),
-                        //       ))),
-                        // )
                         InkWell(
                           onTap: () {
                             showDialog(
@@ -126,8 +74,7 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
                                   backgroundColor: light,
                                   elevation: 0,
                                   content: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 85, right: 55, left: 38),
+                                    padding: const EdgeInsets.only(),
                                     child: Container(
                                         width:
                                             MediaQuery.of(context).size.width,
@@ -213,7 +160,7 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
                                     },
                                     child: Container(
                                         margin: EdgeInsets.only(
-                                            right: 5, top: 10, bottom: 10),
+                                            right: 15, top: 10, bottom: 10),
                                         decoration: BoxDecoration(
                                             boxShadow: [
                                               BoxShadow(
@@ -255,7 +202,7 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
                                     },
                                     child: Container(
                                         margin: EdgeInsets.only(
-                                            right: 5, top: 10, bottom: 10),
+                                            right: 15, top: 10, bottom: 10),
                                         decoration: BoxDecoration(
                                             boxShadow: [
                                               BoxShadow(
@@ -297,7 +244,7 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
                                     },
                                     child: Container(
                                         margin: EdgeInsets.only(
-                                            right: 5, top: 10, bottom: 10),
+                                            right: 15, top: 10, bottom: 10),
                                         decoration: BoxDecoration(
                                             boxShadow: [
                                               BoxShadow(
@@ -339,7 +286,7 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
                                     },
                                     child: Container(
                                         margin: EdgeInsets.only(
-                                            right: 5, top: 10, bottom: 10),
+                                            right: 15, top: 10, bottom: 10),
                                         decoration: BoxDecoration(
                                             boxShadow: [
                                               BoxShadow(
@@ -381,7 +328,7 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
                                     },
                                     child: Container(
                                         margin: EdgeInsets.only(
-                                            right: 5, top: 10, bottom: 10),
+                                            right: 15, top: 10, bottom: 10),
                                         decoration: BoxDecoration(
                                             boxShadow: [
                                               BoxShadow(
