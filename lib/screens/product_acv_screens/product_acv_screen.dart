@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:indlkt_proj/screens/product_acv_screens/product_acv_form.dart';
 import 'package:indlkt_proj/widgets/custom_container.dart';
-import 'package:indlkt_proj/widgets/tabel_plus.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../constants/style.dart';
@@ -129,7 +128,7 @@ class _ProductAcvScreenState extends State<ProductAcvScreen> {
                       image: AssetImage("assets/images/circle_bg2.png"))),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 58, top: 20),
+                  padding: const EdgeInsets.only(left: 40, top: 20),
                   child: Text('Laporan Acv',
                       style: TextStyle(
                           color: blue,
@@ -142,33 +141,37 @@ class _ProductAcvScreenState extends State<ProductAcvScreen> {
                   children: [
                     ListTile(
                       title: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20, top: 20, bottom: 29.4),
+                        padding: const EdgeInsets.only(left: 20, top: 10),
                         child: Text("Data Per Shift",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 18)),
                       ),
-                      // trailing: Padding(
-                      //   padding: const EdgeInsets.all(8.0),
-                      //   child: Container(
-                      //     height: 25,
-                      //     width: 135,
-                      //     decoration: BoxDecoration(
-                      //         color: const Color.fromARGB(255, 212, 212, 212),
-                      //         borderRadius: BorderRadius.circular(20)),
-                      //     child: Padding(
-                      //       padding: const EdgeInsets.only(
-                      //           left: 10, top: 3, bottom: 3, right: 10),
-                      //       child: TextField(
-                      //           controller: search,
-                      //           decoration: InputDecoration.collapsed(
-                      //             hintText: "search",
-                      //           )),
-                      //     ),
-                      //   ),
-                      // ),
+                      trailing: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          height: 25,
+                          width: 135,
+                          decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 212, 212, 212),
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10, top: 3, bottom: 3, right: 10),
+                            child: TextField(
+                                controller: search,
+                                decoration: InputDecoration.collapsed(
+                                  hintText: "search",
+                                )),
+                          ),
+                        ),
+                      ),
                     ),
-                    Flexible(child: tabel_plus()),
+                    Flexible(
+                      child: PlutoGrid(
+                        columns: columns,
+                        rows: rows,
+                      ),
+                    ),
                   ],
                 )),
               ]),

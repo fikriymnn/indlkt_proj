@@ -39,6 +39,7 @@ dependencies:
   syncfusion_flutter_charts: ^21.2.10
   custom_floating_action_button: ^0.0.3
   pluto_grid_export: ^1.0.6
+  pluto_grid: ^7.0.2
   animated_floating_buttons: ^0.0.2
   flutter_expandable_fab: ^1.8.1
   google_fonts: ^4.0.0
@@ -53,8 +54,6 @@ dependencies:
   firebase_auth: ^4.6.3
   quickalert: ^1.0.1
   provider: ^6.0.5
-  file_saver: ^0.0.12
-  url_launcher: ^6.1.11
 
 
 dev_dependencies:
