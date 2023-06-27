@@ -6,6 +6,7 @@ import 'package:table_plus/table_plus.dart';
 
 import '../../constants/style.dart';
 import '../../widgets/appbar.dart';
+import '../../widgets/custom_export.dart';
 import '../../widgets/custom_container.dart';
 import '../dashboard_screens/dashboard_overview_screen.dart';
 import '../dashboard_screens/dashboard_productivity_screen.dart';
@@ -66,9 +67,25 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
                       children: [
                         InkWell(
                           onTap: () {
-                            setState(() {
-                              selectedIndex = 0;
-                            });
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  backgroundColor: light,
+                                  elevation: 0,
+                                  content: Padding(
+                                    padding: const EdgeInsets.only(),
+                                    child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height:
+                                            MediaQuery.of(context).size.height,
+                                        child: exportPage()),
+                                  ),
+                                );
+                                ;
+                              },
+                            );
                           },
                           child: Container(
                               margin: EdgeInsets.only(
@@ -102,7 +119,7 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
                                     ),
                                   ),
                                   Text(
-                                    "Unduh Data",
+                                    "Select Data",
                                     style: GoogleFonts.montserrat(
                                         textStyle: Theme.of(context)
                                             .textTheme
@@ -143,7 +160,7 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
                                     },
                                     child: Container(
                                         margin: EdgeInsets.only(
-                                            right: 5, top: 10, bottom: 10),
+                                            right: 15, top: 10, bottom: 10),
                                         decoration: BoxDecoration(
                                             boxShadow: [
                                               BoxShadow(
@@ -185,7 +202,7 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
                                     },
                                     child: Container(
                                         margin: EdgeInsets.only(
-                                            right: 5, top: 10, bottom: 10),
+                                            right: 15, top: 10, bottom: 10),
                                         decoration: BoxDecoration(
                                             boxShadow: [
                                               BoxShadow(
@@ -227,7 +244,7 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
                                     },
                                     child: Container(
                                         margin: EdgeInsets.only(
-                                            right: 5, top: 10, bottom: 10),
+                                            right: 15, top: 10, bottom: 10),
                                         decoration: BoxDecoration(
                                             boxShadow: [
                                               BoxShadow(
@@ -269,7 +286,7 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
                                     },
                                     child: Container(
                                         margin: EdgeInsets.only(
-                                            right: 5, top: 10, bottom: 10),
+                                            right: 15, top: 10, bottom: 10),
                                         decoration: BoxDecoration(
                                             boxShadow: [
                                               BoxShadow(
@@ -311,7 +328,7 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
                                     },
                                     child: Container(
                                         margin: EdgeInsets.only(
-                                            right: 5, top: 10, bottom: 10),
+                                            right: 15, top: 10, bottom: 10),
                                         decoration: BoxDecoration(
                                             boxShadow: [
                                               BoxShadow(
