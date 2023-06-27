@@ -129,7 +129,7 @@ class _ProductAcvScreenState extends State<ProductAcvScreen> {
                       image: AssetImage("assets/images/circle_bg2.png"))),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 40, top: 20),
+                  padding: const EdgeInsets.only(left: 58, top: 20),
                   child: Text('Laporan Acv',
                       style: TextStyle(
                           color: blue,
@@ -143,30 +143,30 @@ class _ProductAcvScreenState extends State<ProductAcvScreen> {
                     ListTile(
                       title: Padding(
                         padding: const EdgeInsets.only(
-                            left: 20, top: 20, bottom: 20),
+                            left: 20, top: 20, bottom: 29.4),
                         child: Text("Data Per Shift",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 18)),
                       ),
-                      trailing: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          height: 25,
-                          width: 135,
-                          decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 212, 212, 212),
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 10, top: 3, bottom: 3, right: 10),
-                            child: TextField(
-                                controller: search,
-                                decoration: InputDecoration.collapsed(
-                                  hintText: "search",
-                                )),
-                          ),
-                        ),
-                      ),
+                      // trailing: Padding(
+                      //   padding: const EdgeInsets.all(8.0),
+                      //   child: Container(
+                      //     height: 25,
+                      //     width: 135,
+                      //     decoration: BoxDecoration(
+                      //         color: const Color.fromARGB(255, 212, 212, 212),
+                      //         borderRadius: BorderRadius.circular(20)),
+                      //     child: Padding(
+                      //       padding: const EdgeInsets.only(
+                      //           left: 10, top: 3, bottom: 3, right: 10),
+                      //       child: TextField(
+                      //           controller: search,
+                      //           decoration: InputDecoration.collapsed(
+                      //             hintText: "search",
+                      //           )),
+                      //     ),
+                      //   ),
+                      // ),
                     ),
                     Flexible(child: tabel_plus()),
                   ],

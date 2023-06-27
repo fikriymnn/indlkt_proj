@@ -119,7 +119,7 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
                                     ),
                                   ),
                                   Text(
-                                    "Unduh Data",
+                                    "Select Data",
                                     style: GoogleFonts.montserrat(
                                         textStyle: Theme.of(context)
                                             .textTheme
