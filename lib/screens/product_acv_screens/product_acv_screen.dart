@@ -112,7 +112,6 @@ class _ProductAcvScreenState extends State<ProductAcvScreen> {
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
-          height: mediaQueryHeight,
           child: Stack(
             children: [
               Positioned(
@@ -168,7 +167,7 @@ class _ProductAcvScreenState extends State<ProductAcvScreen> {
                       //   ),
                       // ),
                     ),
-                    Flexible(child: tabel_plus()),
+                    tabel_plus(),
                   ],
                 )),
               ]),
