@@ -187,7 +187,7 @@ class _FormInputDataState extends State<FormInputData> {
                               ),
                             ],
                           ),
-                        )
+                        ),
                       ],
                     ),
                     SizedBox(height: 15),
