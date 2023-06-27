@@ -4,18 +4,18 @@ import 'package:indlkt_proj/widgets/small_custom_textfield.dart';
 
 import '../constants/style.dart';
 
-class BreakdownForm extends StatefulWidget {
+class IdleTimeForm extends StatefulWidget {
   final int index;
-  const BreakdownForm({super.key, required this.index});
+  const IdleTimeForm({super.key, required this.index});
 
   @override
-  State<BreakdownForm> createState() => _BreakdownFormState();
+  State<IdleTimeForm> createState() => _IdleTimeFormState();
 }
 
-class _BreakdownFormState extends State<BreakdownForm> {
-  var form = Breakdown().form;
-  var form2 = Breakdown().form2;
-  var form3 = Breakdown().form3;
+class _IdleTimeFormState extends State<IdleTimeForm> {
+  var form = IdleTime().form;
+  var form2 = IdleTime().form2;
+  var form3 = IdleTime().form3;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class _BreakdownFormState extends State<BreakdownForm> {
               SizedBox(
                 height: 10,
               ),
-              Text("Mesin", style: TextStyle(fontWeight: FontWeight.bold)),
+              Text("DT", style: TextStyle(fontWeight: FontWeight.bold)),
               SizedBox(
                 height: 20,
               ),
@@ -42,8 +42,7 @@ class _BreakdownFormState extends State<BreakdownForm> {
               SizedBox(
                 height: 10,
               ),
-              Text("Reason Breakdown",
-                  style: TextStyle(fontWeight: FontWeight.bold)),
+              Text("Sub DT", style: TextStyle(fontWeight: FontWeight.bold)),
               SizedBox(
                 height: 20,
               ),
@@ -55,14 +54,14 @@ class _BreakdownFormState extends State<BreakdownForm> {
               SizedBox(
                 height: 10,
               ),
-              Text("Freq", style: TextStyle(fontWeight: FontWeight.bold)),
+              Text("STD", style: TextStyle(fontWeight: FontWeight.bold)),
               SizedBox(
                 height: 20,
               ),
               SmallTextfield(
                 width: 80,
                 controller: form,
-                hint: 'input',
+                hint: 'Pilih STD',
               )
             ],
           ),
@@ -103,44 +102,11 @@ class _BreakdownFormState extends State<BreakdownForm> {
           )
         ],
       ),
-      SizedBox(height: 25),
-      Row(children: [
-        SizedBox(
-          width: 10,
-        ),
-        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Container(
-              margin: EdgeInsets.only(left: 70),
-              child: Text("Problem",
-                  style: TextStyle(fontWeight: FontWeight.bold))),
-          SizedBox(height: 20),
-          Container(
-              margin: EdgeInsets.only(left: 25),
-              width: 400,
-              height: 90,
-              decoration: BoxDecoration(
-                color: light,
-                border: Border.all(width: 1, color: dark.withOpacity(0.5)),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
-                child: TextField(
-                  maxLines: 4,
-                  controller: TextEditingController(),
-                  decoration: InputDecoration.collapsed(
-                      hintText: "input",
-                      hintStyle: TextStyle(
-                          fontSize: 13, color: dark.withOpacity(0.3))),
-                ),
-              ))
-        ]),
-      ])
     ]);
   }
 }
 
-class Breakdown {
+class IdleTime {
   TextEditingController form = TextEditingController();
   TextEditingController form2 = TextEditingController();
   TextEditingController form3 = TextEditingController();
@@ -153,7 +119,7 @@ class Breakdown {
     };
   }
 
-  Widget breakdownForm(index) {
-    return BreakdownForm(index: index + 1);
+  Widget idletimeForm(index) {
+    return IdleTimeForm(index: index + 1);
   }
 }
