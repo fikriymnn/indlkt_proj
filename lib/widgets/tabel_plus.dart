@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:table_plus/table_plus.dart';
 
 import '../constants/style.dart';
-import 'contain_detail_form.dart';
+import 'content_detail_form.dart';
 import '../screens/product_acv_screens/product_acv_form.dart';
 
 class tabel_plus extends StatefulWidget {
@@ -76,7 +76,7 @@ class _tabel_plusState extends State<tabel_plus> {
                 placeholder: false,
               ),
               DataCell(
-                Text(objData.tanggal.toString()),
+                Text(objData.date.toString()),
                 showEditIcon: false,
                 placeholder: false,
               ),
@@ -141,8 +141,8 @@ class _tabel_plusState extends State<tabel_plus> {
     tableHeading.add("Departement");
     tableHeading.add("Shift");
     tableHeading.add("Line");
-    tableHeading.add("Tanggal");
-    tableHeading.add("action");
+    tableHeading.add("Date");
+    tableHeading.add("Action");
 
     for (var index = 0; index < tableHeading.length; index++) {
       searchCtrl.add(CustomSearchTextFieldWidget(
@@ -173,9 +173,9 @@ class _tabel_plusState extends State<tabel_plus> {
                   searchList.add(nameData);
                 }
               } else if (index == 4) {
-                int tanggal = names[i].tanggal;
+                int date = names[i].date;
                 Name nameData = names[i];
-                if (tanggal.toString().contains(value)) {
+                if (date.toString().contains(value)) {
                   searchList.add(nameData);
                 }
               }
@@ -209,7 +209,7 @@ class _tabel_plusState extends State<tabel_plus> {
           exportFileName: "MyTableFile",
           tabelHeadingList: tableHeading,
           isExportCSVEnabled: false,
-          columnSpacing: 100,
+          columnSpacing: MediaQuery.of(context).size.width * 0.07,
           sortColumnIndex: 1,
           isSearchEnabled: isSearchEnabled,
           rows: dataRowsValues(),
@@ -222,13 +222,9 @@ class _tabel_plusState extends State<tabel_plus> {
   }
 
   var names = List.generate(
-      4,
+      20,
       (index) => Name(
-          product: "jhbh",
-          departement: "jnk",
-          shift: 9,
-          line: 7687,
-          tanggal: 10));
+          product: "jhbh", departement: "jnk", shift: 9, line: 7687, date: 10));
 }
 
 class Name {
@@ -236,12 +232,12 @@ class Name {
   String departement;
   int shift;
   int line;
-  int tanggal;
+  int date;
 
   Name(
       {required this.product,
       required this.departement,
       required this.shift,
       required this.line,
-      required this.tanggal});
+      required this.date});
 }
