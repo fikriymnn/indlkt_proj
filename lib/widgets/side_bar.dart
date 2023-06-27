@@ -23,8 +23,8 @@ class _SideBarState extends State<SideBar> {
     DataMasterScreen(),
     FormInputData()
   ];
-  int selectedIndex = 3;
-  int selectedIndexDisplay = 1;
+  int selectedIndex = 2;
+  int selectedIndexDisplay = 2;
 
   bool auth = true;
   @override

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../constants/style.dart';
 
 class SmallTextfield extends StatefulWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String? hint;
   final double width;
   final bool? readOnly;
@@ -12,7 +12,7 @@ class SmallTextfield extends StatefulWidget {
   const SmallTextfield(
       {super.key,
       this.hint,
-      required this.controller,
+      this.controller,
       required this.width,
       this.readOnly,
       this.value});
@@ -35,9 +35,9 @@ class _SmallTextfieldState extends State<SmallTextfield> {
         child: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
           child: TextFormField(
-            initialValue: widget.value,
+            initialValue: widget.value == null ? null : "${widget.value}",
             readOnly: widget.readOnly == null ? false : true,
-            controller: widget.controller,
+            controller: widget.controller == null ? null : widget.controller,
             decoration: InputDecoration.collapsed(
                 hintText: widget.hint ?? "",
                 hintStyle:
