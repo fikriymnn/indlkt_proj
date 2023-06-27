@@ -111,7 +111,7 @@ class _ProductAcvScreenState extends State<ProductAcvScreen> {
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
-          height: mediaQueryHeight,
+  
           child: Stack(
             children: [
               Positioned(

@@ -8,12 +8,13 @@ class CustomDropdown extends StatefulWidget {
   final void Function(dynamic) onChange;
   final String hintText;
 
-  const CustomDropdown(
-      {super.key,
-      required this.dropdownItems,
-      required this.value,
-      required this.onChange,
-      required this.hintText});
+  const CustomDropdown({
+    super.key,
+    required this.dropdownItems,
+    required this.value,
+    required this.onChange,
+    required this.hintText,
+  });
 
   @override
   State<CustomDropdown> createState() => _CustomDropdownState();
@@ -37,14 +38,15 @@ class _CustomDropdownState extends State<CustomDropdown> {
           border: Border.all(width: 3, color: lightGrey),
           borderRadius: BorderRadius.circular(5),
         ),
-        child: DropdownButton(
-          hint: Text(widget.hintText),
-          padding: EdgeInsets.only(left: 30, right: 30),
-          underline: Container(),
-          borderRadius: BorderRadius.circular(10),
-          value: widget.value,
-          onChanged: widget.onChange,
-          items: widget.dropdownItems,
+        child: Center(
+          child: DropdownButton(
+            hint: Text(widget.hintText),
+            underline: Container(),
+            borderRadius: BorderRadius.circular(10),
+            value: widget.value,
+            onChanged: widget.onChange,
+            items: widget.dropdownItems,
+          ),
         ),
       ),
     );
