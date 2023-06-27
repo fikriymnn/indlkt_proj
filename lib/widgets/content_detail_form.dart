@@ -36,16 +36,19 @@ class _detail_formState extends State<detail_form> {
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  alignment: FractionalOffset.topRight,
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(
-                      Icons.cancel_sharp,
-                      color: Colors.red,
-                      size: 48,
+                Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Container(
+                    alignment: Alignment.topRight,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.cancel_outlined,
+                        color: Colors.red,
+                        size: 35,
+                      ),
                     ),
                   ),
                 ),
@@ -260,11 +263,14 @@ class _detail_formState extends State<detail_form> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Shift",
-                              style: TextStyle(
-                                  color: dark,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold)),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 30),
+                            child: Text("Shift",
+                                style: TextStyle(
+                                    color: dark,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold)),
+                          ),
                           CustomDropdown(
                               hintText: "Pilih Shift...",
                               onChange: (e) {
