@@ -58,11 +58,7 @@ class _IdleTimeFormState extends State<IdleTimeForm> {
               SizedBox(
                 height: 20,
               ),
-              SmallTextfield(
-                width: 80,
-                controller: form,
-                hint: 'Pilih STD',
-              )
+              SmallDropdown(width: 80)
             ],
           ),
           Column(
@@ -76,9 +72,9 @@ class _IdleTimeFormState extends State<IdleTimeForm> {
                 height: 20,
               ),
               SmallTextfield(
+                readOnly: true,
                 width: 150,
                 controller: form2,
-                hint: 'input2',
               )
             ],
           ),

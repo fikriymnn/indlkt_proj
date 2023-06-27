@@ -7,13 +7,15 @@ class SmallTextfield extends StatefulWidget {
   final String? hint;
   final double width;
   final bool? readOnly;
+  final dynamic value;
 
   const SmallTextfield(
       {super.key,
       this.hint,
       required this.controller,
       required this.width,
-      this.readOnly});
+      this.readOnly,
+      this.value});
 
   @override
   State<SmallTextfield> createState() => _SmallTextfieldState();
@@ -32,11 +34,12 @@ class _SmallTextfieldState extends State<SmallTextfield> {
         ),
         child: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
-          child: TextField(
+          child: TextFormField(
+            initialValue: widget.value,
             readOnly: widget.readOnly == null ? false : true,
             controller: widget.controller,
             decoration: InputDecoration.collapsed(
-                hintText: widget.hint == null ? "" : widget.hint,
+                hintText: widget.hint ?? "",
                 hintStyle:
                     TextStyle(fontSize: 13, color: dark.withOpacity(0.3))),
           ),

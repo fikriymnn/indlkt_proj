@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../constants/style.dart';
 
 class SmallDropdown extends StatefulWidget {
-  const SmallDropdown({super.key});
+  final double? width;
+  const SmallDropdown({super.key, this.width});
 
   @override
   State<SmallDropdown> createState() => _SmallDropdownState();
@@ -13,7 +14,7 @@ class _SmallDropdownState extends State<SmallDropdown> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 150,
+        width: widget.width ?? 150,
         height: 30,
         decoration: BoxDecoration(
           color: light,
