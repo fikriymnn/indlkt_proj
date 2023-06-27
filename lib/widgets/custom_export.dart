@@ -130,7 +130,7 @@ class _exportPageState extends State<exportPage> {
                     color: red,
                   ),
                   borderRadius: BorderRadius.circular(20)),
-              width: 150,
+              width: 170,
               height: 35,
               padding: EdgeInsets.all(5),
               child: Center(
@@ -147,7 +147,7 @@ class _exportPageState extends State<exportPage> {
                     ),
                   ),
                   Text(
-                    "Unduh Data",
+                    "Download Data",
                     style: GoogleFonts.montserrat(
                         textStyle: Theme.of(context).textTheme.displayMedium,
                         fontSize: 15,

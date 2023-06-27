@@ -142,7 +142,7 @@ class _tabel_plusState extends State<tabel_plus> {
     tableHeading.add("Shift");
     tableHeading.add("Line");
     tableHeading.add("Date");
-    tableHeading.add("action");
+    tableHeading.add("Action");
 
     for (var index = 0; index < tableHeading.length; index++) {
       searchCtrl.add(CustomSearchTextFieldWidget(
