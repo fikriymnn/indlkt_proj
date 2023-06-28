@@ -41,7 +41,7 @@ class _SmallTextfieldState extends State<SmallTextfield> {
             decoration: InputDecoration.collapsed(
                 hintText: widget.hint ?? "",
                 hintStyle:
-                    TextStyle(fontSize: 13, color: dark.withOpacity(0.3))),
+                    TextStyle(fontSize: 13, color: dark.withOpacity(0.4))),
           ),
         ));
   }

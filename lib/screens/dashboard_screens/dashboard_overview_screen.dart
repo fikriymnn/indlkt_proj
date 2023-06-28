@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:indlkt_proj/constants/style.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_card.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_container.dart';
+import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_donut_button.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_overview_breakdown.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_overview_chart.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_overview_datepicker.dart';
@@ -261,7 +262,9 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                 ],
                               ),
                             ]),
-                        OverviewChart()
+                        Row(
+                          children: [DonutWidget()],
+                        )
                       ],
                     ),
                     SizedBox(width: 270),

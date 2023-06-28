@@ -26,7 +26,7 @@ class _SmallDropdownState extends State<SmallDropdown> {
           child: DropdownButton(
               hint: Text(
                 'input',
-                style: TextStyle(fontSize: 13, color: dark.withOpacity(0.3)),
+                style: TextStyle(fontSize: 13, color: dark.withOpacity(0.4)),
               ),
               underline: Container(),
               isExpanded: true,

@@ -19,124 +19,127 @@ class _BreakdownFormState extends State<BreakdownForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text("${widget.index}"),
-          Column(
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              Text("Mesin", style: TextStyle(fontWeight: FontWeight.bold)),
-              SizedBox(
-                height: 20,
-              ),
-              SmallDropdown()
-            ],
-          ),
-          Column(
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              Text("Reason Breakdown",
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              SizedBox(
-                height: 20,
-              ),
-              SmallDropdown()
-            ],
-          ),
-          Column(
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              Text("Freq", style: TextStyle(fontWeight: FontWeight.bold)),
-              SizedBox(
-                height: 20,
-              ),
-              SmallTextfield(
-                width: 80,
-                controller: form,
-                hint: 'input',
-              )
-            ],
-          ),
-          Column(
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              Text("BD Hour(Min)",
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              SizedBox(
-                height: 20,
-              ),
-              SmallTextfield(
-                width: 150,
-                controller: form2,
-                hint: 'input2',
-              )
-            ],
-          ),
-          Column(
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              Text("BD Hour", style: TextStyle(fontWeight: FontWeight.bold)),
-              SizedBox(
-                height: 20,
-              ),
-              SmallTextfield(
-                width: 150,
-                controller: form3,
-              )
-            ],
-          ),
+    return Container(
+      margin: EdgeInsets.only(bottom: 30),
+      child: Column(children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("${widget.index}"),
+            Column(
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Text("Mesin", style: TextStyle(fontWeight: FontWeight.bold)),
+                SizedBox(
+                  height: 20,
+                ),
+                SmallDropdown()
+              ],
+            ),
+            Column(
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Text("Reason Breakdown",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                SizedBox(
+                  height: 20,
+                ),
+                SmallDropdown()
+              ],
+            ),
+            Column(
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Text("Freq", style: TextStyle(fontWeight: FontWeight.bold)),
+                SizedBox(
+                  height: 20,
+                ),
+                SmallTextfield(
+                  width: 80,
+                  controller: form,
+                  hint: 'input',
+                )
+              ],
+            ),
+            Column(
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Text("BD Hour(Min)",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                SizedBox(
+                  height: 20,
+                ),
+                SmallTextfield(
+                  width: 150,
+                  controller: form2,
+                  hint: 'input2',
+                )
+              ],
+            ),
+            Column(
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Text("BD Hour", style: TextStyle(fontWeight: FontWeight.bold)),
+                SizedBox(
+                  height: 20,
+                ),
+                SmallTextfield(
+                  width: 150,
+                  controller: form3,
+                )
+              ],
+            ),
+            SizedBox(
+              width: 10,
+            )
+          ],
+        ),
+        SizedBox(height: 25),
+        Row(children: [
           SizedBox(
             width: 10,
-          )
-        ],
-      ),
-      SizedBox(height: 25),
-      Row(children: [
-        SizedBox(
-          width: 10,
-        ),
-        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Container(
-              margin: EdgeInsets.only(left: 70),
-              child: Text("Problem",
-                  style: TextStyle(fontWeight: FontWeight.bold))),
-          SizedBox(height: 20),
-          Container(
-              margin: EdgeInsets.only(left: 25),
-              width: 400,
-              height: 90,
-              decoration: BoxDecoration(
-                color: light,
-                border: Border.all(width: 1, color: dark.withOpacity(0.5)),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
-                child: TextField(
-                  maxLines: 4,
-                  controller: TextEditingController(),
-                  decoration: InputDecoration.collapsed(
-                      hintText: "input",
-                      hintStyle: TextStyle(
-                          fontSize: 13, color: dark.withOpacity(0.3))),
+          ),
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Container(
+                margin: EdgeInsets.only(left: 70),
+                child: Text("Problem",
+                    style: TextStyle(fontWeight: FontWeight.bold))),
+            SizedBox(height: 20),
+            Container(
+                margin: EdgeInsets.only(left: 25),
+                width: 400,
+                height: 90,
+                decoration: BoxDecoration(
+                  color: light,
+                  border: Border.all(width: 1, color: dark.withOpacity(0.5)),
+                  borderRadius: BorderRadius.circular(5),
                 ),
-              ))
-        ]),
-      ])
-    ]);
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
+                  child: TextField(
+                    maxLines: 4,
+                    controller: TextEditingController(),
+                    decoration: InputDecoration.collapsed(
+                        hintText: "input",
+                        hintStyle: TextStyle(
+                            fontSize: 13, color: dark.withOpacity(0.3))),
+                  ),
+                ))
+          ]),
+        ])
+      ]),
+    );
   }
 }
 

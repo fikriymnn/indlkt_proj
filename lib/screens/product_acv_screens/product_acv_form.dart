@@ -7,6 +7,7 @@ import '../../widgets/breakdown_form.dart';
 import '../../widgets/custom_container.dart';
 import '../../widgets/custom_textfield.dart';
 import '../../widgets/display_field.dart';
+import '../../widgets/down_time_form.dart';
 import '../../widgets/idle_time_form.dart';
 
 class FormInputData extends StatefulWidget {
@@ -26,7 +27,9 @@ class _FormInputDataState extends State<FormInputData> {
   TextEditingController namaProduct = TextEditingController();
   TextEditingController namaProduct2 = TextEditingController();
   TextEditingController namaProduct3 = TextEditingController();
+
   List<Breakdown> breakdown = [Breakdown()];
+  List<DownTime> downTime = [DownTime()];
   List<IdleTime> idleTime = [IdleTime()];
 
   @override
@@ -152,8 +155,9 @@ class _FormInputDataState extends State<FormInputData> {
                                                   left: 30),
                                               child: Text("Shift",
                                                   style: TextStyle(
-                                                      color: dark,
-                                                      fontSize: 20,
+                                                      color:
+                                                          dark.withOpacity(0.8),
+                                                      fontSize: 25,
                                                       fontWeight:
                                                           FontWeight.bold)),
                                             ),
@@ -194,10 +198,11 @@ class _FormInputDataState extends State<FormInputData> {
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 30),
-                                              child: Text("Shift",
+                                              child: Text("Actual Output",
                                                   style: TextStyle(
-                                                      color: dark,
-                                                      fontSize: 20,
+                                                      color:
+                                                          dark.withOpacity(0.8),
+                                                      fontSize: 25,
                                                       fontWeight:
                                                           FontWeight.bold)),
                                             ),
@@ -216,10 +221,11 @@ class _FormInputDataState extends State<FormInputData> {
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 30),
-                                              child: Text("Shift",
+                                              child: Text("Gross Hour",
                                                   style: TextStyle(
-                                                      color: dark,
-                                                      fontSize: 20,
+                                                      color:
+                                                          dark.withOpacity(0.8),
+                                                      fontSize: 25,
                                                       fontWeight:
                                                           FontWeight.bold)),
                                             ),
@@ -245,8 +251,9 @@ class _FormInputDataState extends State<FormInputData> {
                                                   left: 30),
                                               child: Text("Shift",
                                                   style: TextStyle(
-                                                      color: dark,
-                                                      fontSize: 20,
+                                                      color:
+                                                          dark.withOpacity(0.8),
+                                                      fontSize: 25,
                                                       fontWeight:
                                                           FontWeight.bold)),
                                             ),
@@ -289,8 +296,9 @@ class _FormInputDataState extends State<FormInputData> {
                                                   left: 30),
                                               child: Text("Shift",
                                                   style: TextStyle(
-                                                      color: dark,
-                                                      fontSize: 20,
+                                                      color:
+                                                          dark.withOpacity(0.8),
+                                                      fontSize: 25,
                                                       fontWeight:
                                                           FontWeight.bold)),
                                             ),
@@ -311,8 +319,9 @@ class _FormInputDataState extends State<FormInputData> {
                                                   left: 30),
                                               child: Text("Shift",
                                                   style: TextStyle(
-                                                      color: dark,
-                                                      fontSize: 20,
+                                                      color:
+                                                          dark.withOpacity(0.8),
+                                                      fontSize: 25,
                                                       fontWeight:
                                                           FontWeight.bold)),
                                             ),
@@ -338,8 +347,9 @@ class _FormInputDataState extends State<FormInputData> {
                                                   left: 30),
                                               child: Text("Shift",
                                                   style: TextStyle(
-                                                      color: dark,
-                                                      fontSize: 20,
+                                                      color:
+                                                          dark.withOpacity(0.8),
+                                                      fontSize: 25,
                                                       fontWeight:
                                                           FontWeight.bold)),
                                             ),
@@ -382,8 +392,9 @@ class _FormInputDataState extends State<FormInputData> {
                                                   left: 30),
                                               child: Text("Shift",
                                                   style: TextStyle(
-                                                      color: dark,
-                                                      fontSize: 20,
+                                                      color:
+                                                          dark.withOpacity(0.8),
+                                                      fontSize: 25,
                                                       fontWeight:
                                                           FontWeight.bold)),
                                             ),
@@ -404,8 +415,9 @@ class _FormInputDataState extends State<FormInputData> {
                                                   left: 30),
                                               child: Text("Shift",
                                                   style: TextStyle(
-                                                      color: dark,
-                                                      fontSize: 20,
+                                                      color:
+                                                          dark.withOpacity(0.8),
+                                                      fontSize: 25,
                                                       fontWeight:
                                                           FontWeight.bold)),
                                             ),
@@ -430,8 +442,9 @@ class _FormInputDataState extends State<FormInputData> {
                                                 const EdgeInsets.only(left: 30),
                                             child: Text("Shift",
                                                 style: TextStyle(
-                                                    color: dark,
-                                                    fontSize: 20,
+                                                    color:
+                                                        dark.withOpacity(0.8),
+                                                    fontSize: 25,
                                                     fontWeight:
                                                         FontWeight.bold)),
                                           ),
@@ -477,8 +490,9 @@ class _FormInputDataState extends State<FormInputData> {
                                                   left: 30),
                                               child: Text("Shift",
                                                   style: TextStyle(
-                                                      color: dark,
-                                                      fontSize: 20,
+                                                      color:
+                                                          dark.withOpacity(0.8),
+                                                      fontSize: 25,
                                                       fontWeight:
                                                           FontWeight.bold)),
                                             ),
@@ -494,8 +508,9 @@ class _FormInputDataState extends State<FormInputData> {
                                                   left: 30),
                                               child: Text("Shift",
                                                   style: TextStyle(
-                                                      color: dark,
-                                                      fontSize: 20,
+                                                      color:
+                                                          dark.withOpacity(0.8),
+                                                      fontSize: 25,
                                                       fontWeight:
                                                           FontWeight.bold)),
                                             ),
@@ -515,8 +530,9 @@ class _FormInputDataState extends State<FormInputData> {
                                                 const EdgeInsets.only(left: 30),
                                             child: Text("Shift",
                                                 style: TextStyle(
-                                                    color: dark,
-                                                    fontSize: 20,
+                                                    color:
+                                                        dark.withOpacity(0.8),
+                                                    fontSize: 25,
                                                     fontWeight:
                                                         FontWeight.bold)),
                                           ),
@@ -532,8 +548,9 @@ class _FormInputDataState extends State<FormInputData> {
                                                 const EdgeInsets.only(left: 30),
                                             child: Text("Shift",
                                                 style: TextStyle(
-                                                    color: dark,
-                                                    fontSize: 20,
+                                                    color:
+                                                        dark.withOpacity(0.8),
+                                                    fontSize: 25,
                                                     fontWeight:
                                                         FontWeight.bold)),
                                           ),
@@ -555,8 +572,9 @@ class _FormInputDataState extends State<FormInputData> {
                                                   left: 30),
                                               child: Text("Shift",
                                                   style: TextStyle(
-                                                      color: dark,
-                                                      fontSize: 20,
+                                                      color:
+                                                          dark.withOpacity(0.8),
+                                                      fontSize: 25,
                                                       fontWeight:
                                                           FontWeight.bold)),
                                             ),
@@ -579,10 +597,10 @@ class _FormInputDataState extends State<FormInputData> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Shift",
+                                    Text("Breakdown",
                                         style: TextStyle(
-                                            color: dark,
-                                            fontSize: 20,
+                                            color: dark.withOpacity(0.8),
+                                            fontSize: 25,
                                             fontWeight: FontWeight.bold)),
                                     Container(
                                         width: 900,
@@ -592,7 +610,7 @@ class _FormInputDataState extends State<FormInputData> {
                                             BoxShadow(
                                                 blurRadius: 4,
                                                 offset: Offset(0, 2),
-                                                color: dark.withOpacity(0.7))
+                                                color: dark.withOpacity(0.8))
                                           ],
                                           border: Border.all(
                                               width: 3, color: lightGrey),
@@ -612,16 +630,9 @@ class _FormInputDataState extends State<FormInputData> {
                                                     itemCount: breakdown.length,
                                                     itemBuilder:
                                                         (context, index) {
-                                                      return Container(
-                                                          margin:
-                                                              EdgeInsets.only(
-                                                                  bottom: 30),
-                                                          child: breakdown[
-                                                                  index]
-                                                              .breakdownForm(
-                                                                  index));
+                                                      return breakdown[index]
+                                                          .breakdownForm(index);
                                                     }),
-                                                SizedBox(height: 10),
                                                 InkWell(
                                                     onTap: () {
                                                       setState(() {
@@ -645,10 +656,10 @@ class _FormInputDataState extends State<FormInputData> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Shift",
+                                    Text("Down Time",
                                         style: TextStyle(
-                                            color: dark,
-                                            fontSize: 20,
+                                            color: dark.withOpacity(0.8),
+                                            fontSize: 25,
                                             fontWeight: FontWeight.bold)),
                                     Container(
                                         width: 900,
@@ -658,7 +669,7 @@ class _FormInputDataState extends State<FormInputData> {
                                             BoxShadow(
                                                 blurRadius: 4,
                                                 offset: Offset(0, 2),
-                                                color: dark.withOpacity(0.7))
+                                                color: dark.withOpacity(0.8))
                                           ],
                                           border: Border.all(
                                               width: 3, color: lightGrey),
@@ -675,18 +686,70 @@ class _FormInputDataState extends State<FormInputData> {
                                               children: [
                                                 ListView.builder(
                                                     shrinkWrap: true,
-                                                    itemCount: breakdown.length,
+                                                    itemCount: downTime.length,
                                                     itemBuilder:
                                                         (context, index) {
-                                                      return Container(
-                                                          margin:
-                                                              EdgeInsets.only(
-                                                                  bottom: 30),
-                                                          child: idleTime[index]
-                                                              .idletimeForm(
-                                                                  index));
+                                                      return downTime[index]
+                                                          .downtimeForm(index);
                                                     }),
-                                                SizedBox(height: 10),
+                                                InkWell(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        downTime
+                                                            .add(DownTime());
+                                                      });
+                                                    },
+                                                    child: Icon(
+                                                        Icons
+                                                            .add_circle_rounded,
+                                                        color: active,
+                                                        size: 45))
+                                              ],
+                                            )))
+                                  ],
+                                )),
+                            SizedBox(height: 20),
+                            Padding(
+                                padding: EdgeInsets.only(left: 30, top: 50),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Idle Time",
+                                        style: TextStyle(
+                                            color: dark.withOpacity(0.8),
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.bold)),
+                                    Container(
+                                        width: 600,
+                                        decoration: BoxDecoration(
+                                          color: light,
+                                          boxShadow: [
+                                            BoxShadow(
+                                                blurRadius: 4,
+                                                offset: Offset(0, 2),
+                                                color: dark.withOpacity(0.8))
+                                          ],
+                                          border: Border.all(
+                                              width: 3, color: lightGrey),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 20,
+                                                right: 20,
+                                                top: 11,
+                                                bottom: 11),
+                                            child: Column(
+                                              children: [
+                                                ListView.builder(
+                                                    shrinkWrap: true,
+                                                    itemCount: idleTime.length,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      return idleTime[index]
+                                                          .idletimeForm(index);
+                                                    }),
                                                 InkWell(
                                                     onTap: () {
                                                       setState(() {
@@ -700,9 +763,29 @@ class _FormInputDataState extends State<FormInputData> {
                                                         color: active,
                                                         size: 45))
                                               ],
-                                            )))
+                                            ))),
+                                    SizedBox(height: 30),
                                   ],
-                                ))
+                                )),
+                            Center(
+                              child: InkWell(
+                                child: Container(
+                                    margin: EdgeInsets.all(25),
+                                    decoration: BoxDecoration(
+                                        color: active,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    width: 120,
+                                    child: Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Text("Submit",
+                                            style: TextStyle(
+                                                color: light, fontSize: 15)),
+                                      ),
+                                    )),
+                              ),
+                            )
                           ],
                         ))),
               ]),

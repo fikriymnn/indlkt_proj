@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:indlkt_proj/widgets/small_custom_dropdown.dart';
 import 'package:indlkt_proj/widgets/small_custom_textfield.dart';
 
-class IdleTimeForm extends StatefulWidget {
+import '../constants/style.dart';
+
+class DownTimeForm extends StatefulWidget {
   final int index;
-  const IdleTimeForm({super.key, required this.index});
+  const DownTimeForm({super.key, required this.index});
 
   @override
-  State<IdleTimeForm> createState() => _IdleTimeFormState();
+  State<DownTimeForm> createState() => _DownTimeFormState();
 }
 
-class _IdleTimeFormState extends State<IdleTimeForm> {
-  var form = IdleTime().form;
-  var form2 = IdleTime().form2;
-  var form3 = IdleTime().form3;
+class _DownTimeFormState extends State<DownTimeForm> {
+  var form = DownTime().form;
+  var form2 = DownTime().form2;
+  var form3 = DownTime().form3;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,30 @@ class _IdleTimeFormState extends State<IdleTimeForm> {
                   height: 20,
                 ),
                 SmallDropdown()
+              ],
+            ),
+            Column(
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Text("Sub DT", style: TextStyle(fontWeight: FontWeight.bold)),
+                SizedBox(
+                  height: 20,
+                ),
+                SmallDropdown()
+              ],
+            ),
+            Column(
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Text("STD", style: TextStyle(fontWeight: FontWeight.bold)),
+                SizedBox(
+                  height: 20,
+                ),
+                SmallDropdown(width: 80)
               ],
             ),
             Column(
@@ -79,7 +105,7 @@ class _IdleTimeFormState extends State<IdleTimeForm> {
   }
 }
 
-class IdleTime {
+class DownTime {
   TextEditingController form = TextEditingController();
   TextEditingController form2 = TextEditingController();
   TextEditingController form3 = TextEditingController();
@@ -92,7 +118,7 @@ class IdleTime {
     };
   }
 
-  Widget idletimeForm(index) {
-    return IdleTimeForm(index: index + 1);
+  Widget downtimeForm(index) {
+    return DownTimeForm(index: index + 1);
   }
 }
