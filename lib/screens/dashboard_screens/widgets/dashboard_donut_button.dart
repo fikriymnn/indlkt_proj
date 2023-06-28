@@ -37,16 +37,23 @@ class _DonutButtonState extends State<DonutButton> {
     return Container(
       child: CustomPaint(
         child: Container(),
-        painter: DonutChartPainter(),
+        painter: DonutChartPainter(widget.dataset),
       ),
     );
   }
 }
 
 class DonutChartPainter extends CustomPainter {
+  final List<DataItem> dataset;
+  DonutChartPainter(this.dataset);
   @override
   void paint(Canvas canvas, Size size) {
     final c = Offset(size.width / 2.0, size.height / 2.0);
+
+    var startAngle = 0.0;
+    // dataset.forEach((di) {
+    //   canvas.drawArc(rect, startAngle, sweepAngle, useCenter, paint);
+    // });
   }
 
   @override
