@@ -9,6 +9,8 @@ import '../../widgets/custom_textfield.dart';
 import '../../widgets/display_field.dart';
 import '../../widgets/down_time_form.dart';
 import '../../widgets/idle_time_form.dart';
+import '../../widgets/small_custom_dropdown.dart';
+import '../../widgets/small_custom_textfield.dart';
 
 class FormInputData extends StatefulWidget {
   const FormInputData({super.key});
@@ -32,29 +34,50 @@ class _FormInputDataState extends State<FormInputData> {
   TextEditingController targetHour = TextEditingController();
   TextEditingController planningOutput = TextEditingController();
 
-  dynamic Function() le = (){
+  dynamic Function() le = () {
     return "le";
   };
-  dynamic Function() lp = (){
+  dynamic Function() lp = () {
     return "lp";
   };
-  dynamic Function() dt = (){
+  dynamic Function() dt = () {
     return "dt";
   };
-  dynamic Function() bd = (){
+  dynamic Function() bd = () {
     return "bd";
   };
-  
 
-  List<Breakdown> breakdown = [Breakdown()];
+  int bLength = 1;
+
+  String? mesins;
+  String? reasons;
+
+  List<String?> mesin = [];
+  List<String?> reason = [];
+  List<TextEditingController> freq = [];
+  List<TextEditingController> dbMin = [];
+  List<TextEditingController> problem = [];
+
+  MesinData() {
+    mesin = [mesins];
+  }
+
+  ReasonData() {
+    reason = [reasons];
+  }
+
   List<DownTime> downTime = [DownTime()];
   List<IdleTime> idleTime = [IdleTime()];
-
-  
 
   @override
   Widget build(BuildContext context) {
     double mediaQueryWidth = MediaQuery.of(context).size.width;
+
+    for (int i = 0; i < bLength; i++) freq.add(TextEditingController());
+    for (int i = 0; i < bLength; i++) dbMin.add(TextEditingController());
+    for (int i = 0; i < bLength; i++) problem.add(TextEditingController());
+    for (int i = 0; i < bLength; i++) mesin.add(mesins);
+    for (int i = 0; i < bLength; i++) reason.add(reasons);
 
     return Scaffold(
       appBar: CustomAppBar(title: "Input Data"),
@@ -149,15 +172,20 @@ class _FormInputDataState extends State<FormInputData> {
                                               DropdownMenuItem(
                                                 child: Text(
                                                     "Filling_packing_SKM_couch"),
-                                                value: "Filling_packing_SKM_couch",
+                                                value:
+                                                    "Filling_packing_SKM_couch",
                                               ),
                                               DropdownMenuItem(
-                                                child: Text("Filling_packing_SKM_couch"),
-                                                value: "Filling_packing_SKM_couchh",
+                                                child: Text(
+                                                    "Filling_packing_SKM_couch"),
+                                                value:
+                                                    "Filling_packing_SKM_couchh",
                                               ),
                                               DropdownMenuItem(
-                                                child: Text("Filling_packing_SKM_couch"),
-                                                value: "Filling_packing_SKM_couchl",
+                                                child: Text(
+                                                    "Filling_packing_SKM_couch"),
+                                                value:
+                                                    "Filling_packing_SKM_couchl",
                                               )
                                             ]),
                                       ),
@@ -186,7 +214,7 @@ class _FormInputDataState extends State<FormInputData> {
                                                 hintText: "Pilih Shift...",
                                                 onChange: (e) {
                                                   setState(() {
-                                                    shift= e;
+                                                    shift = e;
                                                   });
                                                 },
                                                 value: shift,
@@ -194,11 +222,11 @@ class _FormInputDataState extends State<FormInputData> {
                                                   DropdownMenuItem(
                                                     child: Text(
                                                         "Filling_packing_SKM_couch"),
-                                                    value:"1",
+                                                    value: "1",
                                                   ),
                                                   DropdownMenuItem(
                                                     child: Text("2"),
-                                                    value:"2",
+                                                    value: "2",
                                                   ),
                                                   DropdownMenuItem(
                                                     child: Text("3"),
@@ -276,7 +304,8 @@ class _FormInputDataState extends State<FormInputData> {
                                                           FontWeight.bold)),
                                             ),
                                             CustomDropdown(
-                                                hintText: "Pilih Departement...",
+                                                hintText:
+                                                    "Pilih Departement...",
                                                 onChange: (e) {
                                                   setState(() {
                                                     departement = e;
@@ -476,20 +505,16 @@ class _FormInputDataState extends State<FormInputData> {
                                               value: line,
                                               dropdownItems: [
                                                 DropdownMenuItem(
-                                                  child: Text(
-                                                      "1"),
-                                                  value:
-                                                      "1",
+                                                  child: Text("1"),
+                                                  value: "1",
                                                 ),
                                                 DropdownMenuItem(
                                                   child: Text("2"),
-                                                  value:
-                                                      "2",
+                                                  value: "2",
                                                 ),
                                                 DropdownMenuItem(
                                                   child: Text("3"),
-                                                  value:
-                                                      "3",
+                                                  value: "3",
                                                 )
                                               ]),
                                         ],
@@ -514,7 +539,9 @@ class _FormInputDataState extends State<FormInputData> {
                                                       fontWeight:
                                                           FontWeight.bold)),
                                             ),
-                                            DisplayField(value: le(),),
+                                            DisplayField(
+                                              value: le(),
+                                            ),
                                           ],
                                         ),
                                         Column(
@@ -645,18 +672,71 @@ class _FormInputDataState extends State<FormInputData> {
                                               children: [
                                                 ListView.builder(
                                                     shrinkWrap: true,
-                                                    itemCount: breakdown.length,
+                                                    itemCount: bLength,
                                                     itemBuilder:
                                                         (context, index) {
-                                                      return breakdown[index]
-                                                          .breakdownForm(index);
+                                                      return BreakdownForm(
+                                                        index: bLength,
+                                                        bdMin: dbMin[index],
+                                                        freq: freq[index],
+                                                        problem: problem[index],
+                                                        mesin: "mesin",
+                                                        reason: "reason",
+                                                        bdHour: "bdHour",
+                                                        dropdownItemMesin: [
+                                                          DropdownMenuItem(
+                                                            child:
+                                                                Text("mesin 1"),
+                                                            value: "mesin 1",
+                                                          ),
+                                                          DropdownMenuItem(
+                                                            child:
+                                                                Text("mesin 2"),
+                                                            value: "mesin 2",
+                                                          ),
+                                                          DropdownMenuItem(
+                                                            child:
+                                                                Text("mesin 3"),
+                                                            value: "mesin 3",
+                                                          )
+                                                        ],
+                                                        valueMesin:
+                                                            mesin[index],
+                                                        onChangeMesin: (a) {
+                                                          setState(() {
+                                                            mesin[index] = a;
+                                                          });
+                                                        },
+                                                        dropdownItemReason: [
+                                                          DropdownMenuItem(
+                                                            child: Text(
+                                                                "reason 1"),
+                                                            value: "reason 1",
+                                                          ),
+                                                          DropdownMenuItem(
+                                                            child: Text(
+                                                                "reason 2"),
+                                                            value: "reason 2",
+                                                          ),
+                                                          DropdownMenuItem(
+                                                            child: Text(
+                                                                "reason 3"),
+                                                            value: "reason 3",
+                                                          )
+                                                        ],
+                                                        onChangeReason: (a) {
+                                                          setState(() {
+                                                            reason[index] = a;
+                                                          });
+                                                        },
+                                                        valueReason:
+                                                            reason[index],
+                                                      );
                                                     }),
                                                 InkWell(
                                                     onTap: () {
                                                       setState(() {
-                                                        breakdown
-                                                            .add(Breakdown());
-                                                      
+                                                        bLength++;
                                                       });
                                                     },
                                                     child: Icon(
@@ -787,6 +867,22 @@ class _FormInputDataState extends State<FormInputData> {
                                 )),
                             Center(
                               child: InkWell(
+                                onTap: () {
+                                  for (int i = 0; i < bLength; i++) {
+                                    var a = freq[i].text;
+                                    var b = dbMin[i].text;
+                                    var c = problem[i].text;
+                                    var d = mesin[i];
+                                    var e = reason[i];
+
+                                    print(a);
+                                    print(b);
+                                    print(c);
+                                    print(d);
+                                    print(e);
+                                  }
+                                  freq.add(TextEditingController());
+                                },
                                 child: Container(
                                     margin: EdgeInsets.all(25),
                                     decoration: BoxDecoration(

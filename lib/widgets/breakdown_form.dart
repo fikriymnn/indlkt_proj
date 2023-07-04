@@ -6,8 +6,33 @@ import '../constants/style.dart';
 
 class BreakdownForm extends StatefulWidget {
   final int index;
-  const BreakdownForm({super.key, required this.index,});
-
+  final TextEditingController freq;
+  final TextEditingController bdMin;
+  final TextEditingController problem;
+  final String mesin;
+  final String reason;
+  final String bdHour;
+  final List<DropdownMenuItem> dropdownItemMesin;
+  final void Function(dynamic) onChangeMesin;
+  final dynamic valueMesin;
+  final List<DropdownMenuItem> dropdownItemReason;
+  final void Function(dynamic) onChangeReason;
+  final dynamic valueReason;
+  const BreakdownForm(
+      {super.key,
+      required this.index,
+      required this.bdMin,
+      required this.freq,
+      required this.problem,
+      required this.mesin,
+      required this.reason,
+      required this.bdHour,
+      required this.dropdownItemMesin,
+      required this.onChangeMesin,
+      required this.valueMesin,
+      required this.dropdownItemReason,
+      required this.onChangeReason,
+      required this.valueReason});
 
   @override
   State<BreakdownForm> createState() => BreakdownFormState();
@@ -15,9 +40,9 @@ class BreakdownForm extends StatefulWidget {
 
 class BreakdownFormState extends State<BreakdownForm> {
   var vau = "ajsjds";
-  TextEditingController freq = TextEditingController();
-  TextEditingController dbMin = Breakdown().dbMin;
-  TextEditingController problem = Breakdown().problem;
+
+  String? mesin;
+  String? reason;
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +54,15 @@ class BreakdownFormState extends State<BreakdownForm> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              width: 25,
-              height:25,
-              decoration: BoxDecoration(
-                color: blue,
-                borderRadius: BorderRadius.circular(100)
-              ),
-              child: Center(child: Text("${widget.index}",style: TextStyle(color: light),))),
+                width: 25,
+                height: 25,
+                decoration: BoxDecoration(
+                    color: blue, borderRadius: BorderRadius.circular(100)),
+                child: Center(
+                    child: Text(
+                  "${widget.index}",
+                  style: TextStyle(color: light),
+                ))),
             Column(
               children: [
                 SizedBox(
@@ -46,27 +73,9 @@ class BreakdownFormState extends State<BreakdownForm> {
                   height: 20,
                 ),
                 SmallDropdown(
-                  value: Breakdown().getMesin,
-                  onChange: (a) {
-                
-                      Breakdown().setMesin = a;
-                    
-                  },
-                  dropdownItem: [
-                    DropdownMenuItem(
-                      child: Text("Filling_packing_SKM_couch"),
-                      value: "Filling_packing_SKM_couch",
-                    ),
-                    DropdownMenuItem(
-                      child: Text("Filling_packing_SKM_couch"),
-                      value: "Filling_packing_SKM_couch",
-                    ),
-                    DropdownMenuItem(
-                      child: Text("Filling_packing_SKM_couch"),
-                      value: "Filling_packing_SKM_couch",
-                    )
-                  ],
-                )
+                    value: widget.valueMesin,
+                    onChange: widget.onChangeMesin,
+                    dropdownItem: widget.dropdownItemMesin)
               ],
             ),
             Column(
@@ -80,27 +89,9 @@ class BreakdownFormState extends State<BreakdownForm> {
                   height: 20,
                 ),
                 SmallDropdown(
-                  value: Breakdown().reasonBreakdown,
-                  onChange: (a) {
-                    setState(() {
-                      Breakdown().setReasonBreakdown = a;
-                    });
-                  },
-                  dropdownItem: [
-                    DropdownMenuItem(
-                      child: Text("Filling_packing_SKM_couch"),
-                      value: "Filling_packing_SKM_couch",
-                    ),
-                    DropdownMenuItem(
-                      child: Text("Filling_packing_SKM_couch"),
-                      value: "Filling_packing_SKM_couch",
-                    ),
-                    DropdownMenuItem(
-                      child: Text("Filling_packing_SKM_couch"),
-                      value: "Filling_packing_SKM_couch",
-                    )
-                  ],
-                )
+                    value: widget.valueReason,
+                    onChange: widget.onChangeReason,
+                    dropdownItem: widget.dropdownItemReason)
               ],
             ),
             Column(
@@ -114,7 +105,7 @@ class BreakdownFormState extends State<BreakdownForm> {
                 ),
                 SmallTextfield(
                   width: 80,
-                  controller: freq,
+                  controller: widget.freq,
                   hint: 'input',
                 )
               ],
@@ -131,7 +122,7 @@ class BreakdownFormState extends State<BreakdownForm> {
                 ),
                 SmallTextfield(
                   width: 150,
-                  controller: dbMin,
+                  controller: widget.bdMin,
                   hint: 'input2',
                 )
               ],
@@ -147,7 +138,7 @@ class BreakdownFormState extends State<BreakdownForm> {
                 ),
                 SmallTextfield(
                   width: 150,
-                  value: Breakdown().dbHour(),
+                  value: widget.bdHour,
                   readOnly: true,
                 )
               ],
@@ -181,7 +172,7 @@ class BreakdownFormState extends State<BreakdownForm> {
                   padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
                   child: TextField(
                     maxLines: 4,
-                    controller: TextEditingController(),
+                    controller: widget.problem,
                     decoration: InputDecoration.collapsed(
                         hintText: "input",
                         hintStyle: TextStyle(
@@ -195,47 +186,42 @@ class BreakdownFormState extends State<BreakdownForm> {
   }
 }
 
-class Breakdown {
-  TextEditingController freq = TextEditingController();
-  TextEditingController dbMin = TextEditingController();
-  TextEditingController problem = TextEditingController();
+// class Breakdown {
+//   TextEditingController freq = TextEditingController();
+//   TextEditingController dbMin = TextEditingController();
+//   TextEditingController problem = TextEditingController();
 
-  dynamic mesin;
-  dynamic reasonBreakdown;
+//   dynamic mesin;
+//   dynamic reasonBreakdown;
 
-  dynamic get getMesin{
-    return mesin;
-  } 
+//   dynamic get Mesin => mesin;
 
-  dynamic get getReasonBreakdown{
-    return reasonBreakdown;
-  } 
+//   dynamic get ReasonBreakdown => reasonBreakdown;
 
+//   set Mesin(dynamic mesin) {
+//     mesin = mesin;
+//   }
 
-  set setMesin(dynamic mesin){
-     mesin = mesin;
-  }
+//   set ReasonBreakdown(dynamic reasonBreakdown) {
+//     reasonBreakdown = reasonBreakdown;
+//   }
 
-  set setReasonBreakdown(dynamic reasonBreakdown){
-     reasonBreakdown = reasonBreakdown;
-  }
+//   dynamic dbHour() {
+//     return "db hour";
+//   }
 
-  dynamic dbHour(){
-    return "db hour";
-  }
+//   Map<String, dynamic> getValue() {
+//     return {
+//       'mesin': mesin,
+//       'reason_breakdown': reasonBreakdown,
+//       'freq': freq.text,
+//       'db_hour_min': dbMin.text,
+//       'problem': problem.text,
+//       'db_hour': dbHour()
+//     };
+//   }
 
-  Map<String, dynamic> getValue() {
-    return {
-      'mesin':mesin,
-      'reason_breakdown': reasonBreakdown,
-      'freq': freq.text,
-      'db_hour_min': dbMin.text,
-      'problem': problem.text,
-      'db_hour':dbHour()
-    };
-  }
-
-  Widget breakdownForm(index) {
-    return BreakdownForm(index: index + 1);
-  }
-}
+//   Widget breakdownForm(index) {
+//     return BreakdownForm(index: index + 1);
+//   }
+// }
