@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
-
 import '../constants/style.dart';
 
 class SmallDropdown extends StatefulWidget {
   final double? width;
-  const SmallDropdown({super.key, this.width});
+  final List<DropdownMenuItem> dropdownItem;
+  final void Function(dynamic) onChange;
+  final dynamic value;
+  const SmallDropdown(
+      {super.key,
+      this.width,
+      required this.dropdownItem,
+      required this.onChange,
+      required this.value
+      });
 
   @override
   State<SmallDropdown> createState() => _SmallDropdownState();
@@ -30,21 +38,9 @@ class _SmallDropdownState extends State<SmallDropdown> {
               ),
               underline: Container(),
               isExpanded: true,
-              items: [
-                DropdownMenuItem(
-                  child: Text("Filling_packing_SKM_couch"),
-                  value: "Filling_packing_SKM_couch",
-                ),
-                DropdownMenuItem(
-                  child: Text("2"),
-                  value: "Filling_packing_SKM_couchdf",
-                ),
-                DropdownMenuItem(
-                  child: Text("3"),
-                  value: "Filling_packing_SKM_couchd",
-                )
-              ],
-              onChanged: (e) {}),
+              value: widget.value,
+              items: widget.dropdownItem,
+              onChanged: widget.onChange),
         ));
   }
 }

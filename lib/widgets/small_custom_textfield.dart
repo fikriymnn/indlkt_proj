@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../constants/style.dart';
 
 class SmallTextfield extends StatefulWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String? hint;
   final double width;
   final bool? readOnly;
@@ -12,7 +12,7 @@ class SmallTextfield extends StatefulWidget {
   const SmallTextfield(
       {super.key,
       this.hint,
-      required this.controller,
+      this.controller,
       required this.width,
       this.readOnly,
       this.value});

@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import '../constants/style.dart';
 
 class CustomTextField extends StatefulWidget {
-  final String hint;
-  final TextEditingController controller;
+  final String? hint;
+  final TextEditingController? controller;
   final String? displayValue;
   final bool? readOnly;
 
   const CustomTextField(
       {super.key,
-      required this.hint,
-      required this.controller,
+      this.hint,
+      this.controller,
       this.displayValue,
       this.readOnly});
 
@@ -42,8 +42,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
           child: TextFormField(
             initialValue: widget.displayValue,
             readOnly: widget.readOnly == null ? false : true,
-            controller: widget.controller,
-            decoration: InputDecoration.collapsed(hintText: widget.hint),
+            controller: widget.controller ?? null,
+            decoration: InputDecoration.collapsed(hintText: widget.hint ?? ""),
           ),
         ),
       ),

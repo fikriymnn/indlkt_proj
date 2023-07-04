@@ -6,16 +6,18 @@ import '../constants/style.dart';
 
 class BreakdownForm extends StatefulWidget {
   final int index;
-  const BreakdownForm({super.key, required this.index});
+  const BreakdownForm({super.key, required this.index,});
+
 
   @override
-  State<BreakdownForm> createState() => _BreakdownFormState();
+  State<BreakdownForm> createState() => BreakdownFormState();
 }
 
-class _BreakdownFormState extends State<BreakdownForm> {
-  var form = Breakdown().form;
-  var form2 = Breakdown().form2;
-  var form3 = Breakdown().form3;
+class BreakdownFormState extends State<BreakdownForm> {
+  var vau = "ajsjds";
+  TextEditingController freq = TextEditingController();
+  TextEditingController dbMin = Breakdown().dbMin;
+  TextEditingController problem = Breakdown().problem;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,14 @@ class _BreakdownFormState extends State<BreakdownForm> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("${widget.index}"),
+            Container(
+              width: 25,
+              height:25,
+              decoration: BoxDecoration(
+                color: blue,
+                borderRadius: BorderRadius.circular(100)
+              ),
+              child: Center(child: Text("${widget.index}",style: TextStyle(color: light),))),
             Column(
               children: [
                 SizedBox(
@@ -36,7 +45,28 @@ class _BreakdownFormState extends State<BreakdownForm> {
                 SizedBox(
                   height: 20,
                 ),
-                SmallDropdown()
+                SmallDropdown(
+                  value: Breakdown().getMesin,
+                  onChange: (a) {
+                
+                      Breakdown().setMesin = a;
+                    
+                  },
+                  dropdownItem: [
+                    DropdownMenuItem(
+                      child: Text("Filling_packing_SKM_couch"),
+                      value: "Filling_packing_SKM_couch",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Filling_packing_SKM_couch"),
+                      value: "Filling_packing_SKM_couch",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Filling_packing_SKM_couch"),
+                      value: "Filling_packing_SKM_couch",
+                    )
+                  ],
+                )
               ],
             ),
             Column(
@@ -49,7 +79,28 @@ class _BreakdownFormState extends State<BreakdownForm> {
                 SizedBox(
                   height: 20,
                 ),
-                SmallDropdown()
+                SmallDropdown(
+                  value: Breakdown().reasonBreakdown,
+                  onChange: (a) {
+                    setState(() {
+                      Breakdown().setReasonBreakdown = a;
+                    });
+                  },
+                  dropdownItem: [
+                    DropdownMenuItem(
+                      child: Text("Filling_packing_SKM_couch"),
+                      value: "Filling_packing_SKM_couch",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Filling_packing_SKM_couch"),
+                      value: "Filling_packing_SKM_couch",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Filling_packing_SKM_couch"),
+                      value: "Filling_packing_SKM_couch",
+                    )
+                  ],
+                )
               ],
             ),
             Column(
@@ -63,7 +114,7 @@ class _BreakdownFormState extends State<BreakdownForm> {
                 ),
                 SmallTextfield(
                   width: 80,
-                  controller: form,
+                  controller: freq,
                   hint: 'input',
                 )
               ],
@@ -80,7 +131,7 @@ class _BreakdownFormState extends State<BreakdownForm> {
                 ),
                 SmallTextfield(
                   width: 150,
-                  controller: form2,
+                  controller: dbMin,
                   hint: 'input2',
                 )
               ],
@@ -96,7 +147,8 @@ class _BreakdownFormState extends State<BreakdownForm> {
                 ),
                 SmallTextfield(
                   width: 150,
-                  controller: form3,
+                  value: Breakdown().dbHour(),
+                  readOnly: true,
                 )
               ],
             ),
@@ -144,15 +196,42 @@ class _BreakdownFormState extends State<BreakdownForm> {
 }
 
 class Breakdown {
-  TextEditingController form = TextEditingController();
-  TextEditingController form2 = TextEditingController();
-  TextEditingController form3 = TextEditingController();
+  TextEditingController freq = TextEditingController();
+  TextEditingController dbMin = TextEditingController();
+  TextEditingController problem = TextEditingController();
+
+  dynamic mesin;
+  dynamic reasonBreakdown;
+
+  dynamic get getMesin{
+    return mesin;
+  } 
+
+  dynamic get getReasonBreakdown{
+    return reasonBreakdown;
+  } 
+
+
+  set setMesin(dynamic mesin){
+     mesin = mesin;
+  }
+
+  set setReasonBreakdown(dynamic reasonBreakdown){
+     reasonBreakdown = reasonBreakdown;
+  }
+
+  dynamic dbHour(){
+    return "db hour";
+  }
 
   Map<String, dynamic> getValue() {
     return {
-      'freq': form.value,
-      'db_hour_min': form2.value,
-      'db_hour': form3.value
+      'mesin':mesin,
+      'reason_breakdown': reasonBreakdown,
+      'freq': freq.text,
+      'db_hour_min': dbMin.text,
+      'problem': problem.text,
+      'db_hour':dbHour()
     };
   }
 

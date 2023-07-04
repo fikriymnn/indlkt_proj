@@ -18,23 +18,44 @@ class FormInputData extends StatefulWidget {
 }
 
 class _FormInputDataState extends State<FormInputData> {
-  int dropdownValue = 1;
-  String? dropdownValue1;
-  int? dropDownValue2;
-  int? dropDownValue3;
-  int? dropDownValue4;
+  String? namaLaporan;
+  String? shift;
+  String? departement;
+  String? product;
+  String? line;
 
-  TextEditingController namaProduct = TextEditingController();
-  TextEditingController namaProduct2 = TextEditingController();
-  TextEditingController namaProduct3 = TextEditingController();
+  TextEditingController actualOutput = TextEditingController();
+  TextEditingController grossHour = TextEditingController();
+  TextEditingController nominalSpeed = TextEditingController();
+  TextEditingController totalHour = TextEditingController();
+  TextEditingController netHour = TextEditingController();
+  TextEditingController targetHour = TextEditingController();
+  TextEditingController planningOutput = TextEditingController();
+
+  dynamic Function() le = (){
+    return "le";
+  };
+  dynamic Function() lp = (){
+    return "lp";
+  };
+  dynamic Function() dt = (){
+    return "dt";
+  };
+  dynamic Function() bd = (){
+    return "bd";
+  };
+  
 
   List<Breakdown> breakdown = [Breakdown()];
   List<DownTime> downTime = [DownTime()];
   List<IdleTime> idleTime = [IdleTime()];
 
+  
+
   @override
   Widget build(BuildContext context) {
     double mediaQueryWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: CustomAppBar(title: "Input Data"),
       body: Container(
@@ -118,25 +139,25 @@ class _FormInputDataState extends State<FormInputData> {
                                             underline: Container(),
                                             borderRadius:
                                                 BorderRadius.circular(10),
-                                            value: dropdownValue,
+                                            value: namaLaporan,
                                             onChanged: (e) {
                                               setState(() {
-                                                dropdownValue = e!;
+                                                namaLaporan = e!;
                                               });
                                             },
                                             items: [
                                               DropdownMenuItem(
                                                 child: Text(
                                                     "Filling_packing_SKM_couch"),
-                                                value: 1,
+                                                value: "Filling_packing_SKM_couch",
                                               ),
                                               DropdownMenuItem(
-                                                child: Text("2"),
-                                                value: 2,
+                                                child: Text("Filling_packing_SKM_couch"),
+                                                value: "Filling_packing_SKM_couchh",
                                               ),
                                               DropdownMenuItem(
-                                                child: Text("3"),
-                                                value: 3,
+                                                child: Text("Filling_packing_SKM_couch"),
+                                                value: "Filling_packing_SKM_couchl",
                                               )
                                             ]),
                                       ),
@@ -165,26 +186,23 @@ class _FormInputDataState extends State<FormInputData> {
                                                 hintText: "Pilih Shift...",
                                                 onChange: (e) {
                                                   setState(() {
-                                                    dropdownValue1 = e;
+                                                    shift= e;
                                                   });
                                                 },
-                                                value: dropdownValue1,
+                                                value: shift,
                                                 dropdownItems: [
                                                   DropdownMenuItem(
                                                     child: Text(
                                                         "Filling_packing_SKM_couch"),
-                                                    value:
-                                                        "Filling_packing_SKM_couch",
+                                                    value:"1",
                                                   ),
                                                   DropdownMenuItem(
                                                     child: Text("2"),
-                                                    value:
-                                                        "Filling_packing_SKM_couchdf",
+                                                    value:"2",
                                                   ),
                                                   DropdownMenuItem(
                                                     child: Text("3"),
-                                                    value:
-                                                        "Filling_packing_SKM_couchd",
+                                                    value: "3",
                                                   )
                                                 ]),
                                           ],
@@ -207,8 +225,8 @@ class _FormInputDataState extends State<FormInputData> {
                                                           FontWeight.bold)),
                                             ),
                                             CustomTextField(
-                                              hint: "Masukan Keterangan",
-                                              controller: namaProduct,
+                                              hint: "Masukan Actual Output...",
+                                              controller: actualOutput,
                                             ),
                                           ],
                                         ),
@@ -230,8 +248,8 @@ class _FormInputDataState extends State<FormInputData> {
                                                           FontWeight.bold)),
                                             ),
                                             CustomTextField(
-                                              hint: "Masukan Keterangan",
-                                              controller: namaProduct2,
+                                              hint: "Masukan Gross Hour...",
+                                              controller: grossHour,
                                             ),
                                           ],
                                         ),
@@ -249,7 +267,7 @@ class _FormInputDataState extends State<FormInputData> {
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 30),
-                                              child: Text("Shift",
+                                              child: Text("Departement",
                                                   style: TextStyle(
                                                       color:
                                                           dark.withOpacity(0.8),
@@ -258,13 +276,13 @@ class _FormInputDataState extends State<FormInputData> {
                                                           FontWeight.bold)),
                                             ),
                                             CustomDropdown(
-                                                hintText: "Pilih Shift...",
+                                                hintText: "Pilih Departement...",
                                                 onChange: (e) {
                                                   setState(() {
-                                                    dropDownValue2 = e;
+                                                    departement = e;
                                                   });
                                                 },
-                                                value: dropDownValue2,
+                                                value: departement,
                                                 dropdownItems: [
                                                   DropdownMenuItem(
                                                     child: Text(
@@ -294,7 +312,7 @@ class _FormInputDataState extends State<FormInputData> {
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 30),
-                                              child: Text("Shift",
+                                              child: Text("Nominal Speed",
                                                   style: TextStyle(
                                                       color:
                                                           dark.withOpacity(0.8),
@@ -303,8 +321,8 @@ class _FormInputDataState extends State<FormInputData> {
                                                           FontWeight.bold)),
                                             ),
                                             CustomTextField(
-                                              hint: "Masukan Keterangan",
-                                              controller: namaProduct,
+                                              hint: "Masukan Nominal Speed...",
+                                              controller: nominalSpeed,
                                             ),
                                           ],
                                         ),
@@ -317,7 +335,7 @@ class _FormInputDataState extends State<FormInputData> {
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 30),
-                                              child: Text("Shift",
+                                              child: Text("Net Hour",
                                                   style: TextStyle(
                                                       color:
                                                           dark.withOpacity(0.8),
@@ -327,7 +345,7 @@ class _FormInputDataState extends State<FormInputData> {
                                             ),
                                             CustomTextField(
                                               hint: "Masukan Keterangan",
-                                              controller: namaProduct2,
+                                              controller: netHour,
                                             ),
                                           ],
                                         ),
@@ -345,7 +363,7 @@ class _FormInputDataState extends State<FormInputData> {
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 30),
-                                              child: Text("Shift",
+                                              child: Text("Product",
                                                   style: TextStyle(
                                                       color:
                                                           dark.withOpacity(0.8),
@@ -354,13 +372,13 @@ class _FormInputDataState extends State<FormInputData> {
                                                           FontWeight.bold)),
                                             ),
                                             CustomDropdown(
-                                                hintText: "Pilih Shift...",
+                                                hintText: "Pilih Product...",
                                                 onChange: (e) {
                                                   setState(() {
-                                                    dropDownValue3 = e;
+                                                    product = e;
                                                   });
                                                 },
-                                                value: dropDownValue3,
+                                                value: product,
                                                 dropdownItems: [
                                                   DropdownMenuItem(
                                                     child: Text(
@@ -390,7 +408,7 @@ class _FormInputDataState extends State<FormInputData> {
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 30),
-                                              child: Text("Shift",
+                                              child: Text("Total Hour",
                                                   style: TextStyle(
                                                       color:
                                                           dark.withOpacity(0.8),
@@ -399,8 +417,8 @@ class _FormInputDataState extends State<FormInputData> {
                                                           FontWeight.bold)),
                                             ),
                                             CustomTextField(
-                                              hint: "Masukan Keterangan",
-                                              controller: namaProduct,
+                                              hint: "Masukan Total Hour",
+                                              controller: totalHour,
                                             ),
                                           ],
                                         ),
@@ -413,7 +431,7 @@ class _FormInputDataState extends State<FormInputData> {
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 30),
-                                              child: Text("Shift",
+                                              child: Text("Target Hour",
                                                   style: TextStyle(
                                                       color:
                                                           dark.withOpacity(0.8),
@@ -422,8 +440,8 @@ class _FormInputDataState extends State<FormInputData> {
                                                           FontWeight.bold)),
                                             ),
                                             CustomTextField(
-                                              hint: "Masukan Keterangan",
-                                              controller: namaProduct2,
+                                              hint: "Masukan Target Hour...",
+                                              controller: targetHour,
                                             ),
                                           ],
                                         ),
@@ -440,7 +458,7 @@ class _FormInputDataState extends State<FormInputData> {
                                           Padding(
                                             padding:
                                                 const EdgeInsets.only(left: 30),
-                                            child: Text("Shift",
+                                            child: Text("Line",
                                                 style: TextStyle(
                                                     color:
                                                         dark.withOpacity(0.8),
@@ -449,29 +467,29 @@ class _FormInputDataState extends State<FormInputData> {
                                                         FontWeight.bold)),
                                           ),
                                           CustomDropdown(
-                                              hintText: "Pilih Shift...",
+                                              hintText: "Pilih Line...",
                                               onChange: (e) {
                                                 setState(() {
-                                                  dropDownValue4 = e;
+                                                  line = e;
                                                 });
                                               },
-                                              value: dropDownValue4,
+                                              value: line,
                                               dropdownItems: [
                                                 DropdownMenuItem(
                                                   child: Text(
-                                                      "Filling_packing_SKM_couch"),
+                                                      "1"),
                                                   value:
-                                                      "Filling_packing_SKM_couch",
+                                                      "1",
                                                 ),
                                                 DropdownMenuItem(
                                                   child: Text("2"),
                                                   value:
-                                                      "Filling_packing_SKM_couchdf",
+                                                      "2",
                                                 ),
                                                 DropdownMenuItem(
                                                   child: Text("3"),
                                                   value:
-                                                      "Filling_packing_SKM_couchd",
+                                                      "3",
                                                 )
                                               ]),
                                         ],
@@ -488,7 +506,7 @@ class _FormInputDataState extends State<FormInputData> {
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 30),
-                                              child: Text("Shift",
+                                              child: Text("%LE",
                                                   style: TextStyle(
                                                       color:
                                                           dark.withOpacity(0.8),
@@ -496,7 +514,7 @@ class _FormInputDataState extends State<FormInputData> {
                                                       fontWeight:
                                                           FontWeight.bold)),
                                             ),
-                                            DisplayField(),
+                                            DisplayField(value: le(),),
                                           ],
                                         ),
                                         Column(
@@ -506,7 +524,7 @@ class _FormInputDataState extends State<FormInputData> {
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 30),
-                                              child: Text("Shift",
+                                              child: Text("%LP",
                                                   style: TextStyle(
                                                       color:
                                                           dark.withOpacity(0.8),
@@ -514,7 +532,7 @@ class _FormInputDataState extends State<FormInputData> {
                                                       fontWeight:
                                                           FontWeight.bold)),
                                             ),
-                                            DisplayField(),
+                                            DisplayField(value: lp()),
                                           ],
                                         )
                                       ],
@@ -528,7 +546,7 @@ class _FormInputDataState extends State<FormInputData> {
                                           Padding(
                                             padding:
                                                 const EdgeInsets.only(left: 30),
-                                            child: Text("Shift",
+                                            child: Text("%DT",
                                                 style: TextStyle(
                                                     color:
                                                         dark.withOpacity(0.8),
@@ -536,7 +554,7 @@ class _FormInputDataState extends State<FormInputData> {
                                                     fontWeight:
                                                         FontWeight.bold)),
                                           ),
-                                          DisplayField(),
+                                          DisplayField(value: dt()),
                                         ],
                                       ),
                                       Column(
@@ -546,7 +564,7 @@ class _FormInputDataState extends State<FormInputData> {
                                           Padding(
                                             padding:
                                                 const EdgeInsets.only(left: 30),
-                                            child: Text("Shift",
+                                            child: Text("%BD",
                                                 style: TextStyle(
                                                     color:
                                                         dark.withOpacity(0.8),
@@ -554,7 +572,7 @@ class _FormInputDataState extends State<FormInputData> {
                                                     fontWeight:
                                                         FontWeight.bold)),
                                           ),
-                                          DisplayField(),
+                                          DisplayField(value: bd()),
                                         ],
                                       )
                                     ]))
@@ -570,7 +588,7 @@ class _FormInputDataState extends State<FormInputData> {
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 30),
-                                              child: Text("Shift",
+                                              child: Text("Planning Output",
                                                   style: TextStyle(
                                                       color:
                                                           dark.withOpacity(0.8),
@@ -579,8 +597,8 @@ class _FormInputDataState extends State<FormInputData> {
                                                           FontWeight.bold)),
                                             ),
                                             CustomTextField(
-                                              hint: "Masukan Keterangan",
-                                              controller: namaProduct2,
+                                              hint: "Masukan Planning Output..",
+                                              controller: planningOutput,
                                             ),
                                           ],
                                         ),
@@ -638,7 +656,7 @@ class _FormInputDataState extends State<FormInputData> {
                                                       setState(() {
                                                         breakdown
                                                             .add(Breakdown());
-                                                        print(breakdown);
+                                                      
                                                       });
                                                     },
                                                     child: Icon(

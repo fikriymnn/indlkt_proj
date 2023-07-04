@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:indlkt_proj/widgets/breakdown_form.dart';
 import 'package:indlkt_proj/widgets/small_custom_dropdown.dart';
 import 'package:indlkt_proj/widgets/small_custom_textfield.dart';
 
@@ -13,9 +14,8 @@ class DownTimeForm extends StatefulWidget {
 }
 
 class _DownTimeFormState extends State<DownTimeForm> {
-  var form = DownTime().form;
-  var form2 = DownTime().form2;
-  var form3 = DownTime().form3;
+  TextEditingController actMin = DownTime().actMin;
+
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,14 @@ class _DownTimeFormState extends State<DownTimeForm> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("${widget.index}"),
+            Container(
+              width: 25,
+              height:25,
+              decoration: BoxDecoration(
+                color: blue,
+                borderRadius: BorderRadius.circular(100)
+              ),
+              child: Center(child: Text("${widget.index}",style: TextStyle(color: light),))),
             Column(
               children: [
                 SizedBox(
@@ -36,7 +43,28 @@ class _DownTimeFormState extends State<DownTimeForm> {
                 SizedBox(
                   height: 20,
                 ),
-                SmallDropdown()
+                SmallDropdown(
+                  value: DownTime().getDT,
+                  onChange: (a) {
+                    setState(() {
+                      DownTime().setDT=a;
+                    });
+                  },
+                  dropdownItem: [
+                    DropdownMenuItem(
+                      child: Text("Filling_packing_SKM_couch"),
+                      value: "Filling_packing_SKM_couch",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Filling_packing_SKM_couch"),
+                      value: "Filling_packing_SKM_couch",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Filling_packing_SKM_couch"),
+                      value: "Filling_packing_SKM_couch",
+                    )
+                  ],
+                )
               ],
             ),
             Column(
@@ -48,7 +76,28 @@ class _DownTimeFormState extends State<DownTimeForm> {
                 SizedBox(
                   height: 20,
                 ),
-                SmallDropdown()
+                SmallDropdown(
+                  value: DownTime().getDT,
+                  onChange: (a) {
+                    setState(() {
+                      DownTime().setDT=a;
+                    });
+                  },
+                  dropdownItem: [
+                    DropdownMenuItem(
+                      child: Text("Filling_packing_SKM_couch"),
+                      value: "Filling_packing_SKM_couch",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Filling_packing_SKM_couch"),
+                      value: "Filling_packing_SKM_couch",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Filling_packing_SKM_couch"),
+                      value: "Filling_packing_SKM_couch",
+                    )
+                  ],
+                )
               ],
             ),
             Column(
@@ -60,23 +109,29 @@ class _DownTimeFormState extends State<DownTimeForm> {
                 SizedBox(
                   height: 20,
                 ),
-                SmallDropdown(width: 80)
-              ],
-            ),
-            Column(
-              children: [
-                SizedBox(
-                  height: 10,
-                ),
-                Text("BD Hour(Min)",
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                SizedBox(
-                  height: 20,
-                ),
-                SmallTextfield(
-                  readOnly: true,
-                  width: 150,
-                  controller: form2,
+                SmallDropdown(
+                  value: DownTime().getSTD,
+                  onChange: (a) {
+                    setState(() {
+                      
+                      DownTime().setSTD = a;
+                    });
+                  },
+                  width: 80,
+                  dropdownItem: [
+                    DropdownMenuItem(
+                      child: Text("Filling_packing_SKM_couch"),
+                      value: "Filling_packing_SKM_couch",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Filling_packing_SKM_couch"),
+                      value: "Filling_packing_SKM_couch",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Filling_packing_SKM_couch"),
+                      value: "Filling_packing_SKM_couch",
+                    )
+                  ],
                 )
               ],
             ),
@@ -85,13 +140,32 @@ class _DownTimeFormState extends State<DownTimeForm> {
                 SizedBox(
                   height: 10,
                 ),
-                Text("BD Hour", style: TextStyle(fontWeight: FontWeight.bold)),
+                Text("Act(Min)",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
                 SizedBox(
                   height: 20,
                 ),
                 SmallTextfield(
+                  hint: "input",
+                  readOnly: true,
                   width: 150,
-                  controller: form3,
+                  controller: actMin,
+                )
+              ],
+            ),
+            Column(
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Text("Act(Hour)", style: TextStyle(fontWeight: FontWeight.bold)),
+                SizedBox(
+                  height: 20,
+                ),
+                SmallTextfield(
+                  readOnly: true,
+                  width: 150,
+                  value: DownTime().actHour(),
                 )
               ],
             ),
@@ -106,15 +180,44 @@ class _DownTimeFormState extends State<DownTimeForm> {
 }
 
 class DownTime {
-  TextEditingController form = TextEditingController();
-  TextEditingController form2 = TextEditingController();
-  TextEditingController form3 = TextEditingController();
+  dynamic dt;
+  dynamic subDT;
+  dynamic std;
+  TextEditingController actMin = TextEditingController();
+
+  dynamic get getDT{
+    return dt;
+  }
+
+  dynamic get getSubDT{
+    return subDT;
+  }
+  dynamic get getSTD{
+    return std;
+  }
+
+  set setDT(dynamic dt){
+    dt = dt;
+  } 
+
+  set setSubDT(dynamic subDT){
+    subDT = subDT;
+  } 
+  set setSTD(dynamic std){
+    std = std;
+  } 
+
+  dynamic actHour(){
+    return "act hour";
+  }
 
   Map<String, dynamic> getValue() {
     return {
-      'freq': form.value,
-      'db_hour_min': form2.value,
-      'db_hour': form3.value
+      'dt': dt,
+      'sub_dt': subDT,
+      'std': std,
+      'act_min': actMin,
+      'act_hour': actHour()
     };
   }
 
