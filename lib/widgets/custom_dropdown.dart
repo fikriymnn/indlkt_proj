@@ -38,8 +38,10 @@ class _CustomDropdownState extends State<CustomDropdown> {
           border: Border.all(width: 3, color: lightGrey),
           borderRadius: BorderRadius.circular(5),
         ),
-        child: Center(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
           child: DropdownButton(
+            isExpanded: true,
             hint: Text(widget.hintText),
             underline: Container(),
             borderRadius: BorderRadius.circular(10),

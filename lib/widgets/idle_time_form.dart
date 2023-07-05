@@ -13,105 +13,123 @@ class IdleTimeForm extends StatefulWidget {
 }
 
 class _IdleTimeFormState extends State<IdleTimeForm> {
-  var form = IdleTime().form;
-  var form2 = IdleTime().form2;
-  var form3 = IdleTime().form3;
+  TextEditingController idleMin = IdleTime().idleMin;
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text("${widget.index}"),
-          Column(
-            children: [
-              SizedBox(
-                height: 10,
+    return Container(
+      margin: EdgeInsets.only(bottom: 35),
+      child: Column(children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              width: 25,
+              height:25,
+              decoration: BoxDecoration(
+                color: blue,
+                borderRadius: BorderRadius.circular(100)
               ),
-              Text("DT", style: TextStyle(fontWeight: FontWeight.bold)),
-              SizedBox(
-                height: 20,
-              ),
-              SmallDropdown()
-            ],
-          ),
-          Column(
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              Text("Sub DT", style: TextStyle(fontWeight: FontWeight.bold)),
-              SizedBox(
-                height: 20,
-              ),
-              SmallDropdown()
-            ],
-          ),
-          Column(
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              Text("STD", style: TextStyle(fontWeight: FontWeight.bold)),
-              SizedBox(
-                height: 20,
-              ),
-              SmallDropdown(width: 80)
-            ],
-          ),
-          Column(
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              Text("BD Hour(Min)",
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              SizedBox(
-                height: 20,
-              ),
-              SmallTextfield(
-                readOnly: true,
-                width: 150,
-                controller: form2,
-              )
-            ],
-          ),
-          Column(
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              Text("BD Hour", style: TextStyle(fontWeight: FontWeight.bold)),
-              SizedBox(
-                height: 20,
-              ),
-              SmallTextfield(
-                width: 150,
-                controller: form3,
-              )
-            ],
-          ),
-          SizedBox(
-            width: 10,
-          )
-        ],
-      ),
-    ]);
+              child: Center(child: Text("${widget.index}",style: TextStyle(color: light),))),
+            Column(
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Text("Idle Desc", style: TextStyle(fontWeight: FontWeight.bold)),
+                SizedBox(
+                  height: 20,
+                ),
+                SmallDropdown(
+                  value: IdleTime().getIdleDesc,
+                  onChange: (a) {
+                    setState(() {
+                      IdleTime().setIdleDesc=a;
+                    });
+                  },
+                  dropdownItem: [
+                    DropdownMenuItem(
+                      child: Text("Filling_packing_SKM_couch"),
+                      value: "Filling_packing_SKM_couch",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Filling_packing_SKM_couch"),
+                      value: "Filling_packing_SKM_couch",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Filling_packing_SKM_couch"),
+                      value: "Filling_packing_SKM_couch",
+                    )
+                  ],
+                )
+              ],
+            ),
+            Column(
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Text("Idle(Min)",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                SizedBox(
+                  height: 20,
+                ),
+                SmallTextfield(
+                  readOnly: true,
+                  width: 150,
+                  controller: idleMin,
+                )
+              ],
+            ),
+            Column(
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Text("Idle(Hour)", style: TextStyle(fontWeight: FontWeight.bold)),
+                SizedBox(
+                  height: 20,
+                ),
+                SmallTextfield(
+                  width: 150,
+                  readOnly: true,
+                  value: IdleTime().idleHour(),
+                )
+              ],
+            ),
+            SizedBox(
+              width: 10,
+            )
+          ],
+        ),
+      ]),
+    );
   }
 }
 
 class IdleTime {
-  TextEditingController form = TextEditingController();
-  TextEditingController form2 = TextEditingController();
-  TextEditingController form3 = TextEditingController();
+  dynamic idleDesc;
+  TextEditingController idleMin = TextEditingController();
+
+  dynamic get getIdleDesc{
+    return idleDesc;
+  }
+
+  set setIdleDesc(dynamic idleDesc){
+    idleDesc = idleDesc;
+  }
+
+  dynamic idleHour(){
+     return "idle hour";
+  }
+
 
   Map<String, dynamic> getValue() {
     return {
-      'freq': form.value,
-      'db_hour_min': form2.value,
-      'db_hour': form3.value
+      'idle_desc':idleDesc ,
+      'idle_min': idleMin,
+      'idle_hour': idleHour()
     };
   }
 

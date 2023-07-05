@@ -23,7 +23,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   String dateText = "";
 
   String formatCurrentLiveTime(DateTime time) {
-    return DateFormat("hh:mm a").format(time);
+    return DateFormat.Hms().format(time);
   }
 
   String formatCurrentDate(DateTime date) {
@@ -79,13 +79,19 @@ class _CustomAppBarState extends State<CustomAppBar> {
                         SizedBox(height: 12),
                         Text(
                           "${dateText}",
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.black),
                         ),
                         SizedBox(
                           height: 5,
                         ),
                         Text("${timeText} WIB",
-                            style: TextStyle(fontWeight: FontWeight.bold))
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                color: Colors.black))
                       ],
                     ),
                   )),

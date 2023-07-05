@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:indlkt_proj/constants/style.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_card.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_container.dart';
+import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_donut_button.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_overview_breakdown.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_overview_chart.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_overview_datepicker.dart';
@@ -17,6 +19,57 @@ class DashboardOverview extends StatefulWidget {
 }
 
 class _DashboardOverviewState extends State<DashboardOverview> {
+  final List<DataItem> dataset = [
+    DataItem(
+        0.25,
+        RichText(
+          text: TextSpan(children: [
+            TextSpan(
+              text: 'Tap here.',
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => print('Tap Here onTap'),
+            )
+          ]),
+        ),
+        active),
+    DataItem(
+        0.25,
+        RichText(
+          text: TextSpan(children: [
+            TextSpan(
+              text: 'Tap here.',
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => print('Tap Here onTap'),
+            )
+          ]),
+        ),
+        blue),
+    DataItem(
+        0.25,
+        RichText(
+          text: TextSpan(children: [
+            TextSpan(
+              text: 'Tap here.',
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => print('Tap Here onTap'),
+            )
+          ]),
+        ),
+        light),
+    DataItem(
+        0.25,
+        RichText(
+          text: TextSpan(children: [
+            TextSpan(
+              text: 'Tap here.',
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => print('Tap Here onTap'),
+            )
+          ]),
+        ),
+        lightGrey),
+  ];
+
   int selectedShift = 0;
   int dropdownValue = 1;
 
@@ -261,7 +314,14 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                 ],
                               ),
                             ]),
-                        OverviewChart()
+                        Row(
+                          children: [
+                            Container(
+                                width: 300,
+                                height: 300,
+                                child: DonutButton(dataset)),
+                          ],
+                        ),
                       ],
                     ),
                     SizedBox(width: 270),
