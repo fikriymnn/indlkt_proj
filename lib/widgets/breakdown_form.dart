@@ -9,7 +9,6 @@ class BreakdownForm extends StatefulWidget {
   final TextEditingController freq;
   final TextEditingController bdMin;
   final TextEditingController problem;
-  final String mesin;
   final String reason;
   final String bdHour;
   final List<DropdownMenuItem> dropdownItemMesin;
@@ -24,7 +23,6 @@ class BreakdownForm extends StatefulWidget {
       required this.bdMin,
       required this.freq,
       required this.problem,
-      required this.mesin,
       required this.reason,
       required this.bdHour,
       required this.dropdownItemMesin,

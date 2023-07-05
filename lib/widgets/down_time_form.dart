@@ -7,7 +7,10 @@ import '../constants/style.dart';
 
 class DownTimeForm extends StatefulWidget {
   final int index;
-  const DownTimeForm({super.key, required this.index});
+  const DownTimeForm({
+    super.key,
+    required this.index,
+  });
 
   @override
   State<DownTimeForm> createState() => _DownTimeFormState();
@@ -15,7 +18,6 @@ class DownTimeForm extends StatefulWidget {
 
 class _DownTimeFormState extends State<DownTimeForm> {
   TextEditingController actMin = DownTime().actMin;
-
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +29,15 @@ class _DownTimeFormState extends State<DownTimeForm> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              width: 25,
-              height:25,
-              decoration: BoxDecoration(
-                color: blue,
-                borderRadius: BorderRadius.circular(100)
-              ),
-              child: Center(child: Text("${widget.index}",style: TextStyle(color: light),))),
+                width: 25,
+                height: 25,
+                decoration: BoxDecoration(
+                    color: blue, borderRadius: BorderRadius.circular(100)),
+                child: Center(
+                    child: Text(
+                  "${widget.index}",
+                  style: TextStyle(color: light),
+                ))),
             Column(
               children: [
                 SizedBox(
@@ -47,7 +51,7 @@ class _DownTimeFormState extends State<DownTimeForm> {
                   value: DownTime().getDT,
                   onChange: (a) {
                     setState(() {
-                      DownTime().setDT=a;
+                      DownTime().setDT = a;
                     });
                   },
                   dropdownItem: [
@@ -80,7 +84,7 @@ class _DownTimeFormState extends State<DownTimeForm> {
                   value: DownTime().getDT,
                   onChange: (a) {
                     setState(() {
-                      DownTime().setDT=a;
+                      DownTime().setDT = a;
                     });
                   },
                   dropdownItem: [
@@ -113,7 +117,6 @@ class _DownTimeFormState extends State<DownTimeForm> {
                   value: DownTime().getSTD,
                   onChange: (a) {
                     setState(() {
-                      
                       DownTime().setSTD = a;
                     });
                   },
@@ -140,8 +143,7 @@ class _DownTimeFormState extends State<DownTimeForm> {
                 SizedBox(
                   height: 10,
                 ),
-                Text("Act(Min)",
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                Text("Act(Min)", style: TextStyle(fontWeight: FontWeight.bold)),
                 SizedBox(
                   height: 20,
                 ),
@@ -158,7 +160,8 @@ class _DownTimeFormState extends State<DownTimeForm> {
                 SizedBox(
                   height: 10,
                 ),
-                Text("Act(Hour)", style: TextStyle(fontWeight: FontWeight.bold)),
+                Text("Act(Hour)",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
                 SizedBox(
                   height: 20,
                 ),
@@ -185,29 +188,31 @@ class DownTime {
   dynamic std;
   TextEditingController actMin = TextEditingController();
 
-  dynamic get getDT{
+  dynamic get getDT {
     return dt;
   }
 
-  dynamic get getSubDT{
+  dynamic get getSubDT {
     return subDT;
   }
-  dynamic get getSTD{
+
+  dynamic get getSTD {
     return std;
   }
 
-  set setDT(dynamic dt){
+  set setDT(dynamic dt) {
     dt = dt;
-  } 
+  }
 
-  set setSubDT(dynamic subDT){
+  set setSubDT(dynamic subDT) {
     subDT = subDT;
-  } 
-  set setSTD(dynamic std){
-    std = std;
-  } 
+  }
 
-  dynamic actHour(){
+  set setSTD(dynamic std) {
+    std = std;
+  }
+
+  dynamic actHour() {
     return "act hour";
   }
 
