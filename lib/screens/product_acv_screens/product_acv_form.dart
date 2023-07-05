@@ -52,11 +52,26 @@ class _FormInputDataState extends State<FormInputData> {
   String? mesins;
   String? reasons;
 
+  //Breakdown
   List<String?> mesin = [];
   List<String?> reason = [];
   List<TextEditingController> freq = [];
   List<TextEditingController> dbMin = [];
   List<TextEditingController> problem = [];
+
+  // //DownTime
+  // List<String?> mesin = [];
+  // List<String?> reason = [];
+  // List<TextEditingController> freq = [];
+  // List<TextEditingController> dbMin = [];
+  // List<TextEditingController> problem = [];
+
+  // //IdleTime
+  // List<String?> mesin = [];
+  // List<String?> reason = [];
+  // List<TextEditingController> freq = [];
+  // List<TextEditingController> dbMin = [];
+  // List<TextEditingController> problem = [];
 
   MesinData() {
     mesin = [mesins];
@@ -680,9 +695,8 @@ class _FormInputDataState extends State<FormInputData> {
                                                         bdMin: dbMin[index],
                                                         freq: freq[index],
                                                         problem: problem[index],
-                                                        mesin: "mesin",
                                                         reason: "reason",
-                                                        bdHour: "bdHour",
+                                                        bdHour: "dbHour",
                                                         dropdownItemMesin: [
                                                           DropdownMenuItem(
                                                             child:
