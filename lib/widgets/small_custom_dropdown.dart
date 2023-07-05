@@ -6,13 +6,14 @@ class SmallDropdown extends StatefulWidget {
   final List<DropdownMenuItem> dropdownItem;
   final void Function(dynamic) onChange;
   final dynamic value;
+  final String hint;
   const SmallDropdown(
       {super.key,
       this.width,
       required this.dropdownItem,
       required this.onChange,
-      required this.value
-      });
+      required this.value,
+      required this.hint});
 
   @override
   State<SmallDropdown> createState() => _SmallDropdownState();
@@ -33,8 +34,11 @@ class _SmallDropdownState extends State<SmallDropdown> {
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: DropdownButton(
               hint: Text(
-                'input',
-                style: TextStyle(fontSize: 13, color: dark.withOpacity(0.4)),
+                widget.hint,
+                style: TextStyle(
+                    fontSize: 13,
+                    color: dark.withOpacity(0.4),
+                    overflow: TextOverflow.ellipsis),
               ),
               underline: Container(),
               isExpanded: true,

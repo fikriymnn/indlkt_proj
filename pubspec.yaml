@@ -55,6 +55,8 @@ dependencies:
   provider: ^6.0.5
   file_saver: ^0.0.12
   url_launcher: ^6.1.11
+  percent_indicator: ^4.2.3
+  flutter_rounded_progress_bar: ^0.2.0
 
 
 dev_dependencies:

@@ -71,6 +71,7 @@ class BreakdownFormState extends State<BreakdownForm> {
                   height: 20,
                 ),
                 SmallDropdown(
+                    hint: 'pilih mesin...',
                     value: widget.valueMesin,
                     onChange: widget.onChangeMesin,
                     dropdownItem: widget.dropdownItemMesin)
@@ -87,6 +88,7 @@ class BreakdownFormState extends State<BreakdownForm> {
                   height: 20,
                 ),
                 SmallDropdown(
+                    hint: 'pilih reason breakdown...',
                     value: widget.valueReason,
                     onChange: widget.onChangeReason,
                     dropdownItem: widget.dropdownItemReason)
@@ -104,7 +106,7 @@ class BreakdownFormState extends State<BreakdownForm> {
                 SmallTextfield(
                   width: 80,
                   controller: widget.freq,
-                  hint: 'input',
+                  hint: 'masukan freq...',
                 )
               ],
             ),
@@ -121,7 +123,7 @@ class BreakdownFormState extends State<BreakdownForm> {
                 SmallTextfield(
                   width: 150,
                   controller: widget.bdMin,
-                  hint: 'input2',
+                  hint: 'masukan db hour min...',
                 )
               ],
             ),

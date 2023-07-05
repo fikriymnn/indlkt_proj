@@ -6,15 +6,26 @@ import '../constants/style.dart';
 
 class IdleTimeForm extends StatefulWidget {
   final int index;
-  const IdleTimeForm({super.key, required this.index});
+  final String idleHour;
+  final TextEditingController idleMin;
+  final dynamic valueIdleDesc;
+  final void Function(dynamic) onChangeIdleDesc;
+  final List<DropdownMenuItem> dropdownItemIdleDesc;
+
+  const IdleTimeForm(
+      {super.key,
+      required this.index,
+      required this.idleHour,
+      required this.idleMin,
+      required this.valueIdleDesc,
+      required this.onChangeIdleDesc,
+      required this.dropdownItemIdleDesc});
 
   @override
   State<IdleTimeForm> createState() => _IdleTimeFormState();
 }
 
 class _IdleTimeFormState extends State<IdleTimeForm> {
-  TextEditingController idleMin = IdleTime().idleMin;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,44 +36,30 @@ class _IdleTimeFormState extends State<IdleTimeForm> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              width: 25,
-              height:25,
-              decoration: BoxDecoration(
-                color: blue,
-                borderRadius: BorderRadius.circular(100)
-              ),
-              child: Center(child: Text("${widget.index}",style: TextStyle(color: light),))),
+                width: 25,
+                height: 25,
+                decoration: BoxDecoration(
+                    color: blue, borderRadius: BorderRadius.circular(100)),
+                child: Center(
+                    child: Text(
+                  "${widget.index}",
+                  style: TextStyle(color: light),
+                ))),
             Column(
               children: [
                 SizedBox(
                   height: 10,
                 ),
-                Text("Idle Desc", style: TextStyle(fontWeight: FontWeight.bold)),
+                Text("Idle Desc",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
                 SizedBox(
                   height: 20,
                 ),
                 SmallDropdown(
-                  value: IdleTime().getIdleDesc,
-                  onChange: (a) {
-                    setState(() {
-                      IdleTime().setIdleDesc=a;
-                    });
-                  },
-                  dropdownItem: [
-                    DropdownMenuItem(
-                      child: Text("Filling_packing_SKM_couch"),
-                      value: "Filling_packing_SKM_couch",
-                    ),
-                    DropdownMenuItem(
-                      child: Text("Filling_packing_SKM_couch"),
-                      value: "Filling_packing_SKM_couch",
-                    ),
-                    DropdownMenuItem(
-                      child: Text("Filling_packing_SKM_couch"),
-                      value: "Filling_packing_SKM_couch",
-                    )
-                  ],
-                )
+                    hint: 'pilih idle desc..',
+                    value: widget.valueIdleDesc,
+                    onChange: widget.onChangeIdleDesc,
+                    dropdownItem: widget.dropdownItemIdleDesc)
               ],
             ),
             Column(
@@ -76,9 +73,9 @@ class _IdleTimeFormState extends State<IdleTimeForm> {
                   height: 20,
                 ),
                 SmallTextfield(
-                  readOnly: true,
+                  hint: 'masukan idle(min)...',
                   width: 150,
-                  controller: idleMin,
+                  controller: widget.idleMin,
                 )
               ],
             ),
@@ -87,14 +84,15 @@ class _IdleTimeFormState extends State<IdleTimeForm> {
                 SizedBox(
                   height: 10,
                 ),
-                Text("Idle(Hour)", style: TextStyle(fontWeight: FontWeight.bold)),
+                Text("Idle(Hour)",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
                 SizedBox(
                   height: 20,
                 ),
                 SmallTextfield(
                   width: 150,
                   readOnly: true,
-                  value: IdleTime().idleHour(),
+                  value: widget.idleHour,
                 )
               ],
             ),
@@ -105,35 +103,5 @@ class _IdleTimeFormState extends State<IdleTimeForm> {
         ),
       ]),
     );
-  }
-}
-
-class IdleTime {
-  dynamic idleDesc;
-  TextEditingController idleMin = TextEditingController();
-
-  dynamic get getIdleDesc{
-    return idleDesc;
-  }
-
-  set setIdleDesc(dynamic idleDesc){
-    idleDesc = idleDesc;
-  }
-
-  dynamic idleHour(){
-     return "idle hour";
-  }
-
-
-  Map<String, dynamic> getValue() {
-    return {
-      'idle_desc':idleDesc ,
-      'idle_min': idleMin,
-      'idle_hour': idleHour()
-    };
-  }
-
-  Widget idletimeForm(index) {
-    return IdleTimeForm(index: index + 1);
   }
 }
