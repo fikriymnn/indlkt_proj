@@ -11,6 +11,7 @@ import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_donut_bu
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_overview_breakdown.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_overview_chart.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_overview_datepicker.dart';
+import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_overview_radial.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -317,17 +318,21 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                 ],
                               ),
                             ]),
-                        Row(
-                          children: [
-                            Column(children: [
-                              RoundedProgressBar(
-                                  childLeft: Text("asd%",
-                                      style: TextStyle(color: Colors.white)),
-                                  percent: 40,
-                                  theme: RoundedProgressBarTheme.green)
-                            ]),
-                          ],
-                        ),
+                        //chart
+                        CircularPercentIndicator(
+                          radius: 60.0,
+                          lineWidth: 5.0,
+                          percent: 1.0,
+                          center: RadialBar(
+                            chartData: [
+                              ChartData('David', 25, Colors.cyanAccent),
+                              ChartData('Steve', 38, Colors.blueGrey),
+                              ChartData('Jack', 34, Colors.deepOrangeAccent),
+                              ChartData('Others', 52, Colors.greenAccent)
+                            ],
+                          ),
+                          progressColor: Colors.green,
+                        )
                       ],
                     ),
                     SizedBox(width: 270),
