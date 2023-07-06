@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:table_plus/table_plus.dart';
 
-import '../constants/style.dart';
-import 'content_detail_form.dart';
-import '../screens/product_acv_screens/product_acv_form.dart';
+import '../../../constants/style.dart';
+import '../../../widgets/content_detail_form.dart';
+import '../../product_acv_screens/product_acv_form.dart';
 
-class tabel_plus extends StatefulWidget {
-  const tabel_plus({super.key});
+class tabel_breakdown extends StatefulWidget {
+  const tabel_breakdown({super.key});
 
   @override
-  State<tabel_plus> createState() => _tabel_plusState();
+  State<tabel_breakdown> createState() => _tabel_breakdownState();
 }
 
-class _tabel_plusState extends State<tabel_plus> {
+class _tabel_breakdownState extends State<tabel_breakdown> {
   int selectedIndex = 0;
 
   //show alert
@@ -56,27 +56,32 @@ class _tabel_plusState extends State<tabel_plus> {
           (objData) => DataRow(
             cells: [
               DataCell(
-                Text(objData.product),
+                Text(objData.mesin),
                 showEditIcon: false,
                 placeholder: false,
               ),
               DataCell(
-                Text(objData.departement),
+                Text(objData.reasonBreakdown),
                 showEditIcon: false,
                 placeholder: false,
               ),
               DataCell(
-                Text(objData.shift.toString()),
+                Text(objData.freq.toString()),
                 showEditIcon: false,
                 placeholder: false,
               ),
               DataCell(
-                Text(objData.line.toString()),
+                Text(objData.bdHourMin.toString()),
                 showEditIcon: false,
                 placeholder: false,
               ),
               DataCell(
-                Text(objData.date.toString()),
+                Text(objData.bdHour.toString()),
+                showEditIcon: false,
+                placeholder: false,
+              ),
+              DataCell(
+                Text(objData.problem),
                 showEditIcon: false,
                 placeholder: false,
               ),
@@ -137,11 +142,12 @@ class _tabel_plusState extends State<tabel_plus> {
     super.initState();
     searchNameList = names;
     tableHeading.clear();
-    tableHeading.add("product");
-    tableHeading.add("Departement");
-    tableHeading.add("Shift");
-    tableHeading.add("Line");
-    tableHeading.add("Date");
+    tableHeading.add("Mesin");
+    tableHeading.add("Reason Breakdown");
+    tableHeading.add("Freq");
+    tableHeading.add("bdHour (Min)");
+    tableHeading.add("BdHour");
+    tableHeading.add("Problem");
     tableHeading.add("Action");
 
     for (var index = 0; index < tableHeading.length; index++) {
@@ -155,31 +161,37 @@ class _tabel_plusState extends State<tabel_plus> {
             for (int i = 0; i < names.length; i++) {
               if (index == 0 || index == 1) {
                 String data =
-                    index == 0 ? names[i].product : names[i].departement;
+                    index == 0 ? names[i].mesin : names[i].reasonBreakdown;
                 Name nameData = names[i];
                 if (data.toLowerCase().contains(value.toLowerCase())) {
                   searchList.add(nameData);
                 }
               } else if (index == 2) {
-                int shift = names[i].shift;
+                int freq = names[i].freq;
                 Name nameData = names[i];
-                if (shift.toString().contains(value)) {
+                if (freq.toString().contains(value)) {
                   searchList.add(nameData);
                 }
               } else if (index == 3) {
-                int line = names[i].line;
+                int bdHourMin = names[i].bdHourMin;
                 Name nameData = names[i];
-                if (line.toString().contains(value)) {
+                if (bdHourMin.toString().contains(value)) {
                   searchList.add(nameData);
                 }
               } else if (index == 4) {
-                int date = names[i].date;
+                int bdHour = names[i].bdHour;
                 Name nameData = names[i];
-                if (date.toString().contains(value)) {
+                if (bdHour.toString().contains(value)) {
+                  searchList.add(nameData);
+                }
+              } else if (index == 2) {
+                String problem = names[i].problem;
+                Name nameData = names[i];
+                if (problem.toString().contains(value)) {
                   searchList.add(nameData);
                 }
               }
-              // String data = index == 0 ? names[i].product : names[i].departement;
+              // String data = index == 0 ? names[i].mesin : names[i].reasonBreakdown;
               // Name nameData = names[i];
               // if (data.toLowerCase().contains(value.toLowerCase())) {
               //   searchList.add(nameData);
@@ -209,7 +221,7 @@ class _tabel_plusState extends State<tabel_plus> {
           exportFileName: "MyTableFile",
           tabelHeadingList: tableHeading,
           isExportCSVEnabled: false,
-          columnSpacing: MediaQuery.of(context).size.width * 0.08,
+          columnSpacing: MediaQuery.of(context).size.width * 0.06,
           sortColumnIndex: 1,
           isSearchEnabled: isSearchEnabled,
           rows: dataRowsValues(),
@@ -224,20 +236,27 @@ class _tabel_plusState extends State<tabel_plus> {
   var names = List.generate(
       20,
       (index) => Name(
-          product: "jhbh", departement: "jnk", shift: 9, line: 7687, date: 10));
+          mesin: "jhbh",
+          reasonBreakdown: "jnk",
+          freq: 9,
+          bdHourMin: 7687,
+          bdHour: 1,
+          problem: "jsfbjfjfbjsjfbs"));
 }
 
 class Name {
-  String product;
-  String departement;
-  int shift;
-  int line;
-  int date;
+  String mesin;
+  String reasonBreakdown;
+  int freq;
+  int bdHourMin;
+  int bdHour;
+  String problem;
 
   Name(
-      {required this.product,
-      required this.departement,
-      required this.shift,
-      required this.line,
-      required this.date});
+      {required this.mesin,
+      required this.reasonBreakdown,
+      required this.freq,
+      required this.bdHourMin,
+      required this.bdHour,
+      required this.problem});
 }
