@@ -20,7 +20,7 @@ class _RadialBarState extends State<RadialBar> {
         // Renders radial bar chart
         RadialBarSeries<ChartData, String>(
             pointColorMapper: (ChartData data, _) => data.color,
-            radius: '50%',
+            radius: '100%',
             dataSource: widget.chartData,
             xValueMapper: (ChartData data, _) => data.x,
             yValueMapper: (ChartData data, _) => data.y)

@@ -320,8 +320,8 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                             ]),
                         //chart
                         CircularPercentIndicator(
-                          radius: 60.0,
-                          lineWidth: 5.0,
+                          radius: 50.0,
+                          lineWidth: 10,
                           percent: 1.0,
                           center: RadialBar(
                             chartData: [
@@ -331,7 +331,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                               ChartData('Others', 52, Colors.greenAccent)
                             ],
                           ),
-                          progressColor: Colors.green,
+                          progressColor: Colors.pink,
                         )
                       ],
                     ),
