@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:indlkt_proj/screens/data_master_screens/widget/tabel_breakdown.dart';
+import 'package:indlkt_proj/screens/data_master_screens/widget/tabel_downtime.dart';
+import 'package:indlkt_proj/screens/data_master_screens/widget/tabel_idletime.dart';
+
 import 'package:indlkt_proj/widgets/tabel_plus.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:table_plus/table_plus.dart';
@@ -25,6 +29,19 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
     DashboardOverview(),
     DashboardProductivity(),
   ];
+  Widget tabel(selectedIndex) {
+    if (selectedIndex == 0) {
+      return tabel_plus();
+    } else if (selectedIndex == 1) {
+      return tabel_breakdown();
+    } else if (selectedIndex == 3) {
+      return tabel_downtime();
+    } else if (selectedIndex == 4) {
+      return tabel_idletime();
+    } else {
+      return tabel_plus();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -320,48 +337,6 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
                                                   : light),
                                         ))),
                                   ),
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedIndex = 4;
-                                      });
-                                    },
-                                    child: Container(
-                                        margin: EdgeInsets.only(
-                                            right: 15, top: 10, bottom: 10),
-                                        decoration: BoxDecoration(
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  blurRadius: 4,
-                                                  offset: Offset(0, 0),
-                                                  color: dark.withOpacity(0.65))
-                                            ],
-                                            border: Border.all(
-                                              color: Color.fromARGB(
-                                                  255, 2, 57, 101),
-                                            ),
-                                            color: selectedIndex == 4
-                                                ? Color.fromARGB(
-                                                    255, 195, 225, 250)
-                                                : blue,
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        width: 66,
-                                        height: 38,
-                                        padding: EdgeInsets.all(5),
-                                        child: Center(
-                                            child: Text(
-                                          "All Data",
-                                          style: GoogleFonts.montserrat(
-                                              textStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .displayMedium,
-                                              fontSize: 10,
-                                              color: selectedIndex == 4
-                                                  ? dark
-                                                  : light),
-                                        ))),
-                                  )
                                 ],
                               )),
                               SizedBox(
@@ -372,7 +347,7 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
                         ),
                       ),
                     ),
-                    tabel_plus()
+                    tabel(selectedIndex)
                   ],
                 )),
               ]),

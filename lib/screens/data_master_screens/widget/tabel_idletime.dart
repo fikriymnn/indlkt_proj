@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:table_plus/table_plus.dart';
 
-import '../constants/style.dart';
-import 'content_detail_form.dart';
-import '../screens/product_acv_screens/product_acv_form.dart';
+import '../../../constants/style.dart';
+import '../../../widgets/content_detail_form.dart';
+import '../../product_acv_screens/product_acv_form.dart';
 
-class tabel_plus extends StatefulWidget {
-  const tabel_plus({super.key});
+class tabel_idletime extends StatefulWidget {
+  const tabel_idletime({super.key});
 
   @override
-  State<tabel_plus> createState() => _tabel_plusState();
+  State<tabel_idletime> createState() => _tabel_idletimeState();
 }
 
-class _tabel_plusState extends State<tabel_plus> {
+class _tabel_idletimeState extends State<tabel_idletime> {
   int selectedIndex = 0;
 
   //show alert
@@ -56,27 +56,17 @@ class _tabel_plusState extends State<tabel_plus> {
           (objData) => DataRow(
             cells: [
               DataCell(
-                Text(objData.product),
+                Text(objData.idleDesc),
                 showEditIcon: false,
                 placeholder: false,
               ),
               DataCell(
-                Text(objData.departement),
+                Text(objData.idleMin),
                 showEditIcon: false,
                 placeholder: false,
               ),
               DataCell(
-                Text(objData.shift.toString()),
-                showEditIcon: false,
-                placeholder: false,
-              ),
-              DataCell(
-                Text(objData.line.toString()),
-                showEditIcon: false,
-                placeholder: false,
-              ),
-              DataCell(
-                Text(objData.date.toString()),
+                Text(objData.idleHour.toString()),
                 showEditIcon: false,
                 placeholder: false,
               ),
@@ -137,11 +127,10 @@ class _tabel_plusState extends State<tabel_plus> {
     super.initState();
     searchNameList = names;
     tableHeading.clear();
-    tableHeading.add("product");
-    tableHeading.add("Departement");
-    tableHeading.add("Shift");
-    tableHeading.add("Line");
-    tableHeading.add("Date");
+    tableHeading.add("Idle Desc");
+    tableHeading.add("Idle(Min)");
+    tableHeading.add("idleHour");
+
     tableHeading.add("Action");
 
     for (var index = 0; index < tableHeading.length; index++) {
@@ -154,32 +143,31 @@ class _tabel_plusState extends State<tabel_plus> {
             searchList.clear();
             for (int i = 0; i < names.length; i++) {
               if (index == 0 || index == 1) {
-                String data =
-                    index == 0 ? names[i].product : names[i].departement;
+                String data = index == 0 ? names[i].idleDesc : names[i].idleMin;
                 Name nameData = names[i];
                 if (data.toLowerCase().contains(value.toLowerCase())) {
                   searchList.add(nameData);
                 }
               } else if (index == 2) {
-                int shift = names[i].shift;
+                String idleDesc = names[i].idleDesc;
                 Name nameData = names[i];
-                if (shift.toString().contains(value)) {
+                if (idleDesc.toString().contains(value)) {
                   searchList.add(nameData);
                 }
-              } else if (index == 3) {
-                int line = names[i].line;
+              } else if (index == 2) {
+                String idleMin = names[i].idleMin;
                 Name nameData = names[i];
-                if (line.toString().contains(value)) {
+                if (idleMin.toString().contains(value)) {
                   searchList.add(nameData);
                 }
-              } else if (index == 4) {
-                int date = names[i].date;
+              } else if (index == 2) {
+                int idleHour = names[i].idleHour;
                 Name nameData = names[i];
-                if (date.toString().contains(value)) {
+                if (idleHour.toString().contains(value)) {
                   searchList.add(nameData);
                 }
               }
-              // String data = index == 0 ? names[i].product : names[i].departement;
+              // String data = index == 0 ? names[i].dt : names[i].idleMin;
               // Name nameData = names[i];
               // if (data.toLowerCase().contains(value.toLowerCase())) {
               //   searchList.add(nameData);
@@ -209,7 +197,7 @@ class _tabel_plusState extends State<tabel_plus> {
           exportFileName: "MyTableFile",
           tabelHeadingList: tableHeading,
           isExportCSVEnabled: false,
-          columnSpacing: MediaQuery.of(context).size.width * 0.08,
+          columnSpacing: MediaQuery.of(context).size.width * 0.16,
           sortColumnIndex: 1,
           isSearchEnabled: isSearchEnabled,
           rows: dataRowsValues(),
@@ -224,20 +212,20 @@ class _tabel_plusState extends State<tabel_plus> {
   var names = List.generate(
       20,
       (index) => Name(
-          product: "jhbh", departement: "jnk", shift: 9, line: 7687, date: 10));
+            idleDesc: "jhbh",
+            idleMin: "jnk",
+            idleHour: 9,
+          ));
 }
 
 class Name {
-  String product;
-  String departement;
-  int shift;
-  int line;
-  int date;
+  String idleDesc;
+  String idleMin;
+  int idleHour;
 
-  Name(
-      {required this.product,
-      required this.departement,
-      required this.shift,
-      required this.line,
-      required this.date});
+  Name({
+    required this.idleDesc,
+    required this.idleMin,
+    required this.idleHour,
+  });
 }
