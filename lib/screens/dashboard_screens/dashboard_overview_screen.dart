@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
+import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
 import 'package:indlkt_proj/constants/style.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_card.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_container.dart';
@@ -9,7 +11,9 @@ import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_donut_bu
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_overview_breakdown.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_overview_chart.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_overview_datepicker.dart';
+import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_overview_radial.dart';
 import 'package:intl/intl.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class DashboardOverview extends StatefulWidget {
   const DashboardOverview({super.key});
@@ -314,14 +318,21 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                 ],
                               ),
                             ]),
-                        Row(
-                          children: [
-                            Container(
-                                width: 300,
-                                height: 300,
-                                child: DonutButton(dataset)),
-                          ],
-                        ),
+                        //chart
+                        CircularPercentIndicator(
+                          radius: 60.0,
+                          lineWidth: 5.0,
+                          percent: 1.0,
+                          center: RadialBar(
+                            chartData: [
+                              ChartData('David', 25, Colors.cyanAccent),
+                              ChartData('Steve', 38, Colors.blueGrey),
+                              ChartData('Jack', 34, Colors.deepOrangeAccent),
+                              ChartData('Others', 52, Colors.greenAccent)
+                            ],
+                          ),
+                          progressColor: Colors.green,
+                        )
                       ],
                     ),
                     SizedBox(width: 270),

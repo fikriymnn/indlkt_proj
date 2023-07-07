@@ -23,9 +23,10 @@ class CustomDropdown extends StatefulWidget {
 class _CustomDropdownState extends State<CustomDropdown> {
   @override
   Widget build(BuildContext context) {
+    double mediaQuery = MediaQuery.of(context).size.width;
     return Center(
       child: Container(
-        width: 310,
+        width: mediaQuery * 0.227,
         height: 50,
         decoration: BoxDecoration(
           color: light,

@@ -23,6 +23,7 @@ class _SideBarState extends State<SideBar> {
     DataMasterScreen(),
     FormInputData()
   ];
+
   int selectedIndex = 2;
   int selectedIndexDisplay = 2;
 
