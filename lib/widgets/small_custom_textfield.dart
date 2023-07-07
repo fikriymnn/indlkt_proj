@@ -35,9 +35,9 @@ class _SmallTextfieldState extends State<SmallTextfield> {
         child: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
           child: TextFormField(
-            initialValue: widget.value,
+            initialValue: widget.value == null ? null : "${widget.value}",
             readOnly: widget.readOnly == null ? false : true,
-            controller: widget.controller,
+            controller: widget.controller == null ? null : widget.controller,
             decoration: InputDecoration.collapsed(
                 hintText: widget.hint ?? "",
                 hintStyle:
