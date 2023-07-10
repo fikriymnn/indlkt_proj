@@ -81,8 +81,8 @@ class _detail_formState extends State<detail_form> {
     reason = [reasons];
   }
 
-  List<DownTime> downTime = [DownTime()];
-  List<IdleTime> idleTime = [IdleTime()];
+  // List<DownTime> downTime = [DownTime()];
+  // List<IdleTime> idleTime = [IdleTime()];
 
   @override
   Widget build(BuildContext context) {
@@ -916,8 +916,7 @@ class _detail_formState extends State<detail_form> {
                                                     SmallTextfield(
                                                       readOnly: true,
                                                       width: 150,
-                                                      value:
-                                                          DownTime().actHour(),
+                                                      value: "dt",
                                                     )
                                                   ],
                                                 ),
@@ -1043,8 +1042,7 @@ class _detail_formState extends State<detail_form> {
                                                     SmallTextfield(
                                                       width: 150,
                                                       readOnly: true,
-                                                      value:
-                                                          IdleTime().idleHour(),
+                                                      value: "idle",
                                                     )
                                                   ],
                                                 ),
