@@ -10,7 +10,7 @@ class BreakdownForm extends StatefulWidget {
   final TextEditingController bdMin;
   final TextEditingController problem;
   final String reason;
-  final String bdHour;
+  // final String bdHour;
   final List<DropdownMenuItem> dropdownItemMesin;
   final void Function(dynamic) onChangeMesin;
   final dynamic valueMesin;
@@ -24,7 +24,7 @@ class BreakdownForm extends StatefulWidget {
       required this.freq,
       required this.problem,
       required this.reason,
-      required this.bdHour,
+      // required this.bdHour,
       required this.dropdownItemMesin,
       required this.onChangeMesin,
       required this.valueMesin,
@@ -37,13 +37,15 @@ class BreakdownForm extends StatefulWidget {
 }
 
 class BreakdownFormState extends State<BreakdownForm> {
-  var vau = "ajsjds";
+  String? hour = "0";
 
   String? mesin;
   String? reason;
 
   @override
   Widget build(BuildContext context) {
+    var dbmin = widget.bdMin.text == "" ? "0" : widget.bdMin.text;
+    print(widget.bdMin.text);
     return Container(
       margin: EdgeInsets.only(bottom: 30),
       child: Column(children: [
@@ -124,7 +126,14 @@ class BreakdownFormState extends State<BreakdownForm> {
                   width: 150,
                   controller: widget.bdMin,
                   hint: 'masukan db hour min...',
-                )
+                  onChange: (value) {
+                    setState(() {
+                      var aa = int.parse(value) / 60;
+
+                      hour = aa.toString();
+                    });
+                  },
+                ),
               ],
             ),
             Column(
@@ -136,11 +145,7 @@ class BreakdownFormState extends State<BreakdownForm> {
                 SizedBox(
                   height: 20,
                 ),
-                SmallTextfield(
-                  width: 150,
-                  value: widget.bdHour,
-                  readOnly: true,
-                )
+                Text("${hour}")
               ],
             ),
             SizedBox(

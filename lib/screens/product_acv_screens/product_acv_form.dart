@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:js_interop';
+
 import 'package:flutter/material.dart';
 import 'package:indlkt_proj/widgets/custom_dropdown.dart';
 import 'package:indlkt_proj/widgets/appbar.dart';
@@ -53,12 +56,14 @@ class _FormInputDataState extends State<FormInputData> {
 
   String? mesins;
   String? reasons;
+  String? bdHours = '0';
 
   List<String?> mesin = [];
   List<String?> reason = [];
   List<TextEditingController> freq = [];
   List<TextEditingController> dbMin = [];
   List<TextEditingController> problem = [];
+  List<String?> bdHour = [];
 
   //DownTime
   int dLength = 1;
@@ -80,16 +85,30 @@ class _FormInputDataState extends State<FormInputData> {
   List<String?> idleDesc = [];
   List<TextEditingController> idleMin = [];
 
+  toHour(index, min) {
+    var miin = int.parse(min);
+    Timer.periodic(Duration(seconds: 3), (timer) {
+      setState(() {
+        var result = miin / 60;
+        bdHour[index] = result.toString();
+      });
+      print(actMin[0].text);
+    });
+    return bdHour[index];
+  }
+
   @override
   Widget build(BuildContext context) {
     double mediaQueryWidth = MediaQuery.of(context).size.width;
 
     //breakdown
     for (int i = 0; i < bLength; i++) freq.add(TextEditingController());
-    for (int i = 0; i < bLength; i++) dbMin.add(TextEditingController());
+    for (int i = 0; i < bLength; i++)
+      dbMin.add(TextEditingController(text: "0"));
     for (int i = 0; i < bLength; i++) problem.add(TextEditingController());
     for (int i = 0; i < bLength; i++) mesin.add(mesins);
     for (int i = 0; i < bLength; i++) reason.add(reasons);
+    for (int i = 0; i < bLength; i++) bdHour.add(bdHours);
 
     //downtime
     for (int i = 0; i < bLength; i++) actMin.add(TextEditingController());
@@ -673,7 +692,8 @@ class _FormInputDataState extends State<FormInputData> {
                                                       freq: freq[index],
                                                       problem: problem[index],
                                                       reason: "reason",
-                                                      bdHour: "dbHour",
+                                                      // bdHour: toHour(index,
+                                                      //     dbMin[index].text),
                                                       dropdownItemMesin: [
                                                         DropdownMenuItem(
                                                           child:
@@ -697,6 +717,7 @@ class _FormInputDataState extends State<FormInputData> {
                                                           mesin[index] = a;
                                                         });
                                                       },
+
                                                       dropdownItemReason: [
                                                         DropdownMenuItem(
                                                           child:
@@ -956,12 +977,15 @@ class _FormInputDataState extends State<FormInputData> {
                                   var c = problem[i].text;
                                   var d = mesin[i];
                                   var e = reason[i];
+                                  var n = dbMin[i].text;
 
                                   print(a);
                                   print(b);
                                   print(c);
                                   print(d);
                                   print(e);
+                                  print(n);
+                                  print(toHour(i, n));
                                 }
                                 freq.add(TextEditingController());
                               },
