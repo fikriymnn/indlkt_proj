@@ -28,11 +28,21 @@ class _FormInputDataState extends State<FormInputData> {
   String? line;
 
   TextEditingController actualOutput = TextEditingController();
-  TextEditingController grossHour = TextEditingController();
   TextEditingController nominalSpeed = TextEditingController();
   TextEditingController totalHour = TextEditingController();
-  TextEditingController netHour = TextEditingController();
-  TextEditingController targetHour = TextEditingController();
+
+  String netHour() {
+    return 'netHour';
+  }
+
+  String targetHour() {
+    return '19';
+  }
+
+  String grossHour() {
+    return 'sdf';
+  }
+
   TextEditingController planningOutput = TextEditingController();
 
   dynamic Function() le = () {
@@ -53,12 +63,14 @@ class _FormInputDataState extends State<FormInputData> {
 
   String? mesins;
   String? reasons;
+  String? bdHours;
 
   List<String?> mesin = [];
   List<String?> reason = [];
   List<TextEditingController> freq = [];
   List<TextEditingController> dbMin = [];
   List<TextEditingController> problem = [];
+  List<String?> bdHour = [];
 
   //DownTime
   int dLength = 1;
@@ -66,19 +78,23 @@ class _FormInputDataState extends State<FormInputData> {
   String? downtimes;
   String? subDTs;
   String? stds;
+  String? actHours;
 
   List<String?> downtime = [];
   List<String?> subDT = [];
   List<String?> std = [];
   List<TextEditingController> actMin = [];
+  List<String?> actHour = [];
 
   //IdleTime
   int iLength = 1;
 
   String? idleDescs;
+  String? idleHours;
 
   List<String?> idleDesc = [];
   List<TextEditingController> idleMin = [];
+  List<String?> idleHour = [];
 
   @override
   Widget build(BuildContext context) {
@@ -90,12 +106,13 @@ class _FormInputDataState extends State<FormInputData> {
     for (int i = 0; i < bLength; i++) problem.add(TextEditingController());
     for (int i = 0; i < bLength; i++) mesin.add(mesins);
     for (int i = 0; i < bLength; i++) reason.add(reasons);
+    for (int i = 0; i < bLength; i++) bdHour.add(bdHours);
 
     //downtime
     for (int i = 0; i < bLength; i++) actMin.add(TextEditingController());
     for (int i = 0; i < bLength; i++) subDT.add(subDTs);
     for (int i = 0; i < bLength; i++) downtime.add(downtimes);
-    for (int i = 0; i < bLength; i++) std.add(stds);
+    for (int i = 0; i < bLength; i++) actHour.add(actHours);
 
     //idle time
     for (int i = 0; i < bLength; i++) idleMin.add(TextEditingController());
@@ -231,8 +248,7 @@ class _FormInputDataState extends State<FormInputData> {
                                             value: shift,
                                             dropdownItems: [
                                               DropdownMenuItem(
-                                                child: Text(
-                                                    "Filling_packing_SKM_couch"),
+                                                child: Text("1"),
                                                 value: "1",
                                               ),
                                               DropdownMenuItem(
@@ -294,8 +310,8 @@ class _FormInputDataState extends State<FormInputData> {
                                                         FontWeight.bold)),
                                           ),
                                           CustomTextField(
-                                            hint: "Masukan Gross Hour...",
-                                            controller: grossHour,
+                                            readOnly: true,
+                                            displayValue: grossHour(),
                                           ),
                                         ],
                                       ),
@@ -385,8 +401,8 @@ class _FormInputDataState extends State<FormInputData> {
                                                   fontWeight: FontWeight.bold)),
                                         ),
                                         CustomTextField(
-                                          hint: "Masukan Keterangan",
-                                          controller: netHour,
+                                          readOnly: true,
+                                          displayValue: netHour(),
                                         ),
                                       ],
                                     ),
@@ -475,8 +491,8 @@ class _FormInputDataState extends State<FormInputData> {
                                                   fontWeight: FontWeight.bold)),
                                         ),
                                         CustomTextField(
-                                          hint: "Masukan Target Hour...",
-                                          controller: targetHour,
+                                          readOnly: true,
+                                          displayValue: targetHour(),
                                         ),
                                       ],
                                     ),
@@ -667,13 +683,21 @@ class _FormInputDataState extends State<FormInputData> {
                                                   itemCount: bLength,
                                                   itemBuilder:
                                                       (context, index) {
+                                                    setState(() {
+                                                      bdHour[index] =
+                                                          (int.parse(dbMin[
+                                                                          index]
+                                                                      .text) /
+                                                                  60)
+                                                              .toString();
+                                                    });
                                                     return BreakdownForm(
                                                       index: bLength,
                                                       bdMin: dbMin[index],
                                                       freq: freq[index],
                                                       problem: problem[index],
                                                       reason: "reason",
-                                                      bdHour: "dbHour",
+                                                      bdHour: bdHour[index]!,
                                                       dropdownItemMesin: [
                                                         DropdownMenuItem(
                                                           child:
@@ -775,10 +799,16 @@ class _FormInputDataState extends State<FormInputData> {
                                                   itemCount: dLength,
                                                   itemBuilder:
                                                       (context, index) {
+                                                    actHour[index] = (int.parse(
+                                                                actMin[index]
+                                                                    .text) /
+                                                            60)
+                                                        .toString();
                                                     return DownTimeForm(
                                                         index: index,
                                                         actMin: actMin[index],
-                                                        actHour: "asdasd",
+                                                        actHour:
+                                                            actHour[index]!,
                                                         dropdownItemDT: [
                                                           DropdownMenuItem(
                                                             child:
@@ -903,9 +933,16 @@ class _FormInputDataState extends State<FormInputData> {
                                                   itemCount: iLength,
                                                   itemBuilder:
                                                       (context, index) {
+                                                    idleHour[index] =
+                                                        (int.parse(idleMin[
+                                                                        index]
+                                                                    .text) /
+                                                                60)
+                                                            .toString();
                                                     return IdleTimeForm(
                                                         index: index,
-                                                        idleHour: "asd",
+                                                        idleHour:
+                                                            idleHour[index]!,
                                                         idleMin: idleMin[index],
                                                         valueIdleDesc:
                                                             idleDesc[index],

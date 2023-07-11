@@ -57,6 +57,7 @@ dependencies:
   url_launcher: ^6.1.11
   percent_indicator: ^4.2.3
   flutter_rounded_progress_bar: ^0.2.0
+  flutter_animation_progress_bar: ^2.3.1
 
 
 dev_dependencies:

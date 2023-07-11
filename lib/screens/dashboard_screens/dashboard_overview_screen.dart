@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
 import 'package:indlkt_proj/constants/style.dart';
@@ -319,19 +320,166 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                               ),
                             ]),
                         //chart
-                        CircularPercentIndicator(
-                          radius: 50.0,
-                          lineWidth: 10,
-                          percent: 1.0,
-                          center: RadialBar(
-                            chartData: [
-                              ChartData('David', 25, Colors.cyanAccent),
-                              ChartData('Steve', 38, Colors.blueGrey),
-                              ChartData('Jack', 34, Colors.deepOrangeAccent),
-                              ChartData('Others', 52, Colors.greenAccent)
-                            ],
-                          ),
-                          progressColor: Colors.pink,
+                        Row(
+                          children: [
+                            Container(
+                              child: Column(children: [
+                                Row(
+                                  children: [
+                                    Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        CircularPercentIndicator(
+                                          radius: 50.0,
+                                          lineWidth: 10,
+                                          percent: 1.0,
+                                          center: RadialBar(
+                                            chartData: [
+                                              ChartData('David', 25,
+                                                  Colors.cyanAccent),
+                                              ChartData(
+                                                  'Steve', 38, Colors.blueGrey),
+                                              ChartData('Jack', 34,
+                                                  Colors.deepOrangeAccent),
+                                              ChartData('Others', 52,
+                                                  Colors.greenAccent)
+                                            ],
+                                          ),
+                                          progressColor: Colors.pink,
+                                        ),
+                                        CircularPercentIndicator(
+                                          radius: 20.0,
+                                          lineWidth: 10,
+                                          percent: 1.0,
+                                          center: Text("SKM"),
+                                        )
+                                      ],
+                                    ),
+                                    Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        CircularPercentIndicator(
+                                          radius: 50.0,
+                                          lineWidth: 12,
+                                          percent: 1.0,
+                                          center: RadialBar(
+                                            chartData: [
+                                              ChartData('David', 25,
+                                                  Colors.cyanAccent),
+                                              ChartData(
+                                                  'Steve', 38, Colors.blueGrey),
+                                              ChartData('Jack', 34,
+                                                  Colors.deepOrangeAccent),
+                                              ChartData('Others', 52,
+                                                  Colors.greenAccent)
+                                            ],
+                                          ),
+                                          progressColor: Colors.pink,
+                                        ),
+                                        CircularPercentIndicator(
+                                          radius: 20.0,
+                                          lineWidth: 12,
+                                          percent: 1.0,
+                                          center: Text("SKM"),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        CircularPercentIndicator(
+                                          radius: 50.0,
+                                          lineWidth: 10,
+                                          percent: 1.0,
+                                          center: RadialBar(
+                                            chartData: [
+                                              ChartData('David', 25,
+                                                  Colors.cyanAccent),
+                                              ChartData(
+                                                  'Steve', 38, Colors.blueGrey),
+                                              ChartData('Jack', 34,
+                                                  Colors.deepOrangeAccent),
+                                              ChartData('Others', 52,
+                                                  Colors.greenAccent)
+                                            ],
+                                          ),
+                                          progressColor: Colors.pink,
+                                        ),
+                                        CircularPercentIndicator(
+                                          radius: 20.0,
+                                          lineWidth: 10,
+                                          percent: 1.0,
+                                          center: Text("SKM"),
+                                        )
+                                      ],
+                                    ),
+                                    Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        CircularPercentIndicator(
+                                          radius: 50.0,
+                                          lineWidth: 10,
+                                          percent: 1.0,
+                                          center: RadialBar(
+                                            chartData: [
+                                              ChartData('David', 25,
+                                                  Colors.cyanAccent),
+                                              ChartData(
+                                                  'Steve', 38, Colors.blueGrey),
+                                              ChartData('Jack', 34,
+                                                  Colors.deepOrangeAccent),
+                                              ChartData('Others', 52,
+                                                  Colors.greenAccent)
+                                            ],
+                                          ),
+                                          progressColor: Colors.pink,
+                                        ),
+                                        CircularPercentIndicator(
+                                          radius: 20.0,
+                                          lineWidth: 10,
+                                          percent: 1.0,
+                                          center: Text("SKM"),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                )
+                              ]),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Container(
+                              width: 100,
+                              height: 80,
+                              child: Column(
+                                children: [
+                                  FAProgressBar(
+                                    borderRadius: BorderRadius.circular(1),
+                                    progressColor: Colors.green,
+                                    size: 15,
+                                    currentValue: 80,
+                                  ),
+                                  FAProgressBar(
+                                    borderRadius: BorderRadius.circular(1),
+                                    progressColor: Colors.green,
+                                    size: 15,
+                                    currentValue: 80,
+                                  ),
+                                  FAProgressBar(
+                                    borderRadius: BorderRadius.circular(1),
+                                    progressColor: Colors.green,
+                                    size: 15,
+                                    currentValue: 80,
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
                         )
                       ],
                     ),

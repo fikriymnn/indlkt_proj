@@ -17,20 +17,21 @@ class BreakdownForm extends StatefulWidget {
   final List<DropdownMenuItem> dropdownItemReason;
   final void Function(dynamic) onChangeReason;
   final dynamic valueReason;
-  const BreakdownForm(
-      {super.key,
-      required this.index,
-      required this.bdMin,
-      required this.freq,
-      required this.problem,
-      required this.reason,
-      required this.bdHour,
-      required this.dropdownItemMesin,
-      required this.onChangeMesin,
-      required this.valueMesin,
-      required this.dropdownItemReason,
-      required this.onChangeReason,
-      required this.valueReason});
+  const BreakdownForm({
+    super.key,
+    required this.index,
+    required this.bdMin,
+    required this.freq,
+    required this.problem,
+    required this.reason,
+    required this.bdHour,
+    required this.dropdownItemMesin,
+    required this.onChangeMesin,
+    required this.valueMesin,
+    required this.dropdownItemReason,
+    required this.onChangeReason,
+    required this.valueReason,
+  });
 
   @override
   State<BreakdownForm> createState() => BreakdownFormState();
