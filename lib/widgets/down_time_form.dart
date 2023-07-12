@@ -18,6 +18,7 @@ class DownTimeForm extends StatefulWidget {
   final List<DropdownMenuItem> dropdownItemSTD;
   final void Function(dynamic) onChangeSTD;
   final dynamic valueSTD;
+  final void Function(dynamic)? onChange;
 
   const DownTimeForm(
       {super.key,
@@ -32,13 +33,15 @@ class DownTimeForm extends StatefulWidget {
       required this.valueSubDT,
       required this.dropdownItemSTD,
       required this.onChangeSTD,
-      required this.valueSTD});
+      required this.valueSTD,
+      this.onChange});
 
   @override
   State<DownTimeForm> createState() => _DownTimeFormState();
 }
 
 class _DownTimeFormState extends State<DownTimeForm> {
+  String? hour = "0";
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -55,7 +58,7 @@ class _DownTimeFormState extends State<DownTimeForm> {
                     color: blue, borderRadius: BorderRadius.circular(100)),
                 child: Center(
                     child: Text(
-                  "${widget.index+1}",
+                  "${widget.index + 1}",
                   style: TextStyle(color: light),
                 ))),
             Column(
@@ -120,10 +123,10 @@ class _DownTimeFormState extends State<DownTimeForm> {
                   height: 20,
                 ),
                 SmallTextfield(
-                  hint: "masukan Act(Min)...",
-                  width: 150,
-                  controller: widget.actMin,
-                )
+                    hint: "masukan Act(Min)...",
+                    width: 150,
+                    controller: widget.actMin,
+                    onChange: widget.onChange)
               ],
             ),
             Column(
@@ -136,11 +139,7 @@ class _DownTimeFormState extends State<DownTimeForm> {
                 SizedBox(
                   height: 20,
                 ),
-                SmallTextfield(
-                  readOnly: true,
-                  width: 150,
-                  value: widget.actHour,
-                )
+                Text("${widget.actHour}")
               ],
             ),
             SizedBox(

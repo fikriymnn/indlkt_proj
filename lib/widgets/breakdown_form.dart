@@ -10,13 +10,14 @@ class BreakdownForm extends StatefulWidget {
   final TextEditingController bdMin;
   final TextEditingController problem;
   final String reason;
-  // final String bdHour;
+  final String bdHour;
   final List<DropdownMenuItem> dropdownItemMesin;
   final void Function(dynamic) onChangeMesin;
   final dynamic valueMesin;
   final List<DropdownMenuItem> dropdownItemReason;
   final void Function(dynamic) onChangeReason;
   final dynamic valueReason;
+  final void Function(dynamic)? onChange;
   const BreakdownForm(
       {super.key,
       required this.index,
@@ -24,13 +25,14 @@ class BreakdownForm extends StatefulWidget {
       required this.freq,
       required this.problem,
       required this.reason,
-      // required this.bdHour,
+      required this.bdHour,
       required this.dropdownItemMesin,
       required this.onChangeMesin,
       required this.valueMesin,
       required this.dropdownItemReason,
       required this.onChangeReason,
-      required this.valueReason});
+      required this.valueReason,
+      this.onChange});
 
   @override
   State<BreakdownForm> createState() => BreakdownFormState();
@@ -123,17 +125,10 @@ class BreakdownFormState extends State<BreakdownForm> {
                   height: 20,
                 ),
                 SmallTextfield(
-                  width: 150,
-                  controller: widget.bdMin,
-                  hint: 'masukan db hour min...',
-                  onChange: (value) {
-                    setState(() {
-                      var aa = int.parse(value) / 60;
-
-                      hour = aa.toString();
-                    });
-                  },
-                ),
+                    width: 150,
+                    controller: widget.bdMin,
+                    hint: 'masukan db hour min...',
+                    onChange: widget.onChange),
               ],
             ),
             Column(
@@ -145,7 +140,7 @@ class BreakdownFormState extends State<BreakdownForm> {
                 SizedBox(
                   height: 20,
                 ),
-                Text("${hour}")
+                Text("${widget.bdHour}")
               ],
             ),
             SizedBox(

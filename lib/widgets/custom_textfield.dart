@@ -4,16 +4,20 @@ import '../constants/style.dart';
 
 class CustomTextField extends StatefulWidget {
   final String? hint;
+  // final String? display;
   final TextEditingController? controller;
   final String? displayValue;
   final bool? readOnly;
+  final void Function(dynamic)? onChange;
 
   const CustomTextField(
       {super.key,
+      // this.display,
       this.hint,
       this.controller,
       this.displayValue,
-      this.readOnly});
+      this.readOnly,
+      this.onChange});
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -41,6 +45,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         child: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20, top: 15),
           child: TextFormField(
+            onChanged: widget.onChange,
             initialValue: widget.displayValue,
             readOnly: widget.readOnly == null ? false : true,
             controller: widget.controller ?? null,

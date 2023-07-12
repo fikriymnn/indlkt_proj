@@ -11,6 +11,7 @@ class IdleTimeForm extends StatefulWidget {
   final dynamic valueIdleDesc;
   final void Function(dynamic) onChangeIdleDesc;
   final List<DropdownMenuItem> dropdownItemIdleDesc;
+  final void Function(dynamic)? onChange;
 
   const IdleTimeForm(
       {super.key,
@@ -19,13 +20,15 @@ class IdleTimeForm extends StatefulWidget {
       required this.idleMin,
       required this.valueIdleDesc,
       required this.onChangeIdleDesc,
-      required this.dropdownItemIdleDesc});
+      required this.dropdownItemIdleDesc,
+      this.onChange});
 
   @override
   State<IdleTimeForm> createState() => _IdleTimeFormState();
 }
 
 class _IdleTimeFormState extends State<IdleTimeForm> {
+  String hour = "0";
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -73,10 +76,10 @@ class _IdleTimeFormState extends State<IdleTimeForm> {
                   height: 20,
                 ),
                 SmallTextfield(
-                  hint: 'masukan idle(min)...',
-                  width: 150,
-                  controller: widget.idleMin,
-                )
+                    hint: 'masukan idle(min)...',
+                    width: 150,
+                    controller: widget.idleMin,
+                    onChange: widget.onChange)
               ],
             ),
             Column(
@@ -89,11 +92,7 @@ class _IdleTimeFormState extends State<IdleTimeForm> {
                 SizedBox(
                   height: 20,
                 ),
-                SmallTextfield(
-                  width: 150,
-                  readOnly: true,
-                  value: widget.idleHour,
-                )
+                Text("${widget.idleHour}")
               ],
             ),
             SizedBox(

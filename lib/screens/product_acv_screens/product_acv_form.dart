@@ -12,6 +12,7 @@ import '../../widgets/custom_textfield.dart';
 import '../../widgets/display_field.dart';
 import '../../widgets/down_time_form.dart';
 import '../../widgets/idle_time_form.dart';
+import '../../widgets/large_display_field.dart';
 import '../../widgets/small_custom_dropdown.dart';
 import '../../widgets/small_custom_textfield.dart';
 
@@ -24,6 +25,17 @@ class FormInputData extends StatefulWidget {
 
 class _FormInputDataState extends State<FormInputData> {
   //Product Form
+  String grossHour = "0";
+  String actualOutputs = "0";
+  String nominalSpeeds = "0";
+  String totalHours = "0";
+  String netHour = "0";
+  String targetHour = "0";
+  String le = "0";
+  String lp = "0";
+  String dt = "0";
+  String bd = "0";
+
   String? namaLaporan;
   String? shift;
   String? departement;
@@ -31,25 +43,24 @@ class _FormInputDataState extends State<FormInputData> {
   String? line;
 
   TextEditingController actualOutput = TextEditingController();
-  TextEditingController grossHour = TextEditingController();
+
   TextEditingController nominalSpeed = TextEditingController();
   TextEditingController totalHour = TextEditingController();
-  TextEditingController netHour = TextEditingController();
-  TextEditingController targetHour = TextEditingController();
+
   TextEditingController planningOutput = TextEditingController();
 
-  dynamic Function() le = () {
-    return "le";
-  };
-  dynamic Function() lp = () {
-    return "lp";
-  };
-  dynamic Function() dt = () {
-    return "dt";
-  };
-  dynamic Function() bd = () {
-    return "bd";
-  };
+  // dynamic Function() le = () {
+  //   return "le";
+  // };
+  // dynamic Function() lp = () {
+  //   return "lp";
+  // };
+  // dynamic Function() dt = () {
+  //   return "dt";
+  // };
+  // dynamic Function() bd = () {
+  //   return "bd";
+  // };
 
   //Breakdown
   int bLength = 1;
@@ -71,6 +82,7 @@ class _FormInputDataState extends State<FormInputData> {
   String? downtimes;
   String? subDTs;
   String? stds;
+  String? actHour = "0";
 
   List<String?> downtime = [];
   List<String?> subDT = [];
@@ -81,6 +93,7 @@ class _FormInputDataState extends State<FormInputData> {
   int iLength = 1;
 
   String? idleDescs;
+  String? idleHour = "0";
 
   List<String?> idleDesc = [];
   List<TextEditingController> idleMin = [];
@@ -111,14 +124,16 @@ class _FormInputDataState extends State<FormInputData> {
     for (int i = 0; i < bLength; i++) bdHour.add(bdHours);
 
     //downtime
-    for (int i = 0; i < bLength; i++) actMin.add(TextEditingController());
-    for (int i = 0; i < bLength; i++) subDT.add(subDTs);
-    for (int i = 0; i < bLength; i++) downtime.add(downtimes);
-    for (int i = 0; i < bLength; i++) std.add(stds);
+    for (int i = 0; i < dLength; i++)
+      actMin.add(TextEditingController(text: "0"));
+    for (int i = 0; i < dLength; i++) subDT.add(subDTs);
+    for (int i = 0; i < dLength; i++) downtime.add(downtimes);
+    for (int i = 0; i < dLength; i++) std.add(stds);
 
     //idle time
-    for (int i = 0; i < bLength; i++) idleMin.add(TextEditingController());
-    for (int i = 0; i < bLength; i++) idleDesc.add(idleDescs);
+    for (int i = 0; i < iLength; i++)
+      idleMin.add(TextEditingController(text: "0"));
+    for (int i = 0; i < iLength; i++) idleDesc.add(idleDescs);
 
     return Scaffold(
       appBar: CustomAppBar(title: "Input Data"),
@@ -288,6 +303,25 @@ class _FormInputDataState extends State<FormInputData> {
                                           CustomTextField(
                                             hint: "Masukan Actual Output...",
                                             controller: actualOutput,
+                                            onChange: (value) {
+                                              setState(() {
+                                                var target = int.parse(value) /
+                                                    int.parse(nominalSpeeds);
+
+                                                targetHour = target.toString();
+
+                                                actualOutputs =
+                                                    value.toString();
+                                                var leV =
+                                                    int.parse(targetHour) /
+                                                        int.parse(netHour);
+                                                var lpV =
+                                                    int.parse(targetHour) /
+                                                        int.parse(grossHour);
+                                                le = leV.toString();
+                                                lp = lpV.toString();
+                                              });
+                                            },
                                           ),
                                         ],
                                       ),
@@ -312,10 +346,9 @@ class _FormInputDataState extends State<FormInputData> {
                                                     fontWeight:
                                                         FontWeight.bold)),
                                           ),
-                                          CustomTextField(
-                                            hint: "Masukan Gross Hour...",
-                                            controller: grossHour,
-                                          ),
+                                          largeDisplayField(
+                                            value: grossHour,
+                                          )
                                         ],
                                       ),
                                     ),
@@ -385,6 +418,22 @@ class _FormInputDataState extends State<FormInputData> {
                                         CustomTextField(
                                           hint: "Masukan Nominal Speed...",
                                           controller: nominalSpeed,
+                                          onChange: (value) {
+                                            setState(() {
+                                              var target =
+                                                  int.parse(actualOutputs) /
+                                                      int.parse(value);
+                                              var speed = int.parse(value);
+                                              nominalSpeeds = speed.toString();
+                                              targetHour = target.toString();
+                                              var leV = int.parse(targetHour) /
+                                                  int.parse(netHour);
+                                              var lpV = int.parse(targetHour) /
+                                                  int.parse(grossHour);
+                                              le = leV.toString();
+                                              lp = lpV.toString();
+                                            });
+                                          },
                                         ),
                                       ],
                                     ),
@@ -403,10 +452,7 @@ class _FormInputDataState extends State<FormInputData> {
                                                   fontSize: 25,
                                                   fontWeight: FontWeight.bold)),
                                         ),
-                                        CustomTextField(
-                                          hint: "Masukan Keterangan",
-                                          controller: netHour,
-                                        ),
+                                        largeDisplayField(value: netHour)
                                       ],
                                     ),
                                   )
@@ -475,6 +521,24 @@ class _FormInputDataState extends State<FormInputData> {
                                         CustomTextField(
                                           hint: "Masukan Total Hour",
                                           controller: totalHour,
+                                          onChange: (value) {
+                                            setState(() {
+                                              var gress = int.parse(value) -
+                                                  int.parse(idleHour!);
+
+                                              var net =
+                                                  gress - int.parse(actHour!);
+                                              grossHour = gress.toString();
+                                              netHour = net.toString();
+                                              var leV = int.parse(targetHour) /
+                                                  int.parse(netHour);
+                                              var lpV = int.parse(targetHour) /
+                                                  int.parse(grossHour);
+                                              totalHours = value.toString();
+                                              le = leV.toString();
+                                              lp = lpV.toString();
+                                            });
+                                          },
                                         ),
                                       ],
                                     ),
@@ -493,10 +557,7 @@ class _FormInputDataState extends State<FormInputData> {
                                                   fontSize: 25,
                                                   fontWeight: FontWeight.bold)),
                                         ),
-                                        CustomTextField(
-                                          hint: "Masukan Target Hour...",
-                                          controller: targetHour,
-                                        ),
+                                        largeDisplayField(value: targetHour)
                                       ],
                                     ),
                                   ),
@@ -561,7 +622,7 @@ class _FormInputDataState extends State<FormInputData> {
                                                   fontWeight: FontWeight.bold)),
                                         ),
                                         DisplayField(
-                                          value: le(),
+                                          value: le,
                                         ),
                                       ],
                                     ),
@@ -578,7 +639,7 @@ class _FormInputDataState extends State<FormInputData> {
                                                   fontSize: 25,
                                                   fontWeight: FontWeight.bold)),
                                         ),
-                                        DisplayField(value: lp()),
+                                        DisplayField(value: lp),
                                       ],
                                     )
                                   ],
@@ -598,7 +659,7 @@ class _FormInputDataState extends State<FormInputData> {
                                                 fontSize: 25,
                                                 fontWeight: FontWeight.bold)),
                                       ),
-                                      DisplayField(value: dt()),
+                                      DisplayField(value: dt),
                                     ],
                                   ),
                                   Column(
@@ -614,7 +675,7 @@ class _FormInputDataState extends State<FormInputData> {
                                                 fontSize: 25,
                                                 fontWeight: FontWeight.bold)),
                                       ),
-                                      DisplayField(value: bd()),
+                                      DisplayField(value: bd),
                                     ],
                                   )
                                 ]))
@@ -692,8 +753,17 @@ class _FormInputDataState extends State<FormInputData> {
                                                       freq: freq[index],
                                                       problem: problem[index],
                                                       reason: "reason",
-                                                      // bdHour: toHour(index,
-                                                      //     dbMin[index].text),
+                                                      onChange: (value) {
+                                                        setState(() {
+                                                          var aa =
+                                                              int.parse(value) /
+                                                                  60;
+
+                                                          bdHours =
+                                                              aa.toString();
+                                                        });
+                                                      },
+                                                      bdHour: bdHours!,
                                                       dropdownItemMesin: [
                                                         DropdownMenuItem(
                                                           child:
@@ -717,7 +787,6 @@ class _FormInputDataState extends State<FormInputData> {
                                                           mesin[index] = a;
                                                         });
                                                       },
-
                                                       dropdownItemReason: [
                                                         DropdownMenuItem(
                                                           child:
@@ -799,7 +868,30 @@ class _FormInputDataState extends State<FormInputData> {
                                                     return DownTimeForm(
                                                         index: index,
                                                         actMin: actMin[index],
-                                                        actHour: "asdasd",
+                                                        onChange: (value) {
+                                                          setState(() {
+                                                            var aa = int.parse(
+                                                                    value) /
+                                                                60;
+
+                                                            var net = int.parse(
+                                                                    grossHour) -
+                                                                aa;
+                                                            var groos = int.parse(
+                                                                    totalHours) -
+                                                                int.parse(
+                                                                    idleHour!);
+                                                            grossHour = groos
+                                                                .toString();
+
+                                                            netHour =
+                                                                net.toString();
+
+                                                            actHour =
+                                                                aa.toString();
+                                                          });
+                                                        },
+                                                        actHour: actHour!,
                                                         dropdownItemDT: [
                                                           DropdownMenuItem(
                                                             child:
@@ -926,7 +1018,28 @@ class _FormInputDataState extends State<FormInputData> {
                                                       (context, index) {
                                                     return IdleTimeForm(
                                                         index: index,
-                                                        idleHour: "asd",
+                                                        onChange: (value) {
+                                                          setState(() {
+                                                            var aa = int.parse(
+                                                                    value) /
+                                                                60;
+
+                                                            var gros = int.parse(
+                                                                    totalHours) -
+                                                                aa;
+                                                            var net = gros -
+                                                                int.parse(
+                                                                    actHour!);
+                                                            netHour =
+                                                                net.toString();
+                                                            grossHour =
+                                                                gros.toString();
+
+                                                            idleHour =
+                                                                aa.toString();
+                                                          });
+                                                        },
+                                                        idleHour: idleHour!,
                                                         idleMin: idleMin[index],
                                                         valueIdleDesc:
                                                             idleDesc[index],

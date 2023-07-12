@@ -2,24 +2,25 @@ import 'package:flutter/material.dart';
 
 import '../constants/style.dart';
 
-class DisplayField extends StatefulWidget {
+class largeDisplayField extends StatefulWidget {
   final dynamic value;
   final dynamic rumus1;
   final dynamic rumus2;
-  const DisplayField({super.key, this.value, this.rumus1, this.rumus2});
+  const largeDisplayField({super.key, this.value, this.rumus1, this.rumus2});
 
   @override
-  State<DisplayField> createState() => _DisplayFieldState();
+  State<largeDisplayField> createState() => _largeDisplayFieldState();
 }
 
-class _DisplayFieldState extends State<DisplayField> {
+class _largeDisplayFieldState extends State<largeDisplayField> {
   @override
   Widget build(BuildContext context) {
+    double mediaQuery = MediaQuery.of(context).size.width;
     return Center(
       child: Padding(
         padding: const EdgeInsets.only(left: 23, right: 23),
         child: Container(
-          width: 100,
+          width: mediaQuery * 0.227,
           height: 50,
           decoration: BoxDecoration(
             color: light,
