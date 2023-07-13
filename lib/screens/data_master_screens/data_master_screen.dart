@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:indlkt_proj/screens/data_master_screens/widget/breakdown_export.dart';
+import 'package:indlkt_proj/screens/data_master_screens/widget/downtime_export.dart';
+import 'package:indlkt_proj/screens/data_master_screens/widget/idle_time_export.dart';
 import 'package:indlkt_proj/screens/data_master_screens/widget/tabel_breakdown.dart';
 import 'package:indlkt_proj/screens/data_master_screens/widget/tabel_downtime.dart';
 import 'package:indlkt_proj/screens/data_master_screens/widget/tabel_idletime.dart';
@@ -10,7 +13,7 @@ import 'package:table_plus/table_plus.dart';
 
 import '../../constants/style.dart';
 import '../../widgets/appbar.dart';
-import '../../widgets/custom_export.dart';
+import 'widget/custom_export.dart';
 import '../../widgets/custom_container.dart';
 import '../dashboard_screens/dashboard_overview_screen.dart';
 import '../dashboard_screens/dashboard_productivity_screen.dart';
@@ -34,12 +37,26 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
       return tabel_plus();
     } else if (selectedIndex == 1) {
       return tabel_breakdown();
-    } else if (selectedIndex == 3) {
+    } else if (selectedIndex == 2) {
       return tabel_downtime();
-    } else if (selectedIndex == 4) {
+    } else if (selectedIndex == 3) {
       return tabel_idletime();
     } else {
       return tabel_plus();
+    }
+  }
+
+  Widget export(selectedIndex) {
+    if (selectedIndex == 0) {
+      return exportPage();
+    } else if (selectedIndex == 1) {
+      return exportBreakdown();
+    } else if (selectedIndex == 2) {
+      return exportDowntime();
+    } else if (selectedIndex == 3) {
+      return exportIdleTime();
+    } else {
+      return exportPage();
     }
   }
 
@@ -97,7 +114,7 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
                                             MediaQuery.of(context).size.width,
                                         height:
                                             MediaQuery.of(context).size.height,
-                                        child: exportPage()),
+                                        child: export(selectedIndex)),
                                   ),
                                 );
                                 ;

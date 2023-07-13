@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:js_interop';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:indlkt_proj/widgets/custom_dropdown.dart';
 import 'package:indlkt_proj/widgets/appbar.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../constants/style.dart';
 import '../../widgets/breakdown_form.dart';
@@ -15,6 +17,7 @@ import '../../widgets/idle_time_form.dart';
 import '../../widgets/large_display_field.dart';
 import '../../widgets/small_custom_dropdown.dart';
 import '../../widgets/small_custom_textfield.dart';
+import 'package:intl/intl.dart';
 
 class FormInputData extends StatefulWidget {
   const FormInputData({super.key});
@@ -24,6 +27,7 @@ class FormInputData extends StatefulWidget {
 }
 
 class _FormInputDataState extends State<FormInputData> {
+  bool _isLoading = false;
   String? bdHourTotal = '0';
   String? actHourTotal = '0';
   String? idleHourTotal = '0';
@@ -1179,13 +1183,13 @@ class _FormInputDataState extends State<FormInputData> {
                                                           ),
                                                           DropdownMenuItem(
                                                             child:
-                                                                Text("mesin 1"),
-                                                            value: "mesin 1",
+                                                                Text("mesin 2"),
+                                                            value: "mesin 2",
                                                           ),
                                                           DropdownMenuItem(
                                                             child:
-                                                                Text("mesin 1"),
-                                                            value: "mesin 1",
+                                                                Text("mesin 3"),
+                                                            value: "mesin 3",
                                                           ),
                                                         ]);
                                                   }),
@@ -1206,23 +1210,150 @@ class _FormInputDataState extends State<FormInputData> {
                               )),
                           Center(
                             child: InkWell(
-                              onTap: () {
-                                print("bdHourTotal = ${bdHourTotal}");
-                                print("actHourTotal = $actHourTotal");
-                                print("idleHourTotal = $idleHourTotal");
-                                // for (int i = 0; i < bLength; i++) {
-                                //   // var a = freq[i].text;
-                                //   // var b = dbMin[i].text;
-                                //   // var c = problem[i].text;
-                                //   // var d = mesin[i];
-                                //   // var e = reason[i];
-                                //   // var n = dbMin[i].text;
+                              onTap: () async {
+                                var uuid = Uuid();
+                                var id = uuid.v4();
+                                DateTime now = DateTime.now();
 
-                                //   // print(a);
-                                //   // print(b);
-                                //   // print(c);
-                                //   // print(d);
-                                //   // print(e);
+                                try {
+                                  setState(() {
+                                    _isLoading = true;
+                                  });
+                                  await FirebaseFirestore.instance
+                                      .collection("product")
+                                      .doc(id)
+                                      .set({
+                                    "uid": id,
+                                    "laporan": namaLaporan,
+                                    "shift": shift,
+                                    "departement": departement,
+                                    "product": product,
+                                    "line": line,
+                                    "planing_output": planningOutput.text,
+                                    "actual_output": actualOutput.text,
+                                    "nominal_speed": nominalSpeed.text,
+                                    "total_hour": totalHour.text,
+                                    "gross_hour": grossHour,
+                                    "net_hour": netHour,
+                                    "target_hour": targetHour,
+                                    "le": le,
+                                    "lp": lp,
+                                    "dt": dt,
+                                    "bd": bd,
+                                    "date": DateFormat('dd/MM/yy').format(now)
+                                  });
+
+                                  for (int i = 0; i < bLength; i++) {
+                                    var uuid = Uuid();
+                                    var idB = uuid.v4();
+                                    if (mesin[i] != null ||
+                                        reason[i] != null ||
+                                        problem[i].text != "" ||
+                                        freq[i].text != "" ||
+                                        dbMin[i].text != "0") {
+                                      FirebaseFirestore.instance
+                                          .collection("breakdown")
+                                          .doc(idB)
+                                          .set({
+                                        "uid": idB,
+                                        "product_id": id,
+                                        "date":
+                                            DateFormat('dd/MM/yy').format(now),
+                                        "mesin": mesin[i],
+                                        "reason": reason[i],
+                                        "freq": freq[i].text,
+                                        "bdMin": dbMin[i].text,
+                                        "bdHour": bdHourList[i],
+                                        "problem": problem[i].text
+                                      });
+                                    } else {
+                                      print("no data");
+                                    }
+                                  }
+
+                                  for (int i = 0; i < dLength; i++) {
+                                    var uuid = Uuid();
+                                    var idd = uuid.v4();
+                                    if (downtime[i] != null ||
+                                        subDT[i] != null ||
+                                        std[i] != null ||
+                                        actMin[i].text != "0") {
+                                      FirebaseFirestore.instance
+                                          .collection("downtime")
+                                          .doc(idd)
+                                          .set({
+                                        "uid": idd,
+                                        "product_id": id,
+                                        "date":
+                                            DateFormat('dd/MM/yy').format(now),
+                                        "dt": downtime[i],
+                                        "subDt": subDT[i],
+                                        "std": std[i],
+                                        "actMin": actMin[i].text,
+                                        "actHour": actHourList[i],
+                                      });
+                                    } else {
+                                      print("no data");
+                                    }
+                                  }
+                                  for (int i = 0; i < iLength; i++) {
+                                    var uuid = Uuid();
+                                    var idi = uuid.v4();
+                                    if (idleDesc[i] != null ||
+                                        idleMin[i].text != "0") {
+                                      FirebaseFirestore.instance
+                                          .collection("idle_time")
+                                          .doc(idi)
+                                          .set({
+                                        "uid": idi,
+                                        "product_id": id,
+                                        "date":
+                                            DateFormat('dd/MM/yy').format(now),
+                                        "idleDesc": idleDesc[i],
+                                        "idleMin": idleMin[i].text,
+                                        "idleHour": idleHourList[i]
+                                      });
+                                    } else {
+                                      print("no data");
+                                    }
+                                  }
+
+                                  setState(() {
+                                    _isLoading = false;
+                                  });
+                                } catch (e) {
+                                  print(e);
+                                }
+
+                                // for (int i = 0; i < bLength; i++) {
+                                //   var uuid = Uuid();
+                                //   var idB = uuid.v4();
+                                //   var a = freq[i].text;
+                                //   var b = dbMin[i].text;
+                                //   var c = problem[i].text;
+                                //   var d = mesin[i];
+                                //   var e = reason[i];
+                                //   // var n = bdHour[i];
+
+                                //   FirebaseFirestore.instance
+                                //       .collection("breakdown")
+                                //       .doc(idB)
+                                //       .set({
+                                //     "uid": idB,
+                                //     "product_id": id,
+                                //     "date": DateFormat('dd/MM/yy').format(now),
+                                //     "mesin": d,
+                                //     "reason": e,
+                                //     "freq": a,
+                                //     "bdMin": b,
+                                //     "problem": c
+                                //   });
+
+                                //   print(a);
+                                //   print(b);
+                                //   print(c);
+                                //   print(d);
+                                //   print(e);
                                 //   // print(n);
                                 // }
                               },
@@ -1234,11 +1365,15 @@ class _FormInputDataState extends State<FormInputData> {
                                   width: 120,
                                   child: Center(
                                     child: Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: Text("Submit",
-                                          style: TextStyle(
-                                              color: light, fontSize: 15)),
-                                    ),
+                                        padding: const EdgeInsets.all(10),
+                                        child: _isLoading
+                                            ? CircularProgressIndicator(
+                                                color: blue,
+                                              )
+                                            : Text("Submit",
+                                                style: TextStyle(
+                                                    color: light,
+                                                    fontSize: 15))),
                                   )),
                             ),
                           )
@@ -1249,5 +1384,19 @@ class _FormInputDataState extends State<FormInputData> {
         ),
       ),
     );
+  }
+
+  uploadBreakdown(idB, id, now, mesin, reason, freq, bdMin, bdHour, problem) {
+    FirebaseFirestore.instance.collection("breakdown").doc(idB).set({
+      "uid": idB,
+      "product_id": id,
+      "date": DateFormat('dd/MM/yy').format(now),
+      "mesin": mesin,
+      "reason": reason,
+      "freq": freq,
+      "bdMin": bdMin,
+      "bdHour": bdHour,
+      "problem": problem
+    });
   }
 }
