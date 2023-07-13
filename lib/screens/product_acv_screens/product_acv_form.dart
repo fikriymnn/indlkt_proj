@@ -24,6 +24,18 @@ class FormInputData extends StatefulWidget {
 }
 
 class _FormInputDataState extends State<FormInputData> {
+  String? bdHourTotal = '0';
+  String? actHourTotal = '0';
+  String? idleHourTotal = '0';
+
+  String? bdHourChild = "0";
+  String? actHourChild = "0";
+  String? idleHourChild = "0";
+
+  List<String?> bdHourList = [];
+  List<String?> actHourList = [];
+  List<String?> idleHourList = [];
+
   //Product Form
   String grossHour = "0";
   String actualOutputs = "0";
@@ -35,6 +47,7 @@ class _FormInputDataState extends State<FormInputData> {
   String lp = "0";
   String dt = "0";
   String bd = "0";
+  String zz = "60";
 
   String? namaLaporan;
   String? shift;
@@ -67,7 +80,6 @@ class _FormInputDataState extends State<FormInputData> {
 
   String? mesins;
   String? reasons;
-  String? bdHours = '0';
 
   List<String?> mesin = [];
   List<String?> reason = [];
@@ -82,7 +94,6 @@ class _FormInputDataState extends State<FormInputData> {
   String? downtimes;
   String? subDTs;
   String? stds;
-  String? actHour = "0";
 
   List<String?> downtime = [];
   List<String?> subDT = [];
@@ -93,22 +104,9 @@ class _FormInputDataState extends State<FormInputData> {
   int iLength = 1;
 
   String? idleDescs;
-  String? idleHour = "0";
 
   List<String?> idleDesc = [];
   List<TextEditingController> idleMin = [];
-
-  toHour(index, min) {
-    var miin = int.parse(min);
-    Timer.periodic(Duration(seconds: 3), (timer) {
-      setState(() {
-        var result = miin / 60;
-        bdHour[index] = result.toString();
-      });
-      print(actMin[0].text);
-    });
-    return bdHour[index];
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +119,7 @@ class _FormInputDataState extends State<FormInputData> {
     for (int i = 0; i < bLength; i++) problem.add(TextEditingController());
     for (int i = 0; i < bLength; i++) mesin.add(mesins);
     for (int i = 0; i < bLength; i++) reason.add(reasons);
-    for (int i = 0; i < bLength; i++) bdHour.add(bdHours);
+    for (int i = 0; i < bLength; i++) bdHourList.add(bdHourChild);
 
     //downtime
     for (int i = 0; i < dLength; i++)
@@ -129,11 +127,13 @@ class _FormInputDataState extends State<FormInputData> {
     for (int i = 0; i < dLength; i++) subDT.add(subDTs);
     for (int i = 0; i < dLength; i++) downtime.add(downtimes);
     for (int i = 0; i < dLength; i++) std.add(stds);
+    for (int i = 0; i < bLength; i++) actHourList.add(actHourChild);
 
     //idle time
     for (int i = 0; i < iLength; i++)
       idleMin.add(TextEditingController(text: "0"));
     for (int i = 0; i < iLength; i++) idleDesc.add(idleDescs);
+    for (int i = 0; i < bLength; i++) idleHourList.add(idleHourChild);
 
     return Scaffold(
       appBar: CustomAppBar(title: "Input Data"),
@@ -305,19 +305,27 @@ class _FormInputDataState extends State<FormInputData> {
                                             controller: actualOutput,
                                             onChange: (value) {
                                               setState(() {
-                                                var target = int.parse(value) /
-                                                    int.parse(nominalSpeeds);
+                                                var target = num.parse(value) /
+                                                    num.parse(nominalSpeeds);
 
                                                 targetHour = target.toString();
 
                                                 actualOutputs =
                                                     value.toString();
                                                 var leV =
-                                                    int.parse(targetHour) /
-                                                        int.parse(netHour);
+                                                    num.parse(targetHour) /
+                                                        num.parse(netHour);
                                                 var lpV =
-                                                    int.parse(targetHour) /
-                                                        int.parse(grossHour);
+                                                    num.parse(targetHour) /
+                                                        num.parse(grossHour);
+                                                var dtV =
+                                                    num.parse(actHourTotal!) /
+                                                        num.parse(grossHour);
+                                                var bdV =
+                                                    num.parse(bdHourTotal!) /
+                                                        num.parse(netHour);
+                                                bd = bdV.toString();
+                                                dt = dtV.toString();
                                                 le = leV.toString();
                                                 lp = lpV.toString();
                                               });
@@ -421,15 +429,24 @@ class _FormInputDataState extends State<FormInputData> {
                                           onChange: (value) {
                                             setState(() {
                                               var target =
-                                                  int.parse(actualOutputs) /
-                                                      int.parse(value);
-                                              var speed = int.parse(value);
+                                                  num.parse(actualOutputs) /
+                                                      num.parse(value);
+                                              var speed = num.parse(value);
                                               nominalSpeeds = speed.toString();
                                               targetHour = target.toString();
-                                              var leV = int.parse(targetHour) /
-                                                  int.parse(netHour);
-                                              var lpV = int.parse(targetHour) /
-                                                  int.parse(grossHour);
+                                              var leV = num.parse(targetHour) /
+                                                  num.parse(netHour);
+                                              var lpV = num.parse(targetHour) /
+                                                  num.parse(grossHour);
+                                              var dtV =
+                                                  num.parse(actHourTotal!) /
+                                                      num.parse(grossHour);
+                                              var bdV =
+                                                  num.parse(bdHourTotal!) /
+                                                      num.parse(netHour);
+                                              bd = bdV.toString();
+                                              dt = dtV.toString();
+
                                               le = leV.toString();
                                               lp = lpV.toString();
                                             });
@@ -523,17 +540,26 @@ class _FormInputDataState extends State<FormInputData> {
                                           controller: totalHour,
                                           onChange: (value) {
                                             setState(() {
-                                              var gress = int.parse(value) -
-                                                  int.parse(idleHour!);
+                                              var gress = num.parse(value) -
+                                                  num.parse(idleHourTotal!);
 
-                                              var net =
-                                                  gress - int.parse(actHour!);
+                                              var net = gress -
+                                                  num.parse(actHourTotal!);
                                               grossHour = gress.toString();
                                               netHour = net.toString();
-                                              var leV = int.parse(targetHour) /
-                                                  int.parse(netHour);
-                                              var lpV = int.parse(targetHour) /
-                                                  int.parse(grossHour);
+                                              var leV = num.parse(targetHour) /
+                                                  num.parse(netHour);
+                                              var lpV = num.parse(targetHour) /
+                                                  num.parse(grossHour);
+                                              var dtV =
+                                                  num.parse(actHourTotal!) /
+                                                      num.parse(grossHour);
+                                              var bdV =
+                                                  num.parse(bdHourTotal!) /
+                                                      num.parse(netHour);
+                                              bd = bdV.toString();
+                                              dt = dtV.toString();
+
                                               totalHours = value.toString();
                                               le = leV.toString();
                                               lp = lpV.toString();
@@ -756,14 +782,45 @@ class _FormInputDataState extends State<FormInputData> {
                                                       onChange: (value) {
                                                         setState(() {
                                                           var aa =
-                                                              int.parse(value) /
+                                                              num.parse(value) /
                                                                   60;
-
-                                                          bdHours =
+                                                          bdHourList[index] =
                                                               aa.toString();
+
+                                                          var integer = bdHourList.fold(
+                                                              0,
+                                                              (a, b) =>
+                                                                  int.parse(a
+                                                                      .toString()) +
+                                                                  int.parse(b
+                                                                      .toString()));
+                                                          bdHourTotal = integer
+                                                              .toString();
+
+                                                          var leV = num.parse(
+                                                                  targetHour) /
+                                                              num.parse(
+                                                                  netHour);
+                                                          var lpV = num.parse(
+                                                                  targetHour) /
+                                                              num.parse(
+                                                                  grossHour);
+                                                          var dtV = num.parse(
+                                                                  actHourTotal!) /
+                                                              num.parse(
+                                                                  grossHour);
+                                                          var bdV = num.parse(
+                                                                  bdHourTotal!) /
+                                                              num.parse(
+                                                                  netHour);
+                                                          bd = bdV.toString();
+                                                          dt = dtV.toString();
+                                                          le = leV.toString();
+                                                          lp = lpV.toString();
                                                         });
                                                       },
-                                                      bdHour: bdHours!,
+                                                      bdHour:
+                                                          bdHourList[index]!,
                                                       dropdownItemMesin: [
                                                         DropdownMenuItem(
                                                           child:
@@ -870,28 +927,61 @@ class _FormInputDataState extends State<FormInputData> {
                                                         actMin: actMin[index],
                                                         onChange: (value) {
                                                           setState(() {
-                                                            var aa = int.parse(
+                                                            var aa = num.parse(
                                                                     value) /
                                                                 60;
+                                                            actHourList[index] =
+                                                                aa.toString();
 
-                                                            var net = int.parse(
+                                                            var integer = actHourList.fold(
+                                                                0,
+                                                                (a, b) =>
+                                                                    int.parse(a
+                                                                        .toString()) +
+                                                                    int.parse(b
+                                                                        .toString()));
+                                                            actHourTotal =
+                                                                integer
+                                                                    .toString();
+
+                                                            var net = num.parse(
                                                                     grossHour) -
-                                                                aa;
-                                                            var groos = int.parse(
+                                                                num.parse(
+                                                                    actHourTotal!);
+                                                            var groos = num.parse(
                                                                     totalHours) -
-                                                                int.parse(
-                                                                    idleHour!);
-                                                            grossHour = groos
-                                                                .toString();
+                                                                num.parse(
+                                                                    idleHourTotal!);
 
                                                             netHour =
                                                                 net.toString();
 
-                                                            actHour =
-                                                                aa.toString();
+                                                            grossHour = groos
+                                                                .toString();
+
+                                                            var leV = num.parse(
+                                                                    targetHour) /
+                                                                num.parse(
+                                                                    netHour);
+                                                            var lpV = num.parse(
+                                                                    targetHour) /
+                                                                num.parse(
+                                                                    grossHour);
+                                                            var dtV = aa /
+                                                                num.parse(
+                                                                    grossHour);
+                                                            var bdV = num.parse(
+                                                                    bdHourTotal!) /
+                                                                num.parse(
+                                                                    netHour);
+                                                            bd = bdV.toString();
+                                                            dt = dtV.toString();
+                                                            le = leV.toString();
+                                                            lp = lpV.toString();
                                                           });
                                                         },
-                                                        actHour: actHour!,
+                                                        actHour:
+                                                            actHourList[index]!,
                                                         dropdownItemDT: [
                                                           DropdownMenuItem(
                                                             child:
@@ -1020,26 +1110,59 @@ class _FormInputDataState extends State<FormInputData> {
                                                         index: index,
                                                         onChange: (value) {
                                                           setState(() {
-                                                            var aa = int.parse(
+                                                            var aa = num.parse(
                                                                     value) /
                                                                 60;
+                                                            idleHourList[
+                                                                    index] =
+                                                                aa.toString();
+                                                            var integer = idleHourList.fold(
+                                                                0,
+                                                                (a, b) =>
+                                                                    int.parse(a
+                                                                        .toString()) +
+                                                                    int.parse(b
+                                                                        .toString()));
+                                                            idleHourTotal =
+                                                                integer
+                                                                    .toString();
 
-                                                            var gros = int.parse(
+                                                            var gros = num.parse(
                                                                     totalHours) -
-                                                                aa;
+                                                                num.parse(
+                                                                    idleHourTotal!);
                                                             var net = gros -
-                                                                int.parse(
-                                                                    actHour!);
+                                                                num.parse(
+                                                                    actHourTotal!);
                                                             netHour =
                                                                 net.toString();
                                                             grossHour =
                                                                 gros.toString();
 
-                                                            idleHour =
-                                                                aa.toString();
+                                                            var leV = num.parse(
+                                                                    targetHour) /
+                                                                num.parse(
+                                                                    netHour);
+                                                            var lpV = num.parse(
+                                                                    targetHour) /
+                                                                num.parse(
+                                                                    grossHour);
+                                                            var dtV = num.parse(
+                                                                    actHourTotal!) /
+                                                                num.parse(
+                                                                    grossHour);
+                                                            var bdV = num.parse(
+                                                                    bdHourTotal!) /
+                                                                num.parse(
+                                                                    netHour);
+                                                            bd = bdV.toString();
+                                                            dt = dtV.toString();
+                                                            le = leV.toString();
+                                                            lp = lpV.toString();
                                                           });
                                                         },
-                                                        idleHour: idleHour!,
+                                                        idleHour: idleHourList[
+                                                            index]!,
                                                         idleMin: idleMin[index],
                                                         valueIdleDesc:
                                                             idleDesc[index],
@@ -1084,23 +1207,24 @@ class _FormInputDataState extends State<FormInputData> {
                           Center(
                             child: InkWell(
                               onTap: () {
-                                for (int i = 0; i < bLength; i++) {
-                                  var a = freq[i].text;
-                                  var b = dbMin[i].text;
-                                  var c = problem[i].text;
-                                  var d = mesin[i];
-                                  var e = reason[i];
-                                  var n = dbMin[i].text;
+                                print("bdHourTotal = ${bdHourTotal}");
+                                print("actHourTotal = $actHourTotal");
+                                print("idleHourTotal = $idleHourTotal");
+                                // for (int i = 0; i < bLength; i++) {
+                                //   // var a = freq[i].text;
+                                //   // var b = dbMin[i].text;
+                                //   // var c = problem[i].text;
+                                //   // var d = mesin[i];
+                                //   // var e = reason[i];
+                                //   // var n = dbMin[i].text;
 
-                                  print(a);
-                                  print(b);
-                                  print(c);
-                                  print(d);
-                                  print(e);
-                                  print(n);
-                                  print(toHour(i, n));
-                                }
-                                freq.add(TextEditingController());
+                                //   // print(a);
+                                //   // print(b);
+                                //   // print(c);
+                                //   // print(d);
+                                //   // print(e);
+                                //   // print(n);
+                                // }
                               },
                               child: Container(
                                   margin: EdgeInsets.all(25),
