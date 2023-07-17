@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
 import 'package:indlkt_proj/constants/style.dart';
@@ -123,7 +124,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
           children: [
             DashboardContainer(
                 width: 700,
-                height: 420,
+                height: 480,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -318,27 +319,161 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                 ],
                               ),
                             ]),
+                        SizedBox(
+                          height: 15,
+                        ),
                         //chart
-                        CircularPercentIndicator(
-                          radius: 50.0,
-                          lineWidth: 10,
-                          percent: 1.0,
-                          center: RadialBar(
-                            chartData: [
-                              ChartData('David', 25, Colors.cyanAccent),
-                              ChartData('Steve', 38, Colors.blueGrey),
-                              ChartData('Jack', 34, Colors.deepOrangeAccent),
-                              ChartData('Others', 52, Colors.greenAccent)
+
+                        Container(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: 300,
+                                height: 300,
+                                child: GridView.count(
+                                  childAspectRatio: 3 / 3,
+                                  crossAxisCount: 2,
+                                  children: List.generate(
+                                      4,
+                                      (index) => Column(
+                                            children: [
+                                              Center(
+                                                child:
+                                                    Text("Filling_packing_SKM"),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Stack(
+                                                alignment: Alignment.center,
+                                                children: [
+                                                  CircularPercentIndicator(
+                                                    radius: 50.0,
+                                                    lineWidth: 10,
+                                                    percent: 1.0,
+                                                    center: RadialBar(
+                                                      chartData: [
+                                                        ChartData('David', 25,
+                                                            Colors.cyanAccent),
+                                                        ChartData('Steve', 38,
+                                                            Colors.blueGrey),
+                                                        ChartData(
+                                                            'Jack',
+                                                            34,
+                                                            Colors
+                                                                .deepOrangeAccent),
+                                                        ChartData('Others', 52,
+                                                            Colors.greenAccent)
+                                                      ],
+                                                    ),
+                                                    progressColor: Colors.pink,
+                                                  ),
+                                                  CircularPercentIndicator(
+                                                    radius: 20.0,
+                                                    lineWidth: 7,
+                                                    percent: 1.0,
+                                                    center: Text("skm"),
+                                                    progressColor: Colors.pink,
+                                                  )
+                                                ],
+                                              ),
+                                            ],
+                                          )),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 40,
+                              ),
+                              Column(
+                                children: [
+                                  Container(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text("Filling_packing_SKM"),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Container(
+                                              width: 280,
+                                              height: 18,
+                                              child: FAProgressBar(
+                                                progressGradient:
+                                                    LinearGradient(colors: [
+                                                  light,
+                                                  Colors.green
+                                                ]),
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                currentValue: 100,
+                                                displayText: '',
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text("BD"),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Container(
+                                              width: 280,
+                                              height: 18,
+                                              child: FAProgressBar(
+                                                  progressGradient:
+                                                      LinearGradient(colors: [
+                                                    light,
+                                                    blue
+                                                  ]),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  currentValue: 100,
+                                                  displayText: ''),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text("DT"),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Container(
+                                              width: 280,
+                                              height: 18,
+                                              child: FAProgressBar(
+                                                  progressGradient:
+                                                      LinearGradient(colors: [
+                                                    light,
+                                                    blue
+                                                  ]),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  currentValue: 80,
+                                                  displayText: ''),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )
                             ],
                           ),
-                          progressColor: Colors.pink,
-                        )
+                        ),
                       ],
-                    ),
-                    SizedBox(width: 270),
-                    Image(
-                      image: AssetImage("assets/images/gears.png"),
-                      width: 100,
                     ),
                   ],
                 )),
