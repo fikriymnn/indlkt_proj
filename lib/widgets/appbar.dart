@@ -8,14 +8,19 @@ import '../constants/style.dart';
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
   final Color backgroundColor = blue;
-  CustomAppBar({super.key, required String this.title});
+  // final double? height;
+  CustomAppBar({
+    super.key,
+    required String this.title,
+    // this.height,
+  });
 
   @override
   State<CustomAppBar> createState() => _CustomAppBarState();
 
   @override
-  // TODO: implement preferredSize
-  Size get preferredSize => Size.fromHeight(85);
+  // TODO: implement preferredSize 85
+  Size get preferredSize => Size.fromHeight(90);
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
@@ -56,52 +61,56 @@ class _CustomAppBarState extends State<CustomAppBar> {
 
   Widget build(BuildContext context) {
     double mediaQuery = MediaQuery.of(context).size.width;
+    double mediaQueryWidth = MediaQuery.of(context).size.width;
+    print(mediaQueryWidth);
     return AppBar(
         backgroundColor: widget.backgroundColor,
         titleTextStyle: TextStyle(color: Colors.white),
-        toolbarHeight: 85,
+        toolbarHeight: mediaQueryWidth * 0.056,
         actions: [
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                  height: 70,
+                  height: mediaQueryWidth * 0.0461,
                   decoration: BoxDecoration(
                     color: light,
                     borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20)),
+                        bottomLeft: Radius.circular(mediaQueryWidth * 0.0132),
+                        bottomRight: Radius.circular(mediaQueryWidth * 0.0132)),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.only(right: 10, left: 10),
+                    padding: EdgeInsets.only(
+                        right: mediaQueryWidth * 0.007,
+                        left: mediaQueryWidth * 0.007),
                     child: Column(
                       children: [
-                        SizedBox(height: 12),
+                        SizedBox(height: mediaQueryWidth * 0.008),
                         Text(
                           "${dateText}",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 20,
+                              fontSize: mediaQueryWidth * 0.0132,
                               color: Colors.black),
                         ),
                         SizedBox(
-                          height: 5,
+                          height: mediaQueryWidth * 0.0033,
                         ),
                         Text("${timeText} WIB",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 15,
+                                fontSize: mediaQueryWidth * 0.01,
                                 color: Colors.black))
                       ],
                     ),
                   )),
             ],
           ),
-          SizedBox(width: 80)
+          SizedBox(width: mediaQueryWidth * 0.053)
         ],
         title: Row(children: [
           Padding(
-            padding: EdgeInsets.all(15),
+            padding: EdgeInsets.all(mediaQueryWidth * 0.01),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -111,7 +120,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                       fontSize: mediaQuery * 0.02, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  height: 5,
+                  height: mediaQueryWidth * 0.0033,
                 ),
                 Text(
                   widget.title,
