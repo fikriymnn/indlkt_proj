@@ -320,7 +320,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                               ),
                             ]),
                         SizedBox(
-                          height: 15,
+                          height: 20,
                         ),
                         //chart
 
@@ -339,8 +339,21 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                       (index) => Column(
                                             children: [
                                               Center(
-                                                child:
+                                                child: Row(
+                                                  children: [
+                                                    Container(
+                                                      height: 10,
+                                                      width: 10,
+                                                      decoration: BoxDecoration(
+                                                          color: blue,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      20)),
+                                                    ),
                                                     Text("Filling_packing_SKM"),
+                                                  ],
+                                                ),
                                               ),
                                               SizedBox(
                                                 height: 5,
@@ -350,8 +363,8 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                                 children: [
                                                   CircularPercentIndicator(
                                                     radius: 50.0,
-                                                    lineWidth: 10,
-                                                    percent: 1.0,
+                                                    lineWidth: 15,
+                                                    percent: 0.8,
                                                     center: RadialBar(
                                                       chartData: [
                                                         ChartData('David', 25,
@@ -370,9 +383,9 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                                     progressColor: Colors.pink,
                                                   ),
                                                   CircularPercentIndicator(
-                                                    radius: 20.0,
-                                                    lineWidth: 7,
-                                                    percent: 1.0,
+                                                    radius: 17.0,
+                                                    lineWidth: 5,
+                                                    percent: 0.2,
                                                     center: Text("skm"),
                                                     progressColor: Colors.pink,
                                                   )
@@ -400,20 +413,29 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                             SizedBox(
                                               height: 5,
                                             ),
-                                            Container(
-                                              width: 280,
-                                              height: 18,
-                                              child: FAProgressBar(
-                                                progressGradient:
-                                                    LinearGradient(colors: [
-                                                  light,
-                                                  Colors.green
-                                                ]),
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                currentValue: 100,
-                                                displayText: '',
-                                              ),
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  width: 220,
+                                                  height: 9,
+                                                  child: FAProgressBar(
+                                                    progressGradient:
+                                                        LinearGradient(colors: [
+                                                      Colors.green,
+                                                      Color.fromARGB(
+                                                          255, 164, 219, 166)
+                                                    ]),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    currentValue: 100,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 7,
+                                                ),
+                                                Text("41287/45000")
+                                              ],
                                             ),
                                           ],
                                         ),
@@ -425,46 +447,32 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                             SizedBox(
                                               height: 5,
                                             ),
-                                            Container(
-                                              width: 280,
-                                              height: 18,
-                                              child: FAProgressBar(
-                                                  progressGradient:
-                                                      LinearGradient(colors: [
-                                                    light,
-                                                    blue
-                                                  ]),
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  currentValue: 100,
-                                                  displayText: ''),
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  width: 280,
+                                                  height: 14,
+                                                  child: FAProgressBar(
+                                                    progressGradient:
+                                                        LinearGradient(colors: [
+                                                      blue,
+                                                      Color.fromARGB(
+                                                          255, 129, 141, 182)
+                                                    ]),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    currentValue: 80,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 7,
+                                                ),
+                                                Text("94,59%")
+                                              ],
                                             ),
                                           ],
                                         ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text("DT"),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Container(
-                                              width: 280,
-                                              height: 18,
-                                              child: FAProgressBar(
-                                                  progressGradient:
-                                                      LinearGradient(colors: [
-                                                    light,
-                                                    blue
-                                                  ]),
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  currentValue: 80,
-                                                  displayText: ''),
-                                            ),
-                                          ],
-                                        )
                                       ],
                                     ),
                                   ),
