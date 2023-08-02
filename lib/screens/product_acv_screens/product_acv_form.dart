@@ -27,6 +27,10 @@ class FormInputData extends StatefulWidget {
 }
 
 class _FormInputDataState extends State<FormInputData> {
+  //Breadkdown dropdown
+  List<DropdownMenuItem> bdMesinList = [];
+
+  //List data form
   bool _isLoading = false;
   String? bdHourTotal = '0';
   String? actHourTotal = '0';
@@ -84,7 +88,9 @@ class _FormInputDataState extends State<FormInputData> {
 
   String? mesins;
   String? reasons;
+  List<DropdownMenuItem> reasonLists = [];
 
+  List<List<DropdownMenuItem>> reasonList = [];
   List<String?> mesin = [];
   List<String?> reason = [];
   List<TextEditingController> freq = [];
@@ -124,6 +130,7 @@ class _FormInputDataState extends State<FormInputData> {
     for (int i = 0; i < bLength; i++) mesin.add(mesins);
     for (int i = 0; i < bLength; i++) reason.add(reasons);
     for (int i = 0; i < bLength; i++) bdHourList.add(bdHourChild);
+    for (int i = 0; i < bLength; i++) reasonList.add(reasonLists);
 
     //downtime
     for (int i = 0; i < dLength; i++)
@@ -218,23 +225,53 @@ class _FormInputDataState extends State<FormInputData> {
                                         onChanged: (e) {
                                           setState(() {
                                             namaLaporan = e!;
+                                            if (namaLaporan == "Process_SKM") {
+                                              bdMesinList =
+                                                  DataBD().process_SKM_Mesin;
+                                            } else if (namaLaporan ==
+                                                "Filling_Packing_SKM_Can") {
+                                              bdMesinList = DataBD()
+                                                  .filling_SKM_Can_Mesin;
+                                            } else if (namaLaporan ==
+                                                "Filling_Packing_SKM_Tall_Can") {
+                                              bdMesinList =
+                                                  DataBD().filling_SKM_Tall_Can;
+                                            } else if (namaLaporan ==
+                                                "Filling_Packing_SKM_Sachet") {
+                                              bdMesinList =
+                                                  DataBD().filling_SKM_Sachet;
+                                            } else if (namaLaporan ==
+                                                "Filling_Packing_SKM_Pouch") {
+                                              bdMesinList =
+                                                  DataBD().filling_SKM_Pouch;
+                                            }
                                           });
                                         },
                                         items: [
                                           DropdownMenuItem(
                                             child: Text(
-                                                "Filling_packing_SKM_couch"),
-                                            value: "Filling_packing_SKM_couch",
+                                                "Filling_Packing_SKM_Pouch"),
+                                            value: "Filling_Packing_SKM_Pouch",
                                           ),
                                           DropdownMenuItem(
                                             child: Text(
-                                                "Filling_packing_SKM_couch"),
-                                            value: "Filling_packing_SKM_couchh",
+                                                "Filling_Packing_SKM_Sachet"),
+                                            value: "Filling_Packing_SKM_Sachet",
                                           ),
                                           DropdownMenuItem(
                                             child: Text(
-                                                "Filling_packing_SKM_couch"),
-                                            value: "Filling_packing_SKM_couchl",
+                                                "Filling_Packing_SKM_Tall_Can"),
+                                            value:
+                                                "Filling_Packing_SKM_Tall_Can",
+                                          ),
+                                          DropdownMenuItem(
+                                            child:
+                                                Text("Filling_Packing_SKM_Can"),
+                                            value: "Filling_Packing_SKM_Can",
+                                          ),
+                                          DropdownMenuItem(
+                                            child: Text("Process_SKM"),
+                                            value: "Process_SKM",
                                           )
                                         ]),
                                   ),
@@ -269,8 +306,7 @@ class _FormInputDataState extends State<FormInputData> {
                                             value: shift,
                                             dropdownItems: [
                                               DropdownMenuItem(
-                                                child: Text(
-                                                    "Filling_packing_SKM_couch"),
+                                                child: Text("1"),
                                                 value: "1",
                                               ),
                                               DropdownMenuItem(
@@ -312,7 +348,8 @@ class _FormInputDataState extends State<FormInputData> {
                                                 var target = num.parse(value) /
                                                     num.parse(nominalSpeeds);
 
-                                                targetHour = target.toString();
+                                                targetHour =
+                                                    target.toStringAsFixed(2);
 
                                                 actualOutputs =
                                                     value.toString();
@@ -328,10 +365,10 @@ class _FormInputDataState extends State<FormInputData> {
                                                 var bdV =
                                                     num.parse(bdHourTotal!) /
                                                         num.parse(netHour);
-                                                bd = bdV.toString();
-                                                dt = dtV.toString();
-                                                le = leV.toString();
-                                                lp = lpV.toString();
+                                                bd = bdV.toStringAsFixed(2);
+                                                dt = dtV.toStringAsFixed(2);
+                                                le = leV.toStringAsFixed(2);
+                                                lp = lpV.toStringAsFixed(2);
                                               });
                                             },
                                           ),
@@ -394,20 +431,8 @@ class _FormInputDataState extends State<FormInputData> {
                                             value: departement,
                                             dropdownItems: [
                                               DropdownMenuItem(
-                                                child: Text(
-                                                    "Filling_packing_SKM_couch"),
-                                                value:
-                                                    "Filling_packing_SKM_couch",
-                                              ),
-                                              DropdownMenuItem(
-                                                child: Text("2"),
-                                                value:
-                                                    "Filling_packing_SKM_couchdf",
-                                              ),
-                                              DropdownMenuItem(
-                                                child: Text("3"),
-                                                value:
-                                                    "Filling_packing_SKM_couchd",
+                                                child: Text("SKM"),
+                                                value: "SKM",
                                               )
                                             ]),
                                       ],
@@ -437,7 +462,8 @@ class _FormInputDataState extends State<FormInputData> {
                                                       num.parse(value);
                                               var speed = num.parse(value);
                                               nominalSpeeds = speed.toString();
-                                              targetHour = target.toString();
+                                              targetHour =
+                                                  target.toStringAsFixed(2);
                                               var leV = num.parse(targetHour) /
                                                   num.parse(netHour);
                                               var lpV = num.parse(targetHour) /
@@ -448,11 +474,10 @@ class _FormInputDataState extends State<FormInputData> {
                                               var bdV =
                                                   num.parse(bdHourTotal!) /
                                                       num.parse(netHour);
-                                              bd = bdV.toString();
-                                              dt = dtV.toString();
-
-                                              le = leV.toString();
-                                              lp = lpV.toString();
+                                              bd = bdV.toStringAsFixed(2);
+                                              dt = dtV.toStringAsFixed(2);
+                                              le = leV.toStringAsFixed(2);
+                                              lp = lpV.toStringAsFixed(2);
                                             });
                                           },
                                         ),
@@ -507,19 +532,31 @@ class _FormInputDataState extends State<FormInputData> {
                                             dropdownItems: [
                                               DropdownMenuItem(
                                                 child: Text(
-                                                    "Filling_packing_SKM_couch"),
+                                                    "Filling_Packing_SKM_Pouch"),
                                                 value:
-                                                    "Filling_packing_SKM_couch",
+                                                    "Filling_Packing_SKM_Pouch",
                                               ),
                                               DropdownMenuItem(
-                                                child: Text("2"),
+                                                child: Text(
+                                                    "Filling_Packing_SKM_Sachet"),
                                                 value:
-                                                    "Filling_packing_SKM_couchdf",
+                                                    "Filling_Packing_SKM_Sachet",
                                               ),
                                               DropdownMenuItem(
-                                                child: Text("3"),
+                                                child: Text(
+                                                    "Filling_Packing_SKM_Tall_Can"),
                                                 value:
-                                                    "Filling_packing_SKM_couchd",
+                                                    "Filling_Packing_SKM_Tall_Can",
+                                              ),
+                                              DropdownMenuItem(
+                                                child: Text(
+                                                    "Filling_Packing_SKM_Can"),
+                                                value:
+                                                    "Filling_Packing_SKM_Can",
+                                              ),
+                                              DropdownMenuItem(
+                                                child: Text("Process_SKM"),
+                                                value: "Process_SKM",
                                               )
                                             ]),
                                       ],
@@ -549,8 +586,10 @@ class _FormInputDataState extends State<FormInputData> {
 
                                               var net = gress -
                                                   num.parse(actHourTotal!);
-                                              grossHour = gress.toString();
-                                              netHour = net.toString();
+                                              //gross hour digit
+                                              grossHour =
+                                                  gress.toStringAsFixed(2);
+                                              netHour = net.toStringAsFixed(2);
                                               var leV = num.parse(targetHour) /
                                                   num.parse(netHour);
                                               var lpV = num.parse(targetHour) /
@@ -561,12 +600,12 @@ class _FormInputDataState extends State<FormInputData> {
                                               var bdV =
                                                   num.parse(bdHourTotal!) /
                                                       num.parse(netHour);
-                                              bd = bdV.toString();
-                                              dt = dtV.toString();
 
                                               totalHours = value.toString();
-                                              le = leV.toString();
-                                              lp = lpV.toString();
+                                              bd = bdV.toStringAsFixed(2);
+                                              dt = dtV.toStringAsFixed(2);
+                                              le = leV.toStringAsFixed(2);
+                                              lp = lpV.toStringAsFixed(2);
                                             });
                                           },
                                         ),
@@ -627,8 +666,24 @@ class _FormInputDataState extends State<FormInputData> {
                                               value: "2",
                                             ),
                                             DropdownMenuItem(
-                                              child: Text("3"),
-                                              value: "3",
+                                              child: Text("A"),
+                                              value: "A",
+                                            ),
+                                            DropdownMenuItem(
+                                              child: Text("B"),
+                                              value: "B",
+                                            ),
+                                            DropdownMenuItem(
+                                              child: Text("C"),
+                                              value: "C",
+                                            ),
+                                            DropdownMenuItem(
+                                              child: Text("D"),
+                                              value: "D",
+                                            ),
+                                            DropdownMenuItem(
+                                              child: Text("E"),
+                                              value: "E",
                                             )
                                           ]),
                                     ],
@@ -785,21 +840,25 @@ class _FormInputDataState extends State<FormInputData> {
                                                       reason: "reason",
                                                       onChange: (value) {
                                                         setState(() {
-                                                          var aa =
-                                                              num.parse(value) /
-                                                                  60;
-                                                          bdHourList[index] =
-                                                              aa.toString();
+                                                          var number =
+                                                              num.parse(value);
+                                                          var aa = number / 60;
+
+                                                          bdHourList[index] = aa
+                                                              .toStringAsFixed(
+                                                                  2);
 
                                                           var integer = bdHourList.fold(
-                                                              0,
+                                                              0.00,
                                                               (a, b) =>
-                                                                  int.parse(a
+                                                                  double.parse(a
                                                                       .toString()) +
-                                                                  int.parse(b
+                                                                  double.parse(b
                                                                       .toString()));
+
                                                           bdHourTotal = integer
-                                                              .toString();
+                                                              .toStringAsFixed(
+                                                                  2);
 
                                                           var leV = num.parse(
                                                                   targetHour) /
@@ -817,54 +876,158 @@ class _FormInputDataState extends State<FormInputData> {
                                                                   bdHourTotal!) /
                                                               num.parse(
                                                                   netHour);
-                                                          bd = bdV.toString();
-                                                          dt = dtV.toString();
-                                                          le = leV.toString();
-                                                          lp = lpV.toString();
+                                                          bd = bdV
+                                                              .toStringAsFixed(
+                                                                  2);
+                                                          dt = dtV
+                                                              .toStringAsFixed(
+                                                                  2);
+                                                          le = leV
+                                                              .toStringAsFixed(
+                                                                  2);
+                                                          lp = lpV
+                                                              .toStringAsFixed(
+                                                                  2);
                                                         });
                                                       },
                                                       bdHour:
                                                           bdHourList[index]!,
-                                                      dropdownItemMesin: [
-                                                        DropdownMenuItem(
-                                                          child:
-                                                              Text("mesin 1"),
-                                                          value: "mesin 1",
-                                                        ),
-                                                        DropdownMenuItem(
-                                                          child:
-                                                              Text("mesin 2"),
-                                                          value: "mesin 2",
-                                                        ),
-                                                        DropdownMenuItem(
-                                                          child:
-                                                              Text("mesin 3"),
-                                                          value: "mesin 3",
-                                                        )
-                                                      ],
+                                                      dropdownItemMesin:
+                                                          bdMesinList,
                                                       valueMesin: mesin[index],
                                                       onChangeMesin: (a) {
                                                         setState(() {
                                                           mesin[index] = a;
+                                                          if (mesin[index] ==
+                                                              "Dumper") {
+                                                            reasonList[index] =
+                                                                DataBD()
+                                                                    .dumper_reason;
+                                                          } else if (mesin[
+                                                                  index] ==
+                                                              "Mixer") {
+                                                            reasonList[index] =
+                                                                DataBD()
+                                                                    .mixer_reason;
+                                                          } else if (mesin[
+                                                                  index] ==
+                                                              "Pasteurizer") {
+                                                            reasonList[index] =
+                                                                DataBD()
+                                                                    .pasteurizer_reason;
+                                                          } else if (mesin[
+                                                                  index] ==
+                                                              "Homogenizer") {
+                                                            reasonList[index] =
+                                                                DataBD()
+                                                                    .homogenizer_reason;
+                                                          } else if (mesin[
+                                                                  index] ==
+                                                              "Flash_Cooler") {
+                                                            reasonList[index] =
+                                                                DataBD()
+                                                                    .flash_cooler_reason;
+                                                          } else if (mesin[
+                                                                  index] ==
+                                                              "CT") {
+                                                            reasonList[index] =
+                                                                DataBD()
+                                                                    .ct_reason;
+                                                          } else if (mesin[
+                                                                  index] ==
+                                                              "Utility") {
+                                                            reasonList[index] =
+                                                                DataBD()
+                                                                    .utility_reason;
+                                                          } else if (mesin[
+                                                                  index] ==
+                                                              "Slurry") {
+                                                            reasonList[index] =
+                                                                DataBD()
+                                                                    .slurry_reason;
+                                                          } else if (mesin[
+                                                                  index] ==
+                                                              "Filler_Closer") {
+                                                            reasonList[index] =
+                                                                DataBD()
+                                                                    .filler_closer_reason;
+                                                          } else if (mesin[
+                                                                  index] ==
+                                                              "Labeling") {
+                                                            reasonList[index] =
+                                                                DataBD()
+                                                                    .labeling_reason;
+                                                          } else if (mesin[
+                                                                  index] ==
+                                                              "Cermex_Cartoning") {
+                                                            reasonList[index] =
+                                                                DataBD()
+                                                                    .cermex_cartoning_reason;
+                                                          } else if (mesin[
+                                                                  index] ==
+                                                              "Robot_Palletizer_Can") {
+                                                            reasonList[index] =
+                                                                DataBD()
+                                                                    .robot_palletizer_can;
+                                                          } else if (mesin[
+                                                                  index] ==
+                                                              "CIP_Kitchen") {
+                                                            reasonList[index] =
+                                                                DataBD()
+                                                                    .cip_kitchen;
+                                                          } else if (mesin[
+                                                                  index] ==
+                                                              "Piltz") {
+                                                            reasonList[index] =
+                                                                DataBD()
+                                                                    .piltz_reason;
+                                                          } else if (mesin[
+                                                                  index] ==
+                                                              "Folding") {
+                                                            reasonList[index] =
+                                                                DataBD()
+                                                                    .folding_reason;
+                                                          } else if (mesin[
+                                                                  index] ==
+                                                              "Omori") {
+                                                            reasonList[index] =
+                                                                DataBD()
+                                                                    .omori_reason;
+                                                          } else if (mesin[
+                                                                  index] ==
+                                                              "Samwoo") {
+                                                            reasonList[index] =
+                                                                DataBD()
+                                                                    .samwoo_reason;
+                                                          } else if (mesin[
+                                                                  index] ==
+                                                              "Bossar") {
+                                                            reasonList[index] =
+                                                                DataBD()
+                                                                    .bossar_reason;
+                                                          } else if (mesin[
+                                                                  index] ==
+                                                              "Cartoning") {
+                                                            reasonList[index] =
+                                                                DataBD()
+                                                                    .cartoning_reason;
+                                                          } else if (mesin[
+                                                                  index] ==
+                                                              "Robotic_Palletizer_Pouch") {
+                                                            reasonList[index] =
+                                                                DataBD()
+                                                                    .robotic_palletizer_pouch;
+                                                          } else if (mesin[
+                                                                  index] ==
+                                                              "Carton_Sealer") {
+                                                            reasonList[index] =
+                                                                DataBD()
+                                                                    .carton_sealer;
+                                                          }
                                                         });
                                                       },
-                                                      dropdownItemReason: [
-                                                        DropdownMenuItem(
-                                                          child:
-                                                              Text("reason 1"),
-                                                          value: "reason 1",
-                                                        ),
-                                                        DropdownMenuItem(
-                                                          child:
-                                                              Text("reason 2"),
-                                                          value: "reason 2",
-                                                        ),
-                                                        DropdownMenuItem(
-                                                          child:
-                                                              Text("reason 3"),
-                                                          value: "reason 3",
-                                                        )
-                                                      ],
+                                                      dropdownItemReason:
+                                                          reasonList[index],
                                                       onChangeReason: (a) {
                                                         setState(() {
                                                           reason[index] = a;
@@ -935,18 +1098,19 @@ class _FormInputDataState extends State<FormInputData> {
                                                                     value) /
                                                                 60;
                                                             actHourList[index] =
-                                                                aa.toString();
+                                                                aa.toStringAsFixed(
+                                                                    2);
 
                                                             var integer = actHourList.fold(
-                                                                0,
+                                                                0.00,
                                                                 (a, b) =>
-                                                                    int.parse(a
+                                                                    double.parse(a
                                                                         .toString()) +
-                                                                    int.parse(b
-                                                                        .toString()));
-                                                            actHourTotal =
-                                                                integer
-                                                                    .toString();
+                                                                    double.parse(
+                                                                        b.toString()));
+                                                            actHourTotal = integer
+                                                                .toStringAsFixed(
+                                                                    2);
 
                                                             var net = num.parse(
                                                                     grossHour) -
@@ -957,8 +1121,9 @@ class _FormInputDataState extends State<FormInputData> {
                                                                 num.parse(
                                                                     idleHourTotal!);
 
-                                                            netHour =
-                                                                net.toString();
+                                                            netHour = net
+                                                                .toStringAsFixed(
+                                                                    2);
 
                                                             grossHour = groos
                                                                 .toString();
@@ -978,10 +1143,18 @@ class _FormInputDataState extends State<FormInputData> {
                                                                     bdHourTotal!) /
                                                                 num.parse(
                                                                     netHour);
-                                                            bd = bdV.toString();
-                                                            dt = dtV.toString();
-                                                            le = leV.toString();
-                                                            lp = lpV.toString();
+                                                            bd = bdV
+                                                                .toStringAsFixed(
+                                                                    2);
+                                                            dt = dtV
+                                                                .toStringAsFixed(
+                                                                    2);
+                                                            le = leV
+                                                                .toStringAsFixed(
+                                                                    2);
+                                                            lp = lpV
+                                                                .toStringAsFixed(
+                                                                    2);
                                                           });
                                                         },
                                                         actHour:
@@ -1119,17 +1292,18 @@ class _FormInputDataState extends State<FormInputData> {
                                                                 60;
                                                             idleHourList[
                                                                     index] =
-                                                                aa.toString();
+                                                                aa.toStringAsFixed(
+                                                                    2);
                                                             var integer = idleHourList.fold(
-                                                                0,
+                                                                0.00,
                                                                 (a, b) =>
-                                                                    int.parse(a
+                                                                    double.parse(a
                                                                         .toString()) +
-                                                                    int.parse(b
-                                                                        .toString()));
-                                                            idleHourTotal =
-                                                                integer
-                                                                    .toString();
+                                                                    double.parse(
+                                                                        b.toString()));
+                                                            idleHourTotal = integer
+                                                                .toStringAsFixed(
+                                                                    2);
 
                                                             var gros = num.parse(
                                                                     totalHours) -
@@ -1159,10 +1333,18 @@ class _FormInputDataState extends State<FormInputData> {
                                                                     bdHourTotal!) /
                                                                 num.parse(
                                                                     netHour);
-                                                            bd = bdV.toString();
-                                                            dt = dtV.toString();
-                                                            le = leV.toString();
-                                                            lp = lpV.toString();
+                                                            bd = bdV
+                                                                .toStringAsFixed(
+                                                                    2);
+                                                            dt = dtV
+                                                                .toStringAsFixed(
+                                                                    2);
+                                                            le = leV
+                                                                .toStringAsFixed(
+                                                                    2);
+                                                            lp = lpV
+                                                                .toStringAsFixed(
+                                                                    2);
                                                           });
                                                         },
                                                         idleHour: idleHourList[
@@ -1177,19 +1359,43 @@ class _FormInputDataState extends State<FormInputData> {
                                                         },
                                                         dropdownItemIdleDesc: [
                                                           DropdownMenuItem(
-                                                            child:
-                                                                Text("mesin 1"),
-                                                            value: "mesin 1",
+                                                            child: Text(
+                                                                "THP (Tunggu Hasil Produk)"),
+                                                            value:
+                                                                "THP (Tunggu Hasil Produk)",
                                                           ),
                                                           DropdownMenuItem(
                                                             child:
-                                                                Text("mesin 2"),
-                                                            value: "mesin 2",
+                                                                Text("CT Full"),
+                                                            value: "CT Full",
+                                                          ),
+                                                          DropdownMenuItem(
+                                                            child: Text(
+                                                                "No Planning"),
+                                                            value:
+                                                                "No Planning",
+                                                          ),
+                                                          DropdownMenuItem(
+                                                            child: Text(
+                                                                "Stock Opname"),
+                                                            value:
+                                                                "Stock Opname",
+                                                          ),
+                                                          DropdownMenuItem(
+                                                            child: Text(
+                                                                "Overhoule"),
+                                                            value: "Overhoule",
                                                           ),
                                                           DropdownMenuItem(
                                                             child:
-                                                                Text("mesin 3"),
-                                                            value: "mesin 3",
+                                                                Text("Project"),
+                                                            value: "Project",
+                                                          ),
+                                                          DropdownMenuItem(
+                                                            child: Text(
+                                                                "Trial New Product"),
+                                                            value:
+                                                                "Trial New Product",
                                                           ),
                                                         ]);
                                                   }),
@@ -1399,4 +1605,1699 @@ class _FormInputDataState extends State<FormInputData> {
       "problem": problem
     });
   }
+}
+
+class DataBD {
+  //Process skm
+  var process_SKM_Mesin = [
+    DropdownMenuItem(
+      child: Text("Dumper"),
+      value: "Dumper",
+    ),
+    DropdownMenuItem(
+      child: Text("Slurry"),
+      value: "Slurry",
+    ),
+    DropdownMenuItem(
+      child: Text("Mixer"),
+      value: "Mixer",
+    ),
+    DropdownMenuItem(
+      child: Text("Pasteurizer"),
+      value: "Pasteurizer",
+    ),
+    DropdownMenuItem(
+      child: Text("Homogenizer"),
+      value: "Homogenizer",
+    ),
+    DropdownMenuItem(
+      child: Text("Flash_Cooler"),
+      value: "Flash_Cooler",
+    ),
+    DropdownMenuItem(
+      child: Text("CT"),
+      value: "CT",
+    ),
+    DropdownMenuItem(
+      child: Text("Utility"),
+      value: "Utility",
+    ),
+    DropdownMenuItem(
+      child: Text("CIP_Kitchen"),
+      value: "CIP_Kitchen",
+    )
+  ];
+  var filling_SKM_Can_Mesin = [
+    DropdownMenuItem(
+      child: Text("Filler_Closer"),
+      value: "Filler_Closer",
+    ),
+    DropdownMenuItem(
+      child: Text("Labeling"),
+      value: "Labeling",
+    ),
+    DropdownMenuItem(
+      child: Text("Cermex_Cartoning"),
+      value: "Cermex_Cartoning",
+    ),
+    DropdownMenuItem(
+      child: Text("Robot_Palletizer_Can"),
+      value: "Robot_Palletizer_Can",
+    ),
+    DropdownMenuItem(
+      child: Text("Utility"),
+      value: "Utility",
+    ),
+    DropdownMenuItem(
+      child: Text("CIP_Kitchen"),
+      value: "CIP_Kitchen",
+    ),
+    DropdownMenuItem(
+      child: Text("CT"),
+      value: "CT",
+    ),
+  ];
+
+  var filling_SKM_Tall_Can = [
+    DropdownMenuItem(
+      child: Text("Filler_Closer"),
+      value: "Filler_Closer",
+    ),
+    DropdownMenuItem(
+      child: Text("Labeling"),
+      value: "Labeling",
+    ),
+    DropdownMenuItem(
+      child: Text("Cermex_Cartoning"),
+      value: "Cermex_Cartoning",
+    ),
+    DropdownMenuItem(
+      child: Text("Robot_Palletizer_Can"),
+      value: "Robot_Palletizer_Can",
+    ),
+    DropdownMenuItem(
+      child: Text("Utility"),
+      value: "Utility",
+    ),
+    DropdownMenuItem(
+      child: Text("CIP_Kitchen"),
+      value: "CIP_Kitchen",
+    ),
+    DropdownMenuItem(
+      child: Text("CT"),
+      value: "CT",
+    ),
+  ];
+  var filling_SKM_Sachet = [
+    DropdownMenuItem(
+      child: Text("Piltz"),
+      value: "Piltz",
+    ),
+    DropdownMenuItem(
+      child: Text("Folding"),
+      value: "Folding",
+    ),
+    DropdownMenuItem(
+      child: Text("Omori"),
+      value: "Omori",
+    ),
+    DropdownMenuItem(
+      child: Text("Samwoo"),
+      value: "Samwoo",
+    ),
+    DropdownMenuItem(
+      child: Text("Utility"),
+      value: "Utility",
+    ),
+    DropdownMenuItem(
+      child: Text("CIP_Kitchen"),
+      value: "CIP_Kitchen",
+    ),
+    DropdownMenuItem(
+      child: Text("CT"),
+      value: "CT",
+    ),
+    DropdownMenuItem(
+      child: Text("Carton_Sealer"),
+      value: "Carton_Sealer",
+    ),
+  ];
+  var filling_SKM_Pouch = [
+    DropdownMenuItem(
+      child: Text("Bossar"),
+      value: "Bossar",
+    ),
+    DropdownMenuItem(
+      child: Text("Cartoning"),
+      value: "Cartoning",
+    ),
+    DropdownMenuItem(
+      child: Text("Robotic_Palletizer_Pouch"),
+      value: "Robotic_Palletizer_Pouch",
+    ),
+    DropdownMenuItem(
+      child: Text("Utility"),
+      value: "Utility",
+    ),
+    DropdownMenuItem(
+      child: Text("CIP_Kitchen"),
+      value: "CIP_Kitchen",
+    ),
+    DropdownMenuItem(
+      child: Text("CT"),
+      value: "CT",
+    ),
+  ];
+
+  //reason
+  var dumper_reason = [
+    DropdownMenuItem(
+      child: Text("Blower Overload"),
+      value: "Blower Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Dosing Gula Blocking"),
+      value: "Dosing Gula Blocking",
+    ),
+    DropdownMenuItem(
+      child: Text("Dosing Gula Lambat"),
+      value: "Dosing Gula Lambat",
+    ),
+    DropdownMenuItem(
+      child: Text("Dosing Powder Blocking"),
+      value: "Dosing Powder Blocking",
+    ),
+    DropdownMenuItem(
+      child: Text("Dosing Powder Lambat"),
+      value: "Dosing Powder Lambat",
+    ),
+    DropdownMenuItem(
+      child: Text("Ganti Filter Tipping Powder"),
+      value: "Ganti Filter Tipping Powder",
+    ),
+    DropdownMenuItem(
+      child: Text("Gula Blocking/Membatu"),
+      value: "Gula Blocking/Membatu",
+    ),
+    DropdownMenuItem(
+      child: Text("Gula Susah Turun"),
+      value: "Gula Susah Turun",
+    ),
+    DropdownMenuItem(
+      child: Text("Jalur Blower Powder Lepas"),
+      value: "Jalur Blower Powder Lepas",
+    ),
+    DropdownMenuItem(
+      child: Text("Powder Susah Turun"),
+      value: "Powder Susah Turun",
+    ),
+    DropdownMenuItem(
+      child: Text("Rantai STRV Tipping Sugar Putus/Lepas"),
+      value: "Rantai STRV Tipping Sugar Putus/Lepas",
+    ),
+    DropdownMenuItem(
+      child: Text("Rantai STRV Tipping Powder Putus/Lepas"),
+      value: "Rantai STRV Tipping Powder Putus/Lepas",
+    ),
+    DropdownMenuItem(
+      child: Text("Screw Tipping Powder Overload"),
+      value: "Screw Tipping Powder Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Screw Tipping Sugar Overload"),
+      value: "Screw Tipping Sugar Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Screw Weighing Overload"),
+      value: "Screw Weighing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Screw Weighing Powder Blocking"),
+      value: "Screw Weighing Powder Blocking",
+    ),
+    DropdownMenuItem(
+      child: Text("Screw Weighing Powder Overload"),
+      value: "Screw Weighing Powder Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("STRV Tipping Powder Overload"),
+      value: "STRV Tipping Powder Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("STRV Tipping Sugar Overload"),
+      value: "STRV Tipping Sugar Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Weighing Gula Lama"),
+      value: "Weighing Gula Lama",
+    ),
+    DropdownMenuItem(
+      child: Text("Weighing Powder Lama"),
+      value: "Weighing Powder Lama",
+    ),
+    DropdownMenuItem(
+      child: Text("Jalur Powder Blocking"),
+      value: "Jalur Powder Blocking",
+    ),
+    DropdownMenuItem(
+      child: Text("Jalur Maldex Blocking"),
+      value: "Jalur Maldex Blocking",
+    ),
+    DropdownMenuItem(
+      child: Text("Screw Gula Macet"),
+      value: "Screw Gula Macet",
+    ),
+    DropdownMenuItem(
+      child: Text("Setting Timbangan"),
+      value: "Setting Timbangan",
+    ),
+  ];
+  var mixer_reason = [
+    DropdownMenuItem(
+      child: Text("Agitator Patah"),
+      value: "Agitator Patah",
+    ),
+    DropdownMenuItem(
+      child: Text("Blocking"),
+      value: "Blocking",
+    ),
+    DropdownMenuItem(
+      child: Text("Mass Flow"),
+      value: "Mass Flow",
+    ),
+    DropdownMenuItem(
+      child: Text("Mixing Stop"),
+      value: "Mixing Stop",
+    ),
+    DropdownMenuItem(
+      child: Text("Mixing Tank Full"),
+      value: "Mixing Tank Full",
+    ),
+    DropdownMenuItem(
+      child: Text("Motor Mixing Overload"),
+      value: "Motor Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Pompa Sirkulasi Overload"),
+      value: "Pompa Sirkulasi Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Sliding Valve Macet"),
+      value: "Sliding Valve Macet",
+    ),
+    DropdownMenuItem(
+      child: Text("Valve Automatic Eror"),
+      value: "Valve Automatic Eror",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+  ];
+
+  var pasteurizer_reason = [
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Motor Pompa Terbakar"),
+      value: "Motor Pompa Terbakar",
+    ),
+    DropdownMenuItem(
+      child: Text("PHE bocor"),
+      value: "PHE bocor",
+    ),
+    DropdownMenuItem(
+      child: Text("Pipa Hot Water Bocor"),
+      value: "Pipa Hot Water Bocor",
+    ),
+    DropdownMenuItem(
+      child: Text("Pumping Lambat dan Flow kecil"),
+      value: "Pumping Lambat dan Flow kecil",
+    ),
+    DropdownMenuItem(
+      child: Text("Valve Automatic Eror"),
+      value: "Valve Automatic Eror",
+    ),
+  ];
+  var homogenizer_reason = [
+    DropdownMenuItem(
+      child: Text("Motor Terbakar"),
+      value: "Motor Terbakar",
+    ),
+    DropdownMenuItem(
+      child: Text("Oli bocor"),
+      value: "Oli bocor",
+    ),
+    DropdownMenuItem(
+      child: Text("Pressure Drop"),
+      value: "Pressure Drop",
+    ),
+    DropdownMenuItem(
+      child: Text("Homogenizer Trouble"),
+      value: "Homogenizer Trouble",
+    ),
+  ];
+
+  var flash_cooler_reason = [
+    DropdownMenuItem(
+      child: Text("Buffer Tank Bocor"),
+      value: "Buffer Tank Bocor",
+    ),
+    DropdownMenuItem(
+      child: Text("Cooling Tower Trouble"),
+      value: "Cooling Tower Trouble",
+    ),
+    DropdownMenuItem(
+      child: Text("House Pump Bocor"),
+      value: "House Pump Bocor",
+    ),
+    DropdownMenuItem(
+      child: Text("Mesin FC Mati/Stop"),
+      value: "Mesin FC Mati/Stop",
+    ),
+    DropdownMenuItem(
+      child: Text("Program Eror"),
+      value: "Program Eror",
+    ),
+    DropdownMenuItem(
+      child: Text("Roda Lactose Grinder Bocor"),
+      value: "Roda Lactose Grinder Bocor",
+    ),
+    DropdownMenuItem(
+      child: Text("Flash Cooler Trouble"),
+      value: "Flash Cooler Trouble",
+    ),
+  ];
+
+  var ct_reason = [
+    DropdownMenuItem(
+      child: Text("Adjustment Produk"),
+      value: "Adjustment Produk",
+    ),
+    DropdownMenuItem(
+      child: Text("Kerusakan pada valve / gasket"),
+      value: "Kerusakan pada valve / gasket",
+    ),
+    DropdownMenuItem(
+      child: Text("Pompa Transfer produk bocor/terbakar"),
+      value: "Pompa Transfer produk bocor/terbakar",
+    ),
+    DropdownMenuItem(
+      child: Text("Agitator Cristalisation tank rusak"),
+      value: "Agitator Cristalisation tank rusak",
+    ),
+  ];
+
+  var utility_reason = [
+    DropdownMenuItem(
+      child: Text("PLN Mati"),
+      value: "PLN Mati",
+    ),
+    DropdownMenuItem(
+      child: Text("Steam Drop"),
+      value: "Steam Drop",
+    ),
+    DropdownMenuItem(
+      child: Text("AHU mati"),
+      value: "AHU mati",
+    ),
+  ];
+
+  var slurry_reason = [
+    DropdownMenuItem(
+      child: Text("Menunggu Slurry Ready"),
+      value: "Menunggu Slurry Ready",
+    ),
+    DropdownMenuItem(
+      child: Text("Motor Slurry Overload"),
+      value: "Motor Slurry Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Valve Automatic Eror"),
+      value: "Valve Automatic Eror",
+    ),
+  ];
+
+  var filler_closer_reason = [
+    DropdownMenuItem(
+      child: Text("Air Cylinder Lid Tidak Berfungsi"),
+      value: "Air Cylinder Lid Tidak Berfungsi",
+    ),
+    DropdownMenuItem(
+      child: Text("Belt Elevator Geser"),
+      value: "Belt Elevator Geser",
+    ),
+    DropdownMenuItem(
+      child: Text("Belt Spiral Putus"),
+      value: "Belt Spiral Putus",
+    ),
+    DropdownMenuItem(
+      child: Text("Belt Vertikal Trouble"),
+      value: "Belt Vertikal Trouble",
+    ),
+    DropdownMenuItem(
+      child: Text("Can Bocor-Gagal Seaming"),
+      value: "Can Bocor-Gagal Seaming",
+    ),
+    DropdownMenuItem(
+      child: Text("Can Penyok"),
+      value: "Can Penyok",
+    ),
+    DropdownMenuItem(
+      child: Text("Can Sterilizer Trouble"),
+      value: "Can Sterilizer Trouble",
+    ),
+    DropdownMenuItem(
+      child: Text("Can Tersangkut Di Can Sterilizer"),
+      value: "Can Tersangkut Di Can Sterilizer",
+    ),
+    DropdownMenuItem(
+      child: Text("Can Tersangkut Di Stopper"),
+      value: "Can Tersangkut Di Stopper",
+    ),
+    DropdownMenuItem(
+      child: Text("Can Tersangkut Di Track"),
+      value: "Can Tersangkut Di Track",
+    ),
+    DropdownMenuItem(
+      child: Text("Can Track Patah"),
+      value: "Can Track Patah",
+    ),
+    DropdownMenuItem(
+      child: Text("Closer Nabrak"),
+      value: "Closer Nabrak",
+    ),
+    DropdownMenuItem(
+      child: Text("Closer Tumpah-Can Penyok"),
+      value: "Closer Tumpah-Can Penyok",
+    ),
+    DropdownMenuItem(
+      child: Text("Closer Tumpah-Can Tidak Ada Tutup"),
+      value: "Closer Tumpah-Can Tidak Ada Tutup",
+    ),
+    DropdownMenuItem(
+      child: Text("Closer Tumpah-Gagal Seaming"),
+      value: "Closer Tumpah-Gagal Seaming",
+    ),
+    DropdownMenuItem(
+      child: Text("Closer Tumpah-Lid Miring"),
+      value: "Closer Tumpah-Lid Miring",
+    ),
+    DropdownMenuItem(
+      child: Text("Closer Tumpah-Lid Terbalik"),
+      value: "Closer Tumpah-Lid Terbalik",
+    ),
+    DropdownMenuItem(
+      child: Text("Closer Tumpah-Tutup Tidak Sempurna"),
+      value: "Closer Tumpah-Tutup Tidak Sempurna",
+    ),
+    DropdownMenuItem(
+      child: Text("Conveyor Depall Putus"),
+      value: "Conveyor Depall Putus",
+    ),
+    DropdownMenuItem(
+      child: Text("Conveyor Filling Putus"),
+      value: "Conveyor Filling Putus",
+    ),
+    DropdownMenuItem(
+      child: Text("Depall Supply Telat"),
+      value: "Depall Supply Telat",
+    ),
+    DropdownMenuItem(
+      child: Text("Lid Burner Mati"),
+      value: "Lid Burner Mati",
+    ),
+    DropdownMenuItem(
+      child: Text("Lid Tersangkut di Magazine"),
+      value: "Lid Tersangkut di Magazine",
+    ),
+    DropdownMenuItem(
+      child: Text("Piston Filler Trouble"),
+      value: "Piston Filler Trouble",
+    ),
+    DropdownMenuItem(
+      child: Text("Rantai Can Sterilizer Lepas"),
+      value: "Rantai Can Sterilizer Lepas",
+    ),
+    DropdownMenuItem(
+      child: Text("Seaming Tidak Sempurna"),
+      value: "Seaming Tidak Sempurna",
+    ),
+    DropdownMenuItem(
+      child: Text("Temperatur filling room tdk stabil"),
+      value: "Temperatur filling room tdk stabil",
+    ),
+    DropdownMenuItem(
+      child: Text("Temperature Tidak Stabil"),
+      value: "Temperature Tidak Stabil",
+    ),
+    DropdownMenuItem(
+      child: Text("Supply OTC Telat"),
+      value: "Supply OTC Telat",
+    ),
+    DropdownMenuItem(
+      child: Text("Panel HMI Mati"),
+      value: "Panel HMI Mati",
+    ),
+    DropdownMenuItem(
+      child: Text("Closer Tumpah"),
+      value: "Closer Tumpah",
+    ),
+    DropdownMenuItem(
+      child: Text("Can Track Seret"),
+      value: "Can Track Seret",
+    ),
+    DropdownMenuItem(
+      child: Text("Closer Can Jiplak"),
+      value: "Closer Can Jiplak",
+    ),
+    DropdownMenuItem(
+      child: Text("Can Tersangkut/Jatuh"),
+      value: "Can Tersangkut/Jatuh",
+    ),
+    DropdownMenuItem(
+      child: Text("OTC tersangkut di Magnet Frame"),
+      value: "OTC tersangkut di Magnet Frame",
+    ),
+  ];
+  var labeling_reason = [
+    DropdownMenuItem(
+      child: Text("Can Tersangkut Di Belt Elevator"),
+      value: "Can Tersangkut Di Belt Elevator",
+    ),
+    DropdownMenuItem(
+      child: Text("Can Tersangkut Di Elevator"),
+      value: "Can Tersangkut Di Elevator",
+    ),
+    DropdownMenuItem(
+      child: Text("Can Tersangkut Di Magnetic Belt"),
+      value: "Can Tersangkut Di Magnetic Belt",
+    ),
+    DropdownMenuItem(
+      child: Text("Can Tersangkut Di Track"),
+      value: "Can Tersangkut Di Track",
+    ),
+    DropdownMenuItem(
+      child: Text("Conveyor Input Putus"),
+      value: "Conveyor Input Putus",
+    ),
+    DropdownMenuItem(
+      child: Text("Hidrolik Lepas"),
+      value: "Hidrolik Lepas",
+    ),
+    DropdownMenuItem(
+      child: Text("Hot Melt Glue Tidak Berputar"),
+      value: "Hot Melt Glue Tidak Berputar",
+    ),
+    DropdownMenuItem(
+      child: Text("Hot Melt Glue Tidak Panas"),
+      value: "Hot Melt Glue Tidak Panas",
+    ),
+    DropdownMenuItem(
+      child: Text("Hydrolic Label Macet"),
+      value: "Hydrolic Label Macet",
+    ),
+    DropdownMenuItem(
+      child: Text("Label Brudul-Label Melengkung"),
+      value: "Label Brudul-Label Melengkung",
+    ),
+    DropdownMenuItem(
+      child: Text("Label Brudul-Label Sobek Dan Miring"),
+      value: "Label Brudul-Label Sobek Dan Miring",
+    ),
+    DropdownMenuItem(
+      child: Text("Label Brudul-Lebar Label Tidak Sama"),
+      value: "Label Brudul-Lebar Label Tidak Sama",
+    ),
+    DropdownMenuItem(
+      child: Text("Label Brudul-Lem Putih Banjir"),
+      value: "Label Brudul-Lem Putih Banjir",
+    ),
+    DropdownMenuItem(
+      child: Text("Label Brudul-Lem Putih Mampet"),
+      value: "Label Brudul-Lem Putih Mampet",
+    ),
+    DropdownMenuItem(
+      child: Text("Label Brudul-Lem Putih Tidak Ada"),
+      value: "Label Brudul-Lem Putih Tidak Ada",
+    ),
+    DropdownMenuItem(
+      child: Text("Label Melipat"),
+      value: "Label Melipat",
+    ),
+    DropdownMenuItem(
+      child: Text("Label Miring"),
+      value: "Label Miring",
+    ),
+    DropdownMenuItem(
+      child: Text("Magnetic Elevator Lepas"),
+      value: "Magnetic Elevator Lepas",
+    ),
+    DropdownMenuItem(
+      child: Text("Main Belt Kendur"),
+      value: "Main Belt Kendur",
+    ),
+    DropdownMenuItem(
+      child: Text("Main Belt Lepas"),
+      value: "Main Belt Lepas",
+    ),
+    DropdownMenuItem(
+      child: Text("Main Belt Sobek"),
+      value: "Main Belt Sobek",
+    ),
+    DropdownMenuItem(
+      child: Text("Pully Maint Belt Lepas"),
+      value: "Pully Maint Belt Lepas",
+    ),
+    DropdownMenuItem(
+      child: Text("Main Belt Putus"),
+      value: "Main Belt Putus",
+    ),
+    DropdownMenuItem(
+      child: Text("Label Brudul"),
+      value: "Label Brudul",
+    ),
+    DropdownMenuItem(
+      child: Text("Oli Hydrolik bocor"),
+      value: "Oli Hydrolik bocor",
+    ),
+    DropdownMenuItem(
+      child: Text("Tangki lem bocor"),
+      value: "Tangki lem bocor",
+    ),
+  ];
+
+  var cermex_cartoning_reason = [
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+  ];
+  var robot_palletizer_can = [
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+  ];
+  var cip_kitchen = [
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+  ];
+  var piltz_reason = [
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+  ];
+  var folding_reason = [
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+  ];
+  var omori_reason = [
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+  ];
+
+  var samwoo_reason = [
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+  ];
+  var bossar_reason = [
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+  ];
+  var cartoning_reason = [
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+  ];
+  var robotic_palletizer_pouch = [
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+  ];
+  var carton_sealer = [
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+    DropdownMenuItem(
+      child: Text("Turbo Mixing Overload"),
+      value: "Turbo Mixing Overload",
+    ),
+  ];
 }
