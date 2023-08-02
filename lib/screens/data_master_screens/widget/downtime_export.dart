@@ -28,6 +28,12 @@ class _exportDowntimeState extends State<exportDowntime> {
         title: 'No',
         field: 'no',
         type: PlutoColumnType.text(),
+        enableSorting: true,
+        width: 60),
+    PlutoColumn(
+        title: 'Date',
+        field: 'date',
+        type: PlutoColumnType.text(),
         enableSorting: true),
     PlutoColumn(
         title: 'DT',
@@ -60,11 +66,6 @@ class _exportDowntimeState extends State<exportDowntime> {
     PlutoColumn(
         title: 'ACT (Hour)',
         field: 'actHour',
-        type: PlutoColumnType.text(),
-        enableSorting: true),
-    PlutoColumn(
-        title: 'Date',
-        field: 'date',
         type: PlutoColumnType.text(),
         enableSorting: true),
   ];

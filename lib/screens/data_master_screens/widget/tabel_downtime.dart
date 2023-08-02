@@ -4,7 +4,6 @@ import 'package:table_plus/table_plus.dart';
 
 import '../../../constants/style.dart';
 import '../../../widgets/content_detail_form.dart';
-import '../../product_acv_screens/product_acv_form.dart';
 
 class tabel_downtime extends StatefulWidget {
   const tabel_downtime({super.key});
@@ -97,7 +96,6 @@ class _tabel_downtimeState extends State<tabel_downtime> {
                               child: detail_form()),
                         ),
                       );
-                      ;
                     },
                   );
                 },

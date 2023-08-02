@@ -28,6 +28,12 @@ class _exportIdleTimeState extends State<exportIdleTime> {
         title: 'No',
         field: 'no',
         type: PlutoColumnType.text(),
+        enableSorting: true,
+        width: 60),
+    PlutoColumn(
+        title: 'Date',
+        field: 'date',
+        type: PlutoColumnType.text(),
         enableSorting: true),
     PlutoColumn(
         title: 'Idle Desc',
@@ -50,11 +56,6 @@ class _exportIdleTimeState extends State<exportIdleTime> {
         // },
         title: 'idle (Hour)',
         field: 'idleHour',
-        type: PlutoColumnType.text(),
-        enableSorting: true),
-    PlutoColumn(
-        title: 'Date',
-        field: 'date',
         type: PlutoColumnType.text(),
         enableSorting: true),
   ];

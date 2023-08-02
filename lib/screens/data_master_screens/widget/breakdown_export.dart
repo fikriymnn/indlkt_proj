@@ -25,8 +25,14 @@ class _exportBreakdownState extends State<exportBreakdown> {
 
   final List<PlutoColumn> columns = [
     PlutoColumn(
-        title: 'No',
-        field: 'no',
+      title: 'No',
+      field: 'no',
+      type: PlutoColumnType.text(),
+      width: 60,
+    ),
+    PlutoColumn(
+        title: 'Date',
+        field: 'date',
         type: PlutoColumnType.text(),
         enableSorting: true),
     PlutoColumn(
@@ -65,11 +71,6 @@ class _exportBreakdownState extends State<exportBreakdown> {
     PlutoColumn(
         title: 'Problem',
         field: 'problem',
-        type: PlutoColumnType.text(),
-        enableSorting: true),
-    PlutoColumn(
-        title: 'Date',
-        field: 'date',
         type: PlutoColumnType.text(),
         enableSorting: true),
   ];

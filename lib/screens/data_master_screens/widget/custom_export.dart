@@ -25,6 +25,17 @@ class _exportPageState extends State<exportPage> {
 
   final List<PlutoColumn> columns = [
     PlutoColumn(
+        title: 'No',
+        field: 'no',
+        type: PlutoColumnType.text(),
+        enableSorting: true,
+        width: 60),
+    PlutoColumn(
+        title: 'Date',
+        field: 'date',
+        type: PlutoColumnType.text(),
+        enableSorting: true),
+    PlutoColumn(
         title: 'Product',
         field: 'product',
         type: PlutoColumnType.text(),
@@ -35,14 +46,6 @@ class _exportPageState extends State<exportPage> {
       type: PlutoColumnType.text(),
     ),
     PlutoColumn(
-        // renderer: (rendererContext) {
-        //   return InkWell(
-        //     onTap: () {
-        //       print('object');
-        //     },
-        //     child: Icon(Icons.abc),
-        //   );
-        // },
         title: 'Shift',
         field: 'shift',
         type: PlutoColumnType.text(),
@@ -105,11 +108,6 @@ class _exportPageState extends State<exportPage> {
     PlutoColumn(
         title: 'BD',
         field: 'bd',
-        type: PlutoColumnType.text(),
-        enableSorting: true),
-    PlutoColumn(
-        title: 'Date',
-        field: 'date',
         type: PlutoColumnType.text(),
         enableSorting: true),
   ];
@@ -244,6 +242,9 @@ class _exportPageState extends State<exportPage> {
                         snapshot.data.docs.length,
                         (index) => PlutoRow(
                           cells: {
+                            'no': PlutoCell(value: index + 1),
+                            'date': PlutoCell(
+                                value: snapshot.data.docs[index]['date']),
                             'product': PlutoCell(
                                 value: snapshot.data.docs[index]['product']),
                             'departement': PlutoCell(
@@ -279,8 +280,6 @@ class _exportPageState extends State<exportPage> {
                                 value: snapshot.data.docs[index]['dt']),
                             'bd': PlutoCell(
                                 value: snapshot.data.docs[index]['bd']),
-                            'date': PlutoCell(
-                                value: snapshot.data.docs[index]['date']),
                           },
                         ),
                       ),

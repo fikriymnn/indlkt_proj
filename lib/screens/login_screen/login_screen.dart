@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:indlkt_proj/screens/login_screen/widgets/chaptcha.dart';
 import 'package:indlkt_proj/widgets/side_bar.dart';
 import 'package:local_captcha/local_captcha.dart';
-import 'package:marquee/marquee.dart';
+
 import 'package:rive/rive.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
