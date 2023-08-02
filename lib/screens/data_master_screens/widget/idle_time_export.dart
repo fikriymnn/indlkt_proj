@@ -1,7 +1,6 @@
 import 'dart:convert';
-import 'dart:io';
-import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pluto_grid/pluto_grid.dart';
@@ -10,30 +9,40 @@ import 'package:pluto_grid_export/pluto_grid_export.dart' as pluto_grid_export;
 import 'package:file_saver/file_saver.dart';
 import 'package:flutter/services.dart';
 
-import '../constants/style.dart';
-import 'custom_container.dart';
+import '../../../constants/style.dart';
 
-class exportPage extends StatefulWidget {
-  const exportPage({super.key});
+class exportIdleTime extends StatefulWidget {
+  const exportIdleTime({super.key});
 
   @override
-  State<exportPage> createState() => _exportPageState();
+  State<exportIdleTime> createState() => _exportIdleTimeState();
 }
 
-class _exportPageState extends State<exportPage> {
+class _exportIdleTimeState extends State<exportIdleTime> {
   int selectedIndex = 0;
   late PlutoGridStateManager stateManager;
   String tes = "";
 
   final List<PlutoColumn> columns = [
     PlutoColumn(
-        title: 'Product',
-        field: 'product',
+        title: 'No',
+        field: 'no',
+        type: PlutoColumnType.text(),
+        enableSorting: true,
+        width: 60),
+    PlutoColumn(
+        title: 'Date',
+        field: 'date',
         type: PlutoColumnType.text(),
         enableSorting: true),
     PlutoColumn(
-      title: 'Departement',
-      field: 'departement',
+        title: 'Idle Desc',
+        field: 'idleDesc',
+        type: PlutoColumnType.text(),
+        enableSorting: true),
+    PlutoColumn(
+      title: 'Idle (Min)',
+      field: 'idleMin',
       type: PlutoColumnType.text(),
     ),
     PlutoColumn(
@@ -45,18 +54,8 @@ class _exportPageState extends State<exportPage> {
         //     child: Icon(Icons.abc),
         //   );
         // },
-        title: 'Shift',
-        field: 'shift',
-        type: PlutoColumnType.text(),
-        enableSorting: true),
-    PlutoColumn(
-        title: 'Line',
-        field: 'line',
-        type: PlutoColumnType.text(),
-        enableSorting: true),
-    PlutoColumn(
-        title: 'Date',
-        field: 'date',
+        title: 'idle (Hour)',
+        field: 'idleHour',
         type: PlutoColumnType.text(),
         enableSorting: true),
   ];
@@ -179,29 +178,46 @@ class _exportPageState extends State<exportPage> {
                   color: dark, fontSize: 15, fontWeight: FontWeight.bold)),
         ),
         Expanded(
-          child: PlutoGrid(
-            columns: columns,
-            rows: List.generate(
-              200,
-              (index) => PlutoRow(
-                cells: {
-                  'product': PlutoCell(value: 'cell 1${index + 1}'),
-                  'departement': PlutoCell(value: 'cell 1-2'),
-                  'shift': PlutoCell(value: 'cell 1-3'),
-                  'line': PlutoCell(value: 'cell 1-3'),
-                  'date': PlutoCell(value: 'cell 1-3'),
-                },
-              ),
-            ),
-            onLoaded: (e) {
-              stateManager = e.stateManager;
-            },
-            createFooter: (stateManager) {
-              stateManager.setPageSize(100, notify: false); // default 40
-              return PlutoPagination(stateManager);
-            },
-          ),
-        ),
+            child: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection("idle_time")
+                    .snapshots(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    return PlutoGrid(
+                      columns: columns,
+                      rows: List.generate(
+                        snapshot.data.docs.length,
+                        (index) => PlutoRow(
+                          cells: {
+                            'no': PlutoCell(value: index + 1),
+                            'idleDesc': PlutoCell(
+                                value: snapshot.data.docs[index]['idleDesc']),
+                            'idleMin': PlutoCell(
+                                value: snapshot.data.docs[index]['idleMin']),
+                            'idleHour': PlutoCell(
+                                value: snapshot.data.docs[index]['idleHour']),
+                            'date': PlutoCell(
+                                value: snapshot.data.docs[index]['date']),
+                          },
+                        ),
+                      ),
+                      onLoaded: (e) {
+                        stateManager = e.stateManager;
+                      },
+                      createFooter: (stateManager) {
+                        stateManager.setPageSize(100,
+                            notify: false); // default 40
+                        return PlutoPagination(stateManager);
+                      },
+                    );
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.purple,
+                    ),
+                  );
+                })),
       ],
     );
   }

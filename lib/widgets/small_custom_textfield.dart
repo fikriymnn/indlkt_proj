@@ -8,6 +8,7 @@ class SmallTextfield extends StatefulWidget {
   final double width;
   final bool? readOnly;
   final dynamic value;
+  final void Function(dynamic)? onChange;
 
   const SmallTextfield(
       {super.key,
@@ -15,7 +16,8 @@ class SmallTextfield extends StatefulWidget {
       this.controller,
       required this.width,
       this.readOnly,
-      this.value});
+      this.value,
+      this.onChange});
 
   @override
   State<SmallTextfield> createState() => _SmallTextfieldState();
@@ -35,6 +37,7 @@ class _SmallTextfieldState extends State<SmallTextfield> {
         child: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
           child: TextFormField(
+            onChanged: widget.onChange,
             initialValue: widget.value == null ? null : "${widget.value}",
             readOnly: widget.readOnly == null ? false : true,
             controller: widget.controller == null ? null : widget.controller,

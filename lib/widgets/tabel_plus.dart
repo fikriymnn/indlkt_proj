@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:table_plus/table_plus.dart';
@@ -132,6 +133,11 @@ class _tabel_plusState extends State<tabel_plus> {
         .toList();
   }
 
+  var names = List.generate(
+      20,
+      (index) => Name(
+          product: "jhbh", departement: "jnk", shift: 9, line: 7687, date: 10));
+
   @override
   void initState() {
     super.initState();
@@ -220,11 +226,6 @@ class _tabel_plusState extends State<tabel_plus> {
       ),
     );
   }
-
-  var names = List.generate(
-      20,
-      (index) => Name(
-          product: "jhbh", departement: "jnk", shift: 9, line: 7687, date: 10));
 }
 
 class Name {

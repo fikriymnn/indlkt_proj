@@ -4,7 +4,6 @@ import 'package:table_plus/table_plus.dart';
 
 import '../../../constants/style.dart';
 import '../../../widgets/content_detail_form.dart';
-import '../../product_acv_screens/product_acv_form.dart';
 
 class tabel_idletime extends StatefulWidget {
   const tabel_idletime({super.key});
@@ -87,7 +86,6 @@ class _tabel_idletimeState extends State<tabel_idletime> {
                               child: detail_form()),
                         ),
                       );
-                      ;
                     },
                   );
                 },

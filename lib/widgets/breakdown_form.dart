@@ -17,6 +17,7 @@ class BreakdownForm extends StatefulWidget {
   final List<DropdownMenuItem> dropdownItemReason;
   final void Function(dynamic) onChangeReason;
   final dynamic valueReason;
+  final void Function(dynamic)? onChange;
   const BreakdownForm(
       {super.key,
       required this.index,
@@ -30,20 +31,23 @@ class BreakdownForm extends StatefulWidget {
       required this.valueMesin,
       required this.dropdownItemReason,
       required this.onChangeReason,
-      required this.valueReason});
+      required this.valueReason,
+      this.onChange});
 
   @override
   State<BreakdownForm> createState() => BreakdownFormState();
 }
 
 class BreakdownFormState extends State<BreakdownForm> {
-  var vau = "ajsjds";
+  String? hour = "0";
 
   String? mesin;
   String? reason;
 
   @override
   Widget build(BuildContext context) {
+    var dbmin = widget.bdMin.text == "" ? "0" : widget.bdMin.text;
+    print(widget.bdMin.text);
     return Container(
       margin: EdgeInsets.only(bottom: 30),
       child: Column(children: [
@@ -121,10 +125,10 @@ class BreakdownFormState extends State<BreakdownForm> {
                   height: 20,
                 ),
                 SmallTextfield(
-                  width: 150,
-                  controller: widget.bdMin,
-                  hint: 'masukan db hour min...',
-                )
+                    width: 150,
+                    controller: widget.bdMin,
+                    hint: 'masukan db hour min...',
+                    onChange: widget.onChange),
               ],
             ),
             Column(
@@ -136,11 +140,7 @@ class BreakdownFormState extends State<BreakdownForm> {
                 SizedBox(
                   height: 20,
                 ),
-                SmallTextfield(
-                  width: 150,
-                  value: widget.bdHour,
-                  readOnly: true,
-                )
+                Text("${widget.bdHour}")
               ],
             ),
             SizedBox(
