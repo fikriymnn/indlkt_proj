@@ -78,27 +78,14 @@ class _FormInputDataState extends State<FormInputData> {
 
   TextEditingController planningOutput = TextEditingController();
 
-  // dynamic Function() le = () {
-  //   return "le";
-  // };
-  // dynamic Function() lp = () {
-  //   return "lp";
-  // };
-  // dynamic Function() dt = () {
-  //   return "dt";
-  // };
-  // dynamic Function() bd = () {
-  //   return "bd";
-  // };
-
   //Breakdown
   int bLength = 1;
 
   String? mesins;
   String? reasons;
-  List<DropdownMenuItem> reasonLists = [];
+  var reasonLists = [""];
 
-  List<List<DropdownMenuItem>> reasonList = [];
+  var reasonList = [];
   List<String?> mesin = [];
   List<String?> reason = [];
   List<TextEditingController> freq = [];
@@ -1034,11 +1021,8 @@ class _FormInputDataState extends State<FormInputData> {
                                                           }
                                                         });
                                                       },
-                                                      dropdownItemReason: [
-                                                        "Acep",
-                                                        "Lutfi",
-                                                        "Tio"
-                                                      ],
+                                                      dropdownItemReason:
+                                                          reasonList[index],
                                                       onChangeReason: (a) {
                                                         setState(() {
                                                           reason[index] = a;
@@ -1782,149 +1766,12 @@ class DataBD {
 
   //reason
   var dumper_reason = [
-    DropdownMenuItem(
-      child: Text("Blower Overload"),
-      value: "Blower Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Dosing Gula Blocking"),
-      value: "Dosing Gula Blocking",
-    ),
-    DropdownMenuItem(
-      child: Text("Dosing Gula Lambat"),
-      value: "Dosing Gula Lambat",
-    ),
-    DropdownMenuItem(
-      child: Text("Dosing Powder Blocking"),
-      value: "Dosing Powder Blocking",
-    ),
-    DropdownMenuItem(
-      child: Text("Dosing Powder Lambat"),
-      value: "Dosing Powder Lambat",
-    ),
-    DropdownMenuItem(
-      child: Text("Ganti Filter Tipping Powder"),
-      value: "Ganti Filter Tipping Powder",
-    ),
-    DropdownMenuItem(
-      child: Text("Gula Blocking/Membatu"),
-      value: "Gula Blocking/Membatu",
-    ),
-    DropdownMenuItem(
-      child: Text("Gula Susah Turun"),
-      value: "Gula Susah Turun",
-    ),
-    DropdownMenuItem(
-      child: Text("Jalur Blower Powder Lepas"),
-      value: "Jalur Blower Powder Lepas",
-    ),
-    DropdownMenuItem(
-      child: Text("Powder Susah Turun"),
-      value: "Powder Susah Turun",
-    ),
-    DropdownMenuItem(
-      child: Text("Rantai STRV Tipping Sugar Putus/Lepas"),
-      value: "Rantai STRV Tipping Sugar Putus/Lepas",
-    ),
-    DropdownMenuItem(
-      child: Text("Rantai STRV Tipping Powder Putus/Lepas"),
-      value: "Rantai STRV Tipping Powder Putus/Lepas",
-    ),
-    DropdownMenuItem(
-      child: Text("Screw Tipping Powder Overload"),
-      value: "Screw Tipping Powder Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Screw Tipping Sugar Overload"),
-      value: "Screw Tipping Sugar Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Screw Weighing Overload"),
-      value: "Screw Weighing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Screw Weighing Powder Blocking"),
-      value: "Screw Weighing Powder Blocking",
-    ),
-    DropdownMenuItem(
-      child: Text("Screw Weighing Powder Overload"),
-      value: "Screw Weighing Powder Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("STRV Tipping Powder Overload"),
-      value: "STRV Tipping Powder Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("STRV Tipping Sugar Overload"),
-      value: "STRV Tipping Sugar Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Weighing Gula Lama"),
-      value: "Weighing Gula Lama",
-    ),
-    DropdownMenuItem(
-      child: Text("Weighing Powder Lama"),
-      value: "Weighing Powder Lama",
-    ),
-    DropdownMenuItem(
-      child: Text("Jalur Powder Blocking"),
-      value: "Jalur Powder Blocking",
-    ),
-    DropdownMenuItem(
-      child: Text("Jalur Maldex Blocking"),
-      value: "Jalur Maldex Blocking",
-    ),
-    DropdownMenuItem(
-      child: Text("Screw Gula Macet"),
-      value: "Screw Gula Macet",
-    ),
-    DropdownMenuItem(
-      child: Text("Setting Timbangan"),
-      value: "Setting Timbangan",
-    ),
+    "Blower Overload",
+    "Dosing Gula Blocking",
+    "Dosing Gula Lambat"
   ];
-  var mixer_reason = [
-    DropdownMenuItem(
-      child: Text("Agitator Patah"),
-      value: "Agitator Patah",
-    ),
-    DropdownMenuItem(
-      child: Text("Blocking"),
-      value: "Blocking",
-    ),
-    DropdownMenuItem(
-      child: Text("Mass Flow"),
-      value: "Mass Flow",
-    ),
-    DropdownMenuItem(
-      child: Text("Mixing Stop"),
-      value: "Mixing Stop",
-    ),
-    DropdownMenuItem(
-      child: Text("Mixing Tank Full"),
-      value: "Mixing Tank Full",
-    ),
-    DropdownMenuItem(
-      child: Text("Motor Mixing Overload"),
-      value: "Motor Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Pompa Sirkulasi Overload"),
-      value: "Pompa Sirkulasi Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Sliding Valve Macet"),
-      value: "Sliding Valve Macet",
-    ),
-    DropdownMenuItem(
-      child: Text("Valve Automatic Eror"),
-      value: "Valve Automatic Eror",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-  ];
+
+  var mixer_reason = ["Agitator Patah", "Blocking"];
 
   var pasteurizer_reason = [
     DropdownMenuItem(

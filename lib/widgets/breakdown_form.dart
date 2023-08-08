@@ -101,7 +101,7 @@ class BreakdownFormState extends State<BreakdownForm> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10, right: 10),
                       child: CustomSearchableDropDown(
-                        enabled: false,
+                        enabled: widget.valueMesin == null ? false : true,
                         items: widget.dropdownItemReason,
                         label: 'Pilih Reason...',
                         decoration: BoxDecoration(

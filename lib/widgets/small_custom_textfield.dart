@@ -28,14 +28,14 @@ class _SmallTextfieldState extends State<SmallTextfield> {
   Widget build(BuildContext context) {
     return Container(
         width: widget.width,
-        height: 30,
+        height: 35,
         decoration: BoxDecoration(
           color: light,
           border: Border.all(width: 1, color: dark.withOpacity(0.5)),
           borderRadius: BorderRadius.circular(5),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
+          padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
           child: TextFormField(
             onChanged: widget.onChange,
             initialValue: widget.value == null ? null : "${widget.value}",
