@@ -2,7 +2,10 @@ import 'dart:async';
 import 'dart:js_interop';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:custom_searchable_dropdown/custom_searchable_dropdown.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dropdown_search/flutter_dropdown_search.dart';
 import 'package:indlkt_proj/widgets/custom_dropdown.dart';
 import 'package:indlkt_proj/widgets/appbar.dart';
 import 'package:uuid/uuid.dart';
@@ -29,6 +32,10 @@ class FormInputData extends StatefulWidget {
 class _FormInputDataState extends State<FormInputData> {
   //Breadkdown dropdown
   List<DropdownMenuItem> bdMesinList = [];
+  List listToSearch = ["Acep", "Lutfi", "Tio"];
+
+  var selected;
+  late List selectedList;
 
   //List data form
   bool _isLoading = false;
@@ -64,6 +71,7 @@ class _FormInputDataState extends State<FormInputData> {
   String? line;
 
   TextEditingController actualOutput = TextEditingController();
+  TextEditingController _controller = TextEditingController();
 
   TextEditingController nominalSpeed = TextEditingController();
   TextEditingController totalHour = TextEditingController();
@@ -1026,8 +1034,11 @@ class _FormInputDataState extends State<FormInputData> {
                                                           }
                                                         });
                                                       },
-                                                      dropdownItemReason:
-                                                          reasonList[index],
+                                                      dropdownItemReason: [
+                                                        "Acep",
+                                                        "Lutfi",
+                                                        "Tio"
+                                                      ],
                                                       onChangeReason: (a) {
                                                         setState(() {
                                                           reason[index] = a;

@@ -1,3 +1,5 @@
+import 'package:custom_searchable_dropdown/custom_searchable_dropdown.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:indlkt_proj/widgets/small_custom_dropdown.dart';
 import 'package:indlkt_proj/widgets/small_custom_textfield.dart';
@@ -14,7 +16,7 @@ class BreakdownForm extends StatefulWidget {
   final List<DropdownMenuItem> dropdownItemMesin;
   final void Function(dynamic) onChangeMesin;
   final dynamic valueMesin;
-  final List<DropdownMenuItem> dropdownItemReason;
+  final List dropdownItemReason;
   final void Function(dynamic) onChangeReason;
   final dynamic valueReason;
   final void Function(dynamic)? onChange;
@@ -40,7 +42,7 @@ class BreakdownForm extends StatefulWidget {
 
 class BreakdownFormState extends State<BreakdownForm> {
   String? hour = "0";
-
+  List listToSearch = ["Acep", "Lutfi", "Tio"];
   String? mesin;
   String? reason;
 
@@ -91,11 +93,29 @@ class BreakdownFormState extends State<BreakdownForm> {
                 SizedBox(
                   height: 20,
                 ),
-                SmallDropdown(
-                    hint: 'pilih reason breakdown...',
-                    value: widget.valueReason,
-                    onChange: widget.onChangeReason,
-                    dropdownItem: widget.dropdownItemReason)
+                Container(
+                    width: 200,
+                    decoration: BoxDecoration(
+                      color: light,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: CustomSearchableDropDown(
+                        enabled: false,
+                        items: widget.dropdownItemReason,
+                        label: 'Pilih Reason...',
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(
+                                width: 1, color: dark.withOpacity(0.5))),
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.all(0.0),
+                          child: Icon(Icons.search),
+                        ),
+                        dropDownMenuItems: widget.dropdownItemReason,
+                        onChanged: widget.onChangeReason,
+                      ),
+                    )),
               ],
             ),
             Column(

@@ -1,3 +1,4 @@
+import 'package:custom_searchable_dropdown/custom_searchable_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:indlkt_proj/widgets/breakdown_form.dart';
 import 'package:indlkt_proj/widgets/small_custom_dropdown.dart';
@@ -70,12 +71,29 @@ class _DownTimeFormState extends State<DownTimeForm> {
                 SizedBox(
                   height: 20,
                 ),
-                SmallDropdown(
-                  hint: 'pilih dt...',
-                  value: widget.valueDT,
-                  onChange: widget.onChangeDT,
-                  dropdownItem: widget.dropdownItemDT,
-                )
+                Container(
+                    width: 200,
+                    decoration: BoxDecoration(
+                      color: light,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: CustomSearchableDropDown(
+                        enabled: false,
+                        items: widget.dropdownItemDT,
+                        label: 'Pilih DT...',
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(
+                                width: 1, color: dark.withOpacity(0.5))),
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.all(0.0),
+                          child: Icon(Icons.search),
+                        ),
+                        dropDownMenuItems: widget.dropdownItemDT,
+                        onChanged: widget.onChangeDT,
+                      ),
+                    ))
               ],
             ),
             Column(
@@ -87,12 +105,29 @@ class _DownTimeFormState extends State<DownTimeForm> {
                 SizedBox(
                   height: 20,
                 ),
-                SmallDropdown(
-                  hint: 'pilih sub dt...',
-                  value: widget.valueSubDT,
-                  onChange: widget.onChangeSubDT,
-                  dropdownItem: widget.dropdownItemSubDT,
-                )
+                Container(
+                    width: 200,
+                    decoration: BoxDecoration(
+                      color: light,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: CustomSearchableDropDown(
+                        enabled: false,
+                        items: widget.dropdownItemSubDT,
+                        label: 'Pilih Sub DT...',
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(
+                                width: 1, color: dark.withOpacity(0.5))),
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.all(0.0),
+                          child: Icon(Icons.search),
+                        ),
+                        dropDownMenuItems: widget.dropdownItemSubDT,
+                        onChanged: widget.onChangeSubDT,
+                      ),
+                    ))
               ],
             ),
             Column(
