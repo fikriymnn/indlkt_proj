@@ -123,7 +123,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             DashboardContainer(
-                width: 700,
+                width: 900,
                 height: 480,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -332,68 +332,234 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                 width: 300,
                                 height: 300,
                                 child: GridView.count(
-                                  childAspectRatio: 3 / 3,
-                                  crossAxisCount: 2,
-                                  children: List.generate(
-                                      4,
-                                      (index) => Column(
+                                    childAspectRatio: 3 / 3,
+                                    crossAxisCount: 2,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Center(
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  height: 10,
+                                                  width: 10,
+                                                  decoration: BoxDecoration(
+                                                      color: blue,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20)),
+                                                ),
+                                                Text("Filling_packing_SKM"),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Stack(
+                                            alignment: Alignment.center,
                                             children: [
-                                              Center(
-                                                child: Row(
-                                                  children: [
-                                                    Container(
-                                                      height: 10,
-                                                      width: 10,
-                                                      decoration: BoxDecoration(
-                                                          color: blue,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      20)),
-                                                    ),
-                                                    Text("Filling_packing_SKM"),
+                                              CircularPercentIndicator(
+                                                radius: 50.0,
+                                                lineWidth: 15,
+                                                percent: 0.8,
+                                                center: RadialBar(
+                                                  chartData: [
+                                                    ChartData('David', 25,
+                                                        Colors.cyanAccent),
+                                                    ChartData('Steve', 38,
+                                                        Colors.blueGrey),
+                                                    ChartData(
+                                                        'Jack',
+                                                        34,
+                                                        Colors
+                                                            .deepOrangeAccent),
+                                                    ChartData('Others', 52,
+                                                        Colors.greenAccent)
                                                   ],
                                                 ),
+                                                progressColor: Colors.pink,
                                               ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Stack(
-                                                alignment: Alignment.center,
-                                                children: [
-                                                  CircularPercentIndicator(
-                                                    radius: 50.0,
-                                                    lineWidth: 15,
-                                                    percent: 0.8,
-                                                    center: RadialBar(
-                                                      chartData: [
-                                                        ChartData('David', 25,
-                                                            Colors.cyanAccent),
-                                                        ChartData('Steve', 38,
-                                                            Colors.blueGrey),
-                                                        ChartData(
-                                                            'Jack',
-                                                            34,
-                                                            Colors
-                                                                .deepOrangeAccent),
-                                                        ChartData('Others', 52,
-                                                            Colors.greenAccent)
-                                                      ],
-                                                    ),
-                                                    progressColor: Colors.pink,
-                                                  ),
-                                                  CircularPercentIndicator(
-                                                    radius: 17.0,
-                                                    lineWidth: 5,
-                                                    percent: 0.2,
-                                                    center: Text("skm"),
-                                                    progressColor: Colors.pink,
-                                                  )
-                                                ],
-                                              ),
+                                              CircularPercentIndicator(
+                                                radius: 17.0,
+                                                lineWidth: 5,
+                                                percent: 0.2,
+                                                center: Text("skm"),
+                                                progressColor: Colors.pink,
+                                              )
                                             ],
-                                          )),
-                                ),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          Center(
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  height: 10,
+                                                  width: 10,
+                                                  decoration: BoxDecoration(
+                                                      color: blue,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20)),
+                                                ),
+                                                Text("Filling_packing_SKM"),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Stack(
+                                            alignment: Alignment.center,
+                                            children: [
+                                              CircularPercentIndicator(
+                                                radius: 50.0,
+                                                lineWidth: 15,
+                                                percent: 0.8,
+                                                center: RadialBar(
+                                                  chartData: [
+                                                    ChartData('David', 25,
+                                                        Colors.cyanAccent),
+                                                    ChartData('Steve', 38,
+                                                        Colors.blueGrey),
+                                                    ChartData(
+                                                        'Jack',
+                                                        34,
+                                                        Colors
+                                                            .deepOrangeAccent),
+                                                    ChartData('Others', 52,
+                                                        Colors.greenAccent)
+                                                  ],
+                                                ),
+                                                progressColor: Colors.pink,
+                                              ),
+                                              CircularPercentIndicator(
+                                                radius: 17.0,
+                                                lineWidth: 5,
+                                                percent: 0.2,
+                                                center: Text("skm"),
+                                                progressColor: Colors.pink,
+                                              )
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          Center(
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  height: 10,
+                                                  width: 10,
+                                                  decoration: BoxDecoration(
+                                                      color: blue,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20)),
+                                                ),
+                                                Text("Filling_packing_SKM"),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Stack(
+                                            alignment: Alignment.center,
+                                            children: [
+                                              CircularPercentIndicator(
+                                                radius: 50.0,
+                                                lineWidth: 15,
+                                                percent: 0.8,
+                                                center: RadialBar(
+                                                  chartData: [
+                                                    ChartData('David', 25,
+                                                        Colors.cyanAccent),
+                                                    ChartData('Steve', 38,
+                                                        Colors.blueGrey),
+                                                    ChartData(
+                                                        'Jack',
+                                                        34,
+                                                        Colors
+                                                            .deepOrangeAccent),
+                                                    ChartData('Others', 52,
+                                                        Colors.greenAccent)
+                                                  ],
+                                                ),
+                                                progressColor: Colors.pink,
+                                              ),
+                                              CircularPercentIndicator(
+                                                radius: 17.0,
+                                                lineWidth: 5,
+                                                percent: 0.2,
+                                                center: Text("skm"),
+                                                progressColor: Colors.pink,
+                                              )
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          Center(
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  height: 10,
+                                                  width: 10,
+                                                  decoration: BoxDecoration(
+                                                      color: blue,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20)),
+                                                ),
+                                                Text("Filling_packing_SKM"),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Stack(
+                                            alignment: Alignment.center,
+                                            children: [
+                                              CircularPercentIndicator(
+                                                radius: 50.0,
+                                                lineWidth: 15,
+                                                percent: 0.8,
+                                                center: RadialBar(
+                                                  chartData: [
+                                                    ChartData('David', 25,
+                                                        Colors.cyanAccent),
+                                                    ChartData('Steve', 38,
+                                                        Colors.blueGrey),
+                                                    ChartData(
+                                                        'Jack',
+                                                        34,
+                                                        Colors
+                                                            .deepOrangeAccent),
+                                                    ChartData('Others', 52,
+                                                        Colors.greenAccent)
+                                                  ],
+                                                ),
+                                                progressColor: Colors.pink,
+                                              ),
+                                              CircularPercentIndicator(
+                                                radius: 17.0,
+                                                lineWidth: 5,
+                                                percent: 0.2,
+                                                center: Text("skm"),
+                                                progressColor: Colors.pink,
+                                              )
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ]),
                               ),
                               SizedBox(
                                 width: 40,
