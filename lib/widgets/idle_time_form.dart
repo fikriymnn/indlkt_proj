@@ -11,7 +11,7 @@ class IdleTimeForm extends StatefulWidget {
   final TextEditingController idleMin;
   final dynamic valueIdleDesc;
   final void Function(dynamic) onChangeIdleDesc;
-  final List<DropdownMenuItem> dropdownItemIdleDesc;
+  final List<String> dropdownItemIdleDesc;
   final void Function(dynamic)? onChange;
 
   const IdleTimeForm(
@@ -67,7 +67,7 @@ class _IdleTimeFormState extends State<IdleTimeForm> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10, right: 10),
                       child: CustomSearchableDropDown(
-                        enabled: false,
+                        enabled: true,
                         items: widget.dropdownItemIdleDesc,
                         label: 'Pilih Idle Desc...',
                         decoration: BoxDecoration(

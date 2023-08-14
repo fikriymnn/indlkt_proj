@@ -35,12 +35,12 @@ class _DashboardCardState extends State<DashboardCard> {
               offset: Offset(4, 0),
               color: dark.withOpacity(0.25))
         ], color: light, borderRadius: BorderRadius.circular(10)),
-        height: 125,
-        width: 325,
+        height: 175,
+        width: 375,
         child: Row(
           children: [
             Container(
-              width: 125,
+              width: 175,
               decoration: BoxDecoration(
                   color: widget.color, borderRadius: BorderRadius.circular(10)),
               child: Center(
@@ -52,11 +52,11 @@ class _DashboardCardState extends State<DashboardCard> {
             ),
             Flexible(
                 child: Container(
-              width: 200,
+              width: 250,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(width: 5),
+                  SizedBox(width: 15),
                   Padding(
                       padding: EdgeInsets.all(10),
                       child: Row(
@@ -91,7 +91,7 @@ class _DashboardCardState extends State<DashboardCard> {
     return Container(
       color: light,
       child: Padding(
-        padding: const EdgeInsets.all(2),
+        padding: const EdgeInsets.all(6),
         child: Container(
             decoration: BoxDecoration(boxShadow: [
               BoxShadow(

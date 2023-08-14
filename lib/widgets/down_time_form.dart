@@ -10,14 +10,13 @@ class DownTimeForm extends StatefulWidget {
   final int index;
   final TextEditingController actMin;
   final String actHour;
-  final List<DropdownMenuItem> dropdownItemDT;
+  final List<String> dropdownItemDT;
   final void Function(dynamic) onChangeDT;
   final dynamic valueDT;
-  final List<DropdownMenuItem> dropdownItemSubDT;
+  final List<String> dropdownItemSubDT;
   final void Function(dynamic) onChangeSubDT;
   final dynamic valueSubDT;
-  final List<DropdownMenuItem> dropdownItemSTD;
-  final void Function(dynamic) onChangeSTD;
+
   final dynamic valueSTD;
   final void Function(dynamic)? onChange;
 
@@ -32,8 +31,6 @@ class DownTimeForm extends StatefulWidget {
       required this.dropdownItemSubDT,
       required this.onChangeSubDT,
       required this.valueSubDT,
-      required this.dropdownItemSTD,
-      required this.onChangeSTD,
       required this.valueSTD,
       this.onChange});
 
@@ -79,7 +76,7 @@ class _DownTimeFormState extends State<DownTimeForm> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10, right: 10),
                       child: CustomSearchableDropDown(
-                        enabled: false,
+                        enabled: true,
                         items: widget.dropdownItemDT,
                         label: 'Pilih DT...',
                         decoration: BoxDecoration(
@@ -113,7 +110,7 @@ class _DownTimeFormState extends State<DownTimeForm> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10, right: 10),
                       child: CustomSearchableDropDown(
-                        enabled: false,
+                        enabled: widget.valueDT == null ? false : true,
                         items: widget.dropdownItemSubDT,
                         label: 'Pilih Sub DT...',
                         decoration: BoxDecoration(
@@ -139,13 +136,7 @@ class _DownTimeFormState extends State<DownTimeForm> {
                 SizedBox(
                   height: 20,
                 ),
-                SmallDropdown(
-                  hint: 'pilih std...',
-                  value: widget.valueSTD,
-                  onChange: widget.onChangeSTD,
-                  width: 80,
-                  dropdownItem: widget.dropdownItemSTD,
-                )
+                Text("${widget.valueSTD}")
               ],
             ),
             Column(

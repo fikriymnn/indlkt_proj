@@ -31,7 +31,9 @@ class FormInputData extends StatefulWidget {
 
 class _FormInputDataState extends State<FormInputData> {
   //Breadkdown dropdown
-  List<DropdownMenuItem> bdMesinList = [];
+  List<String>? bdMesinList = [""];
+  List<String>? subDTList = [''];
+
   List listToSearch = ["Acep", "Lutfi", "Tio"];
 
   var selected;
@@ -77,6 +79,7 @@ class _FormInputDataState extends State<FormInputData> {
   TextEditingController totalHour = TextEditingController();
 
   TextEditingController planningOutput = TextEditingController();
+  TextEditingController weekController = TextEditingController();
 
   //Breakdown
   int bLength = 1;
@@ -98,7 +101,7 @@ class _FormInputDataState extends State<FormInputData> {
 
   String? downtimes;
   String? subDTs;
-  String? stds;
+  String? stds = "";
 
   List<String?> downtime = [];
   List<String?> subDT = [];
@@ -702,7 +705,8 @@ class _FormInputDataState extends State<FormInputData> {
                                                   fontWeight: FontWeight.bold)),
                                         ),
                                         DisplayField(
-                                          value: le,
+                                          value: (double.parse(le) * 100)
+                                              .toStringAsFixed(3),
                                         ),
                                       ],
                                     ),
@@ -719,7 +723,9 @@ class _FormInputDataState extends State<FormInputData> {
                                                   fontSize: 25,
                                                   fontWeight: FontWeight.bold)),
                                         ),
-                                        DisplayField(value: lp),
+                                        DisplayField(
+                                            value: (double.parse(lp) * 100)
+                                                .toStringAsFixed(3)),
                                       ],
                                     )
                                   ],
@@ -739,7 +745,9 @@ class _FormInputDataState extends State<FormInputData> {
                                                 fontSize: 25,
                                                 fontWeight: FontWeight.bold)),
                                       ),
-                                      DisplayField(value: dt),
+                                      DisplayField(
+                                          value: (double.parse(dt) * 100)
+                                              .toStringAsFixed(3)),
                                     ],
                                   ),
                                   Column(
@@ -755,7 +763,9 @@ class _FormInputDataState extends State<FormInputData> {
                                                 fontSize: 25,
                                                 fontWeight: FontWeight.bold)),
                                       ),
-                                      DisplayField(value: bd),
+                                      DisplayField(
+                                          value: (double.parse(bd) * 100)
+                                              .toStringAsFixed(3)),
                                     ],
                                   )
                                 ]))
@@ -787,7 +797,34 @@ class _FormInputDataState extends State<FormInputData> {
                                   Flexible(child: Container()),
                                   Flexible(child: Container())
                                 ],
-                              )
+                              ),
+                              SizedBox(height: 20),
+                              Row(children: [
+                                Flexible(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 30),
+                                        child: Text("Week",
+                                            style: TextStyle(
+                                                color: dark.withOpacity(0.8),
+                                                fontSize: 25,
+                                                fontWeight: FontWeight.bold)),
+                                      ),
+                                      CustomTextField(
+                                        hint: "Masukan week...",
+                                        controller: weekController,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Flexible(child: Container()),
+                                Flexible(child: Container()),
+                              ])
                             ],
                           ),
                           Padding(
@@ -888,7 +925,7 @@ class _FormInputDataState extends State<FormInputData> {
                                                       bdHour:
                                                           bdHourList[index]!,
                                                       dropdownItemMesin:
-                                                          bdMesinList,
+                                                          bdMesinList!,
                                                       valueMesin: mesin[index],
                                                       onChangeMesin: (a) {
                                                         setState(() {
@@ -1154,76 +1191,193 @@ class _FormInputDataState extends State<FormInputData> {
                                                         },
                                                         actHour:
                                                             actHourList[index]!,
-                                                        dropdownItemDT: [
-                                                          DropdownMenuItem(
-                                                            child:
-                                                                Text("mesin 1"),
-                                                            value: "mesin 1",
-                                                          ),
-                                                          DropdownMenuItem(
-                                                            child:
-                                                                Text("mesin 2"),
-                                                            value: "mesin 2",
-                                                          ),
-                                                          DropdownMenuItem(
-                                                            child:
-                                                                Text("mesin 3"),
-                                                            value: "mesin 3",
-                                                          )
-                                                        ],
+                                                        dropdownItemDT:
+                                                            DataDT().dt,
                                                         onChangeDT: (a) {
                                                           setState(() {
                                                             downtime[index] = a;
                                                           });
+                                                          if (a == "Set_Up") {
+                                                            setState(() =>
+                                                                subDTList =
+                                                                    DataDT()
+                                                                        .set_up);
+                                                          } else if (a ==
+                                                              "Start_Up") {
+                                                            setState(() =>
+                                                                subDTList =
+                                                                    DataDT()
+                                                                        .start_up);
+                                                          } else if (a ==
+                                                              "Cleaning") {
+                                                            setState(() =>
+                                                                subDTList =
+                                                                    DataDT()
+                                                                        .cleaning);
+                                                          } else if (a ==
+                                                              "Change_Over") {
+                                                            setState(() =>
+                                                                subDTList = DataDT()
+                                                                    .change_over);
+                                                          } else if (a ==
+                                                              "Maintenance") {
+                                                            setState(() =>
+                                                                subDTList = DataDT()
+                                                                    .maintenance);
+                                                          } else if (a ==
+                                                              "Personal_Time") {
+                                                            setState(() =>
+                                                                subDTList = DataDT()
+                                                                    .personal_time);
+                                                          } else if (a ==
+                                                              "Operational_Downtime") {
+                                                            setState(() =>
+                                                                subDTList = DataDT()
+                                                                    .operational_downtime);
+                                                          }
                                                         },
                                                         valueDT:
                                                             downtime[index],
-                                                        dropdownItemSubDT: [
-                                                          DropdownMenuItem(
-                                                            child:
-                                                                Text("mesin 1"),
-                                                            value: "mesin 1",
-                                                          ),
-                                                          DropdownMenuItem(
-                                                            child:
-                                                                Text("mesin 2"),
-                                                            value: "mesin 2",
-                                                          ),
-                                                          DropdownMenuItem(
-                                                            child:
-                                                                Text("mesin 3"),
-                                                            value: "mesin 3",
-                                                          )
-                                                        ],
+                                                        dropdownItemSubDT:
+                                                            subDTList!,
                                                         onChangeSubDT: (a) {
-                                                          setState(() {
-                                                            subDT[index] = a;
-                                                          });
-                                                        },
-                                                        valueSubDT:
-                                                            subDT[index],
-                                                        dropdownItemSTD: [
-                                                          DropdownMenuItem(
-                                                            child:
-                                                                Text("mesin 1"),
-                                                            value: "mesin 1",
-                                                          ),
-                                                          DropdownMenuItem(
-                                                            child:
-                                                                Text("mesin 2"),
-                                                            value: "mesin 2",
-                                                          ),
-                                                          DropdownMenuItem(
-                                                            child:
-                                                                Text("mesin 3"),
-                                                            value: "mesin 3",
-                                                          )
-                                                        ],
-                                                        onChangeSTD: (a) {
+                                                          print(a);
                                                           setState(() {
                                                             std[index] = a;
                                                           });
+
+                                                          if (a ==
+                                                              "Set Up Mesin") {
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "100");
+                                                          } else if (a ==
+                                                              "Fogging Ruangan") {
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "00");
+                                                          } else if (a ==
+                                                              "Greasing/CIL") {
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "100");
+                                                          } else if (a ==
+                                                              "Preheating Machine") {
+                                                            setState(() => {
+                                                                  std[index] =
+                                                                      "100"
+                                                                });
+                                                          } else if (a ==
+                                                              "CIP Tengah Minggu") {
+                                                            setState(() => {
+                                                                  std[index] =
+                                                                      "100"
+                                                                });
+                                                          } else if (a ==
+                                                              "CIP CT") {
+                                                            setState(() => {
+                                                                  std[index] =
+                                                                      "100"
+                                                                });
+                                                          } else if (a ==
+                                                              "Cleaning & Sterilisasi Piston") {
+                                                            setState(() => {
+                                                                  std[index] =
+                                                                      "100"
+                                                                });
+                                                          } else if (a ==
+                                                              "Pembersihan sealer bar horisontal") {
+                                                            setState(() => {
+                                                                  std[index] =
+                                                                      "100"
+                                                                });
+                                                          } else if (a ==
+                                                              "CIP Daily") {
+                                                            setState(() => {
+                                                                  std[index] =
+                                                                      "100"
+                                                                });
+                                                          } else if (a ==
+                                                              "CIP Weekly") {
+                                                            setState(() => {
+                                                                  std[index] =
+                                                                      "100"
+                                                                });
+                                                          } else if (a ==
+                                                              "Ganti Formula") {
+                                                            setState(() => {
+                                                                  std[index] =
+                                                                      "100"
+                                                                });
+                                                          } else if (a ==
+                                                              "COP Weekly") {
+                                                            setState(() => {
+                                                                  std[index] =
+                                                                      "100"
+                                                                });
+                                                          } else if (a ==
+                                                              "Ganti Brand (Persiapan PM)") {
+                                                            setState(() => {
+                                                                  std[index] =
+                                                                      "100"
+                                                                });
+                                                          } else if (a ==
+                                                              "Ganti Crystalitation Tank") {
+                                                            setState(() => {
+                                                                  std[index] =
+                                                                      "100"
+                                                                });
+                                                          } else if (a ==
+                                                              "Ganti Kode") {
+                                                            setState(() => {
+                                                                  std[index] =
+                                                                      "100"
+                                                                });
+                                                          } else if (a ==
+                                                              "Ganti alumunium foil") {
+                                                            setState(() => {
+                                                                  std[index] =
+                                                                      "100"
+                                                                });
+                                                          } else if (a ==
+                                                              "Ganti brand") {
+                                                            setState(() => {
+                                                                  std[index] =
+                                                                      "100"
+                                                                });
+                                                          } else if (a ==
+                                                              "Ganti ribbon") {
+                                                            setState(() => {
+                                                                  std[index] =
+                                                                      "100"
+                                                                });
+                                                          } else if (a ==
+                                                              "Weekly Maintenance") {
+                                                            setState(() => {
+                                                                  std[index] =
+                                                                      "100"
+                                                                });
+                                                          } else if (a ==
+                                                              "Sholat Jumat") {
+                                                            setState(() => {
+                                                                  std[index] =
+                                                                      "100"
+                                                                });
+                                                          } else if (a ==
+                                                              "Aging") {
+                                                            setState(() => {
+                                                                  std[index] =
+                                                                      "100"
+                                                                });
+                                                          } else if (a ==
+                                                              "Cleaning dan line clearance") {
+                                                            setState(() => {
+                                                                  std[index] =
+                                                                      "100"
+                                                                });
+                                                          }
                                                         },
+                                                        valueSubDT: std[index],
                                                         valueSTD: std[index]);
                                                   }),
                                               InkWell(
@@ -1352,47 +1506,8 @@ class _FormInputDataState extends State<FormInputData> {
                                                             idleDesc[index] = a;
                                                           });
                                                         },
-                                                        dropdownItemIdleDesc: [
-                                                          DropdownMenuItem(
-                                                            child: Text(
-                                                                "THP (Tunggu Hasil Produk)"),
-                                                            value:
-                                                                "THP (Tunggu Hasil Produk)",
-                                                          ),
-                                                          DropdownMenuItem(
-                                                            child:
-                                                                Text("CT Full"),
-                                                            value: "CT Full",
-                                                          ),
-                                                          DropdownMenuItem(
-                                                            child: Text(
-                                                                "No Planning"),
-                                                            value:
-                                                                "No Planning",
-                                                          ),
-                                                          DropdownMenuItem(
-                                                            child: Text(
-                                                                "Stock Opname"),
-                                                            value:
-                                                                "Stock Opname",
-                                                          ),
-                                                          DropdownMenuItem(
-                                                            child: Text(
-                                                                "Overhoule"),
-                                                            value: "Overhoule",
-                                                          ),
-                                                          DropdownMenuItem(
-                                                            child:
-                                                                Text("Project"),
-                                                            value: "Project",
-                                                          ),
-                                                          DropdownMenuItem(
-                                                            child: Text(
-                                                                "Trial New Product"),
-                                                            value:
-                                                                "Trial New Product",
-                                                          ),
-                                                        ]);
+                                                        dropdownItemIdleDesc:
+                                                            DataIdle().idle);
                                                   }),
                                               InkWell(
                                                   onTap: () {
@@ -1437,10 +1552,17 @@ class _FormInputDataState extends State<FormInputData> {
                                     "gross_hour": grossHour,
                                     "net_hour": netHour,
                                     "target_hour": targetHour,
-                                    "le": le,
-                                    "lp": lp,
-                                    "dt": dt,
-                                    "bd": bd,
+                                    "le": (double.parse(le) * 100)
+                                        .toStringAsFixed(3),
+                                    "lp": (double.parse(lp) * 100)
+                                        .toStringAsFixed(3),
+                                    "dt": (double.parse(dt) * 100)
+                                        .toStringAsFixed(3),
+                                    "bd": (double.parse(bd) * 100)
+                                        .toStringAsFixed(3),
+                                    "week": weekController.text,
+                                    "bulan": DateFormat.MMMM().format(now),
+                                    "tahun": DateFormat.y().format(now),
                                     "date": DateFormat('dd/MM/yy').format(now)
                                   });
 
@@ -1604,165 +1726,12 @@ class _FormInputDataState extends State<FormInputData> {
 
 class DataBD {
   //Process skm
-  var process_SKM_Mesin = [
-    DropdownMenuItem(
-      child: Text("Dumper"),
-      value: "Dumper",
-    ),
-    DropdownMenuItem(
-      child: Text("Slurry"),
-      value: "Slurry",
-    ),
-    DropdownMenuItem(
-      child: Text("Mixer"),
-      value: "Mixer",
-    ),
-    DropdownMenuItem(
-      child: Text("Pasteurizer"),
-      value: "Pasteurizer",
-    ),
-    DropdownMenuItem(
-      child: Text("Homogenizer"),
-      value: "Homogenizer",
-    ),
-    DropdownMenuItem(
-      child: Text("Flash_Cooler"),
-      value: "Flash_Cooler",
-    ),
-    DropdownMenuItem(
-      child: Text("CT"),
-      value: "CT",
-    ),
-    DropdownMenuItem(
-      child: Text("Utility"),
-      value: "Utility",
-    ),
-    DropdownMenuItem(
-      child: Text("CIP_Kitchen"),
-      value: "CIP_Kitchen",
-    )
-  ];
-  var filling_SKM_Can_Mesin = [
-    DropdownMenuItem(
-      child: Text("Filler_Closer"),
-      value: "Filler_Closer",
-    ),
-    DropdownMenuItem(
-      child: Text("Labeling"),
-      value: "Labeling",
-    ),
-    DropdownMenuItem(
-      child: Text("Cermex_Cartoning"),
-      value: "Cermex_Cartoning",
-    ),
-    DropdownMenuItem(
-      child: Text("Robot_Palletizer_Can"),
-      value: "Robot_Palletizer_Can",
-    ),
-    DropdownMenuItem(
-      child: Text("Utility"),
-      value: "Utility",
-    ),
-    DropdownMenuItem(
-      child: Text("CIP_Kitchen"),
-      value: "CIP_Kitchen",
-    ),
-    DropdownMenuItem(
-      child: Text("CT"),
-      value: "CT",
-    ),
-  ];
+  var process_SKM_Mesin = ["Dumper", "Slurry", "Mixer"];
+  var filling_SKM_Can_Mesin = ["Filler_Closer", "Labeling", "Cermex_Cartoning"];
 
-  var filling_SKM_Tall_Can = [
-    DropdownMenuItem(
-      child: Text("Filler_Closer"),
-      value: "Filler_Closer",
-    ),
-    DropdownMenuItem(
-      child: Text("Labeling"),
-      value: "Labeling",
-    ),
-    DropdownMenuItem(
-      child: Text("Cermex_Cartoning"),
-      value: "Cermex_Cartoning",
-    ),
-    DropdownMenuItem(
-      child: Text("Robot_Palletizer_Can"),
-      value: "Robot_Palletizer_Can",
-    ),
-    DropdownMenuItem(
-      child: Text("Utility"),
-      value: "Utility",
-    ),
-    DropdownMenuItem(
-      child: Text("CIP_Kitchen"),
-      value: "CIP_Kitchen",
-    ),
-    DropdownMenuItem(
-      child: Text("CT"),
-      value: "CT",
-    ),
-  ];
-  var filling_SKM_Sachet = [
-    DropdownMenuItem(
-      child: Text("Piltz"),
-      value: "Piltz",
-    ),
-    DropdownMenuItem(
-      child: Text("Folding"),
-      value: "Folding",
-    ),
-    DropdownMenuItem(
-      child: Text("Omori"),
-      value: "Omori",
-    ),
-    DropdownMenuItem(
-      child: Text("Samwoo"),
-      value: "Samwoo",
-    ),
-    DropdownMenuItem(
-      child: Text("Utility"),
-      value: "Utility",
-    ),
-    DropdownMenuItem(
-      child: Text("CIP_Kitchen"),
-      value: "CIP_Kitchen",
-    ),
-    DropdownMenuItem(
-      child: Text("CT"),
-      value: "CT",
-    ),
-    DropdownMenuItem(
-      child: Text("Carton_Sealer"),
-      value: "Carton_Sealer",
-    ),
-  ];
-  var filling_SKM_Pouch = [
-    DropdownMenuItem(
-      child: Text("Bossar"),
-      value: "Bossar",
-    ),
-    DropdownMenuItem(
-      child: Text("Cartoning"),
-      value: "Cartoning",
-    ),
-    DropdownMenuItem(
-      child: Text("Robotic_Palletizer_Pouch"),
-      value: "Robotic_Palletizer_Pouch",
-    ),
-    DropdownMenuItem(
-      child: Text("Utility"),
-      value: "Utility",
-    ),
-    DropdownMenuItem(
-      child: Text("CIP_Kitchen"),
-      value: "CIP_Kitchen",
-    ),
-    DropdownMenuItem(
-      child: Text("CT"),
-      value: "CT",
-    ),
-  ];
+  var filling_SKM_Tall_Can = ["Filler_Closer", "Labeling", "Cermex_Cartoning"];
+  var filling_SKM_Sachet = ["Piltz", "Folding", "Omori", "Samwoo"];
+  var filling_SKM_Pouch = ["Bossar", "Cartoning", "Robotic_Palletizer_Pouch"];
 
   //reason
   var dumper_reason = [
@@ -1773,1389 +1742,72 @@ class DataBD {
 
   var mixer_reason = ["Agitator Patah", "Blocking"];
 
-  var pasteurizer_reason = [
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Motor Pompa Terbakar"),
-      value: "Motor Pompa Terbakar",
-    ),
-    DropdownMenuItem(
-      child: Text("PHE bocor"),
-      value: "PHE bocor",
-    ),
-    DropdownMenuItem(
-      child: Text("Pipa Hot Water Bocor"),
-      value: "Pipa Hot Water Bocor",
-    ),
-    DropdownMenuItem(
-      child: Text("Pumping Lambat dan Flow kecil"),
-      value: "Pumping Lambat dan Flow kecil",
-    ),
-    DropdownMenuItem(
-      child: Text("Valve Automatic Eror"),
-      value: "Valve Automatic Eror",
-    ),
-  ];
-  var homogenizer_reason = [
-    DropdownMenuItem(
-      child: Text("Motor Terbakar"),
-      value: "Motor Terbakar",
-    ),
-    DropdownMenuItem(
-      child: Text("Oli bocor"),
-      value: "Oli bocor",
-    ),
-    DropdownMenuItem(
-      child: Text("Pressure Drop"),
-      value: "Pressure Drop",
-    ),
-    DropdownMenuItem(
-      child: Text("Homogenizer Trouble"),
-      value: "Homogenizer Trouble",
-    ),
-  ];
+  var pasteurizer_reason = ["Turbo Mixing Overload", "Motor Pompa Terbakar"];
+  var homogenizer_reason = ["Motor Terbakar", "Oli bocor"];
 
   var flash_cooler_reason = [
-    DropdownMenuItem(
-      child: Text("Buffer Tank Bocor"),
-      value: "Buffer Tank Bocor",
-    ),
-    DropdownMenuItem(
-      child: Text("Cooling Tower Trouble"),
-      value: "Cooling Tower Trouble",
-    ),
-    DropdownMenuItem(
-      child: Text("House Pump Bocor"),
-      value: "House Pump Bocor",
-    ),
-    DropdownMenuItem(
-      child: Text("Mesin FC Mati/Stop"),
-      value: "Mesin FC Mati/Stop",
-    ),
-    DropdownMenuItem(
-      child: Text("Program Eror"),
-      value: "Program Eror",
-    ),
-    DropdownMenuItem(
-      child: Text("Roda Lactose Grinder Bocor"),
-      value: "Roda Lactose Grinder Bocor",
-    ),
-    DropdownMenuItem(
-      child: Text("Flash Cooler Trouble"),
-      value: "Flash Cooler Trouble",
-    ),
+    "Buffer Tank Bocor",
+    "Cooling Tower Trouble",
+    "House Pump Bocor"
   ];
 
-  var ct_reason = [
-    DropdownMenuItem(
-      child: Text("Adjustment Produk"),
-      value: "Adjustment Produk",
-    ),
-    DropdownMenuItem(
-      child: Text("Kerusakan pada valve / gasket"),
-      value: "Kerusakan pada valve / gasket",
-    ),
-    DropdownMenuItem(
-      child: Text("Pompa Transfer produk bocor/terbakar"),
-      value: "Pompa Transfer produk bocor/terbakar",
-    ),
-    DropdownMenuItem(
-      child: Text("Agitator Cristalisation tank rusak"),
-      value: "Agitator Cristalisation tank rusak",
-    ),
-  ];
+  var ct_reason = ["Adjustment Produk", "Kerusakan pada valve / gasket"];
 
-  var utility_reason = [
-    DropdownMenuItem(
-      child: Text("PLN Mati"),
-      value: "PLN Mati",
-    ),
-    DropdownMenuItem(
-      child: Text("Steam Drop"),
-      value: "Steam Drop",
-    ),
-    DropdownMenuItem(
-      child: Text("AHU mati"),
-      value: "AHU mati",
-    ),
-  ];
+  var utility_reason = ["PLN Mati", "Steam Drop", "AHU mati"];
 
-  var slurry_reason = [
-    DropdownMenuItem(
-      child: Text("Menunggu Slurry Ready"),
-      value: "Menunggu Slurry Ready",
-    ),
-    DropdownMenuItem(
-      child: Text("Motor Slurry Overload"),
-      value: "Motor Slurry Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Valve Automatic Eror"),
-      value: "Valve Automatic Eror",
-    ),
-  ];
+  var slurry_reason = ["Menunggu Slurry Ready", "Motor Slurry Overload"];
 
   var filler_closer_reason = [
-    DropdownMenuItem(
-      child: Text("Air Cylinder Lid Tidak Berfungsi"),
-      value: "Air Cylinder Lid Tidak Berfungsi",
-    ),
-    DropdownMenuItem(
-      child: Text("Belt Elevator Geser"),
-      value: "Belt Elevator Geser",
-    ),
-    DropdownMenuItem(
-      child: Text("Belt Spiral Putus"),
-      value: "Belt Spiral Putus",
-    ),
-    DropdownMenuItem(
-      child: Text("Belt Vertikal Trouble"),
-      value: "Belt Vertikal Trouble",
-    ),
-    DropdownMenuItem(
-      child: Text("Can Bocor-Gagal Seaming"),
-      value: "Can Bocor-Gagal Seaming",
-    ),
-    DropdownMenuItem(
-      child: Text("Can Penyok"),
-      value: "Can Penyok",
-    ),
-    DropdownMenuItem(
-      child: Text("Can Sterilizer Trouble"),
-      value: "Can Sterilizer Trouble",
-    ),
-    DropdownMenuItem(
-      child: Text("Can Tersangkut Di Can Sterilizer"),
-      value: "Can Tersangkut Di Can Sterilizer",
-    ),
-    DropdownMenuItem(
-      child: Text("Can Tersangkut Di Stopper"),
-      value: "Can Tersangkut Di Stopper",
-    ),
-    DropdownMenuItem(
-      child: Text("Can Tersangkut Di Track"),
-      value: "Can Tersangkut Di Track",
-    ),
-    DropdownMenuItem(
-      child: Text("Can Track Patah"),
-      value: "Can Track Patah",
-    ),
-    DropdownMenuItem(
-      child: Text("Closer Nabrak"),
-      value: "Closer Nabrak",
-    ),
-    DropdownMenuItem(
-      child: Text("Closer Tumpah-Can Penyok"),
-      value: "Closer Tumpah-Can Penyok",
-    ),
-    DropdownMenuItem(
-      child: Text("Closer Tumpah-Can Tidak Ada Tutup"),
-      value: "Closer Tumpah-Can Tidak Ada Tutup",
-    ),
-    DropdownMenuItem(
-      child: Text("Closer Tumpah-Gagal Seaming"),
-      value: "Closer Tumpah-Gagal Seaming",
-    ),
-    DropdownMenuItem(
-      child: Text("Closer Tumpah-Lid Miring"),
-      value: "Closer Tumpah-Lid Miring",
-    ),
-    DropdownMenuItem(
-      child: Text("Closer Tumpah-Lid Terbalik"),
-      value: "Closer Tumpah-Lid Terbalik",
-    ),
-    DropdownMenuItem(
-      child: Text("Closer Tumpah-Tutup Tidak Sempurna"),
-      value: "Closer Tumpah-Tutup Tidak Sempurna",
-    ),
-    DropdownMenuItem(
-      child: Text("Conveyor Depall Putus"),
-      value: "Conveyor Depall Putus",
-    ),
-    DropdownMenuItem(
-      child: Text("Conveyor Filling Putus"),
-      value: "Conveyor Filling Putus",
-    ),
-    DropdownMenuItem(
-      child: Text("Depall Supply Telat"),
-      value: "Depall Supply Telat",
-    ),
-    DropdownMenuItem(
-      child: Text("Lid Burner Mati"),
-      value: "Lid Burner Mati",
-    ),
-    DropdownMenuItem(
-      child: Text("Lid Tersangkut di Magazine"),
-      value: "Lid Tersangkut di Magazine",
-    ),
-    DropdownMenuItem(
-      child: Text("Piston Filler Trouble"),
-      value: "Piston Filler Trouble",
-    ),
-    DropdownMenuItem(
-      child: Text("Rantai Can Sterilizer Lepas"),
-      value: "Rantai Can Sterilizer Lepas",
-    ),
-    DropdownMenuItem(
-      child: Text("Seaming Tidak Sempurna"),
-      value: "Seaming Tidak Sempurna",
-    ),
-    DropdownMenuItem(
-      child: Text("Temperatur filling room tdk stabil"),
-      value: "Temperatur filling room tdk stabil",
-    ),
-    DropdownMenuItem(
-      child: Text("Temperature Tidak Stabil"),
-      value: "Temperature Tidak Stabil",
-    ),
-    DropdownMenuItem(
-      child: Text("Supply OTC Telat"),
-      value: "Supply OTC Telat",
-    ),
-    DropdownMenuItem(
-      child: Text("Panel HMI Mati"),
-      value: "Panel HMI Mati",
-    ),
-    DropdownMenuItem(
-      child: Text("Closer Tumpah"),
-      value: "Closer Tumpah",
-    ),
-    DropdownMenuItem(
-      child: Text("Can Track Seret"),
-      value: "Can Track Seret",
-    ),
-    DropdownMenuItem(
-      child: Text("Closer Can Jiplak"),
-      value: "Closer Can Jiplak",
-    ),
-    DropdownMenuItem(
-      child: Text("Can Tersangkut/Jatuh"),
-      value: "Can Tersangkut/Jatuh",
-    ),
-    DropdownMenuItem(
-      child: Text("OTC tersangkut di Magnet Frame"),
-      value: "OTC tersangkut di Magnet Frame",
-    ),
+    "Air Cylinder Lid Tidak Berfungsi",
+    "Belt Elevator Geser"
   ];
-  var labeling_reason = [
-    DropdownMenuItem(
-      child: Text("Can Tersangkut Di Belt Elevator"),
-      value: "Can Tersangkut Di Belt Elevator",
-    ),
-    DropdownMenuItem(
-      child: Text("Can Tersangkut Di Elevator"),
-      value: "Can Tersangkut Di Elevator",
-    ),
-    DropdownMenuItem(
-      child: Text("Can Tersangkut Di Magnetic Belt"),
-      value: "Can Tersangkut Di Magnetic Belt",
-    ),
-    DropdownMenuItem(
-      child: Text("Can Tersangkut Di Track"),
-      value: "Can Tersangkut Di Track",
-    ),
-    DropdownMenuItem(
-      child: Text("Conveyor Input Putus"),
-      value: "Conveyor Input Putus",
-    ),
-    DropdownMenuItem(
-      child: Text("Hidrolik Lepas"),
-      value: "Hidrolik Lepas",
-    ),
-    DropdownMenuItem(
-      child: Text("Hot Melt Glue Tidak Berputar"),
-      value: "Hot Melt Glue Tidak Berputar",
-    ),
-    DropdownMenuItem(
-      child: Text("Hot Melt Glue Tidak Panas"),
-      value: "Hot Melt Glue Tidak Panas",
-    ),
-    DropdownMenuItem(
-      child: Text("Hydrolic Label Macet"),
-      value: "Hydrolic Label Macet",
-    ),
-    DropdownMenuItem(
-      child: Text("Label Brudul-Label Melengkung"),
-      value: "Label Brudul-Label Melengkung",
-    ),
-    DropdownMenuItem(
-      child: Text("Label Brudul-Label Sobek Dan Miring"),
-      value: "Label Brudul-Label Sobek Dan Miring",
-    ),
-    DropdownMenuItem(
-      child: Text("Label Brudul-Lebar Label Tidak Sama"),
-      value: "Label Brudul-Lebar Label Tidak Sama",
-    ),
-    DropdownMenuItem(
-      child: Text("Label Brudul-Lem Putih Banjir"),
-      value: "Label Brudul-Lem Putih Banjir",
-    ),
-    DropdownMenuItem(
-      child: Text("Label Brudul-Lem Putih Mampet"),
-      value: "Label Brudul-Lem Putih Mampet",
-    ),
-    DropdownMenuItem(
-      child: Text("Label Brudul-Lem Putih Tidak Ada"),
-      value: "Label Brudul-Lem Putih Tidak Ada",
-    ),
-    DropdownMenuItem(
-      child: Text("Label Melipat"),
-      value: "Label Melipat",
-    ),
-    DropdownMenuItem(
-      child: Text("Label Miring"),
-      value: "Label Miring",
-    ),
-    DropdownMenuItem(
-      child: Text("Magnetic Elevator Lepas"),
-      value: "Magnetic Elevator Lepas",
-    ),
-    DropdownMenuItem(
-      child: Text("Main Belt Kendur"),
-      value: "Main Belt Kendur",
-    ),
-    DropdownMenuItem(
-      child: Text("Main Belt Lepas"),
-      value: "Main Belt Lepas",
-    ),
-    DropdownMenuItem(
-      child: Text("Main Belt Sobek"),
-      value: "Main Belt Sobek",
-    ),
-    DropdownMenuItem(
-      child: Text("Pully Maint Belt Lepas"),
-      value: "Pully Maint Belt Lepas",
-    ),
-    DropdownMenuItem(
-      child: Text("Main Belt Putus"),
-      value: "Main Belt Putus",
-    ),
-    DropdownMenuItem(
-      child: Text("Label Brudul"),
-      value: "Label Brudul",
-    ),
-    DropdownMenuItem(
-      child: Text("Oli Hydrolik bocor"),
-      value: "Oli Hydrolik bocor",
-    ),
-    DropdownMenuItem(
-      child: Text("Tangki lem bocor"),
-      value: "Tangki lem bocor",
-    ),
-  ];
-
-  var cermex_cartoning_reason = [
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-  ];
+  var labeling_reason = ["Turbo Mixing Overload"];
+  var cermex_cartoning_reason = ["Turbo Mixing Overload"];
   var robot_palletizer_can = [
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
+    "Turbo Mixing Overload"
+        "Turbo Mixing Overload"
   ];
-  var cip_kitchen = [
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-  ];
-  var piltz_reason = [
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-  ];
-  var folding_reason = [
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-  ];
-  var omori_reason = [
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-  ];
+  var cip_kitchen = ["Turbo Mixing Overload"];
+  var piltz_reason = ["Turbo Mixing Overload"];
+  var folding_reason = ["Turbo Mixing Overload"];
+  var omori_reason = ["Turbo Mixing Overload"];
 
-  var samwoo_reason = [
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
+  var samwoo_reason = ["Turbo Mixing Overload"];
+  var bossar_reason = ["Turbo Mixing Overload"];
+  var cartoning_reason = ["Turbo Mixing Overload"];
+  var robotic_palletizer_pouch = ["Turbo Mixing Overload"];
+  var carton_sealer = ["Turbo Mixing Overload"];
+}
+
+class DataDT {
+  var dt = [
+    "Set_Up",
+    "Start_Up",
+    "Cleaning",
+    "Change_Over",
+    "Maintenance",
+    "Personal_Time",
+    "Operational_Downtime"
   ];
-  var bossar_reason = [
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-  ];
-  var cartoning_reason = [
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-  ];
-  var robotic_palletizer_pouch = [
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-  ];
-  var carton_sealer = [
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
-    DropdownMenuItem(
-      child: Text("Turbo Mixing Overload"),
-      value: "Turbo Mixing Overload",
-    ),
+  // sub dt
+  var set_up = ["CIP Daily"];
+
+  var start_up = ["CIP Daily"];
+  var cleaning = ["CIP Daily"];
+  var change_over = ["CIP Daily"];
+  var maintenance = ["CIP Daily"];
+  var personal_time = ['CIP Daily'];
+  var operational_downtime = ["CIP Daily"];
+}
+
+class DataIdle {
+  var idle = [
+    "THP (Tunggu Hasil Produk)",
+    "CT Full",
+    "No Planning",
+    "Stock Opname",
+    "Overhoule",
+    "Project",
+    "Trial New Product"
   ];
 }
