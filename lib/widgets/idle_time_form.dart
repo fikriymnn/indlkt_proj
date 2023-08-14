@@ -1,3 +1,4 @@
+import 'package:custom_searchable_dropdown/custom_searchable_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:indlkt_proj/widgets/small_custom_dropdown.dart';
 import 'package:indlkt_proj/widgets/small_custom_textfield.dart';
@@ -10,7 +11,7 @@ class IdleTimeForm extends StatefulWidget {
   final TextEditingController idleMin;
   final dynamic valueIdleDesc;
   final void Function(dynamic) onChangeIdleDesc;
-  final List<DropdownMenuItem> dropdownItemIdleDesc;
+  final List<String> dropdownItemIdleDesc;
   final void Function(dynamic)? onChange;
 
   const IdleTimeForm(
@@ -58,11 +59,29 @@ class _IdleTimeFormState extends State<IdleTimeForm> {
                 SizedBox(
                   height: 20,
                 ),
-                SmallDropdown(
-                    hint: 'pilih idle desc..',
-                    value: widget.valueIdleDesc,
-                    onChange: widget.onChangeIdleDesc,
-                    dropdownItem: widget.dropdownItemIdleDesc)
+                Container(
+                    width: 200,
+                    decoration: BoxDecoration(
+                      color: light,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: CustomSearchableDropDown(
+                        enabled: true,
+                        items: widget.dropdownItemIdleDesc,
+                        label: 'Pilih Idle Desc...',
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(
+                                width: 1, color: dark.withOpacity(0.5))),
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.all(0.0),
+                          child: Icon(Icons.search),
+                        ),
+                        dropDownMenuItems: widget.dropdownItemIdleDesc,
+                        onChanged: widget.onChangeIdleDesc,
+                      ),
+                    ))
               ],
             ),
             Column(

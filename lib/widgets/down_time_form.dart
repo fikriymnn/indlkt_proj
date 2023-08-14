@@ -1,3 +1,4 @@
+import 'package:custom_searchable_dropdown/custom_searchable_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:indlkt_proj/widgets/breakdown_form.dart';
 import 'package:indlkt_proj/widgets/small_custom_dropdown.dart';
@@ -9,14 +10,13 @@ class DownTimeForm extends StatefulWidget {
   final int index;
   final TextEditingController actMin;
   final String actHour;
-  final List<DropdownMenuItem> dropdownItemDT;
+  final List<String> dropdownItemDT;
   final void Function(dynamic) onChangeDT;
   final dynamic valueDT;
-  final List<DropdownMenuItem> dropdownItemSubDT;
+  final List<String> dropdownItemSubDT;
   final void Function(dynamic) onChangeSubDT;
   final dynamic valueSubDT;
-  final List<DropdownMenuItem> dropdownItemSTD;
-  final void Function(dynamic) onChangeSTD;
+
   final dynamic valueSTD;
   final void Function(dynamic)? onChange;
 
@@ -31,8 +31,6 @@ class DownTimeForm extends StatefulWidget {
       required this.dropdownItemSubDT,
       required this.onChangeSubDT,
       required this.valueSubDT,
-      required this.dropdownItemSTD,
-      required this.onChangeSTD,
       required this.valueSTD,
       this.onChange});
 
@@ -70,12 +68,29 @@ class _DownTimeFormState extends State<DownTimeForm> {
                 SizedBox(
                   height: 20,
                 ),
-                SmallDropdown(
-                  hint: 'pilih dt...',
-                  value: widget.valueDT,
-                  onChange: widget.onChangeDT,
-                  dropdownItem: widget.dropdownItemDT,
-                )
+                Container(
+                    width: 200,
+                    decoration: BoxDecoration(
+                      color: light,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: CustomSearchableDropDown(
+                        enabled: true,
+                        items: widget.dropdownItemDT,
+                        label: 'Pilih DT...',
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(
+                                width: 1, color: dark.withOpacity(0.5))),
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.all(0.0),
+                          child: Icon(Icons.search),
+                        ),
+                        dropDownMenuItems: widget.dropdownItemDT,
+                        onChanged: widget.onChangeDT,
+                      ),
+                    ))
               ],
             ),
             Column(
@@ -87,12 +102,29 @@ class _DownTimeFormState extends State<DownTimeForm> {
                 SizedBox(
                   height: 20,
                 ),
-                SmallDropdown(
-                  hint: 'pilih sub dt...',
-                  value: widget.valueSubDT,
-                  onChange: widget.onChangeSubDT,
-                  dropdownItem: widget.dropdownItemSubDT,
-                )
+                Container(
+                    width: 200,
+                    decoration: BoxDecoration(
+                      color: light,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: CustomSearchableDropDown(
+                        enabled: widget.valueDT == null ? false : true,
+                        items: widget.dropdownItemSubDT,
+                        label: 'Pilih Sub DT...',
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(
+                                width: 1, color: dark.withOpacity(0.5))),
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.all(0.0),
+                          child: Icon(Icons.search),
+                        ),
+                        dropDownMenuItems: widget.dropdownItemSubDT,
+                        onChanged: widget.onChangeSubDT,
+                      ),
+                    ))
               ],
             ),
             Column(
@@ -104,13 +136,7 @@ class _DownTimeFormState extends State<DownTimeForm> {
                 SizedBox(
                   height: 20,
                 ),
-                SmallDropdown(
-                  hint: 'pilih std...',
-                  value: widget.valueSTD,
-                  onChange: widget.onChangeSTD,
-                  width: 80,
-                  dropdownItem: widget.dropdownItemSTD,
-                )
+                Text("${widget.valueSTD}")
               ],
             ),
             Column(

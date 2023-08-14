@@ -24,7 +24,7 @@ class _SmallDropdownState extends State<SmallDropdown> {
   Widget build(BuildContext context) {
     return Container(
         width: widget.width ?? 150,
-        height: 30,
+        height: 35,
         decoration: BoxDecoration(
           color: light,
           border: Border.all(width: 1, color: dark.withOpacity(0.5)),

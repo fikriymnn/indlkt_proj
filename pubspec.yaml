@@ -60,6 +60,9 @@ dependencies:
   uuid: ^3.0.7
   flutter_animation_progress_bar: ^2.3.1
   math_expressions: ^2.4.0
+  dropdown_search: ^5.0.6
+  flutter_dropdown_search: ^0.0.4
+  custom_searchable_dropdown: ^2.1.1
 
 
 dev_dependencies:
