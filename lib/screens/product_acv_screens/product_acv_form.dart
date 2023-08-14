@@ -1250,131 +1250,112 @@ class _FormInputDataState extends State<FormInputData> {
                                                               "Set Up Mesin") {
                                                             setState(() =>
                                                                 std[index] =
-                                                                    "100");
+                                                                    "30");
                                                           } else if (a ==
                                                               "Fogging Ruangan") {
                                                             setState(() =>
                                                                 std[index] =
-                                                                    "00");
+                                                                    "10");
                                                           } else if (a ==
                                                               "Greasing/CIL") {
                                                             setState(() =>
                                                                 std[index] =
-                                                                    "100");
+                                                                    "30");
                                                           } else if (a ==
                                                               "Preheating Machine") {
-                                                            setState(() => {
-                                                                  std[index] =
-                                                                      "100"
-                                                                });
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "30");
                                                           } else if (a ==
                                                               "CIP Tengah Minggu") {
-                                                            setState(() => {
-                                                                  std[index] =
-                                                                      "100"
-                                                                });
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "240");
                                                           } else if (a ==
                                                               "CIP CT") {
-                                                            setState(() => {
-                                                                  std[index] =
-                                                                      "100"
-                                                                });
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "120");
                                                           } else if (a ==
                                                               "Cleaning & Sterilisasi Piston") {
-                                                            setState(() => {
-                                                                  std[index] =
-                                                                      "100"
-                                                                });
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "60");
                                                           } else if (a ==
                                                               "Pembersihan sealer bar horisontal") {
-                                                            setState(() => {
-                                                                  std[index] =
-                                                                      "100"
-                                                                });
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "35");
                                                           } else if (a ==
                                                               "CIP Daily") {
-                                                            setState(() => {
-                                                                  std[index] =
-                                                                      "100"
-                                                                });
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "135");
                                                           } else if (a ==
                                                               "CIP Weekly") {
-                                                            setState(() => {
-                                                                  std[index] =
-                                                                      "100"
-                                                                });
-                                                          } else if (a ==
-                                                              "Ganti Formula") {
-                                                            setState(() => {
-                                                                  std[index] =
-                                                                      "100"
-                                                                });
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "240");
                                                           } else if (a ==
                                                               "COP Weekly") {
-                                                            setState(() => {
-                                                                  std[index] =
-                                                                      "100"
-                                                                });
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "240");
+                                                          } else if (a ==
+                                                              "Ganti Formula") {
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "15");
                                                           } else if (a ==
                                                               "Ganti Brand (Persiapan PM)") {
-                                                            setState(() => {
-                                                                  std[index] =
-                                                                      "100"
-                                                                });
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "35");
                                                           } else if (a ==
                                                               "Ganti Crystalitation Tank") {
-                                                            setState(() => {
-                                                                  std[index] =
-                                                                      "100"
-                                                                });
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "30");
                                                           } else if (a ==
                                                               "Ganti Kode") {
-                                                            setState(() => {
-                                                                  std[index] =
-                                                                      "100"
-                                                                });
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "10");
                                                           } else if (a ==
                                                               "Ganti alumunium foil") {
-                                                            setState(() => {
-                                                                  std[index] =
-                                                                      "100"
-                                                                });
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "30");
                                                           } else if (a ==
                                                               "Ganti brand") {
-                                                            setState(() => {
-                                                                  std[index] =
-                                                                      "100"
-                                                                });
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "30");
                                                           } else if (a ==
                                                               "Ganti ribbon") {
-                                                            setState(() => {
-                                                                  std[index] =
-                                                                      "100"
-                                                                });
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "12");
                                                           } else if (a ==
                                                               "Weekly Maintenance") {
-                                                            setState(() => {
-                                                                  std[index] =
-                                                                      "100"
-                                                                });
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "480");
                                                           } else if (a ==
                                                               "Sholat Jumat") {
-                                                            setState(() => {
-                                                                  std[index] =
-                                                                      "100"
-                                                                });
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "90");
                                                           } else if (a ==
                                                               "Aging") {
-                                                            setState(() => {
-                                                                  std[index] =
-                                                                      "100"
-                                                                });
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "30");
                                                           } else if (a ==
                                                               "Cleaning dan line clearance") {
-                                                            setState(() => {
-                                                                  std[index] =
-                                                                      "100"
-                                                                });
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "30");
                                                           }
                                                         },
                                                         valueSubDT: std[index],
@@ -1726,7 +1707,17 @@ class _FormInputDataState extends State<FormInputData> {
 
 class DataBD {
   //Process skm
-  var process_SKM_Mesin = ["Dumper", "Slurry", "Mixer"];
+  var process_SKM_Mesin = [
+    "Dumper",
+    "Slurry",
+    "Mixer",
+    "Pasteurizer",
+    "Homogenizer",
+    "Flash_Cooler",
+    "CT",
+    "Utility",
+    "CIP_Kitchen"
+  ];
   var filling_SKM_Can_Mesin = ["Filler_Closer", "Labeling", "Cermex_Cartoning"];
 
   var filling_SKM_Tall_Can = ["Filler_Closer", "Labeling", "Cermex_Cartoning"];
@@ -1737,46 +1728,414 @@ class DataBD {
   var dumper_reason = [
     "Blower Overload",
     "Dosing Gula Blocking",
-    "Dosing Gula Lambat"
+    "Dosing Gula Lambat",
+    "Dosing Powder Lambat",
+    "Ganti Filter Tipping Powder",
+    "Gula Blocking/Membatu",
+    "Gula Susah Turun",
+    "Gula Susah Turun",
+    "Jalur Blower Powder Lepas",
+    "Powder Susah Turun",
+    "Rantai STRV Tipping Sugar Putus/Lepas",
+    "Rantai STRV Tipping Powder Putus/Lepas",
+    "Screw Tipping Powder Overload",
+    "Screw Tipping Sugar Overload",
+    "Screw Weighing Overload",
+    "Screw Weighing Powder Blocking",
+    "Screw Weighing Powder Overload",
+    "STRV Tipping Powder Overload",
+    "STRV Tipping Sugar Overload",
+    "Weighing Gula Lama",
+    "Weighing Powder Lama",
+    "Jalur Powder Blocking",
+    "Jalur Maldex Blocking",
+    "Screw Gula Macet",
+    "Setting Timbangan",
   ];
 
-  var mixer_reason = ["Agitator Patah", "Blocking"];
+  var mixer_reason = [
+    " Agitator Patah",
+    "Blocking",
+    "Mass Flow",
+    "Mixing Stop",
+    "Mixing Tank Full",
+    "Motor Mixing Overload",
+    "Pompa Sirkulasi Overload",
+    "Sliding Valve Macet",
+    "Valve Automatic Eror",
+    "Turbo Mixing Overload",
+  ];
 
-  var pasteurizer_reason = ["Turbo Mixing Overload", "Motor Pompa Terbakar"];
-  var homogenizer_reason = ["Motor Terbakar", "Oli bocor"];
+  var pasteurizer_reason = [
+    "  Motor Pompa Overload",
+    "Motor Pompa Terbakar",
+    "PHE bocor",
+    "Pipa Hot Water Bocor",
+    "Pumping Lambat dan Flow kecil",
+    "Valve Automatic Eror",
+  ];
+  var homogenizer_reason = [
+    "Motor Terbakar",
+    "Oli bocor",
+    "Pressure Drop",
+    "Homogenizer Trouble",
+  ];
 
   var flash_cooler_reason = [
     "Buffer Tank Bocor",
     "Cooling Tower Trouble",
-    "House Pump Bocor"
+    "House Pump Bocor",
+    "Mesin FC Mati/Stop",
+    "Program Eror",
+    "Roda Lactose Grinder Bocor",
+    "Flash Cooler Trouble",
   ];
 
-  var ct_reason = ["Adjustment Produk", "Kerusakan pada valve / gasket"];
+  var ct_reason = [
+    "Adjustment Produk",
+    "Kerusakan pada valve / gasket",
+    "Pompa Transfer produk bocor/terbakar",
+    "Agitator Cristalisation tank rusak"
+  ];
 
   var utility_reason = ["PLN Mati", "Steam Drop", "AHU mati"];
 
-  var slurry_reason = ["Menunggu Slurry Ready", "Motor Slurry Overload"];
+  var slurry_reason = [
+    "Menunggu Slurry Ready",
+    "Motor Slurry Overload",
+    "Valve Automatic Eror"
+  ];
 
   var filler_closer_reason = [
     "Air Cylinder Lid Tidak Berfungsi",
-    "Belt Elevator Geser"
+    "Belt Elevator Geser",
+    "Belt Spiral Putus",
+    "Belt Vertikal Trouble",
+    "Can Bocor-Gagal Seaming",
+    "Can Penyok",
+    "Can Sterilizer Trouble",
+    "Can Tersangkut Di Can Sterilizer",
+    "Can Tersangkut Di Stopper",
+    "Can Tersangkut Di Track",
+    "Can Track Patah",
+    "Closer Nabrak",
+    "Closer Tumpah-Can Penyok",
+    "Closer Tumpah-Can Tidak Ada Tutup",
+    "Closer Tumpah-Gagal Seaming",
+    "Closer Tumpah-Lid Miring",
+    "Closer Tumpah-Lid Terbalik",
+    "Closer Tumpah-Tutup Tidak Sempurna",
+    "Conveyor Depall Putus",
+    "Conveyor Filling Putus",
+    "Depall Supply Telat",
+    "Lid Burner Mati",
+    "Lid Tersangkut di Magazine",
+    "Piston Filler Trouble",
+    "Rantai Can Sterilizer Lepas",
+    "Seaming Tidak Sempurna",
+    "Temperatur filling room tdk stabil",
+    "Temperature Tidak Stabil",
+    "Supply OTC Telat",
+    "Panel HMI Mati",
+    "Closer Tumpah",
+    "Can Track Seret",
+    "Closer Can Jiplak",
+    "Can Tersangkut/Jatuh",
+    "OTC tersangkut di Magnet Frame",
   ];
-  var labeling_reason = ["Turbo Mixing Overload"];
-  var cermex_cartoning_reason = ["Turbo Mixing Overload"];
+  var labeling_reason = [
+    " Can Tersangkut Di Belt Elevator",
+    "Can Tersangkut Di Elevator",
+    "Can Tersangkut Di Magnetic Belt",
+    "Can Tersangkut Di Track",
+    "Conveyor Input Putus",
+    "Hidrolik Lepas",
+    "Hot Melt Glue Tidak Berputar",
+    "Hot Melt Glue Tidak Panas",
+    "Hydrolic Label Macet",
+    "Label Brudul-Label Melengkung",
+    "Label Brudul-Label Sobek Dan Miring",
+    "Label Brudul-Lebar Label Tidak Sama",
+    "Label Brudul-Lem Putih Banjir",
+    "Label Brudul-Lem Putih Mampet",
+    "Label Brudul-Lem Putih Tidak Ada",
+    "Label Melipat",
+    "Label Miring",
+    "Magnetic Elevator Lepas",
+    "Main Belt Kendur",
+    "Main Belt Lepas",
+    "Main Belt Sobek",
+    "Pully Maint Belt Lepas",
+    "Main Belt Putus",
+    "Label Brudul",
+    "Oli Hydrolik bocor",
+    "Tangki lem bocor",
+  ];
+  var cermex_cartoning_reason = [
+    " Pressan Karton Tidak Sempurna",
+    "Baut Dudukan Karet Vacum Kendor",
+    "Baut Holding Plat Patah",
+    "Baut Piston Karton Lepas",
+    "Baut Plat Pendorong Lepas",
+    "Baut Stoper Lepas",
+    "Belt Elevator Slip",
+    "Belt Input Sobek",
+    "Belt Transfer Miring",
+    "Blank Gripper Inverter Fault",
+    "Can Jatuh Saat Di Vacuum",
+    "Can Tersangkut Di Meja Stopper",
+    "Can Tersangkut Di Stopper",
+    "Can Tersangkut Di Track",
+    "Carton Box Tersangkut Di Timbangan",
+    "Cermex Alarm-Can Tersangkut",
+    "Cermex Alarm-Can Tidak Vacuum",
+    "Cermex Eror",
+    "Cermex Ganti Nozzle",
+    "Cermex Nabrak",
+    "Cermex Nabrak-Can Lepas Dari Vacum",
+    "Flap Karton Lepas",
+    "Holding Plat Lepas",
+    "Holding Plat Patah",
+    'Lem Karton Box Tidak Keluar',
+    "Lidah Karton Terbuka",
+    "Meja Vacum Macet",
+    "Nozzle Lem Mampet",
+    "Plat Pendorong Kendur",
+    "Plat Pendorong Lepas",
+    "Rantai Cermex Lepas",
+    "Timing Rantai Lepas",
+    "Track Cermex Patah",
+    "Vacum Sering Lepas",
+    "Holding Plat Macet",
+    "Sensor Lem Patah",
+    "Setting sensor carton box",
+    "Holding Plat Eror",
+    "Selang angin lem lepas",
+    "Plat pendorong patah",
+    "Neaple angin rusak",
+    "Setting meja pusher",
+    "Setting Holding Plat",
+    "Baut pressan patah",
+  ];
   var robot_palletizer_can = [
-    "Turbo Mixing Overload"
-        "Turbo Mixing Overload"
+    " Pallet Tersangkut Di Stopper Magazine",
+    "Pallet Tersangkut Di Track",
+    "Robotic Eror",
+    "Robotic Nabrak-Pallet Tersangkut",
+    "Sensor Pallet Error",
+    "Sensor Clumper Error",
   ];
-  var cip_kitchen = ["Turbo Mixing Overload"];
-  var piltz_reason = ["Turbo Mixing Overload"];
-  var folding_reason = ["Turbo Mixing Overload"];
-  var omori_reason = ["Turbo Mixing Overload"];
+  var cip_kitchen = ["PHE bocor", "Pompa transfer chemical tidak berfungsi"];
+  var piltz_reason = [
+    "Alumunium Foil Acak",
+    "Alumunium Foil Bergeser",
+    "Alumunium Foil Keriput",
+    "Alumunium Foil Licin",
+    "Alumunium Foil Overlap",
+    "Alumunium Foil Putus Di Cutter Pembelah",
+    "Alumunium Foil Tersangkut",
+    "Alumunium Foil Tersangkut Di Cutter Roll",
+    "Alumunium Foil Tidak Stabil",
+    "Baut Arm Patah",
+    "Baut Hidrolik Kendur",
+    "Baut Hidrolik Patah",
+    "Baut Rack Gear Lepas",
+    "Bearing Rack Gear Rusak",
+    "Casset Ribbon Trouble",
+    "Coding Kurang Jelas",
+    "Cutter Horizontal Macet",
+    "Cutter Lepas",
+    "Cutter Macet",
+    "Cutter Pembelah Tumpul",
+    "Cutter Perforasi Macet",
+    "Cutter Perforasi Patah",
+    "Cutter Vertical Macet",
+    "Cutter Vertical Tumpul",
+    "Cutter Vertikal Bergeser",
+    "Desain Produk Panjang Pendek",
+    "Dosing Pump Fault Line 1",
+    "Dosing Pump Fault Line 2",
+    "Dosing Pump Fault Line 3",
+    'Dosing Pump Fault Line 4',
+    "Dosing Pump Fault Line 5",
+    "Dosing Pump Fault Line 6",
+    "Duplex Chain Putus",
+    "Eye Mark Trouble",
+    "Filling Rembes",
+    "Filling System Fault",
+    "Filling Tube Trouble",
+    "Film Transport System Macet",
+    "Heater Sealer Horizontal Konslet",
+    "Heater Sealer Vertical Konslet",
+    "Hidrolik Pressure Bocor",
+    "Lampu UV Not Ok",
+    "Main Drive Fault",
+    "Oli Hidrolik Kurang",
+    "Omori Trouble",
+    "Overlap Bocor",
+    "Pump House Trouble",
+    "Ribbon Fault",
+    "Rubber Roll Trouble",
+    "Sambungan Alumunium Foil Bocor",
+    "Sambungan Alumunium Foil Lewat",
+    "Sealer Horizontal Bocor",
+    "Sealer Horizontal Trouble",
+    "Sealer Vertical Bocor",
+    "Sealer Vertical Trouble",
+    "Servo Auto Web Error",
+    "Snap Ring Cutter Roll Patah",
+    "Stick Filling Tube Bocor",
+    "Temperature Drop",
+    "Temperature Tidak Stabil",
+    "Magnetic Clutch Macet",
+    "Conveyor Output Mati",
+    "Positive pump bocor",
+    "Break Slip",
+    "Servo panas",
+    "Insert push position fault",
+    "Alumunium Foil Melipat",
+    "Baut Rack Gear Patah",
+    "Bearing Arm Rontok",
+    "Bearing Arm Kendor",
+    "Setting Plat Sealer",
+    "Dosing Line Lepas",
+    "Cutter tidak memotong",
+    "Baut Sealer Patah",
+    "Bearing Arm Aus",
+    "Setting Alumunium Foil",
+    "Filling Tube Bocor",
+    "Drain produk encer",
+    "Error Hopper Minimum produk",
+    "Produk under range hopper",
+    "Heating sealer safety relay trip",
+    "Perforasi Putus",
+    "Setting ketebalan produk",
+    "Heater Drop",
+    "Produk bocor",
+  ];
+  var folding_reason = [
+    "Folding Tersangkut Di Konveyor (Produk Terjepit)",
+    "Folding/Pelipat Eror",
+    "Folding/Pelipat Patah",
+    "Folding/Pelipat Tidak Sinkron",
+    "Slider Macet",
+    "Sensor Eror",
+    "Engkol Rack Gear Lepas",
+    "Folding Lengket",
+    "Conveyor Pelipat Eror",
+    "Slider telat",
+    "Produk sering berantakan",
+    "Produk menumpuk",
+    "Produk terjepit pelipat",
+    "Folding/Pelipat Tersangkut",
+    "Scoop eror",
+    "Belt Input Trouble",
+  ];
+  var omori_reason = [
+    "Belt Conveyor Miring",
+    "Belt Omori Putus",
+    "Belt Roller Center Sealer Putus",
+    "Belt Tidak Berputar",
+    "Finger Nabrak",
+    "Omori Trouble",
+    "Sachet Tersangkut",
+    "Selenoid Tidak Stabil",
+    "Plastik OPP Terbuka",
+    "OPP tidak menempel",
+    "Setting Center Sealer",
+    "Servo Omori Trouble",
+    "Baut handle penjepit aus",
+    "Belt Output Macet",
+    "Center Sealer Tidak Menempel",
+    "Salah OPP",
+    "Produk terjepit",
+    "End Seal Jam",
+    "Trouble Sensor Eror",
+    "Belt Feeding Putus",
+  ];
 
-  var samwoo_reason = ["Turbo Mixing Overload"];
-  var bossar_reason = ["Turbo Mixing Overload"];
-  var cartoning_reason = ["Turbo Mixing Overload"];
-  var robotic_palletizer_pouch = ["Turbo Mixing Overload"];
-  var carton_sealer = ["Turbo Mixing Overload"];
+  var samwoo_reason = [
+    " Angin Drop",
+    "Belt Before Putus",
+    "Belt Input Trouble",
+    "Folding Tersangkut Di Konveyor (Produk Terjepit)",
+    "Produk Terjepit Di Gripper",
+    "Vacum Box Failed",
+    "Sensor Pusher Eror",
+    "Double Loop",
+    "Packing Manual",
+    "Silinder Flap Tidak Berfungsi",
+    "Safety door eror",
+    "Track Carton Box Tidak Sejajar",
+    "Sensor box eror",
+    "Produk terjepit di Insert Pusher",
+    "Gate Samwoo tidak naik",
+    "Samwoo trouble",
+    "Gate Samwoo lepas",
+  ];
+  var bossar_reason = [
+    " Air holder kurang/tidak terisi",
+    "Alumunium Foil Overlap",
+    "Alumunium Foil Underspec",
+    "Conveyor out put mati/overload",
+    "Cutter Vertical Tumpul",
+    "Filling tube menetes",
+    "Ganti alufo tidak bisa auto",
+    "Heater vertical seal rusak/suhu drop",
+    "Kode hilang/tidak jelas/terputus",
+    "Low air pressure",
+    "Mesin Kode error",
+    "Nilai RO Tinggi, Setting Filling N2",
+    "Pre blowing air holder trouble",
+    "Produk tumpah",
+    "Pulse light error",
+    "Sambungan Alufo Putus",
+    "Sensor eye mark eror",
+    "Smiley Not OK",
+    "Spout tersangkut",
+    "Spout tidak pas",
+    "Vertical Sealer Not OK",
+    "Vision Camera 1 reject",
+    "Vision camera 2 reject",
+    "Lampu UV Mati",
+    "Lampu UV Rusak",
+    "Filler Kurang Lancar",
+    "Filter produk bocor",
+    "Alumunium foil putus",
+    "Baut penjepit produk patah",
+    "Sunction cup air holder lepas",
+    "Air handle blocked",
+    "Alarm Sealer Vertical Blocked",
+    "Positive pump eror",
+    "HMI Eror",
+    "Upper Sealer Trouble",
+    "Spout menempel di Sealer",
+    "Join alumunium foil putus",
+    "Heater blow up Fault",
+    "Alumunium Foil Acak",
+    "Baut Spout Lepas",
+    "Setting sensitivitas camera",
+    "Viscos Produk rendah",
+    "Camera Fault",
+    "Bag tidak membuka",
+    "Perbaikan Bearing & Screw",
+    "Sunction cup sobek",
+    "Filling tube mampet",
+    "Valve produk mampet",
+    "Alumunium foil bergelombang",
+    "Air handle fault",
+    "Alumunium foil tersangkut",
+  ];
+  var cartoning_reason = ["Cartoning Eror"];
+  var robotic_palletizer_pouch = [
+    "Robotic Eror",
+    "Sensor finger robotic putus",
+  ];
+  var carton_sealer = [
+    " Carton box tersangkut",
+    "Lakban tidak melekat",
+    "Baut Sealer Lepas",
+  ];
 }
 
 class DataDT {
@@ -1790,14 +2149,39 @@ class DataDT {
     "Operational_Downtime"
   ];
   // sub dt
-  var set_up = ["CIP Daily"];
+  var set_up = ["Set Up Mesin"];
 
-  var start_up = ["CIP Daily"];
-  var cleaning = ["CIP Daily"];
-  var change_over = ["CIP Daily"];
-  var maintenance = ["CIP Daily"];
-  var personal_time = ['CIP Daily'];
-  var operational_downtime = ["CIP Daily"];
+  var start_up = ["Preheating Machine"];
+  var cleaning = [
+    "CIP Tengah Minggu",
+    "CIP CT",
+    "Cleaning & Sterilisasi Piston",
+    "Pembersihan sealer bar horizontal",
+    "CIP Daily",
+    "CIP Weekly",
+    "COP Weekly",
+    "Cleaning dan line clearance",
+    "Fogging Ruangan",
+    "Swab & Sterilisasi",
+    "COP",
+    "CIP AT Daily",
+    "CIP COP Weekly",
+    "Bersihkan sealer",
+    "Bersihkan Sealer  dan stick N2",
+    "Initial Cleaning",
+  ];
+  var change_over = [
+    "Ganti Formula",
+    "Ganti Brand (Persiapan PM)",
+    "Ganti Crystalitation Tank",
+    "Ganti Kode",
+    "Ganti alumunium foil",
+    "Ganti brand",
+    "Ganti ribbon",
+  ];
+  var maintenance = ["Weekly Maintenance"];
+  var personal_time = ['Sholat Jumat'];
+  var operational_downtime = ["Aging"];
 }
 
 class DataIdle {
