@@ -33,7 +33,7 @@ class _FormInputDataState extends State<FormInputData> {
   //Breadkdown dropdown
   List<String>? bdMesinList = [""];
   List<String>? subDTList = [''];
-
+  List<DropdownMenuItem<String>> lineList = [];
   List listToSearch = ["Acep", "Lutfi", "Tio"];
 
   var selected;
@@ -226,22 +226,27 @@ class _FormInputDataState extends State<FormInputData> {
                                             if (namaLaporan == "Process_SKM") {
                                               bdMesinList =
                                                   DataBD().process_SKM_Mesin;
+                                              lineList = Line().process;
                                             } else if (namaLaporan ==
                                                 "Filling_Packing_SKM_Can") {
                                               bdMesinList = DataBD()
                                                   .filling_SKM_Can_Mesin;
+                                              lineList = Line().skm_can;
                                             } else if (namaLaporan ==
                                                 "Filling_Packing_SKM_Tall_Can") {
                                               bdMesinList =
                                                   DataBD().filling_SKM_Tall_Can;
+                                              lineList = Line().skm_can;
                                             } else if (namaLaporan ==
                                                 "Filling_Packing_SKM_Sachet") {
                                               bdMesinList =
                                                   DataBD().filling_SKM_Sachet;
+                                              lineList = Line().skm_sachet;
                                             } else if (namaLaporan ==
                                                 "Filling_Packing_SKM_Pouch") {
                                               bdMesinList =
                                                   DataBD().filling_SKM_Pouch;
+                                              lineList = Line().skm_pouch;
                                             }
                                           });
                                         },
@@ -654,36 +659,7 @@ class _FormInputDataState extends State<FormInputData> {
                                             });
                                           },
                                           value: line,
-                                          dropdownItems: [
-                                            DropdownMenuItem(
-                                              child: Text("1"),
-                                              value: "1",
-                                            ),
-                                            DropdownMenuItem(
-                                              child: Text("2"),
-                                              value: "2",
-                                            ),
-                                            DropdownMenuItem(
-                                              child: Text("A"),
-                                              value: "A",
-                                            ),
-                                            DropdownMenuItem(
-                                              child: Text("B"),
-                                              value: "B",
-                                            ),
-                                            DropdownMenuItem(
-                                              child: Text("C"),
-                                              value: "C",
-                                            ),
-                                            DropdownMenuItem(
-                                              child: Text("D"),
-                                              value: "D",
-                                            ),
-                                            DropdownMenuItem(
-                                              child: Text("E"),
-                                              value: "E",
-                                            )
-                                          ]),
+                                          dropdownItems: lineList)
                                     ],
                                   ),
                                 ),
@@ -865,7 +841,7 @@ class _FormInputDataState extends State<FormInputData> {
                                                   itemBuilder:
                                                       (context, index) {
                                                     return BreakdownForm(
-                                                      index: bLength,
+                                                      index: index+1,
                                                       bdMin: dbMin[index],
                                                       freq: freq[index],
                                                       problem: problem[index],
@@ -1356,6 +1332,41 @@ class _FormInputDataState extends State<FormInputData> {
                                                             setState(() =>
                                                                 std[index] =
                                                                     "30");
+                                                          } else if (a ==
+                                                              "Swab & Sterilisasi") {
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "-");
+                                                          } else if (a ==
+                                                              "COP") {
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "-");
+                                                          } else if (a ==
+                                                              "CIP AT Daily") {
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "-");
+                                                          } else if (a ==
+                                                              "CIP COP Weekly") {
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "-");
+                                                          } else if (a ==
+                                                              "Bersihkan sealer") {
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "-");
+                                                          } else if (a ==
+                                                              "Bersihkan Sealer  dan stick N2") {
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "-");
+                                                          } else if (a ==
+                                                              "Initial Cleaning") {
+                                                            setState(() =>
+                                                                std[index] =
+                                                                    "-");
                                                           }
                                                         },
                                                         valueSubDT: std[index],
@@ -2193,5 +2204,67 @@ class DataIdle {
     "Overhoule",
     "Project",
     "Trial New Product"
+  ];
+}
+
+class Line {
+  var process = [
+    DropdownMenuItem(
+      child: Text("1"),
+      value: "1",
+    ),
+    DropdownMenuItem(
+      child: Text("2"),
+      value: "2",
+    ),
+  ];
+
+  var skm_can = [
+    DropdownMenuItem(
+      child: Text("A"),
+      value: "A",
+    ),
+    DropdownMenuItem(
+      child: Text("B"),
+      value: "B",
+    ),
+  ];
+
+  var skm_sachet = [
+    DropdownMenuItem(
+      child: Text("A"),
+      value: "A",
+    ),
+    DropdownMenuItem(
+      child: Text("B"),
+      value: "B",
+    ),
+    DropdownMenuItem(
+      child: Text("C"),
+      value: "C",
+    ),
+    DropdownMenuItem(
+      child: Text("D"),
+      value: "D",
+    ),
+    DropdownMenuItem(
+      child: Text("E"),
+      value: "E",
+    ),
+    DropdownMenuItem(
+      child: Text("F"),
+      value: "F",
+    ),
+  ];
+
+  var skm_pouch = [
+    DropdownMenuItem(
+      child: Text("A"),
+      value: "A",
+    ),
+    DropdownMenuItem(
+      child: Text("B"),
+      value: "B",
+    ),
   ];
 }
