@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import '../../../constants/style.dart';
 
 class BreakdownItem extends StatefulWidget {
-  const BreakdownItem({super.key});
+  final String title;
+  final String desc;
+  final int number;
+
+  const BreakdownItem(
+      {required this.title, required this.desc, required this.number});
 
   @override
   State<BreakdownItem> createState() => _BreakdownItemState();
@@ -13,8 +18,13 @@ class _BreakdownItemState extends State<BreakdownItem> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text('Utility', style: TextStyle(fontWeight: FontWeight.bold)),
-      subtitle: Text('Listrik Trip/Deep Sag'),
+      title: Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: Text(widget.title,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+      ),
+      subtitle: Text(widget.desc,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
       trailing: Container(
           decoration: BoxDecoration(
               border: Border.all(
@@ -27,7 +37,7 @@ class _BreakdownItemState extends State<BreakdownItem> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "140",
+                  (widget.number).toString(),
                   style: TextStyle(
                     color: active,
                   ),

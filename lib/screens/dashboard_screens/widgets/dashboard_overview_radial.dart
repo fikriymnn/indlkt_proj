@@ -14,8 +14,8 @@ class _RadialBarState extends State<RadialBar> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 200,
-      height: 200,
+      width: 145,
+      height: 145,
       child: SfCircularChart(series: <CircularSeries>[
         // Renders radial bar chart
         RadialBarSeries<ChartData, String>(
