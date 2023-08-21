@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
 import 'package:indlkt_proj/constants/style.dart';
+import 'package:indlkt_proj/screens/dashboard_screens/widgets/detail_proses.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_card.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_container.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_donut_button.dart';
@@ -76,14 +78,27 @@ class _DashboardOverviewState extends State<DashboardOverview> {
   ];
 
   int selectedShift = 0;
-  int dropdownValue = 1;
+  int dropdownValue = 0;
   int showProgress = 0;
+  DateTime? _fromSelectedDate = DateTime.now();
+  DateTime? _toSelectedDate = DateTime.now();
+
+  String selectedDateText(select) {
+    return DateFormat("dd/MMMM/yyyy").format(select);
+  }
+
+  // prossesSkm(){
+  //   if(selectedShift == 0 &&)
+  // }
 
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     Widget detail(v) {
       if (v == 1) {
-        return Detail().detail1;
+        return Detail1(
+          dropdownValue: dropdownValue,
+          selectedShift: selectedShift,
+        );
       } else if (v == 2) {
         return Detail().detail2;
       } else if (v == 3) {
@@ -129,7 +144,89 @@ class _DashboardOverviewState extends State<DashboardOverview> {
           ],
         ),
         SizedBox(height: 15),
-        DatePicker(),
+        Container(
+          child: Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('From'),
+                Container(
+                  decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                            blurRadius: 4,
+                            offset: Offset(0, 0),
+                            color: dark.withOpacity(0.4))
+                      ],
+                      color: Color.fromARGB(255, 229, 228, 228),
+                      border: Border.all(color: blue),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: InkWell(
+                      onTap: () async {
+                        DateTime? pickDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(3000));
+
+                        setState(() {
+                          _fromSelectedDate = pickDate;
+                          print(_fromSelectedDate!);
+                        });
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 5, right: 5, top: 2, bottom: 2),
+                        child: Text(
+                            "${_fromSelectedDate != null ? selectedDateText(_fromSelectedDate) : DateFormat("dd/MMMM/yyyy").format(DateTime.now())}"),
+                      )),
+                ),
+              ],
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.only(left: 8, right: 8, top: 10, bottom: 10),
+              child: Container(width: 80, color: blue, height: 3),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('To'),
+                Container(
+                  decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                            blurRadius: 4,
+                            offset: Offset(0, 0),
+                            color: dark.withOpacity(0.4))
+                      ],
+                      color: Color.fromARGB(255, 229, 228, 228),
+                      border: Border.all(color: blue),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: InkWell(
+                      onTap: () async {
+                        DateTime? pickDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(3000));
+
+                        setState(() {
+                          _toSelectedDate = pickDate;
+                          print(Timestamp.fromDate(_toSelectedDate!));
+                        });
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 5, right: 5, top: 2, bottom: 2),
+                        child: Text(
+                            "${_toSelectedDate != null ? selectedDateText(_toSelectedDate) : DateFormat("dd/MMMM/yyyy").format(DateTime.now())}"),
+                      )),
+                ),
+              ],
+            )
+          ]),
+        ),
         SizedBox(
           height: 15,
         ),
@@ -315,6 +412,10 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                           },
                                           items: [
                                             DropdownMenuItem(
+                                              child: Text("all"),
+                                              value: 0,
+                                            ),
+                                            DropdownMenuItem(
                                               child: Text("1"),
                                               value: 1,
                                             ),
@@ -349,78 +450,213 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                     crossAxisCount: 2,
                                     children: [
                                       // Radial Bar 1
-                                      InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            showProgress = 1;
-                                          });
-                                        },
-                                        child: Column(
-                                          children: [
-                                            Center(
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    bottom: 5),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Container(
-                                                      margin: EdgeInsets.only(
-                                                          right: 5),
-                                                      height: 10,
-                                                      width: 10,
-                                                      decoration: BoxDecoration(
-                                                          color: blue,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      20)),
+                                      StreamBuilder(
+                                          stream: selectedShift == 0 &&
+                                                  dropdownValue == 0
+                                              ? FirebaseFirestore.instance
+                                                  .collection('product')
+                                                  .where("product",
+                                                      isEqualTo: "Process_SKM")
+                                                  .snapshots()
+                                              : selectedShift != 0 &&
+                                                      dropdownValue == 0
+                                                  ? FirebaseFirestore.instance
+                                                      .collection('product')
+                                                      .where("product",
+                                                          isEqualTo:
+                                                              "Process_SKM")
+                                                      .where("shift",
+                                                          isEqualTo:
+                                                              selectedShift
+                                                                  .toString())
+                                                      .snapshots()
+                                                  : selectedShift == 0 &&
+                                                          dropdownValue != 0
+                                                      ? FirebaseFirestore
+                                                          .instance
+                                                          .collection('product')
+                                                          .where("product",
+                                                              isEqualTo:
+                                                                  "Process_SKM")
+                                                          .where("line",
+                                                              isEqualTo:
+                                                                  dropdownValue
+                                                                      .toString())
+                                                          .snapshots()
+                                                      : selectedShift != 0 &&
+                                                              dropdownValue != 0
+                                                          ? FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  'product')
+                                                              .where("product",
+                                                                  isEqualTo:
+                                                                      "Process_SKM")
+                                                              .where("shift",
+                                                                  isEqualTo:
+                                                                      selectedShift
+                                                                          .toString())
+                                                              .where("line",
+                                                                  isEqualTo:
+                                                                      dropdownValue
+                                                                          .toString())
+                                                              .snapshots()
+                                                          : null,
+                                          builder: (context,
+                                              AsyncSnapshot snapshot) {
+                                            if (!snapshot.hasData) {
+                                              return Text("no Data");
+                                            }
+                                            final doc = snapshot.data.docs;
+                                            var leCuy = List.generate(
+                                                doc.length, (index) {
+                                              double x = double.parse(
+                                                  doc[index]['le']);
+                                              String z = x.toStringAsFixed(0);
+                                              int a = int.parse(z);
+
+                                              return a;
+                                            }).fold(0, (p, c) => p + c);
+                                            var lpCuy = List.generate(
+                                                doc.length, (index) {
+                                              double x = double.parse(
+                                                  doc[index]['lp']);
+                                              String z = x.toStringAsFixed(0);
+                                              int a = int.parse(z);
+
+                                              return a;
+                                            }).fold(0, (p, c) => p + c);
+                                            var bdCuy = List.generate(
+                                                doc.length, (index) {
+                                              double x = double.parse(
+                                                  doc[index]['bd']);
+                                              String z = x.toStringAsFixed(0);
+                                              int a = int.parse(z);
+
+                                              return a;
+                                            }).fold(0, (p, c) => p + c);
+                                            var dtCuy = List.generate(
+                                                doc.length, (index) {
+                                              double x = double.parse(
+                                                  doc[index]['dt']);
+                                              String z = x.toStringAsFixed(0);
+                                              int a = int.parse(z);
+
+                                              return a;
+                                            }).fold(0, (p, c) => p + c);
+
+                                            var actualO = List.generate(
+                                                doc.length, (index) {
+                                              double x = double.parse(
+                                                  doc[index]['actual_output']);
+                                              String z = x.toStringAsFixed(0);
+                                              int a = int.parse(z);
+
+                                              return a;
+                                            }).fold(0, (p, c) => p + c);
+                                            var planingO = List.generate(
+                                                doc.length, (index) {
+                                              double x = double.parse(
+                                                  doc[index]['planing_output']);
+                                              String z = x.toStringAsFixed(0);
+                                              int a = int.parse(z);
+
+                                              return a;
+                                            }).fold(0, (p, c) => p + c);
+
+                                            double LeFix = leCuy / doc.length;
+                                            double LpFix = lpCuy / doc.length;
+                                            double dtFix = dtCuy / doc.length;
+                                            double bdFix = bdCuy / doc.length;
+                                            double SkmFix = actualO / planingO;
+
+                                            return InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  showProgress = 1;
+                                                });
+                                              },
+                                              child: Column(
+                                                children: [
+                                                  Center(
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              bottom: 5),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Container(
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    right: 5),
+                                                            height: 10,
+                                                            width: 10,
+                                                            decoration: BoxDecoration(
+                                                                color: blue,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            20)),
+                                                          ),
+                                                          Text("Process_SKM"),
+                                                        ],
+                                                      ),
                                                     ),
-                                                    Text("Filling_packing_SKM"),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Stack(
-                                              alignment: Alignment.center,
-                                              children: [
-                                                CircularPercentIndicator(
-                                                  radius: 80.0,
-                                                  lineWidth: 16.0,
-                                                  percent: 0.8,
-                                                  center: RadialBar(
-                                                    chartData: [
-                                                      ChartData('David', 25,
-                                                          Colors.cyanAccent),
-                                                      ChartData('Steve', 38,
-                                                          Colors.blueGrey),
-                                                      ChartData(
-                                                          'Jack',
-                                                          34,
-                                                          Colors
-                                                              .deepOrangeAccent),
-                                                      ChartData('Others', 52,
-                                                          Colors.greenAccent)
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Stack(
+                                                    alignment: Alignment.center,
+                                                    children: [
+                                                      CircularPercentIndicator(
+                                                        radius: 80.0,
+                                                        lineWidth: 16.0,
+                                                        percent: SkmFix,
+                                                        center: RadialBar(
+                                                          chartData: [
+                                                            ChartData(
+                                                                'LE',
+                                                                LeFix,
+                                                                Colors
+                                                                    .cyanAccent),
+                                                            ChartData(
+                                                                'DT',
+                                                                dtFix,
+                                                                Colors.red),
+                                                            ChartData(
+                                                                'BD',
+                                                                bdFix,
+                                                                Colors
+                                                                    .deepOrangeAccent),
+                                                            ChartData(
+                                                                'LP',
+                                                                LpFix,
+                                                                Colors
+                                                                    .greenAccent)
+                                                          ],
+                                                        ),
+                                                        progressColor:
+                                                            Colors.pink,
+                                                      ),
+                                                      CircularPercentIndicator(
+                                                        radius: 30.0,
+                                                        lineWidth: 12,
+                                                        percent: 0.2,
+                                                        center: Text("SKM"),
+                                                        progressColor:
+                                                            Colors.pink,
+                                                      )
                                                     ],
                                                   ),
-                                                  progressColor: Colors.pink,
-                                                ),
-                                                CircularPercentIndicator(
-                                                  radius: 30.0,
-                                                  lineWidth: 12,
-                                                  percent: 0.2,
-                                                  center: Text("SKM"),
-                                                  progressColor: Colors.pink,
-                                                )
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                                                ],
+                                              ),
+                                            );
+                                          }),
+
                                       // Radial Bar 2
                                       InkWell(
                                         onTap: () {
@@ -695,151 +931,6 @@ class _DashboardOverviewState extends State<DashboardOverview> {
 
 class Detail {
   Widget detail = Container();
-
-  Widget detail1 = Container(
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Filling_packing_SKM"),
-            SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: [
-                Container(
-                  width: 220,
-                  height: 9,
-                  child: FAProgressBar(
-                    progressGradient: LinearGradient(colors: [
-                      Colors.green,
-                      Color.fromARGB(255, 164, 219, 166)
-                    ]),
-                    borderRadius: BorderRadius.circular(5),
-                    currentValue: 100,
-                  ),
-                ),
-                SizedBox(
-                  width: 7,
-                ),
-                Text("41287/45000")
-              ],
-            ),
-          ],
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("BD"),
-            SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: [
-                Container(
-                  width: 220,
-                  height: 9,
-                  child: FAProgressBar(
-                    progressGradient: LinearGradient(
-                        colors: [blue, Color.fromARGB(255, 129, 141, 182)]),
-                    borderRadius: BorderRadius.circular(5),
-                    currentValue: 80,
-                  ),
-                ),
-                SizedBox(
-                  width: 7,
-                ),
-                Text("94,59%")
-              ],
-            ),
-          ],
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("BD"),
-            SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: [
-                Container(
-                  width: 220,
-                  height: 9,
-                  child: FAProgressBar(
-                    progressGradient: LinearGradient(
-                        colors: [blue, Color.fromARGB(255, 129, 141, 182)]),
-                    borderRadius: BorderRadius.circular(5),
-                    currentValue: 80,
-                  ),
-                ),
-                SizedBox(
-                  width: 7,
-                ),
-                Text("94,59%")
-              ],
-            ),
-          ],
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("BD"),
-            SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: [
-                Container(
-                  width: 220,
-                  height: 9,
-                  child: FAProgressBar(
-                    progressGradient: LinearGradient(
-                        colors: [blue, Color.fromARGB(255, 129, 141, 182)]),
-                    borderRadius: BorderRadius.circular(5),
-                    currentValue: 80,
-                  ),
-                ),
-                SizedBox(
-                  width: 7,
-                ),
-                Text("94,59%")
-              ],
-            ),
-          ],
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("BD"),
-            SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: [
-                Container(
-                  width: 220,
-                  height: 9,
-                  child: FAProgressBar(
-                    progressGradient: LinearGradient(
-                        colors: [blue, Color.fromARGB(255, 129, 141, 182)]),
-                    borderRadius: BorderRadius.circular(5),
-                    currentValue: 80,
-                  ),
-                ),
-                SizedBox(
-                  width: 7,
-                ),
-                Text("94,59%")
-              ],
-            ),
-          ],
-        ),
-      ],
-    ),
-  );
 
   Widget detail2 = Container(
     child: Column(

@@ -36,6 +36,26 @@ class _exportBreakdownState extends State<exportBreakdown> {
         type: PlutoColumnType.text(),
         enableSorting: true),
     PlutoColumn(
+        title: 'Product',
+        field: 'product',
+        type: PlutoColumnType.text(),
+        enableSorting: true),
+    PlutoColumn(
+      title: 'Departement',
+      field: 'departement',
+      type: PlutoColumnType.text(),
+    ),
+    PlutoColumn(
+        title: 'Shift',
+        field: 'shift',
+        type: PlutoColumnType.text(),
+        enableSorting: true),
+    PlutoColumn(
+        title: 'Line',
+        field: 'line',
+        type: PlutoColumnType.text(),
+        enableSorting: true),
+    PlutoColumn(
         title: 'Mesin',
         field: 'mesin',
         type: PlutoColumnType.text(),
@@ -206,8 +226,19 @@ class _exportBreakdownState extends State<exportBreakdown> {
                         (index) => PlutoRow(
                           cells: {
                             'no': PlutoCell(value: index + 1),
+                            'date': PlutoCell(
+                                value: snapshot.data.docs[index]['date']),
                             'mesin': PlutoCell(
                                 value: snapshot.data.docs[index]['mesin']),
+                            'product': PlutoCell(
+                                value: snapshot.data.docs[index]['product']),
+                            'departement': PlutoCell(
+                                value: snapshot.data.docs[index]
+                                    ['departement']),
+                            'shift': PlutoCell(
+                                value: snapshot.data.docs[index]['shift']),
+                            'line': PlutoCell(
+                                value: snapshot.data.docs[index]['line']),
                             'reason': PlutoCell(
                                 value: snapshot.data.docs[index]['reason']),
                             'freq': PlutoCell(
@@ -218,8 +249,6 @@ class _exportBreakdownState extends State<exportBreakdown> {
                                 value: snapshot.data.docs[index]['bdHour']),
                             'problem': PlutoCell(
                                 value: snapshot.data.docs[index]['problem']),
-                            'date': PlutoCell(
-                                value: snapshot.data.docs[index]['date']),
                           },
                         ),
                       ),

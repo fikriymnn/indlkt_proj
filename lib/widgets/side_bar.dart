@@ -24,8 +24,8 @@ class _SideBarState extends State<SideBar> {
     FormInputData()
   ];
 
-  int selectedIndex = 1;
-  int selectedIndexDisplay = 1;
+  int selectedIndex = 0;
+  int selectedIndexDisplay = 0;
 
   bool auth = true;
   @override
