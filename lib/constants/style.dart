@@ -9,4 +9,3 @@ Color green = Color(0xffB1CC85);
 Color blue = Color(0xff0550A2);
 Color active = Color(0xffBE2A45);
 Color lightBlue = Color.fromARGB(255, 195, 225, 250);
-
