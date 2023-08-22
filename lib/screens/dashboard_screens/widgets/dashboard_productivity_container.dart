@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:unique_simple_bar_chart/data_models.dart';
 import 'package:unique_simple_bar_chart/simple_bar_chart.dart';
-
+import 'package:chart_components/bar_chart_component.dart';
 import '../../../constants/style.dart';
 
 class ProductivityContainer extends StatefulWidget {
-  const ProductivityContainer({super.key});
+  final dynamic children;
+  const ProductivityContainer({required this.children});
 
   @override
   State<ProductivityContainer> createState() => _ProductivityContainerState();
@@ -16,7 +17,7 @@ class _ProductivityContainerState extends State<ProductivityContainer> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(20),
-      height: 500,
+      height: 350,
       width: 640,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -38,57 +39,7 @@ class _ProductivityContainerState extends State<ProductivityContainer> {
                     color: light, fontWeight: FontWeight.bold, fontSize: 15),
               ),
             )),
-        Container(
-            child: Row(
-          children: [
-            Container(
-              width: 200,
-              child: SimpleBarChart(
-                makeItDouble: true,
-                listOfHorizontalBarData: [
-                  HorizontalDetailsModel(
-                    name: 'Mon',
-                    color: const Color(0xFFEB7735),
-                    size: 10,
-                  ),
-                  HorizontalDetailsModel(
-                    name: 'Tues',
-                    color: const Color(0xFFEB7735),
-                    size: 10,
-                  ),
-                  HorizontalDetailsModel(
-                    name: 'Wed',
-                    color: const Color(0xFFFBBC05),
-                    size: 10,
-                  ),
-                  HorizontalDetailsModel(
-                    name: 'Wed',
-                    color: const Color(0xFFFBBC05),
-                    size: 10,
-                  ),
-                  HorizontalDetailsModel(
-                    name: 'Wed',
-                    color: const Color(0xFFFBBC05),
-                    size: 10,
-                  ),
-                  HorizontalDetailsModel(
-                    name: 'Wed',
-                    color: const Color(0xFFFBBC05),
-                    size: 10,
-                  ),
-                  HorizontalDetailsModel(
-                    name: 'Wed',
-                    color: const Color(0xFFFBBC05),
-                    size: 10,
-                  ),
-                ],
-                verticalInterval: 25,
-                fullBarChartHeight: 300,
-                horizontalBarPadding: 10,
-              ),
-            ),
-          ],
-        ))
+        Container(child: Row(children: widget.children))
       ]),
     );
   }
