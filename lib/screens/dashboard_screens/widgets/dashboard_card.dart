@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import '../../../constants/style.dart';
 
 class DashboardCard extends StatefulWidget {
-  final String Product;
-  final double LE;
-  final double LP;
-  final double ProdAcv;
-  final double DT;
-  final double BD;
+  final dynamic Product;
+  final dynamic LE;
+  final dynamic LP;
+  final dynamic ProdAcv;
+  final dynamic DT;
+  final dynamic BD;
   final Color color;
 
   const DashboardCard(

@@ -127,20 +127,20 @@ class _DashboardOverviewState extends State<DashboardOverview> {
             DashboardCard(
                 color: Color(0xff2BB8C1),
                 Product: "UHT",
-                LE: 9.2,
-                LP: 9.2,
-                ProdAcv: 9.2,
-                DT: 9.2,
-                BD: 9.2),
+                LE: "-",
+                LP: "-",
+                ProdAcv: "-",
+                DT: "-",
+                BD: "-"),
             SizedBox(width: width * 0.042),
             DashboardCard(
                 color: Color(0xff50E279),
                 Product: "Factory",
-                LE: 9.2,
-                LP: 9.2,
-                ProdAcv: 9.2,
-                DT: 9.2,
-                BD: 9.2)
+                LE: "-",
+                LP: "-",
+                ProdAcv: "-",
+                DT: "-",
+                BD: "-")
           ],
         ),
         SizedBox(height: 15),
@@ -235,662 +235,696 @@ class _DashboardOverviewState extends State<DashboardOverview> {
           children: [
             DashboardContainer(
                 width: 900,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 15),
-                        Text(
-                          "Pencapaian dan Performa",
-                          style: TextStyle(
-                              fontSize: 23, fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(height: 15),
-                        Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Shift",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                  Row(children: [
-                                    Container(
-                                        decoration: BoxDecoration(
-                                            color: selectedShift == 1
-                                                ? light
-                                                : blue,
-                                            border: Border.all(),
-                                            borderRadius: BorderRadius.only(
-                                                bottomLeft: Radius.circular(10),
-                                                topLeft: Radius.circular(10))),
-                                        child: InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              selectedShift = 1;
-                                            });
-                                          },
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                                right: 8,
-                                                left: 8,
-                                                top: 1.5,
-                                                bottom: 1.5),
-                                            child: Text("1",
-                                                style: TextStyle(
-                                                    color: selectedShift == 1
-                                                        ? dark
-                                                        : light)),
-                                          ),
-                                        )),
-                                    Container(
-                                        decoration: BoxDecoration(
-                                          color:
-                                              selectedShift == 2 ? light : blue,
-                                          border: Border.all(),
-                                        ),
-                                        child: InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              selectedShift = 2;
-                                            });
-                                          },
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                                right: 8,
-                                                left: 8,
-                                                top: 1.5,
-                                                bottom: 1.5),
-                                            child: Text("2",
-                                                style: TextStyle(
-                                                    color: selectedShift == 2
-                                                        ? dark
-                                                        : light)),
-                                          ),
-                                        )),
-                                    Container(
-                                        decoration: BoxDecoration(
-                                            color: selectedShift == 3
-                                                ? light
-                                                : blue,
-                                            border: Border.all(),
-                                            borderRadius: BorderRadius.only(
-                                                bottomRight:
-                                                    Radius.circular(10),
-                                                topRight: Radius.circular(10))),
-                                        child: InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              selectedShift = 3;
-                                            });
-                                          },
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                                right: 8,
-                                                left: 8,
-                                                top: 1.5,
-                                                bottom: 1.5),
-                                            child: Text(
-                                              "3",
-                                              style: TextStyle(
-                                                  color: selectedShift == 3
-                                                      ? dark
-                                                      : light),
+                child: Stack(children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 15),
+                          Text(
+                            "Pencapaian dan Performa",
+                            style: TextStyle(
+                                fontSize: 23, fontWeight: FontWeight.bold),
+                          ),
+
+                          SizedBox(height: 15),
+                          Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Shift",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    Row(children: [
+                                      Container(
+                                          decoration: BoxDecoration(
+                                              color: selectedShift == 1
+                                                  ? light
+                                                  : blue,
+                                              border: Border.all(),
+                                              borderRadius: BorderRadius.only(
+                                                  bottomLeft:
+                                                      Radius.circular(10),
+                                                  topLeft:
+                                                      Radius.circular(10))),
+                                          child: InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                selectedShift = 1;
+                                              });
+                                            },
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                  right: 8,
+                                                  left: 8,
+                                                  top: 1.5,
+                                                  bottom: 1.5),
+                                              child: Text("1",
+                                                  style: TextStyle(
+                                                      color: selectedShift == 1
+                                                          ? dark
+                                                          : light)),
                                             ),
+                                          )),
+                                      Container(
+                                          decoration: BoxDecoration(
+                                            color: selectedShift == 2
+                                                ? light
+                                                : blue,
+                                            border: Border.all(),
                                           ),
-                                        ))
-                                  ]),
-                                ],
-                              ),
-                              SizedBox(width: 10),
-                              Container(
-                                  decoration: BoxDecoration(
-                                    color: selectedShift == 0 ? light : blue,
-                                    boxShadow: [
-                                      BoxShadow(
-                                          blurRadius: 4,
-                                          offset: Offset(0, 0),
-                                          color: dark.withOpacity(0.4))
-                                    ],
-                                    border: Border.all(width: 1, color: dark),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedShift = 0;
-                                      });
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 2, bottom: 2, right: 4, left: 4),
-                                      child: Text("all shift",
-                                          style: TextStyle(
-                                              color: selectedShift == 0
-                                                  ? dark
-                                                  : light)),
-                                    ),
-                                  )),
-                              SizedBox(width: 20),
-                              Column(
-                                children: [
-                                  Text("Line",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                  Container(
-                                    height: 25,
+                                          child: InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                selectedShift = 2;
+                                              });
+                                            },
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                  right: 8,
+                                                  left: 8,
+                                                  top: 1.5,
+                                                  bottom: 1.5),
+                                              child: Text("2",
+                                                  style: TextStyle(
+                                                      color: selectedShift == 2
+                                                          ? dark
+                                                          : light)),
+                                            ),
+                                          )),
+                                      Container(
+                                          decoration: BoxDecoration(
+                                              color: selectedShift == 3
+                                                  ? light
+                                                  : blue,
+                                              border: Border.all(),
+                                              borderRadius: BorderRadius.only(
+                                                  bottomRight:
+                                                      Radius.circular(10),
+                                                  topRight:
+                                                      Radius.circular(10))),
+                                          child: InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                selectedShift = 3;
+                                              });
+                                            },
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                  right: 8,
+                                                  left: 8,
+                                                  top: 1.5,
+                                                  bottom: 1.5),
+                                              child: Text(
+                                                "3",
+                                                style: TextStyle(
+                                                    color: selectedShift == 3
+                                                        ? dark
+                                                        : light),
+                                              ),
+                                            ),
+                                          ))
+                                    ]),
+                                  ],
+                                ),
+                                SizedBox(width: 10),
+                                Container(
                                     decoration: BoxDecoration(
-                                      color: light,
+                                      color: selectedShift == 0 ? light : blue,
                                       boxShadow: [
                                         BoxShadow(
                                             blurRadius: 4,
                                             offset: Offset(0, 0),
                                             color: dark.withOpacity(0.4))
                                       ],
-                                      border: Border.all(width: 1, color: blue),
+                                      border: Border.all(width: 1, color: dark),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 8, right: 8),
-                                      child: DropdownButton(
-                                          underline: Container(),
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          value: dropdownValue,
-                                          onChanged: (e) {
-                                            setState(() {
-                                              dropdownValue = e!;
-                                            });
-                                          },
-                                          items: [
-                                            DropdownMenuItem(
-                                              child: Text("all"),
-                                              value: 0,
-                                            ),
-                                            DropdownMenuItem(
-                                              child: Text("1"),
-                                              value: 1,
-                                            ),
-                                            DropdownMenuItem(
-                                              child: Text("2"),
-                                              value: 2,
-                                            ),
-                                            DropdownMenuItem(
-                                              child: Text("3"),
-                                              value: 3,
-                                            )
-                                          ]),
+                                    child: InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedShift = 0;
+                                        });
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 2,
+                                            bottom: 2,
+                                            right: 4,
+                                            left: 4),
+                                        child: Text("all shift",
+                                            style: TextStyle(
+                                                color: selectedShift == 0
+                                                    ? dark
+                                                    : light)),
+                                      ),
+                                    )),
+                                SizedBox(width: 20),
+                                Column(
+                                  children: [
+                                    Text("Line",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    Container(
+                                      height: 25,
+                                      decoration: BoxDecoration(
+                                        color: light,
+                                        boxShadow: [
+                                          BoxShadow(
+                                              blurRadius: 4,
+                                              offset: Offset(0, 0),
+                                              color: dark.withOpacity(0.4))
+                                        ],
+                                        border:
+                                            Border.all(width: 1, color: blue),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 8, right: 8),
+                                        child: DropdownButton(
+                                            underline: Container(),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            value: dropdownValue,
+                                            onChanged: (e) {
+                                              setState(() {
+                                                dropdownValue = e!;
+                                              });
+                                            },
+                                            items: [
+                                              DropdownMenuItem(
+                                                child: Text("all"),
+                                                value: 0,
+                                              ),
+                                              DropdownMenuItem(
+                                                child: Text("1"),
+                                                value: 1,
+                                              ),
+                                              DropdownMenuItem(
+                                                child: Text("2"),
+                                                value: 2,
+                                              ),
+                                              DropdownMenuItem(
+                                                child: Text("3"),
+                                                value: 3,
+                                              )
+                                            ]),
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ]),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        //chart
+                                  ],
+                                ),
+                              ]),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          //chart
 
-                        Container(
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 480,
-                                height: 500,
-                                child: GridView.count(
-                                    childAspectRatio: 3 / 3,
-                                    crossAxisCount: 2,
-                                    children: [
-                                      // Radial Bar 1
-                                      StreamBuilder(
-                                          stream: selectedShift == 0 &&
-                                                  dropdownValue == 0
-                                              ? FirebaseFirestore.instance
-                                                  .collection('product')
-                                                  .where("product",
-                                                      isEqualTo: "Process_SKM")
-                                                  .snapshots()
-                                              : selectedShift != 0 &&
-                                                      dropdownValue == 0
-                                                  ? FirebaseFirestore.instance
-                                                      .collection('product')
-                                                      .where("product",
-                                                          isEqualTo:
-                                                              "Process_SKM")
-                                                      .where("shift",
-                                                          isEqualTo:
-                                                              selectedShift
-                                                                  .toString())
-                                                      .snapshots()
-                                                  : selectedShift == 0 &&
-                                                          dropdownValue != 0
-                                                      ? FirebaseFirestore
-                                                          .instance
-                                                          .collection('product')
-                                                          .where("product",
-                                                              isEqualTo:
-                                                                  "Process_SKM")
-                                                          .where("line",
-                                                              isEqualTo:
-                                                                  dropdownValue
-                                                                      .toString())
-                                                          .snapshots()
-                                                      : selectedShift != 0 &&
-                                                              dropdownValue != 0
-                                                          ? FirebaseFirestore
-                                                              .instance
-                                                              .collection(
-                                                                  'product')
-                                                              .where("product",
-                                                                  isEqualTo:
-                                                                      "Process_SKM")
-                                                              .where("shift",
-                                                                  isEqualTo:
-                                                                      selectedShift
-                                                                          .toString())
-                                                              .where("line",
-                                                                  isEqualTo:
-                                                                      dropdownValue
-                                                                          .toString())
-                                                              .snapshots()
-                                                          : null,
-                                          builder: (context,
-                                              AsyncSnapshot snapshot) {
-                                            if (!snapshot.hasData) {
-                                              return Text("no Data");
-                                            }
-                                            final doc = snapshot.data.docs;
-                                            var leCuy = List.generate(
-                                                doc.length, (index) {
-                                              double x = double.parse(
-                                                  doc[index]['le']);
-                                              String z = x.toStringAsFixed(0);
-                                              int a = int.parse(z);
+                          Container(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 480,
+                                  height: 500,
+                                  child: GridView.count(
+                                      childAspectRatio: 3 / 3,
+                                      crossAxisCount: 2,
+                                      children: [
+                                        // Radial Bar 1
+                                        StreamBuilder(
+                                            stream: selectedShift == 0 &&
+                                                    dropdownValue == 0
+                                                ? FirebaseFirestore.instance
+                                                    .collection('product')
+                                                    .where("product",
+                                                        isEqualTo:
+                                                            "Process_SKM")
+                                                    .snapshots()
+                                                : selectedShift != 0 &&
+                                                        dropdownValue == 0
+                                                    ? FirebaseFirestore.instance
+                                                        .collection('product')
+                                                        .where("product",
+                                                            isEqualTo:
+                                                                "Process_SKM")
+                                                        .where("shift",
+                                                            isEqualTo:
+                                                                selectedShift
+                                                                    .toString())
+                                                        .snapshots()
+                                                    : selectedShift == 0 &&
+                                                            dropdownValue != 0
+                                                        ? FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                'product')
+                                                            .where("product",
+                                                                isEqualTo:
+                                                                    "Process_SKM")
+                                                            .where("line",
+                                                                isEqualTo: dropdownValue
+                                                                    .toString())
+                                                            .snapshots()
+                                                        : selectedShift != 0 &&
+                                                                dropdownValue !=
+                                                                    0
+                                                            ? FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                    'product')
+                                                                .where("product",
+                                                                    isEqualTo:
+                                                                        "Process_SKM")
+                                                                .where("shift",
+                                                                    isEqualTo: selectedShift
+                                                                        .toString())
+                                                                .where("line",
+                                                                    isEqualTo:
+                                                                        dropdownValue.toString())
+                                                                .snapshots()
+                                                            : null,
+                                            builder: (context, AsyncSnapshot snapshot) {
+                                              if (!snapshot.hasData) {
+                                                return Text("no Data");
+                                              }
+                                              final doc = snapshot.data.docs;
+                                              var leCuy = List.generate(
+                                                  doc.length, (index) {
+                                                double x = double.parse(
+                                                    doc[index]['le']);
+                                                String z = x.toStringAsFixed(0);
+                                                int a = int.parse(z);
 
-                                              return a;
-                                            }).fold(0, (p, c) => p + c);
-                                            var lpCuy = List.generate(
-                                                doc.length, (index) {
-                                              double x = double.parse(
-                                                  doc[index]['lp']);
-                                              String z = x.toStringAsFixed(0);
-                                              int a = int.parse(z);
+                                                return a;
+                                              }).fold(0, (p, c) => p + c);
+                                              var lpCuy = List.generate(
+                                                  doc.length, (index) {
+                                                double x = double.parse(
+                                                    doc[index]['lp']);
+                                                String z = x.toStringAsFixed(0);
+                                                int a = int.parse(z);
 
-                                              return a;
-                                            }).fold(0, (p, c) => p + c);
-                                            var bdCuy = List.generate(
-                                                doc.length, (index) {
-                                              double x = double.parse(
-                                                  doc[index]['bd']);
-                                              String z = x.toStringAsFixed(0);
-                                              int a = int.parse(z);
+                                                return a;
+                                              }).fold(0, (p, c) => p + c);
+                                              var bdCuy = List.generate(
+                                                  doc.length, (index) {
+                                                double x = double.parse(
+                                                    doc[index]['bd']);
+                                                String z = x.toStringAsFixed(0);
+                                                int a = int.parse(z);
 
-                                              return a;
-                                            }).fold(0, (p, c) => p + c);
-                                            var dtCuy = List.generate(
-                                                doc.length, (index) {
-                                              double x = double.parse(
-                                                  doc[index]['dt']);
-                                              String z = x.toStringAsFixed(0);
-                                              int a = int.parse(z);
+                                                return a;
+                                              }).fold(0, (p, c) => p + c);
+                                              var dtCuy = List.generate(
+                                                  doc.length, (index) {
+                                                double x = double.parse(
+                                                    doc[index]['dt']);
+                                                String z = x.toStringAsFixed(0);
+                                                int a = int.parse(z);
 
-                                              return a;
-                                            }).fold(0, (p, c) => p + c);
+                                                return a;
+                                              }).fold(0, (p, c) => p + c);
 
-                                            var actualO = List.generate(
-                                                doc.length, (index) {
-                                              double x = double.parse(
-                                                  doc[index]['actual_output']);
-                                              String z = x.toStringAsFixed(0);
-                                              int a = int.parse(z);
+                                              var actualO = List.generate(
+                                                  doc.length, (index) {
+                                                double x = double.parse(
+                                                    doc[index]
+                                                        ['actual_output']);
+                                                String z = x.toStringAsFixed(0);
+                                                int a = int.parse(z);
 
-                                              return a;
-                                            }).fold(0, (p, c) => p + c);
-                                            var planingO = List.generate(
-                                                doc.length, (index) {
-                                              double x = double.parse(
-                                                  doc[index]['planing_output']);
-                                              String z = x.toStringAsFixed(0);
-                                              int a = int.parse(z);
+                                                return a;
+                                              }).fold(0, (p, c) => p + c);
+                                              var planingO = List.generate(
+                                                  doc.length, (index) {
+                                                double x = double.parse(
+                                                    doc[index]
+                                                        ['planing_output']);
+                                                String z = x.toStringAsFixed(0);
+                                                int a = int.parse(z);
 
-                                              return a;
-                                            }).fold(0, (p, c) => p + c);
+                                                return a;
+                                              }).fold(0, (p, c) => p + c);
 
-                                            double LeFix = leCuy / doc.length;
-                                            double LpFix = lpCuy / doc.length;
-                                            double dtFix = dtCuy / doc.length;
-                                            double bdFix = bdCuy / doc.length;
-                                            double SkmFix = actualO / planingO;
+                                              double LeFix = leCuy / doc.length;
+                                              double LpFix = lpCuy / doc.length;
+                                              double dtFix = dtCuy / doc.length;
+                                              double bdFix = bdCuy / doc.length;
+                                              double SkmFix =
+                                                  actualO / planingO;
 
-                                            return InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  showProgress = 1;
-                                                });
-                                              },
-                                              child: Column(
-                                                children: [
-                                                  Center(
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              bottom: 5),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Container(
-                                                            margin:
-                                                                EdgeInsets.only(
-                                                                    right: 5),
-                                                            height: 10,
-                                                            width: 10,
-                                                            decoration: BoxDecoration(
-                                                                color: blue,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            20)),
-                                                          ),
-                                                          Text("Process_SKM"),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 5,
-                                                  ),
-                                                  Stack(
-                                                    alignment: Alignment.center,
-                                                    children: [
-                                                      CircularPercentIndicator(
-                                                        radius: 80.0,
-                                                        lineWidth: 16.0,
-                                                        percent: SkmFix,
-                                                        center: RadialBar(
-                                                          chartData: [
-                                                            ChartData(
-                                                                'LE',
-                                                                LeFix,
-                                                                Colors
-                                                                    .cyanAccent),
-                                                            ChartData(
-                                                                'DT',
-                                                                dtFix,
-                                                                Colors.red),
-                                                            ChartData(
-                                                                'BD',
-                                                                bdFix,
-                                                                Colors
-                                                                    .deepOrangeAccent),
-                                                            ChartData(
-                                                                'LP',
-                                                                LpFix,
-                                                                Colors
-                                                                    .greenAccent)
+                                              return InkWell(
+                                                onTap: () {
+                                                  setState(() {
+                                                    showProgress = 1;
+                                                  });
+                                                },
+                                                child: Column(
+                                                  children: [
+                                                    Center(
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                bottom: 5),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Container(
+                                                              margin: EdgeInsets
+                                                                  .only(
+                                                                      right: 5),
+                                                              height: 10,
+                                                              width: 10,
+                                                              decoration: BoxDecoration(
+                                                                  color: blue,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              20)),
+                                                            ),
+                                                            Text("Process_SKM"),
                                                           ],
                                                         ),
-                                                        progressColor:
-                                                            Colors.pink,
                                                       ),
-                                                      CircularPercentIndicator(
-                                                        radius: 30.0,
-                                                        lineWidth: 12,
-                                                        percent: 0.2,
-                                                        center: Text("SKM"),
-                                                        progressColor:
-                                                            Colors.pink,
-                                                      )
+                                                    ),
+                                                    SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    Stack(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      children: [
+                                                        CircularPercentIndicator(
+                                                          radius: 80.0,
+                                                          lineWidth: 16.0,
+                                                          percent: SkmFix,
+                                                          center: RadialBar(
+                                                            chartData: [
+                                                              ChartData(
+                                                                  'LE',
+                                                                  LeFix,
+                                                                  Colors
+                                                                      .cyanAccent),
+                                                              ChartData(
+                                                                  'DT',
+                                                                  dtFix,
+                                                                  Colors.red),
+                                                              ChartData(
+                                                                  'BD',
+                                                                  bdFix,
+                                                                  Colors
+                                                                      .deepOrangeAccent),
+                                                              ChartData(
+                                                                  'LP',
+                                                                  LpFix,
+                                                                  Colors
+                                                                      .greenAccent)
+                                                            ],
+                                                          ),
+                                                          progressColor:
+                                                              Colors.pink,
+                                                        ),
+                                                        CircularPercentIndicator(
+                                                          radius: 30.0,
+                                                          lineWidth: 12,
+                                                          percent: 0.2,
+                                                          center: Text("SKM"),
+                                                          progressColor:
+                                                              Colors.pink,
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            }),
+
+                                        // Radial Bar 2
+                                        InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              showProgress = 2;
+                                            });
+                                          },
+                                          child: Column(
+                                            children: [
+                                              Center(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 5),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        margin: EdgeInsets.only(
+                                                            right: 5),
+                                                        height: 10,
+                                                        width: 10,
+                                                        decoration: BoxDecoration(
+                                                            color: blue,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20)),
+                                                      ),
+                                                      Text(
+                                                          "Filling_packing_SKM"),
                                                     ],
                                                   ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Stack(
+                                                alignment: Alignment.center,
+                                                children: [
+                                                  CircularPercentIndicator(
+                                                    radius: 80.0,
+                                                    lineWidth: 16.0,
+                                                    percent: 0.8,
+                                                    center: RadialBar(
+                                                      chartData: [
+                                                        ChartData('David', 25,
+                                                            Colors.cyanAccent),
+                                                        ChartData('Steve', 38,
+                                                            Colors.blueGrey),
+                                                        ChartData(
+                                                            'Jack',
+                                                            34,
+                                                            Colors
+                                                                .deepOrangeAccent),
+                                                        ChartData('Others', 52,
+                                                            Colors.greenAccent)
+                                                      ],
+                                                    ),
+                                                    progressColor: Colors.pink,
+                                                  ),
+                                                  CircularPercentIndicator(
+                                                    radius: 30.0,
+                                                    lineWidth: 12,
+                                                    percent: 0.2,
+                                                    center: Text("SKM"),
+                                                    progressColor: Colors.pink,
+                                                  )
                                                 ],
                                               ),
-                                            );
-                                          }),
-
-                                      // Radial Bar 2
-                                      InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            showProgress = 2;
-                                          });
-                                        },
-                                        child: Column(
-                                          children: [
-                                            Center(
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    bottom: 5),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Container(
-                                                      margin: EdgeInsets.only(
-                                                          right: 5),
-                                                      height: 10,
-                                                      width: 10,
-                                                      decoration: BoxDecoration(
-                                                          color: blue,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      20)),
-                                                    ),
-                                                    Text("Filling_packing_SKM"),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Stack(
-                                              alignment: Alignment.center,
-                                              children: [
-                                                CircularPercentIndicator(
-                                                  radius: 80.0,
-                                                  lineWidth: 16.0,
-                                                  percent: 0.8,
-                                                  center: RadialBar(
-                                                    chartData: [
-                                                      ChartData('David', 25,
-                                                          Colors.cyanAccent),
-                                                      ChartData('Steve', 38,
-                                                          Colors.blueGrey),
-                                                      ChartData(
-                                                          'Jack',
-                                                          34,
-                                                          Colors
-                                                              .deepOrangeAccent),
-                                                      ChartData('Others', 52,
-                                                          Colors.greenAccent)
+                                            ],
+                                          ),
+                                        ),
+                                        // Radial Bar 3
+                                        InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              showProgress = 3;
+                                            });
+                                          },
+                                          child: Column(
+                                            children: [
+                                              Center(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 5),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        margin: EdgeInsets.only(
+                                                            right: 5),
+                                                        height: 10,
+                                                        width: 10,
+                                                        decoration: BoxDecoration(
+                                                            color: blue,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20)),
+                                                      ),
+                                                      Text(
+                                                          "Filling_packing_SKM"),
                                                     ],
                                                   ),
-                                                  progressColor: Colors.pink,
-                                                ),
-                                                CircularPercentIndicator(
-                                                  radius: 30.0,
-                                                  lineWidth: 12,
-                                                  percent: 0.2,
-                                                  center: Text("SKM"),
-                                                  progressColor: Colors.pink,
-                                                )
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      // Radial Bar 3
-                                      InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            showProgress = 3;
-                                          });
-                                        },
-                                        child: Column(
-                                          children: [
-                                            Center(
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    bottom: 5),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Container(
-                                                      margin: EdgeInsets.only(
-                                                          right: 5),
-                                                      height: 10,
-                                                      width: 10,
-                                                      decoration: BoxDecoration(
-                                                          color: blue,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      20)),
-                                                    ),
-                                                    Text("Filling_packing_SKM"),
-                                                  ],
                                                 ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Stack(
-                                              alignment: Alignment.center,
-                                              children: [
-                                                CircularPercentIndicator(
-                                                  radius: 80.0,
-                                                  lineWidth: 16.0,
-                                                  percent: 0.8,
-                                                  center: RadialBar(
-                                                    chartData: [
-                                                      ChartData('David', 25,
-                                                          Colors.cyanAccent),
-                                                      ChartData('Steve', 38,
-                                                          Colors.blueGrey),
-                                                      ChartData(
-                                                          'Jack',
-                                                          34,
-                                                          Colors
-                                                              .deepOrangeAccent),
-                                                      ChartData('Others', 52,
-                                                          Colors.greenAccent)
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Stack(
+                                                alignment: Alignment.center,
+                                                children: [
+                                                  CircularPercentIndicator(
+                                                    radius: 80.0,
+                                                    lineWidth: 16.0,
+                                                    percent: 0.8,
+                                                    center: RadialBar(
+                                                      chartData: [
+                                                        ChartData('David', 25,
+                                                            Colors.cyanAccent),
+                                                        ChartData('Steve', 38,
+                                                            Colors.blueGrey),
+                                                        ChartData(
+                                                            'Jack',
+                                                            34,
+                                                            Colors
+                                                                .deepOrangeAccent),
+                                                        ChartData('Others', 52,
+                                                            Colors.greenAccent)
+                                                      ],
+                                                    ),
+                                                    progressColor: Colors.pink,
+                                                  ),
+                                                  CircularPercentIndicator(
+                                                    radius: 30.0,
+                                                    lineWidth: 12,
+                                                    percent: 0.2,
+                                                    center: Text("SKM"),
+                                                    progressColor: Colors.pink,
+                                                  )
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        // Radial Bar 4
+                                        InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              showProgress = 4;
+                                            });
+                                          },
+                                          child: Column(
+                                            children: [
+                                              Center(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 5),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        margin: EdgeInsets.only(
+                                                            right: 5),
+                                                        height: 10,
+                                                        width: 10,
+                                                        decoration: BoxDecoration(
+                                                            color: blue,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20)),
+                                                      ),
+                                                      Text(
+                                                          "Filling_packing_SKM"),
                                                     ],
                                                   ),
-                                                  progressColor: Colors.pink,
-                                                ),
-                                                CircularPercentIndicator(
-                                                  radius: 30.0,
-                                                  lineWidth: 12,
-                                                  percent: 0.2,
-                                                  center: Text("SKM"),
-                                                  progressColor: Colors.pink,
-                                                )
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      // Radial Bar 4
-                                      InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            showProgress = 4;
-                                          });
-                                        },
-                                        child: Column(
-                                          children: [
-                                            Center(
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    bottom: 5),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Container(
-                                                      margin: EdgeInsets.only(
-                                                          right: 5),
-                                                      height: 10,
-                                                      width: 10,
-                                                      decoration: BoxDecoration(
-                                                          color: blue,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      20)),
-                                                    ),
-                                                    Text("Filling_packing_SKM"),
-                                                  ],
                                                 ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Stack(
-                                              alignment: Alignment.center,
-                                              children: [
-                                                CircularPercentIndicator(
-                                                  radius: 80.0,
-                                                  lineWidth: 16.0,
-                                                  percent: 0.8,
-                                                  center: RadialBar(
-                                                    chartData: [
-                                                      ChartData('David', 25,
-                                                          Colors.cyanAccent),
-                                                      ChartData('Steve', 38,
-                                                          Colors.blueGrey),
-                                                      ChartData(
-                                                          'Jack',
-                                                          34,
-                                                          Colors
-                                                              .deepOrangeAccent),
-                                                      ChartData('Others', 52,
-                                                          Colors.greenAccent)
-                                                    ],
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Stack(
+                                                alignment: Alignment.center,
+                                                children: [
+                                                  CircularPercentIndicator(
+                                                    radius: 80.0,
+                                                    lineWidth: 16.0,
+                                                    percent: 0.8,
+                                                    center: RadialBar(
+                                                      chartData: [
+                                                        ChartData('Gogin', 100,
+                                                            Colors.cyanAccent),
+                                                        ChartData('Steve', 2.5,
+                                                            Colors.blueGrey),
+                                                        ChartData(
+                                                            'Jack',
+                                                            3.4,
+                                                            Colors
+                                                                .deepOrangeAccent),
+                                                        ChartData('Others', 2.6,
+                                                            Colors.greenAccent)
+                                                      ],
+                                                    ),
+                                                    progressColor: Colors.pink,
                                                   ),
-                                                  progressColor: Colors.pink,
-                                                ),
-                                                CircularPercentIndicator(
-                                                  radius: 30.0,
-                                                  lineWidth: 12,
-                                                  percent: 0.2,
-                                                  center: Text("SKM"),
-                                                  progressColor: Colors.pink,
-                                                )
-                                              ],
-                                            ),
-                                          ],
+                                                  CircularPercentIndicator(
+                                                    radius: 30.0,
+                                                    lineWidth: 12,
+                                                    percent: 0.2,
+                                                    center: Text("SKM"),
+                                                    progressColor: Colors.pink,
+                                                  )
+                                                ],
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ]),
-                              ),
-                              SizedBox(
-                                width: 40,
-                              ),
-                              Column(
-                                children: [detail(showProgress)],
-                              )
-                            ],
+                                      ]),
+                                ),
+                                SizedBox(
+                                  width: 40,
+                                ),
+                                Column(
+                                  children: [detail(showProgress)],
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                )),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Image.asset("assets/images/gears.png",
+                            width: 120, height: 120),
+                      ),
+                    ],
+                  )
+                ])),
             SizedBox(width: 12),
             DashboardContainer(
                 height: 620,

@@ -31,7 +31,7 @@ class _RadialBarState extends State<RadialBar> {
 
 class ChartData {
   ChartData(this.x, this.y, this.color);
-  final String x;
+  final dynamic x;
   final double y;
   final Color color;
 }
