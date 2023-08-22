@@ -108,6 +108,7 @@ class _Detail1State extends State<Detail1> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(height: 20),
                     Text("Process_SKM"),
                     SizedBox(
                       height: 5,
@@ -133,6 +134,9 @@ class _Detail1State extends State<Detail1> {
                       ],
                     ),
                   ],
+                ),
+                SizedBox(
+                  height: 12,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,6 +167,9 @@ class _Detail1State extends State<Detail1> {
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: 12,
+                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -192,6 +199,9 @@ class _Detail1State extends State<Detail1> {
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: 12,
+                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -220,6 +230,9 @@ class _Detail1State extends State<Detail1> {
                       ],
                     ),
                   ],
+                ),
+                SizedBox(
+                  height: 12,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

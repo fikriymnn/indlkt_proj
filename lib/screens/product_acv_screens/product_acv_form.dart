@@ -1219,7 +1219,7 @@ class _FormInputDataState extends State<FormInputData> {
                                                         onChangeSubDT: (a) {
                                                           print(a);
                                                           setState(() {
-                                                            std[index] = a;
+                                                            subDT[index] = a;
                                                           });
 
                                                           if (a ==
