@@ -605,16 +605,23 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                                               margin: EdgeInsets
                                                                   .only(
                                                                       right: 5),
-                                                              height: 10,
-                                                              width: 10,
+                                                              height: 15,
+                                                              width: 15,
                                                               decoration: BoxDecoration(
-                                                                  color: blue,
+                                                                  color: Color(
+                                                                      0xffE48D9D),
                                                                   borderRadius:
                                                                       BorderRadius
                                                                           .circular(
                                                                               20)),
                                                             ),
-                                                            Text("Process_SKM"),
+                                                            Text(
+                                                              "Process_SKM",
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
                                                           ],
                                                         ),
                                                       ),
@@ -622,49 +629,52 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                                     SizedBox(
                                                       height: 5,
                                                     ),
-                                                    Stack(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      children: [
-                                                        CircularPercentIndicator(
-                                                          radius: 80.0,
-                                                          lineWidth: 16.0,
-                                                          percent: SkmFix,
-                                                          center: RadialBar(
-                                                            chartData: [
-                                                              ChartData(
-                                                                  'LE',
-                                                                  LeFix,
-                                                                  Colors
-                                                                      .cyanAccent),
-                                                              ChartData(
-                                                                  'DT',
-                                                                  dtFix,
-                                                                  Colors.red),
-                                                              ChartData(
-                                                                  'BD',
-                                                                  bdFix,
-                                                                  Colors
-                                                                      .deepOrangeAccent),
-                                                              ChartData(
-                                                                  'LP',
-                                                                  LpFix,
-                                                                  Colors
-                                                                      .greenAccent)
-                                                            ],
+                                                    Container(
+                                                      child: Stack(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        children: [
+                                                          Container(
+                                                            child:
+                                                                CircularPercentIndicator(
+                                                              radius: 80.0,
+                                                              lineWidth: 16.0,
+                                                              percent: SkmFix,
+                                                              center: RadialBar(
+                                                                chartData: [
+                                                                  ChartData(
+                                                                      'LE',
+                                                                      LeFix,
+                                                                      blueLE),
+                                                                  ChartData(
+                                                                      'LP',
+                                                                      LpFix,
+                                                                      greenLP),
+                                                                  ChartData(
+                                                                      'DT',
+                                                                      dtFix,
+                                                                      redDT),
+                                                                  ChartData(
+                                                                      'BD',
+                                                                      bdFix,
+                                                                      orangeBD),
+                                                                ],
+                                                              ),
+                                                              progressColor:
+                                                                  const Color(
+                                                                      0xffE48D9D),
+                                                            ),
                                                           ),
-                                                          progressColor:
-                                                              Colors.pink,
-                                                        ),
-                                                        CircularPercentIndicator(
-                                                          radius: 30.0,
-                                                          lineWidth: 12,
-                                                          percent: 0.2,
-                                                          center: Text("SKM"),
-                                                          progressColor:
-                                                              Colors.pink,
-                                                        )
-                                                      ],
+                                                          CircularPercentIndicator(
+                                                            radius: 30.0,
+                                                            lineWidth: 12,
+                                                            percent: 0.2,
+                                                            center: Text("SKM"),
+                                                            progressColor:
+                                                                redSKM,
+                                                          )
+                                                        ],
+                                                      ),
                                                     ),
                                                   ],
                                                 ),
@@ -905,7 +915,9 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                   width: 40,
                                 ),
                                 Column(
-                                  children: [detail(showProgress)],
+                                  children: [
+                                    detail(showProgress),
+                                  ],
                                 )
                               ],
                             ),

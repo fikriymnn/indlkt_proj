@@ -263,6 +263,64 @@ class _Detail1State extends State<Detail1> {
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(right: 5),
+                      height: 15,
+                      width: 15,
+                      decoration: BoxDecoration(
+                          color: blueLE,
+                          borderRadius: BorderRadius.circular(20)),
+                    ),
+                    Text("LE", style: TextStyle(fontWeight: FontWeight.bold)),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(right: 5),
+                      height: 15,
+                      width: 15,
+                      decoration: BoxDecoration(
+                          color: greenLP,
+                          borderRadius: BorderRadius.circular(20)),
+                    ),
+                    Text("LP", style: TextStyle(fontWeight: FontWeight.bold)),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(right: 5),
+                      height: 15,
+                      width: 15,
+                      decoration: BoxDecoration(
+                          color: redDT,
+                          borderRadius: BorderRadius.circular(20)),
+                    ),
+                    Text("DT", style: TextStyle(fontWeight: FontWeight.bold)),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(right: 5),
+                      height: 15,
+                      width: 15,
+                      decoration: BoxDecoration(
+                          color: orangeBD,
+                          borderRadius: BorderRadius.circular(20)),
+                    ),
+                    Text(
+                      "BD",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                  ],
+                )
               ],
             ),
           );
