@@ -841,7 +841,7 @@ class _FormInputDataState extends State<FormInputData> {
                                                   itemBuilder:
                                                       (context, index) {
                                                     return BreakdownForm(
-                                                      index: index+1,
+                                                      index: index + 1,
                                                       bdMin: dbMin[index],
                                                       freq: freq[index],
                                                       problem: problem[index],
@@ -1555,7 +1555,8 @@ class _FormInputDataState extends State<FormInputData> {
                                     "week": weekController.text,
                                     "bulan": DateFormat.MMMM().format(now),
                                     "tahun": DateFormat.y().format(now),
-                                    "date": DateFormat('dd/MM/yy').format(now)
+                                    "date": DateFormat('dd/MM/yy').format(now),
+                                    "createdAt": now
                                   });
 
                                   for (int i = 0; i < bLength; i++) {
@@ -1574,12 +1575,17 @@ class _FormInputDataState extends State<FormInputData> {
                                         "product_id": id,
                                         "date":
                                             DateFormat('dd/MM/yy').format(now),
+                                        "shift": shift,
+                                        "departement": departement,
+                                        "product": product,
+                                        "line": line,
                                         "mesin": mesin[i],
                                         "reason": reason[i],
                                         "freq": freq[i].text,
                                         "bdMin": dbMin[i].text,
                                         "bdHour": bdHourList[i],
-                                        "problem": problem[i].text
+                                        "problem": problem[i].text,
+                                        "createdAt": now
                                       });
                                     } else {
                                       print("no data");
@@ -1601,11 +1607,16 @@ class _FormInputDataState extends State<FormInputData> {
                                         "product_id": id,
                                         "date":
                                             DateFormat('dd/MM/yy').format(now),
+                                        "shift": shift,
+                                        "departement": departement,
+                                        "product": product,
+                                        "line": line,
                                         "dt": downtime[i],
                                         "subDt": subDT[i],
                                         "std": std[i],
                                         "actMin": actMin[i].text,
                                         "actHour": actHourList[i],
+                                        "createdAt": now
                                       });
                                     } else {
                                       print("no data");
@@ -1624,9 +1635,14 @@ class _FormInputDataState extends State<FormInputData> {
                                         "product_id": id,
                                         "date":
                                             DateFormat('dd/MM/yy').format(now),
+                                        "shift": shift,
+                                        "departement": departement,
+                                        "product": product,
+                                        "line": line,
                                         "idleDesc": idleDesc[i],
                                         "idleMin": idleMin[i].text,
-                                        "idleHour": idleHourList[i]
+                                        "idleHour": idleHourList[i],
+                                        "createdAt": now
                                       });
                                     } else {
                                       print("no data");

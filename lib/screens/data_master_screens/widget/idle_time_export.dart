@@ -36,6 +36,26 @@ class _exportIdleTimeState extends State<exportIdleTime> {
         type: PlutoColumnType.text(),
         enableSorting: true),
     PlutoColumn(
+        title: 'Product',
+        field: 'product',
+        type: PlutoColumnType.text(),
+        enableSorting: true),
+    PlutoColumn(
+      title: 'Departement',
+      field: 'departement',
+      type: PlutoColumnType.text(),
+    ),
+    PlutoColumn(
+        title: 'Shift',
+        field: 'shift',
+        type: PlutoColumnType.text(),
+        enableSorting: true),
+    PlutoColumn(
+        title: 'Line',
+        field: 'line',
+        type: PlutoColumnType.text(),
+        enableSorting: true),
+    PlutoColumn(
         title: 'Idle Desc',
         field: 'idleDesc',
         type: PlutoColumnType.text(),
@@ -191,14 +211,23 @@ class _exportIdleTimeState extends State<exportIdleTime> {
                         (index) => PlutoRow(
                           cells: {
                             'no': PlutoCell(value: index + 1),
+                            'date': PlutoCell(
+                                value: snapshot.data.docs[index]['date']),
+                            'product': PlutoCell(
+                                value: snapshot.data.docs[index]['product']),
+                            'departement': PlutoCell(
+                                value: snapshot.data.docs[index]
+                                    ['departement']),
+                            'shift': PlutoCell(
+                                value: snapshot.data.docs[index]['shift']),
+                            'line': PlutoCell(
+                                value: snapshot.data.docs[index]['line']),
                             'idleDesc': PlutoCell(
                                 value: snapshot.data.docs[index]['idleDesc']),
                             'idleMin': PlutoCell(
                                 value: snapshot.data.docs[index]['idleMin']),
                             'idleHour': PlutoCell(
                                 value: snapshot.data.docs[index]['idleHour']),
-                            'date': PlutoCell(
-                                value: snapshot.data.docs[index]['date']),
                           },
                         ),
                       ),
