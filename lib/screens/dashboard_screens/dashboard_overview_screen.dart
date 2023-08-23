@@ -83,13 +83,15 @@ class _DashboardOverviewState extends State<DashboardOverview> {
   DateTime? _fromSelectedDate = DateTime.now();
   DateTime? _toSelectedDate = DateTime.now();
 
+  int? FromFix;
+  int? ToFix;
+
+  List<String> output2 = [];
+  Function? onClik;
+
   String selectedDateText(select) {
     return DateFormat("dd/MMMM/yyyy").format(select);
   }
-
-  // prossesSkm(){
-  //   if(selectedShift == 0 &&)
-  // }
 
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -171,7 +173,15 @@ class _DashboardOverviewState extends State<DashboardOverview> {
 
                         setState(() {
                           _fromSelectedDate = pickDate;
-                          print(_fromSelectedDate!);
+                          int noww = _fromSelectedDate!.millisecondsSinceEpoch;
+
+                          DateTime date =
+                              DateTime.fromMillisecondsSinceEpoch(noww);
+                          String datetime = date.year.toString() +
+                              date.month.toString() +
+                              date.day.toString();
+                          FromFix = int.parse(datetime);
+                          print(FromFix);
                         });
                       },
                       child: Padding(
@@ -213,7 +223,14 @@ class _DashboardOverviewState extends State<DashboardOverview> {
 
                         setState(() {
                           _toSelectedDate = pickDate;
-                          print(Timestamp.fromDate(_toSelectedDate!));
+                          int noww = _toSelectedDate!.millisecondsSinceEpoch;
+                          DateTime date =
+                              DateTime.fromMillisecondsSinceEpoch(noww);
+                          String datetime = date.year.toString() +
+                              date.month.toString() +
+                              date.day.toString();
+                          ToFix = int.parse(datetime);
+                          print(ToFix);
                         });
                       },
                       child: Padding(
@@ -461,62 +478,81 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                       children: [
                                         // Radial Bar 1
                                         StreamBuilder(
-                                            stream: selectedShift == 0 &&
-                                                    dropdownValue == 0
-                                                ? FirebaseFirestore.instance
+                                            stream:
+                                                // selectedShift == 0 &&
+                                                //         dropdownValue == 0
+                                                //     ?
+                                                FirebaseFirestore.instance
                                                     .collection('product')
-                                                    .where("product",
-                                                        isEqualTo:
-                                                            "Process_SKM")
-                                                    .snapshots()
-                                                : selectedShift != 0 &&
-                                                        dropdownValue == 0
-                                                    ? FirebaseFirestore.instance
-                                                        .collection('product')
-                                                        .where("product",
-                                                            isEqualTo:
-                                                                "Process_SKM")
-                                                        .where("shift",
-                                                            isEqualTo:
-                                                                selectedShift
-                                                                    .toString())
-                                                        .snapshots()
-                                                    : selectedShift == 0 &&
-                                                            dropdownValue != 0
-                                                        ? FirebaseFirestore
-                                                            .instance
-                                                            .collection(
-                                                                'product')
-                                                            .where("product",
-                                                                isEqualTo:
-                                                                    "Process_SKM")
-                                                            .where("line",
-                                                                isEqualTo: dropdownValue
-                                                                    .toString())
-                                                            .snapshots()
-                                                        : selectedShift != 0 &&
-                                                                dropdownValue !=
-                                                                    0
-                                                            ? FirebaseFirestore
-                                                                .instance
-                                                                .collection(
-                                                                    'product')
-                                                                .where("product",
-                                                                    isEqualTo:
-                                                                        "Process_SKM")
-                                                                .where("shift",
-                                                                    isEqualTo: selectedShift
-                                                                        .toString())
-                                                                .where("line",
-                                                                    isEqualTo:
-                                                                        dropdownValue.toString())
-                                                                .snapshots()
-                                                            : null,
-                                            builder: (context, AsyncSnapshot snapshot) {
+                                                    .where("createdAt",
+                                                        isGreaterThanOrEqualTo:
+                                                            FromFix)
+                                                    .where("createdAt",
+                                                        isLessThanOrEqualTo:
+                                                            ToFix)
+
+                                                    // .where("product",
+                                                    //     isEqualTo:
+                                                    //         "Process_SKM")
+                                                    .snapshots(),
+                                            // : selectedShift != 0 &&
+                                            //         dropdownValue == 0
+                                            //     ? FirebaseFirestore.instance
+                                            //         .collection('product')
+                                            //         .where("product",
+                                            //             isEqualTo:
+                                            //                 "Process_SKM")
+                                            //         .where("shift",
+                                            //             isEqualTo: selectedShift
+                                            //                 .toString())
+                                            //         .where("createdAt",
+                                            //             isGreaterThanOrEqualTo:
+                                            //                 FromFix)
+                                            //         .where("createdAt",
+                                            //             isLessThanOrEqualTo:
+                                            //                 ToFix)
+                                            //         .snapshots()
+                                            //     : selectedShift == 0 &&
+                                            //             dropdownValue != 0
+                                            //         ? FirebaseFirestore.instance
+                                            //             .collection(
+                                            //                 'product')
+                                            //             .where("product",
+                                            //                 isEqualTo:
+                                            //                     "Process_SKM")
+                                            //             .where("line",
+                                            //                 isEqualTo: dropdownValue
+                                            //                     .toString())
+                                            //             .where("createdAt",
+                                            //                 isGreaterThanOrEqualTo:
+                                            //                     FromFix)
+                                            //             .where("createdAt",
+                                            //                 isLessThanOrEqualTo:
+                                            //                     ToFix)
+                                            //             .snapshots()
+                                            //         : selectedShift != 0 &&
+                                            //                 dropdownValue !=
+                                            //                     0
+                                            //             ? FirebaseFirestore
+                                            //                 .instance
+                                            //                 .collection(
+                                            //                     'product')
+                                            //                 .where("product",
+                                            //                     isEqualTo: "Process_SKM")
+                                            //                 .where("shift", isEqualTo: selectedShift.toString())
+                                            //                 .where("line", isEqualTo: dropdownValue.toString())
+                                            //                 .where("createdAt", isGreaterThanOrEqualTo: FromFix)
+                                            //                 .where("createdAt", isLessThanOrEqualTo: ToFix)
+                                            //                 .snapshots()
+                                            //             : null,
+                                            builder: (context,
+                                                AsyncSnapshot snapshot) {
                                               if (!snapshot.hasData) {
                                                 return Text("no Data");
                                               }
+
                                               final doc = snapshot.data.docs;
+
                                               var leCuy = List.generate(
                                                   doc.length, (index) {
                                                 double x = double.parse(
@@ -938,14 +974,43 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 45),
+                    StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection('breakdown')
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          final doc = snapshot.data!.docs;
+                          return TextButton(
+                              onPressed: onClik = () {
+                                var myList2 = List.generate(
+                                    doc.length, (index) => doc[index]["mesin"]);
+
+                                final map2 = <String, int>{};
+                                for (final m in myList2) {
+                                  final letter = m;
+                                  map2[letter] = map2.containsKey(letter)
+                                      ? map2[letter]! + 1
+                                      : 1;
+                                }
+
+                                setState(() {
+                                  output2 = map2.keys.toList(growable: false);
+                                  output2.sort((k1, k2) =>
+                                      map2[k2]!.compareTo(map2[k1] as num));
+                                });
+
+                                print(output2);
+                              },
+                              child: Text("jhbxc"));
+                        }),
                     ListView.builder(
                         shrinkWrap: true,
-                        itemCount: 5,
+                        itemCount: output2.length,
                         itemBuilder: (context, index) {
                           return Column(
                             children: [
                               BreakdownItem(
-                                  title: "Utility",
+                                  title: output2[index],
                                   desc: "Listrik Trip/Deep Sag",
                                   number: 140),
                               SizedBox(

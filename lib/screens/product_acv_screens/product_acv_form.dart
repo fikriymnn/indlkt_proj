@@ -1522,6 +1522,15 @@ class _FormInputDataState extends State<FormInputData> {
                                 var uuid = Uuid();
                                 var id = uuid.v4();
                                 DateTime now = DateTime.now();
+                                int noww =
+                                    DateTime.now().millisecondsSinceEpoch;
+
+                                DateTime date =
+                                    DateTime.fromMillisecondsSinceEpoch(noww);
+                                String datetime = date.year.toString() +
+                                    date.month.toString() +
+                                    date.day.toString();
+                                int dateFix = int.parse(datetime);
 
                                 try {
                                   setState(() {
@@ -1556,7 +1565,7 @@ class _FormInputDataState extends State<FormInputData> {
                                     "bulan": DateFormat.MMMM().format(now),
                                     "tahun": DateFormat.y().format(now),
                                     "date": DateFormat('dd/MM/yy').format(now),
-                                    "createdAt": now
+                                    "createdAt": dateFix
                                   });
 
                                   for (int i = 0; i < bLength; i++) {
@@ -1585,7 +1594,7 @@ class _FormInputDataState extends State<FormInputData> {
                                         "bdMin": dbMin[i].text,
                                         "bdHour": bdHourList[i],
                                         "problem": problem[i].text,
-                                        "createdAt": now
+                                        "createdAt": dateFix
                                       });
                                     } else {
                                       print("no data");
@@ -1616,7 +1625,7 @@ class _FormInputDataState extends State<FormInputData> {
                                         "std": std[i],
                                         "actMin": actMin[i].text,
                                         "actHour": actHourList[i],
-                                        "createdAt": now
+                                        "createdAt": dateFix
                                       });
                                     } else {
                                       print("no data");
@@ -1642,7 +1651,7 @@ class _FormInputDataState extends State<FormInputData> {
                                         "idleDesc": idleDesc[i],
                                         "idleMin": idleMin[i].text,
                                         "idleHour": idleHourList[i],
-                                        "createdAt": now
+                                        "createdAt": dateFix
                                       });
                                     } else {
                                       print("no data");
