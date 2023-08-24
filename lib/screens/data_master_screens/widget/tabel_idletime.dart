@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:indlkt_proj/widgets/content_idle_time_detail.dart';
 import 'package:table_plus/table_plus.dart';
 
 import '../../../constants/style.dart';
@@ -15,15 +16,18 @@ class tabel_idletime extends StatefulWidget {
 
 class _tabel_idletimeState extends State<tabel_idletime> {
   int selectedIndex = 0;
+  final db = FirebaseFirestore.instance;
 
   //show alert
 
   // tabel plus
   var searchNameList = <dynamic>[];
+  List dataIdle = [];
   final bool isSearchEnabled = true;
   List<Widget> searchCtrl = <Widget>[];
   List<String> tableHeading = <String>[];
 
+  var names = [];
   List<DataColumn> dataColumnValues() {
     List<DataColumn> values = <DataColumn>[];
     for (var i = 0; i < tableHeading.length; i++) {
@@ -48,18 +52,6 @@ class _tabel_idletimeState extends State<tabel_idletime> {
       ));
     }
     return values;
-  }
-
-  getData() {
-    FirebaseFirestore.instance.collection("product").get().then(
-      (querySnapshot) {
-        print("Successfully completed");
-        for (var docSnapshot in querySnapshot.docs) {
-          print('${docSnapshot.id} => ${docSnapshot.data()}');
-        }
-      },
-      onError: (e) => print("Error completing: $e"),
-    );
   }
 
   List<DataRow> dataRowsValues() {
@@ -96,7 +88,16 @@ class _tabel_idletimeState extends State<tabel_idletime> {
                           child: Container(
                               width: MediaQuery.of(context).size.width,
                               height: MediaQuery.of(context).size.height,
-                              child: detail_form()),
+                              child: idletime_detail(
+                                date: objData.date,
+                                departement: objData.departement,
+                                idleDesc: objData.idleDesc,
+                                idleHour: objData.idleHour,
+                                idleMin: objData.idleMin,
+                                line: objData.line,
+                                product: objData.product,
+                                shift: objData.shift,
+                              )),
                         ),
                       );
                     },
@@ -133,10 +134,37 @@ class _tabel_idletimeState extends State<tabel_idletime> {
         .toList();
   }
 
+  getData() async {
+    QuerySnapshot querySnapshot = await db.collection("idle_time").get();
+    setState(() {
+      dataIdle = querySnapshot.docs.map((doc) => doc.data()).toList();
+    });
+
+    getData2();
+  }
+
+  getData2() {
+    names = List.generate(
+        dataIdle.length,
+        (index) => Name(
+            date: dataIdle[index]["date"],
+            product: dataIdle[index]["product"],
+            departement: dataIdle[index]["departement"],
+            shift: dataIdle[index]["shift"],
+            line: dataIdle[index]["line"],
+            idleDesc: dataIdle[index]["idleDesc"],
+            idleMin: dataIdle[index]["idleMin"],
+            idleHour: dataIdle[index]["idleHour"]));
+
+    setState(() {
+      searchNameList = names;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    searchNameList = names;
+    getData();
     tableHeading.clear();
     tableHeading.add("Idle Desc");
     tableHeading.add("Idle(Min)");
@@ -172,7 +200,7 @@ class _tabel_idletimeState extends State<tabel_idletime> {
                   searchList.add(nameData);
                 }
               } else if (index == 2) {
-                int idleHour = names[i].idleHour;
+                String idleHour = names[i].idleHour;
                 Name nameData = names[i];
                 if (idleHour.toString().contains(value)) {
                   searchList.add(nameData);
@@ -219,22 +247,20 @@ class _tabel_idletimeState extends State<tabel_idletime> {
       ),
     );
   }
-
-  var names = List.generate(
-      20,
-      (index) => Name(
-            idleDesc: "jhbh",
-            idleMin: "jnk",
-            idleHour: 9,
-          ));
 }
 
 class Name {
+  String date, product, departement, shift, line;
   String idleDesc;
   String idleMin;
-  int idleHour;
+  String idleHour;
 
   Name({
+    required this.date,
+    required this.product,
+    required this.departement,
+    required this.shift,
+    required this.line,
     required this.idleDesc,
     required this.idleMin,
     required this.idleHour,

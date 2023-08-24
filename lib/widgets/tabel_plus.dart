@@ -16,14 +16,20 @@ class tabel_plus extends StatefulWidget {
 
 class _tabel_plusState extends State<tabel_plus> {
   int selectedIndex = 0;
+  final db = FirebaseFirestore.instance;
 
   //show alert
 
   // tabel plus
   var searchNameList = <dynamic>[];
+  // var dataaa = <dynamic>[];
+
+  List dataProduct = [];
+
   final bool isSearchEnabled = true;
   List<Widget> searchCtrl = <Widget>[];
   List<String> tableHeading = <String>[];
+  var names = [];
 
   List<DataColumn> dataColumnValues() {
     List<DataColumn> values = <DataColumn>[];
@@ -95,7 +101,25 @@ class _tabel_plusState extends State<tabel_plus> {
                           child: Container(
                               width: MediaQuery.of(context).size.width,
                               height: MediaQuery.of(context).size.height,
-                              child: detail_form()),
+                              child: detail_form(
+                                shift: objData.shift,
+                                departement: objData.departement,
+                                product: objData.product,
+                                line: objData.line,
+                                planingOutput: objData.planingOutput,
+                                actualOutput: objData.actualOutput,
+                                nominalSpeed: objData.nominalSpeed,
+                                totalHour: objData.totalHour,
+                                grossHour: objData.grossHour,
+                                netHour: objData.netHour,
+                                targetHout: objData.targetHour,
+                                le: objData.Le,
+                                lp: objData.Lp,
+                                bd: objData.Bd,
+                                dt: objData.Dt,
+                                date: objData.date,
+                                id: objData.id,
+                              )),
                         ),
                       );
                       ;
@@ -133,15 +157,48 @@ class _tabel_plusState extends State<tabel_plus> {
         .toList();
   }
 
-  var names = List.generate(
-      20,
-      (index) => Name(
-          product: "jhbh", departement: "jnk", shift: 9, line: 7687, date: 10));
+  getData() async {
+    QuerySnapshot querySnapshot = await db.collection("product").get();
+    setState(() {
+      dataProduct = querySnapshot.docs.map((doc) => doc.data()).toList();
+    });
+
+    getData2();
+  }
+
+  getData2() {
+    names = List.generate(
+        dataProduct.length,
+        (index) => Name(
+            product: dataProduct[index]["product"],
+            departement: dataProduct[index]["departement"],
+            shift: dataProduct[index]["shift"],
+            line: dataProduct[index]["line"],
+            date: dataProduct[index]["date"],
+            Bd: dataProduct[index]["bd"],
+            Dt: dataProduct[index]["dt"],
+            Le: dataProduct[index]["le"],
+            Lp: dataProduct[index]["lp"],
+            actualOutput: dataProduct[index]["actual_output"],
+            grossHour: dataProduct[index]["gross_hour"],
+            netHour: dataProduct[index]["net_hour"],
+            nominalSpeed: dataProduct[index]["nominal_speed"],
+            planingOutput: dataProduct[index]["planing_output"],
+            targetHour: dataProduct[index]["target_hour"],
+            totalHour: dataProduct[index]["total_hour"],
+            id: dataProduct[index]["uid"]));
+
+    setState(() {
+      searchNameList = names;
+    });
+  }
 
   @override
   void initState() {
+    getData();
+
     super.initState();
-    searchNameList = names;
+
     tableHeading.clear();
     tableHeading.add("product");
     tableHeading.add("Departement");
@@ -167,19 +224,19 @@ class _tabel_plusState extends State<tabel_plus> {
                   searchList.add(nameData);
                 }
               } else if (index == 2) {
-                int shift = names[i].shift;
+                String shift = names[i].shift;
                 Name nameData = names[i];
                 if (shift.toString().contains(value)) {
                   searchList.add(nameData);
                 }
               } else if (index == 3) {
-                int line = names[i].line;
+                String line = names[i].line;
                 Name nameData = names[i];
                 if (line.toString().contains(value)) {
                   searchList.add(nameData);
                 }
               } else if (index == 4) {
-                int date = names[i].date;
+                String date = names[i].date;
                 Name nameData = names[i];
                 if (date.toString().contains(value)) {
                   searchList.add(nameData);
@@ -231,14 +288,38 @@ class _tabel_plusState extends State<tabel_plus> {
 class Name {
   String product;
   String departement;
-  int shift;
-  int line;
-  int date;
+  String shift;
+  String line;
+  String date;
+  String planingOutput,
+      actualOutput,
+      nominalSpeed,
+      totalHour,
+      grossHour,
+      netHour,
+      targetHour,
+      Le,
+      Lp,
+      Dt,
+      Bd,
+      id;
 
   Name(
       {required this.product,
       required this.departement,
       required this.shift,
       required this.line,
-      required this.date});
+      required this.date,
+      required this.Bd,
+      required this.Dt,
+      required this.Le,
+      required this.Lp,
+      required this.actualOutput,
+      required this.grossHour,
+      required this.netHour,
+      required this.nominalSpeed,
+      required this.planingOutput,
+      required this.targetHour,
+      required this.totalHour,
+      required this.id});
 }

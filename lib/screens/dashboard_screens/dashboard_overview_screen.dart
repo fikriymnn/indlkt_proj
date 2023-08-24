@@ -86,7 +86,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
   int? FromFix;
   int? ToFix;
 
-  List<String> output2 = [];
+  List<String> output2 = ["a"];
   Function? onClik;
 
   String selectedDateText(select) {

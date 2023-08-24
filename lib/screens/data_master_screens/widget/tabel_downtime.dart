@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:indlkt_proj/widgets/content_downtime_detail.dart';
 import 'package:table_plus/table_plus.dart';
 
 import '../../../constants/style.dart';
@@ -16,12 +18,13 @@ class _tabel_downtimeState extends State<tabel_downtime> {
   int selectedIndex = 0;
 
   //show alert
-
+  List dataDowntime = [];
   // tabel plus
   var searchNameList = <dynamic>[];
   final bool isSearchEnabled = true;
   List<Widget> searchCtrl = <Widget>[];
   List<String> tableHeading = <String>[];
+  var names = [];
 
   List<DataColumn> dataColumnValues() {
     List<DataColumn> values = <DataColumn>[];
@@ -93,7 +96,17 @@ class _tabel_downtimeState extends State<tabel_downtime> {
                           child: Container(
                               width: MediaQuery.of(context).size.width,
                               height: MediaQuery.of(context).size.height,
-                              child: detail_form()),
+                              child: downtimeDetail(
+                                  shift: objData.shift,
+                                  departement: objData.departement,
+                                  product: objData.product,
+                                  line: objData.line,
+                                  date: objData.date,
+                                  actMin: objData.actMin,
+                                  actHour: objData.actHour,
+                                  std: objData.STD,
+                                  subDt: objData.subDt,
+                                  dt: objData.dt)),
                         ),
                       );
                     },
@@ -130,10 +143,40 @@ class _tabel_downtimeState extends State<tabel_downtime> {
         .toList();
   }
 
+  getData() async {
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection("downtime").get();
+    setState(() {
+      dataDowntime = querySnapshot.docs.map((doc) => doc.data()).toList();
+    });
+
+    getData2();
+  }
+
+  getData2() {
+    names = List.generate(
+        dataDowntime.length,
+        (index) => Name(
+            date: dataDowntime[index]["date"],
+            product: dataDowntime[index]["product"],
+            departement: dataDowntime[index]["departement"],
+            shift: dataDowntime[index]["shift"],
+            line: dataDowntime[index]["line"],
+            dt: dataDowntime[index]["dt"],
+            subDt: dataDowntime[index]["subDt"],
+            STD: dataDowntime[index]["std"],
+            actMin: dataDowntime[index]["actMin"],
+            actHour: dataDowntime[index]["actHour"]));
+
+    setState(() {
+      searchNameList = names;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    searchNameList = names;
+    getData();
     tableHeading.clear();
     tableHeading.add("Dt");
     tableHeading.add("Reason Breakdown");
@@ -159,19 +202,19 @@ class _tabel_downtimeState extends State<tabel_downtime> {
                   searchList.add(nameData);
                 }
               } else if (index == 2) {
-                int STD = names[i].STD;
+                String STD = names[i].STD;
                 Name nameData = names[i];
                 if (STD.toString().contains(value)) {
                   searchList.add(nameData);
                 }
               } else if (index == 3) {
-                int actMin = names[i].actMin;
+                String actMin = names[i].actMin;
                 Name nameData = names[i];
                 if (actMin.toString().contains(value)) {
                   searchList.add(nameData);
                 }
               } else if (index == 4) {
-                int actHour = names[i].actHour;
+                String actHour = names[i].actHour;
                 Name nameData = names[i];
                 if (actHour.toString().contains(value)) {
                   searchList.add(nameData);
@@ -218,26 +261,22 @@ class _tabel_downtimeState extends State<tabel_downtime> {
       ),
     );
   }
-
-  var names = List.generate(
-      20,
-      (index) => Name(
-            dt: "jhbh",
-            subDt: "jnk",
-            STD: 9,
-            actMin: 7687,
-            actHour: 1,
-          ));
 }
 
 class Name {
+  String date, product, departement, shift, line;
   String dt;
   String subDt;
-  int STD;
-  int actMin;
-  int actHour;
+  String STD;
+  String actMin;
+  String actHour;
 
   Name({
+    required this.date,
+    required this.product,
+    required this.departement,
+    required this.shift,
+    required this.line,
     required this.dt,
     required this.subDt,
     required this.STD,

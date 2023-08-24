@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:indlkt_proj/widgets/content_breakdown_detail.dart';
 import 'package:table_plus/table_plus.dart';
 
 import '../../../constants/style.dart';
@@ -22,7 +24,8 @@ class _tabel_breakdownState extends State<tabel_breakdown> {
   final bool isSearchEnabled = true;
   List<Widget> searchCtrl = <Widget>[];
   List<String> tableHeading = <String>[];
-
+  List dataBreakdown = [];
+  var names = [];
   List<DataColumn> dataColumnValues() {
     List<DataColumn> values = <DataColumn>[];
     for (var i = 0; i < tableHeading.length; i++) {
@@ -98,7 +101,19 @@ class _tabel_breakdownState extends State<tabel_breakdown> {
                           child: Container(
                               width: MediaQuery.of(context).size.width,
                               height: MediaQuery.of(context).size.height,
-                              child: detail_form()),
+                              child: breakdownDetail(
+                                shift: objData.shift,
+                                departement: objData.departement,
+                                product: objData.product,
+                                line: objData.line,
+                                date: objData.date,
+                                bdHour: objData.bdHour,
+                                bdMin: objData.bdHourMin,
+                                freq: objData.freq,
+                                mesin: objData.mesin,
+                                problem: objData.problem,
+                                reason: objData.reasonBreakdown,
+                              )),
                         ),
                       );
                     },
@@ -135,10 +150,41 @@ class _tabel_breakdownState extends State<tabel_breakdown> {
         .toList();
   }
 
+  getData() async {
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection("breakdown").get();
+    setState(() {
+      dataBreakdown = querySnapshot.docs.map((doc) => doc.data()).toList();
+    });
+
+    getData2();
+  }
+
+  getData2() {
+    names = List.generate(
+        dataBreakdown.length,
+        (index) => Name(
+            date: dataBreakdown[index]["date"],
+            product: dataBreakdown[index]["product"],
+            departement: dataBreakdown[index]["departement"],
+            shift: dataBreakdown[index]["shift"],
+            line: dataBreakdown[index]["line"],
+            mesin: dataBreakdown[index]["mesin"],
+            reasonBreakdown: dataBreakdown[index]["reason"],
+            freq: dataBreakdown[index]["freq"],
+            bdHourMin: dataBreakdown[index]["bdMin"],
+            bdHour: dataBreakdown[index]["bdHour"],
+            problem: dataBreakdown[index]["problem"]));
+
+    setState(() {
+      searchNameList = names;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    searchNameList = names;
+    getData();
     tableHeading.clear();
     tableHeading.add("Mesin");
     tableHeading.add("Reason Breakdown");
@@ -165,19 +211,19 @@ class _tabel_breakdownState extends State<tabel_breakdown> {
                   searchList.add(nameData);
                 }
               } else if (index == 2) {
-                int freq = names[i].freq;
+                String freq = names[i].freq;
                 Name nameData = names[i];
                 if (freq.toString().contains(value)) {
                   searchList.add(nameData);
                 }
               } else if (index == 3) {
-                int bdHourMin = names[i].bdHourMin;
+                String bdHourMin = names[i].bdHourMin;
                 Name nameData = names[i];
                 if (bdHourMin.toString().contains(value)) {
                   searchList.add(nameData);
                 }
               } else if (index == 4) {
-                int bdHour = names[i].bdHour;
+                String bdHour = names[i].bdHour;
                 Name nameData = names[i];
                 if (bdHour.toString().contains(value)) {
                   searchList.add(nameData);
@@ -230,28 +276,24 @@ class _tabel_breakdownState extends State<tabel_breakdown> {
       ),
     );
   }
-
-  var names = List.generate(
-      20,
-      (index) => Name(
-          mesin: "jhbh",
-          reasonBreakdown: "jnk",
-          freq: 9,
-          bdHourMin: 7687,
-          bdHour: 1,
-          problem: "jsfbjfjfbjsjfbs"));
 }
 
 class Name {
+  String date, product, departement, shift, line;
   String mesin;
   String reasonBreakdown;
-  int freq;
-  int bdHourMin;
-  int bdHour;
+  String freq;
+  String bdHourMin;
+  String bdHour;
   String problem;
 
   Name(
-      {required this.mesin,
+      {required this.date,
+      required this.product,
+      required this.departement,
+      required this.shift,
+      required this.line,
+      required this.mesin,
       required this.reasonBreakdown,
       required this.freq,
       required this.bdHourMin,

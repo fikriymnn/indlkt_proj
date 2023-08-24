@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:indlkt_proj/widgets/custom_dropdown.dart';
 import 'package:indlkt_proj/widgets/appbar.dart';
@@ -13,7 +14,42 @@ import '../../widgets/small_custom_dropdown.dart';
 import '../../widgets/small_custom_textfield.dart';
 
 class detail_form extends StatefulWidget {
-  const detail_form({super.key});
+  final String shift,
+      departement,
+      date,
+      id,
+      product,
+      line,
+      planingOutput,
+      actualOutput,
+      nominalSpeed,
+      totalHour,
+      grossHour,
+      netHour,
+      targetHout,
+      le,
+      lp,
+      bd,
+      dt;
+  const detail_form(
+      {super.key,
+      required this.shift,
+      required this.departement,
+      required this.product,
+      required this.line,
+      required this.planingOutput,
+      required this.actualOutput,
+      required this.nominalSpeed,
+      required this.totalHour,
+      required this.grossHour,
+      required this.netHour,
+      required this.targetHout,
+      required this.le,
+      required this.lp,
+      required this.bd,
+      required this.dt,
+      required this.date,
+      required this.id});
 
   @override
   State<detail_form> createState() => _detail_formState();
@@ -161,7 +197,7 @@ class _detail_formState extends State<detail_form> {
                                           child: Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 8, right: 8, top: 10),
-                                              child: Text("data")),
+                                              child: Text(widget.date)),
                                         ),
                                       ],
                                     ),
@@ -186,7 +222,7 @@ class _detail_formState extends State<detail_form> {
                                                           FontWeight.bold)),
                                             ),
                                             CustomTextField(
-                                              displayValue: "sss",
+                                              displayValue: widget.shift,
                                               readOnly: true,
                                             ),
                                           ],
@@ -209,7 +245,7 @@ class _detail_formState extends State<detail_form> {
                                                           FontWeight.bold)),
                                             ),
                                             CustomTextField(
-                                              displayValue: "sss",
+                                              displayValue: widget.actualOutput,
                                               readOnly: true,
                                             ),
                                           ],
@@ -232,7 +268,7 @@ class _detail_formState extends State<detail_form> {
                                                           FontWeight.bold)),
                                             ),
                                             CustomTextField(
-                                              displayValue: "sss",
+                                              displayValue: widget.grossHour,
                                               readOnly: true,
                                             ),
                                           ],
@@ -260,7 +296,7 @@ class _detail_formState extends State<detail_form> {
                                                           FontWeight.bold)),
                                             ),
                                             CustomTextField(
-                                              displayValue: "sss",
+                                              displayValue: widget.departement,
                                               readOnly: true,
                                             ),
                                           ],
@@ -283,7 +319,7 @@ class _detail_formState extends State<detail_form> {
                                                           FontWeight.bold)),
                                             ),
                                             CustomTextField(
-                                              displayValue: "sss",
+                                              displayValue: widget.nominalSpeed,
                                               readOnly: true,
                                             ),
                                           ],
@@ -306,7 +342,7 @@ class _detail_formState extends State<detail_form> {
                                                           FontWeight.bold)),
                                             ),
                                             CustomTextField(
-                                              displayValue: "sss",
+                                              displayValue: widget.netHour,
                                               readOnly: true,
                                             ),
                                           ],
@@ -334,7 +370,7 @@ class _detail_formState extends State<detail_form> {
                                                           FontWeight.bold)),
                                             ),
                                             CustomTextField(
-                                              displayValue: "sss",
+                                              displayValue: widget.product,
                                               readOnly: true,
                                             ),
                                           ],
@@ -357,7 +393,7 @@ class _detail_formState extends State<detail_form> {
                                                           FontWeight.bold)),
                                             ),
                                             CustomTextField(
-                                              displayValue: "sss",
+                                              displayValue: widget.totalHour,
                                               readOnly: true,
                                             ),
                                           ],
@@ -380,7 +416,7 @@ class _detail_formState extends State<detail_form> {
                                                           FontWeight.bold)),
                                             ),
                                             CustomTextField(
-                                              displayValue: "sss",
+                                              displayValue: widget.targetHout,
                                               readOnly: true,
                                             ),
                                           ],
@@ -407,7 +443,7 @@ class _detail_formState extends State<detail_form> {
                                                         FontWeight.bold)),
                                           ),
                                           CustomTextField(
-                                            displayValue: "sss",
+                                            displayValue: widget.line,
                                             readOnly: true,
                                           ),
                                         ],
@@ -433,7 +469,7 @@ class _detail_formState extends State<detail_form> {
                                                           FontWeight.bold)),
                                             ),
                                             DisplayField(
-                                              value: le(),
+                                              value: widget.le,
                                             ),
                                           ],
                                         ),
@@ -452,7 +488,7 @@ class _detail_formState extends State<detail_form> {
                                                       fontWeight:
                                                           FontWeight.bold)),
                                             ),
-                                            DisplayField(value: lp()),
+                                            DisplayField(value: widget.lp),
                                           ],
                                         )
                                       ],
@@ -474,7 +510,7 @@ class _detail_formState extends State<detail_form> {
                                                     fontWeight:
                                                         FontWeight.bold)),
                                           ),
-                                          DisplayField(value: dt()),
+                                          DisplayField(value: widget.dt),
                                         ],
                                       ),
                                       Column(
@@ -492,7 +528,7 @@ class _detail_formState extends State<detail_form> {
                                                     fontWeight:
                                                         FontWeight.bold)),
                                           ),
-                                          DisplayField(value: bd()),
+                                          DisplayField(value: widget.bd),
                                         ],
                                       )
                                     ]))
@@ -517,7 +553,8 @@ class _detail_formState extends State<detail_form> {
                                                           FontWeight.bold)),
                                             ),
                                             CustomTextField(
-                                              displayValue: "sss",
+                                              displayValue:
+                                                  widget.planingOutput,
                                               readOnly: true,
                                             ),
                                           ],
@@ -530,559 +567,668 @@ class _detail_formState extends State<detail_form> {
                                 ],
                               ),
                             ),
-                            Padding(
-                                padding: EdgeInsets.only(left: 30, top: 50),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Breakdown",
-                                        style: TextStyle(
-                                            color: dark.withOpacity(0.8),
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold)),
-                                    Container(
-                                        width: 900,
-                                        decoration: BoxDecoration(
-                                          color: light,
-                                          boxShadow: [
-                                            BoxShadow(
-                                                blurRadius: 4,
-                                                offset: Offset(0, 2),
-                                                color: dark.withOpacity(0.8))
-                                          ],
-                                          border: Border.all(
-                                              width: 3, color: lightGrey),
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 20,
-                                                right: 20,
-                                                top: 11,
-                                                bottom: 11),
+                            StreamBuilder(
+                                stream: FirebaseFirestore.instance
+                                    .collection('breakdown')
+                                    .where("product_id", isEqualTo: widget.id)
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  final doc = snapshot.data!.docs;
+                                  if (!snapshot.hasData) {
+                                    return Text("");
+                                  }
+
+                                  return ListView.builder(
+                                      itemCount: doc.length,
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        String mesin = doc[index]["mesin"];
+                                        String reason = doc[index]["reason"];
+                                        String freq = doc[index]["freq"];
+                                        String bdMin = doc[index]["bdMin"];
+                                        String bdHour = doc[index]["bdHour"];
+                                        String problem = doc[index]["problem"];
+                                        return Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 30, top: 50),
                                             child: Column(
-                                              children: [
-                                                Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Container(
-                                                        width: 25,
-                                                        height: 25,
-                                                        child: Center(
-                                                            child: Text("1",
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        15,
-                                                                    color:
-                                                                        light))),
-                                                        decoration: BoxDecoration(
-                                                            color: blue,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        100))),
-                                                    Column(
-                                                      children: [
-                                                        SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        Text("Mesin",
-                                                            style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold)),
-                                                        SizedBox(
-                                                          height: 20,
-                                                        ),
-                                                        SmallTextfield(
-                                                          value: "iddhjhdjh",
-                                                          readOnly: true,
-                                                          width: 150,
-                                                          hint: 'input2',
-                                                        )
-                                                      ],
-                                                    ),
-                                                    Column(
-                                                      children: [
-                                                        SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        Text("Reason Breakdown",
-                                                            style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold)),
-                                                        SizedBox(
-                                                          height: 20,
-                                                        ),
-                                                        SmallTextfield(
-                                                          width: 150,
-                                                          value: "sss",
-                                                          readOnly: true,
-                                                        )
-                                                      ],
-                                                    ),
-                                                    Column(
-                                                      children: [
-                                                        SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        Text("Freq",
-                                                            style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold)),
-                                                        SizedBox(
-                                                          height: 20,
-                                                        ),
-                                                        SmallTextfield(
-                                                          width: 80,
-                                                          // controller: form,
-                                                          value: "sss",
-                                                          readOnly: true,
-                                                        )
-                                                      ],
-                                                    ),
-                                                    Column(
-                                                      children: [
-                                                        SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        Text("BD Hour(Min)",
-                                                            style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold)),
-                                                        SizedBox(
-                                                          height: 20,
-                                                        ),
-                                                        SmallTextfield(
-                                                          width: 150,
-                                                          value: "sss",
-                                                          readOnly: true,
-                                                        )
-                                                      ],
-                                                    ),
-                                                    Column(
-                                                      children: [
-                                                        SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        Text("BD Hour",
-                                                            style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold)),
-                                                        SizedBox(
-                                                          height: 20,
-                                                        ),
-                                                        SmallTextfield(
-                                                          width: 150,
-                                                          // controller: form3,
-                                                          readOnly: true,
-                                                          value: "sss",
-                                                        )
-                                                      ],
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    )
-                                                  ],
-                                                ),
-                                                SizedBox(height: 25),
-                                                Row(children: [
-                                                  SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Container(
-                                                            margin:
-                                                                EdgeInsets.only(
-                                                                    left: 70),
-                                                            child: Text(
-                                                                "Problem",
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold))),
-                                                        SizedBox(height: 20),
-                                                        Container(
-                                                            margin:
-                                                                EdgeInsets.only(
-                                                                    left: 40),
-                                                            width: 400,
-                                                            height: 90,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: light,
-                                                              border: Border.all(
-                                                                  width: 1,
-                                                                  color: dark
-                                                                      .withOpacity(
-                                                                          0.5)),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5),
-                                                            ),
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      left: 10,
-                                                                      right: 10,
-                                                                      top: 5),
-                                                              child: TextField(
-                                                                maxLines: 4,
-                                                                controller:
-                                                                    TextEditingController(),
-                                                                readOnly: true,
-                                                                decoration: InputDecoration.collapsed(
-                                                                    hintText:
-                                                                        "input",
-                                                                    hintStyle: TextStyle(
-                                                                        fontSize:
-                                                                            13,
-                                                                        color: dark
-                                                                            .withOpacity(0.3))),
-                                                              ),
-                                                            ))
-                                                      ]),
-                                                ])
-                                              ],
-                                            )))
-                                  ],
-                                )),
-                            SizedBox(height: 20),
-                            Padding(
-                                padding: EdgeInsets.only(left: 30, top: 50),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Down Time",
-                                        style: TextStyle(
-                                            color: dark.withOpacity(0.8),
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold)),
-                                    Container(
-                                        width: 900,
-                                        decoration: BoxDecoration(
-                                          color: light,
-                                          boxShadow: [
-                                            BoxShadow(
-                                                blurRadius: 4,
-                                                offset: Offset(0, 2),
-                                                color: dark.withOpacity(0.8))
-                                          ],
-                                          border: Border.all(
-                                              width: 3, color: lightGrey),
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 20,
-                                              right: 20,
-                                              top: 11,
-                                              bottom: 11),
-                                          child: Column(children: [
-                                            Row(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
                                               children: [
+                                                Text("Breakdown",
+                                                    style: TextStyle(
+                                                        color: dark
+                                                            .withOpacity(0.8),
+                                                        fontSize: 25,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
                                                 Container(
-                                                  child: Center(
-                                                      child: Text("2",
-                                                          style: TextStyle(
-                                                              fontSize: 15,
-                                                              color: light))),
-                                                  width: 25,
-                                                  height: 25,
-                                                  decoration: BoxDecoration(
-                                                      color: blue,
+                                                    width: 900,
+                                                    decoration: BoxDecoration(
+                                                      color: light,
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                            blurRadius: 4,
+                                                            offset:
+                                                                Offset(0, 2),
+                                                            color: dark
+                                                                .withOpacity(
+                                                                    0.8))
+                                                      ],
+                                                      border: Border.all(
+                                                          width: 3,
+                                                          color: lightGrey),
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              100)),
-                                                ),
-                                                Column(
-                                                  children: [
-                                                    SizedBox(
-                                                      height: 10,
+                                                              5),
                                                     ),
-                                                    Text("DT",
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold)),
-                                                    SizedBox(
-                                                      height: 20,
-                                                    ),
-                                                    SmallTextfield(
-                                                      value: "sss",
-                                                      readOnly: true,
-                                                      width: 150,
-                                                      // controller: actMin,
-                                                    )
-                                                  ],
-                                                ),
-                                                Column(
-                                                  children: [
-                                                    SizedBox(
-                                                      height: 10,
-                                                    ),
-                                                    Text("Sub DT",
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold)),
-                                                    SizedBox(
-                                                      height: 20,
-                                                    ),
-                                                    SmallTextfield(
-                                                      value: "sss",
-                                                      readOnly: true,
-                                                      width: 150,
-                                                      // controller: actMin,
-                                                    )
-                                                  ],
-                                                ),
-                                                Column(
-                                                  children: [
-                                                    SizedBox(
-                                                      height: 10,
-                                                    ),
-                                                    Text("STD",
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold)),
-                                                    SizedBox(
-                                                      height: 20,
-                                                    ),
-                                                    SmallTextfield(
-                                                      value: "sss",
-                                                      readOnly: true,
-                                                      width: 80,
-                                                      // controller: actMin,
-                                                    )
-                                                  ],
-                                                ),
-                                                Column(
-                                                  children: [
-                                                    SizedBox(
-                                                      height: 10,
-                                                    ),
-                                                    Text("Act(Min)",
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold)),
-                                                    SizedBox(
-                                                      height: 20,
-                                                    ),
-                                                    SmallTextfield(
-                                                      value: "sss",
-                                                      readOnly: true,
-                                                      width: 150,
-                                                      // controller: actMin,
-                                                    )
-                                                  ],
-                                                ),
-                                                Column(
-                                                  children: [
-                                                    SizedBox(
-                                                      height: 10,
-                                                    ),
-                                                    Text("Act(Hour)",
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold)),
-                                                    SizedBox(
-                                                      height: 20,
-                                                    ),
-                                                    SmallTextfield(
-                                                      readOnly: true,
-                                                      width: 150,
-                                                      value: "dt",
-                                                    )
-                                                  ],
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                )
+                                                    child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 20,
+                                                                right: 20,
+                                                                top: 11,
+                                                                bottom: 11),
+                                                        child: Column(
+                                                          children: [
+                                                            Row(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Container(
+                                                                    width: 25,
+                                                                    height: 25,
+                                                                    child: Center(
+                                                                        child: Text(
+                                                                            "${index + 1}",
+                                                                            style: TextStyle(
+                                                                                fontSize:
+                                                                                    15,
+                                                                                color:
+                                                                                    light))),
+                                                                    decoration: BoxDecoration(
+                                                                        color:
+                                                                            blue,
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(100))),
+                                                                Column(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height:
+                                                                          10,
+                                                                    ),
+                                                                    Text(
+                                                                        "Mesin",
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.bold)),
+                                                                    SizedBox(
+                                                                      height:
+                                                                          20,
+                                                                    ),
+                                                                    SmallTextfield(
+                                                                      value:
+                                                                          mesin,
+                                                                      readOnly:
+                                                                          true,
+                                                                      width:
+                                                                          150,
+                                                                      hint:
+                                                                          'input2',
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                                Column(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height:
+                                                                          10,
+                                                                    ),
+                                                                    Text(
+                                                                        "Reason Breakdown",
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.bold)),
+                                                                    SizedBox(
+                                                                      height:
+                                                                          20,
+                                                                    ),
+                                                                    SmallTextfield(
+                                                                      width:
+                                                                          150,
+                                                                      value:
+                                                                          reason,
+                                                                      readOnly:
+                                                                          true,
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                                Column(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height:
+                                                                          10,
+                                                                    ),
+                                                                    Text("Freq",
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.bold)),
+                                                                    SizedBox(
+                                                                      height:
+                                                                          20,
+                                                                    ),
+                                                                    SmallTextfield(
+                                                                      width: 80,
+                                                                      // controller: form,
+                                                                      value:
+                                                                          freq,
+                                                                      readOnly:
+                                                                          true,
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                                Column(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height:
+                                                                          10,
+                                                                    ),
+                                                                    Text(
+                                                                        "BD Hour(Min)",
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.bold)),
+                                                                    SizedBox(
+                                                                      height:
+                                                                          20,
+                                                                    ),
+                                                                    SmallTextfield(
+                                                                      width:
+                                                                          150,
+                                                                      value:
+                                                                          bdMin,
+                                                                      readOnly:
+                                                                          true,
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                                Column(
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height:
+                                                                          10,
+                                                                    ),
+                                                                    Text(
+                                                                        "BD Hour",
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.bold)),
+                                                                    SizedBox(
+                                                                      height:
+                                                                          20,
+                                                                    ),
+                                                                    SmallTextfield(
+                                                                      width:
+                                                                          150,
+                                                                      // controller: form3,
+                                                                      readOnly:
+                                                                          true,
+                                                                      value:
+                                                                          bdHour,
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 10,
+                                                                )
+                                                              ],
+                                                            ),
+                                                            SizedBox(
+                                                                height: 25),
+                                                            Row(children: [
+                                                              SizedBox(
+                                                                width: 10,
+                                                              ),
+                                                              Column(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Container(
+                                                                        margin: EdgeInsets.only(
+                                                                            left:
+                                                                                70),
+                                                                        child: Text(
+                                                                            "Problem",
+                                                                            style:
+                                                                                TextStyle(fontWeight: FontWeight.bold))),
+                                                                    SizedBox(
+                                                                        height:
+                                                                            20),
+                                                                    Container(
+                                                                        margin: EdgeInsets.only(
+                                                                            left:
+                                                                                40),
+                                                                        width:
+                                                                            400,
+                                                                        height:
+                                                                            90,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          color:
+                                                                              light,
+                                                                          border: Border.all(
+                                                                              width: 1,
+                                                                              color: dark.withOpacity(0.5)),
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(5),
+                                                                        ),
+                                                                        child:
+                                                                            Padding(
+                                                                          padding: const EdgeInsets.only(
+                                                                              left: 10,
+                                                                              right: 10,
+                                                                              top: 5),
+                                                                          child:
+                                                                              TextFormField(
+                                                                            maxLines:
+                                                                                4,
+                                                                            initialValue:
+                                                                                problem,
+                                                                            readOnly:
+                                                                                true,
+                                                                            decoration:
+                                                                                InputDecoration.collapsed(hintText: "input", hintStyle: TextStyle(fontSize: 13, color: dark.withOpacity(0.3))),
+                                                                          ),
+                                                                        ))
+                                                                  ]),
+                                                            ])
+                                                          ],
+                                                        )))
                                               ],
-                                            ),
-                                          ]),
-                                        ))
-                                  ],
-                                )),
+                                            ));
+                                      });
+                                }),
                             SizedBox(height: 20),
-                            Padding(
-                                padding: EdgeInsets.only(left: 30, top: 50),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Idle Time",
-                                        style: TextStyle(
-                                            color: dark.withOpacity(0.8),
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold)),
-                                    Container(
-                                        margin: EdgeInsets.only(top: 40),
-                                        width: 600,
-                                        decoration: BoxDecoration(
-                                          color: light,
-                                          boxShadow: [
-                                            BoxShadow(
-                                                blurRadius: 4,
-                                                offset: Offset(0, 2),
-                                                color: dark.withOpacity(0.8))
-                                          ],
-                                          border: Border.all(
-                                              width: 3, color: lightGrey),
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 20,
-                                              right: 20,
-                                              top: 11,
-                                              bottom: 11),
-                                          child: Column(children: [
-                                            Row(
+                            StreamBuilder(
+                                stream: FirebaseFirestore.instance
+                                    .collection('downtime')
+                                    .where("product_id", isEqualTo: widget.id)
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  final doc = snapshot.data!.docs;
+                                  if (!snapshot.hasData) {
+                                    return Text("");
+                                  }
+
+                                  return ListView.builder(
+                                      itemCount: doc.length,
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        String dt = doc[index]["dt"];
+                                        String subDt = doc[index]["subDt"];
+                                        String std = doc[index]["std"];
+                                        String actMin = doc[index]["actMin"];
+                                        String actHour = doc[index]["actHour"];
+
+                                        return Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 30, top: 50),
+                                            child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
                                               children: [
+                                                Text("Down Time",
+                                                    style: TextStyle(
+                                                        color: dark
+                                                            .withOpacity(0.8),
+                                                        fontSize: 25,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
                                                 Container(
-                                                    width: 25,
-                                                    height: 25,
+                                                    width: 900,
                                                     decoration: BoxDecoration(
-                                                        color: blue,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(100)),
-                                                    child: Center(
-                                                        child: Text(
-                                                      "3",
-                                                      style: TextStyle(
-                                                          color: light),
-                                                    ))),
-                                                Column(
-                                                  children: [
-                                                    SizedBox(
-                                                      height: 10,
+                                                      color: light,
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                            blurRadius: 4,
+                                                            offset:
+                                                                Offset(0, 2),
+                                                            color: dark
+                                                                .withOpacity(
+                                                                    0.8))
+                                                      ],
+                                                      border: Border.all(
+                                                          width: 3,
+                                                          color: lightGrey),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
                                                     ),
-                                                    Text("Idle Desc",
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold)),
-                                                    SizedBox(
-                                                      height: 20,
-                                                    ),
-                                                    SmallTextfield(
-                                                      readOnly: true,
-                                                      width: 150,
-                                                      value: "sss",
-                                                      // controller: idleMin,
-                                                    )
-                                                  ],
-                                                ),
-                                                Column(
-                                                  children: [
-                                                    SizedBox(
-                                                      height: 10,
-                                                    ),
-                                                    Text("Idle(Min)",
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold)),
-                                                    SizedBox(
-                                                      height: 20,
-                                                    ),
-                                                    SmallTextfield(
-                                                      readOnly: true,
-                                                      width: 150,
-                                                      value: "sss",
-                                                      // controller: idleMin,
-                                                    )
-                                                  ],
-                                                ),
-                                                Column(
-                                                  children: [
-                                                    SizedBox(
-                                                      height: 10,
-                                                    ),
-                                                    Text("Idle(Hour)",
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold)),
-                                                    SizedBox(
-                                                      height: 20,
-                                                    ),
-                                                    SmallTextfield(
-                                                      width: 150,
-                                                      readOnly: true,
-                                                      value: "idle",
-                                                    )
-                                                  ],
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                )
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 20,
+                                                              right: 20,
+                                                              top: 11,
+                                                              bottom: 11),
+                                                      child: Column(children: [
+                                                        Row(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Container(
+                                                              child: Center(
+                                                                  child: Text(
+                                                                      "${index + 1}",
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              15,
+                                                                          color:
+                                                                              light))),
+                                                              width: 25,
+                                                              height: 25,
+                                                              decoration: BoxDecoration(
+                                                                  color: blue,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              100)),
+                                                            ),
+                                                            Column(
+                                                              children: [
+                                                                SizedBox(
+                                                                  height: 10,
+                                                                ),
+                                                                Text("DT",
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight.bold)),
+                                                                SizedBox(
+                                                                  height: 20,
+                                                                ),
+                                                                SmallTextfield(
+                                                                  value: dt,
+                                                                  readOnly:
+                                                                      true,
+                                                                  width: 150,
+                                                                  // controller: actMin,
+                                                                )
+                                                              ],
+                                                            ),
+                                                            Column(
+                                                              children: [
+                                                                SizedBox(
+                                                                  height: 10,
+                                                                ),
+                                                                Text("Sub DT",
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight.bold)),
+                                                                SizedBox(
+                                                                  height: 20,
+                                                                ),
+                                                                SmallTextfield(
+                                                                  value: subDt,
+                                                                  readOnly:
+                                                                      true,
+                                                                  width: 150,
+                                                                  // controller: actMin,
+                                                                )
+                                                              ],
+                                                            ),
+                                                            Column(
+                                                              children: [
+                                                                SizedBox(
+                                                                  height: 10,
+                                                                ),
+                                                                Text("STD",
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight.bold)),
+                                                                SizedBox(
+                                                                  height: 20,
+                                                                ),
+                                                                SmallTextfield(
+                                                                  value: std,
+                                                                  readOnly:
+                                                                      true,
+                                                                  width: 80,
+                                                                  // controller: actMin,
+                                                                )
+                                                              ],
+                                                            ),
+                                                            Column(
+                                                              children: [
+                                                                SizedBox(
+                                                                  height: 10,
+                                                                ),
+                                                                Text("Act(Min)",
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight.bold)),
+                                                                SizedBox(
+                                                                  height: 20,
+                                                                ),
+                                                                SmallTextfield(
+                                                                  value: actMin,
+                                                                  readOnly:
+                                                                      true,
+                                                                  width: 150,
+                                                                  // controller: actMin,
+                                                                )
+                                                              ],
+                                                            ),
+                                                            Column(
+                                                              children: [
+                                                                SizedBox(
+                                                                  height: 10,
+                                                                ),
+                                                                Text(
+                                                                    "Act(Hour)",
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight.bold)),
+                                                                SizedBox(
+                                                                  height: 20,
+                                                                ),
+                                                                SmallTextfield(
+                                                                  readOnly:
+                                                                      true,
+                                                                  width: 150,
+                                                                  value:
+                                                                      actHour,
+                                                                )
+                                                              ],
+                                                            ),
+                                                            SizedBox(
+                                                              width: 10,
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ]),
+                                                    ))
                                               ],
-                                            ),
-                                          ]),
-                                        )),
-                                    SizedBox(height: 30),
-                                  ],
-                                )),
-                            Center(
-                              child: InkWell(
-                                onTap: () {
-                                  for (int i = 0; i < bLength; i++) {
-                                    var a = freq[i].text;
-                                    var b = dbMin[i].text;
-                                    var c = problem[i].text;
-                                    var d = mesin[i];
-                                    var e = reason[i];
-
-                                    print(a);
-                                    print(b);
-                                    print(c);
-                                    print(d);
-                                    print(e);
+                                            ));
+                                      });
+                                }),
+                            SizedBox(height: 20),
+                            StreamBuilder(
+                                stream: FirebaseFirestore.instance
+                                    .collection('idle_time')
+                                    .where("product_id", isEqualTo: widget.id)
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  final doc = snapshot.data!.docs;
+                                  if (!snapshot.hasData) {
+                                    return Text("");
                                   }
-                                  freq.add(TextEditingController());
-                                },
-                                child: Container(
-                                  margin: EdgeInsets.all(25),
-                                  decoration: BoxDecoration(
-                                      color: active,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  width: 120,
-                                ),
-                              ),
-                            )
+
+                                  return ListView.builder(
+                                      itemCount: doc.length,
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        String idleDes = doc[index]["idleDesc"];
+                                        String idleMin = doc[index]["idleMin"];
+                                        String idleHour =
+                                            doc[index]["idleHour"];
+
+                                        return Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 30, top: 50),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text("Idle Time",
+                                                    style: TextStyle(
+                                                        color: dark
+                                                            .withOpacity(0.8),
+                                                        fontSize: 25,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                Container(
+                                                    margin: EdgeInsets.only(
+                                                        top: 40),
+                                                    width: 600,
+                                                    decoration: BoxDecoration(
+                                                      color: light,
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                            blurRadius: 4,
+                                                            offset:
+                                                                Offset(0, 2),
+                                                            color: dark
+                                                                .withOpacity(
+                                                                    0.8))
+                                                      ],
+                                                      border: Border.all(
+                                                          width: 3,
+                                                          color: lightGrey),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                    ),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 20,
+                                                              right: 20,
+                                                              top: 11,
+                                                              bottom: 11),
+                                                      child: Column(children: [
+                                                        Row(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Container(
+                                                                width: 25,
+                                                                height: 25,
+                                                                decoration: BoxDecoration(
+                                                                    color: blue,
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            100)),
+                                                                child: Center(
+                                                                    child: Text(
+                                                                  "${index + 1}",
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                          light),
+                                                                ))),
+                                                            Column(
+                                                              children: [
+                                                                SizedBox(
+                                                                  height: 10,
+                                                                ),
+                                                                Text(
+                                                                    "Idle Desc",
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight.bold)),
+                                                                SizedBox(
+                                                                  height: 20,
+                                                                ),
+                                                                SmallTextfield(
+                                                                  readOnly:
+                                                                      true,
+                                                                  width: 150,
+                                                                  value:
+                                                                      idleDes,
+                                                                  // controller: idleMin,
+                                                                )
+                                                              ],
+                                                            ),
+                                                            Column(
+                                                              children: [
+                                                                SizedBox(
+                                                                  height: 10,
+                                                                ),
+                                                                Text(
+                                                                    "Idle(Min)",
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight.bold)),
+                                                                SizedBox(
+                                                                  height: 20,
+                                                                ),
+                                                                SmallTextfield(
+                                                                  readOnly:
+                                                                      true,
+                                                                  width: 150,
+                                                                  value:
+                                                                      idleMin,
+                                                                  // controller: idleMin,
+                                                                )
+                                                              ],
+                                                            ),
+                                                            Column(
+                                                              children: [
+                                                                SizedBox(
+                                                                  height: 10,
+                                                                ),
+                                                                Text(
+                                                                    "Idle(Hour)",
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight.bold)),
+                                                                SizedBox(
+                                                                  height: 20,
+                                                                ),
+                                                                SmallTextfield(
+                                                                  width: 150,
+                                                                  readOnly:
+                                                                      true,
+                                                                  value:
+                                                                      idleHour,
+                                                                )
+                                                              ],
+                                                            ),
+                                                            SizedBox(
+                                                              width: 10,
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ]),
+                                                    )),
+                                                SizedBox(height: 30),
+                                              ],
+                                            ));
+                                      });
+                                }),
                           ],
                         ))),
               ]),
