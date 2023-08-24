@@ -60,7 +60,8 @@ class _DashboardProductivityState extends State<DashboardProductivity> {
                     ),
                     Column(
                       children: [
-                        Text("Filter Week"),
+                        Text("Filter Week",
+                            style: TextStyle(fontWeight: FontWeight.bold)),
                         SizedBox(
                           height: 5,
                         ),
@@ -113,7 +114,10 @@ class _DashboardProductivityState extends State<DashboardProductivity> {
                     ),
                     Column(
                       children: [
-                        Text("Filter Year"),
+                        Text(
+                          "Filter Year",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                         SizedBox(
                           height: 5,
                         ),
@@ -162,9 +166,12 @@ class _DashboardProductivityState extends State<DashboardProductivity> {
                           style: TextStyle(
                               color: light,
                               fontWeight: FontWeight.bold,
-                              fontSize: 18),
+                              fontSize: 30),
                         ),
                       )),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 Column(
                   children: [
@@ -172,6 +179,7 @@ class _DashboardProductivityState extends State<DashboardProductivity> {
                       children: [
                         // Bar 1
                         ProductivityContainer(
+                          proTitle: 'Production Archievement (CTN)',
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(
@@ -265,6 +273,7 @@ class _DashboardProductivityState extends State<DashboardProductivity> {
                         ),
                         // Bar 2
                         ProductivityContainer(
+                          proTitle: 'LE Process',
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(
@@ -362,6 +371,7 @@ class _DashboardProductivityState extends State<DashboardProductivity> {
                       children: [
                         // Bar 3
                         ProductivityContainer(
+                          proTitle: 'LE Fillpack',
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(
@@ -455,6 +465,7 @@ class _DashboardProductivityState extends State<DashboardProductivity> {
                         ),
                         // Bar 4
                         ProductivityContainer(
+                          proTitle: 'LP Process',
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(

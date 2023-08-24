@@ -313,13 +313,13 @@ class _DashboardOverviewState extends State<DashboardOverview> {
           ]),
         ),
         SizedBox(
-          height: 15,
+          height: 20,
         ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             DashboardContainer(
-                width: 900,
+                width: 1000,
                 child: Stack(children: [
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
