@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:indlkt_proj/screens/login_screen/widgets/chaptcha.dart';
 import 'package:indlkt_proj/widgets/side_bar.dart';
 import 'package:local_captcha/local_captcha.dart';
-
+import 'package:marquee/marquee.dart';
 import 'package:rive/rive.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -108,6 +108,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double mediaQueryWidth = MediaQuery.of(context).size.width;
+    double mediaQueryHeight = MediaQuery.of(context).size.height;
+    print(mediaQueryWidth);
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -118,35 +121,38 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  width: 700,
+                  width: mediaQueryWidth * 0.519,
                   child: Stack(
                     children: [
                       Positioned(
                         child: Container(
-                          width: 2500,
-                          height: 700,
+                          width: mediaQueryWidth * 1.852,
+                          height: mediaQueryWidth * 0.519,
                           child: RiveAnimation.asset("assets/RiveAssets/c.riv"),
                         ),
                       ),
                       Container(
-                        width: 700,
+                        width: mediaQueryWidth * 0.519,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 31),
+                              padding: EdgeInsets.only(
+                                  left: mediaQueryWidth * 0.023),
                               child: Container(
                                 color: Colors.white,
-                                width: 170.8,
-                                height: 25.2,
+                                width: mediaQueryWidth * 0.126,
+                                height: mediaQueryWidth * 0.0186,
                                 child: Image(
                                   image: AssetImage("assets/images/logo.png"),
                                 ),
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 91.7, top: 62.3, bottom: 21),
+                              padding: EdgeInsets.only(
+                                  left: mediaQueryWidth * 0.068,
+                                  top: mediaQueryWidth * 0.046,
+                                  bottom: mediaQueryWidth * 0.0156),
                               child: Container(
                                 child: Center(
                                   child: Text(
@@ -155,19 +161,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                       textStyle: Theme.of(context)
                                           .textTheme
                                           .displayMedium,
-                                      fontSize: 28,
+                                      fontSize: mediaQueryWidth * 0.0190,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
-                                width: 543.2,
-                                height: 32.2,
+                                width: mediaQueryWidth * 0.403,
+                                height: mediaQueryWidth * 0.024,
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.only(left: 120),
-                              width: 404.6,
-                              height: 542.3,
+                              margin: EdgeInsets.only(
+                                  left: mediaQueryWidth * 0.089),
+                              width: mediaQueryWidth * 0.3,
+                              height: mediaQueryWidth * 0.402,
                               child: Stack(
                                 children: [
                                   // Positioned(
@@ -184,11 +191,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                     bottom: 0,
                                     left: 0,
                                     child: Container(
-                                      width: 380.8,
-                                      height: 511.5,
+                                      width: mediaQueryWidth * 0.282,
+                                      height: mediaQueryWidth * 0.379,
                                       decoration: BoxDecoration(
                                         color: active,
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius: BorderRadius.circular(
+                                            mediaQueryWidth * 0.0223),
                                         boxShadow: [
                                           BoxShadow(
                                               color: active,
@@ -200,14 +208,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                   ),
                                   Positioned(
-                                    bottom: 14,
-                                    left: 14,
+                                    bottom: mediaQueryWidth * 0.0104,
+                                    left: mediaQueryWidth * 0.0104,
                                     child: Container(
-                                      width: 380.8,
-                                      height: 512.5,
+                                      width: mediaQueryWidth * 0.282,
+                                      height: mediaQueryWidth * 0.3796,
                                       decoration: BoxDecoration(
                                         color: blue,
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius: BorderRadius.circular(
+                                            mediaQueryWidth * 0.0223),
                                         boxShadow: [
                                           BoxShadow(
                                               color: blue,
@@ -222,11 +231,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                     top: 0,
                                     right: 0,
                                     child: Container(
-                                      width: 380.8,
-                                      height: 512.5,
+                                      width: mediaQueryWidth * 0.282,
+                                      height: mediaQueryWidth * 0.38,
                                       decoration: BoxDecoration(
                                         color: light,
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius: BorderRadius.circular(
+                                            mediaQueryWidth * 0.0223),
                                         boxShadow: [
                                           BoxShadow(
                                               color: Colors.black,
@@ -242,25 +252,30 @@ class _LoginScreenState extends State<LoginScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 37.1, top: 25.7),
+                                              padding: EdgeInsets.only(
+                                                  left: mediaQueryWidth * 0.028,
+                                                  top: mediaQueryWidth * 0.019),
                                               child: Text(
                                                 "Login",
                                                 style: GoogleFonts.montserrat(
                                                   textStyle: Theme.of(context)
                                                       .textTheme
                                                       .displayMedium,
-                                                  fontSize: 25.2,
+                                                  fontSize:
+                                                      mediaQueryWidth * 0.0188,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 27.937,
-                                                  right: 16.905,
-                                                  top: 20.59,
-                                                  bottom: 16.93),
+                                              padding: EdgeInsets.only(
+                                                  left:
+                                                      mediaQueryWidth * 0.0207,
+                                                  right:
+                                                      mediaQueryWidth * 0.0125,
+                                                  top: mediaQueryWidth * 0.015,
+                                                  bottom:
+                                                      mediaQueryWidth * 0.0125),
                                               child: Container(
                                                 child: TextFormField(
                                                   validator: (value) {
@@ -291,20 +306,22 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       prefixIcon: Icon(Icons
                                                           .perm_contact_calendar_outlined),
                                                       hintText: 'email',
-                                                      border:
-                                                          OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10))),
+                                                      border: OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  mediaQueryWidth *
+                                                                      0.008))),
                                                 ),
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 27.937,
-                                                  right: 16.905,
-                                                  bottom: 16.93),
+                                              padding: EdgeInsets.only(
+                                                  left:
+                                                      mediaQueryWidth * 0.0207,
+                                                  right:
+                                                      mediaQueryWidth * 0.0125,
+                                                  bottom:
+                                                      mediaQueryWidth * 0.0125),
                                               child: Container(
                                                 child: TextFormField(
                                                   obscureText: _obsecureText,
@@ -345,12 +362,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                 .visibility_off),
                                                       ),
                                                       hintText: 'password',
-                                                      border:
-                                                          OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10))),
+                                                      border: OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  mediaQueryWidth *
+                                                                      0.008))),
                                                 ),
                                               ),
                                             ),
@@ -359,10 +375,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                    left: 27.937,
-                                                    top: 10.8,
+                                                  padding: EdgeInsets.only(
+                                                    left: mediaQueryWidth *
+                                                        0.0207,
+                                                    top: mediaQueryWidth *
+                                                        0.0081,
                                                   ),
                                                   child: Text("Chaptcha",
                                                       style: GoogleFonts.rubik(
@@ -370,13 +387,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                                             Theme.of(context)
                                                                 .textTheme
                                                                 .displayMedium,
-                                                        fontSize: 10,
+                                                        fontSize:
+                                                            mediaQueryWidth *
+                                                                0.008,
                                                       )),
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          bottom: 9.24),
+                                                  padding: EdgeInsets.only(
+                                                      bottom: mediaQueryWidth *
+                                                          0.007),
                                                   child: Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
@@ -388,8 +407,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                 .toString()),
                                                         controller:
                                                             _localCaptchaController,
-                                                        height: 68,
-                                                        width: 191.415,
+                                                        height:
+                                                            mediaQueryWidth *
+                                                                0.0504,
+                                                        width: mediaQueryWidth *
+                                                            0.142,
                                                         backgroundColor:
                                                             Colors.grey[100]!,
                                                         chars: _configFormData
@@ -422,10 +444,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                               ],
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 27.937,
-                                                  right: 16.905,
-                                                  bottom: 16.93),
+                                              padding: EdgeInsets.only(
+                                                  left:
+                                                      mediaQueryWidth * 0.0207,
+                                                  right:
+                                                      mediaQueryWidth * 0.0125,
+                                                  bottom:
+                                                      mediaQueryWidth * 0.0125),
                                               child: TextFormField(
                                                 onEditingComplete: () {
                                                   _submitFormOnLogin();
@@ -440,8 +465,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     hintText: 'Enter Chaptcha',
                                                     border: OutlineInputBorder(
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(10))),
+                                                            BorderRadius.circular(
+                                                                mediaQueryWidth *
+                                                                    0.008))),
                                                 validator: (value) {
                                                   if (value != null &&
                                                       value.isNotEmpty) {
@@ -485,21 +511,26 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       _submitFormOnLogin();
                                                     },
                                                     child: Container(
-                                                        height: 49.266,
-                                                        width: 251.426,
+                                                        height:
+                                                            mediaQueryWidth *
+                                                                0.037,
+                                                        width: mediaQueryWidth *
+                                                            0.186,
                                                         decoration: BoxDecoration(
                                                             color: blue,
                                                             borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10)),
+                                                                BorderRadius.circular(
+                                                                    mediaQueryWidth *
+                                                                        0.008)),
                                                         child: Center(
-                                                          child: const Text(
+                                                          child: Text(
                                                             'Login',
                                                             style: TextStyle(
                                                               color:
                                                                   Colors.white,
-                                                              fontSize: 14,
+                                                              fontSize:
+                                                                  mediaQueryWidth *
+                                                                      0.0104,
                                                             ),
                                                           ),
                                                         )),
@@ -509,8 +540,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                             ),
                                             Container(
                                               child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 3.8),
+                                                padding: EdgeInsets.only(
+                                                    top: mediaQueryWidth *
+                                                        0.0029),
                                                 child: Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
@@ -519,12 +551,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       onTap: () {
                                                         //forgot password screen
                                                       },
-                                                      child: const Text(
+                                                      child: Text(
                                                         'Forgot Password',
                                                         style: TextStyle(
                                                           color: Color.fromARGB(
                                                               255, 0, 0, 0),
-                                                          fontSize: 10.15,
+                                                          fontSize:
+                                                              mediaQueryWidth *
+                                                                  0.0081,
                                                         ),
                                                       ),
                                                     ),
@@ -550,6 +584,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Stack(
                     children: [
                       Container(
+                        width: mediaQueryWidth * 1,
+                        height: mediaQueryHeight * 1,
                         child: const Image(
                           image: AssetImage("assets/images/image_32.png"),
                           fit: BoxFit.cover,
@@ -559,8 +595,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         bottom: 0,
                         right: 0,
                         child: Container(
-                          width: 355,
-                          height: 355,
+                          width: mediaQueryWidth * 0.263,
+                          height: mediaQueryWidth * 0.263,
                           child: RiveAnimation.asset(
                               "assets/RiveAssets/bulat.riv"),
                         ),

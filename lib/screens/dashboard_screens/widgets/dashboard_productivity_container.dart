@@ -6,7 +6,8 @@ import '../../../constants/style.dart';
 
 class ProductivityContainer extends StatefulWidget {
   final dynamic children;
-  const ProductivityContainer({required this.children});
+  final String proTitle;
+  const ProductivityContainer({required this.children, required this.proTitle});
 
   @override
   State<ProductivityContainer> createState() => _ProductivityContainerState();
@@ -33,7 +34,7 @@ class _ProductivityContainerState extends State<ProductivityContainer> {
               padding: const EdgeInsets.only(
                   left: 45, right: 45, top: 10, bottom: 10),
               child: Text(
-                "Product Achievments",
+                widget.proTitle,
                 style: TextStyle(
                     color: light, fontWeight: FontWeight.bold, fontSize: 15),
               ),
