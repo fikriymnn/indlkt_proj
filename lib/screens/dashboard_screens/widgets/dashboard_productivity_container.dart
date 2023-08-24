@@ -17,7 +17,6 @@ class _ProductivityContainerState extends State<ProductivityContainer> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(20),
-      height: 350,
       width: 640,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),

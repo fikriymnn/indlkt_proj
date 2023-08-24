@@ -76,9 +76,9 @@ class _DashboardCardState extends State<DashboardCard> {
                       padding: EdgeInsets.all(10),
                       child: Row(
                         children: [
-                          span("DT ${widget.DT}"),
+                          span("DT ${widget.DT}%"),
                           SizedBox(width: 5),
-                          span("DB ${widget.BD}")
+                          span("DB ${widget.BD}%")
                         ],
                       ))
                 ],

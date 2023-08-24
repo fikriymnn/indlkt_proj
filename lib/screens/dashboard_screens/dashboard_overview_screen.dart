@@ -117,14 +117,82 @@ class _DashboardOverviewState extends State<DashboardOverview> {
       children: [
         Row(
           children: [
-            DashboardCard(
-                color: active,
-                Product: "SKM",
-                LE: 9.2,
-                LP: 9.2,
-                ProdAcv: 9.2,
-                DT: 9.2,
-                BD: 9.2),
+            StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection('product')
+                    .where("createdAt", isGreaterThanOrEqualTo: FromFix)
+                    .where("createdAt", isLessThanOrEqualTo: ToFix)
+
+                    // .where("product",
+                    //     isEqualTo:
+                    //         "Process_SKM")
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Text("no Data");
+                  }
+
+                  final doc = snapshot.data!.docs;
+
+                  var leCuy = List.generate(doc.length, (index) {
+                    double x = double.parse(doc[index]['le']);
+                    String z = x.toStringAsFixed(0);
+                    int a = int.parse(z);
+
+                    return a;
+                  }).fold(0, (p, c) => p + c);
+                  var lpCuy = List.generate(doc.length, (index) {
+                    double x = double.parse(doc[index]['lp']);
+                    String z = x.toStringAsFixed(0);
+                    int a = int.parse(z);
+
+                    return a;
+                  }).fold(0, (p, c) => p + c);
+                  var bdCuy = List.generate(doc.length, (index) {
+                    double x = double.parse(doc[index]['bd']);
+                    String z = x.toStringAsFixed(0);
+                    int a = int.parse(z);
+
+                    return a;
+                  }).fold(0, (p, c) => p + c);
+                  var dtCuy = List.generate(doc.length, (index) {
+                    double x = double.parse(doc[index]['dt']);
+                    String z = x.toStringAsFixed(0);
+                    int a = int.parse(z);
+
+                    return a;
+                  }).fold(0, (p, c) => p + c);
+
+                  var actualO = List.generate(doc.length, (index) {
+                    double x = double.parse(doc[index]['actual_output']);
+                    String z = x.toStringAsFixed(0);
+                    int a = int.parse(z);
+
+                    return a;
+                  }).fold(0, (p, c) => p + c);
+                  var planingO = List.generate(doc.length, (index) {
+                    double x = double.parse(doc[index]['planing_output']);
+                    String z = x.toStringAsFixed(0);
+                    int a = int.parse(z);
+
+                    return a;
+                  }).fold(0, (p, c) => p + c);
+
+                  double LeFix = leCuy / doc.length;
+                  double LpFix = lpCuy / doc.length;
+                  double dtFix = dtCuy / doc.length;
+                  double bdFix = bdCuy / doc.length;
+                  double Skm = actualO / planingO;
+                  double skmFix = Skm * 100;
+                  return DashboardCard(
+                      color: active,
+                      Product: "SKM",
+                      LE: LeFix.toStringAsFixed(0),
+                      LP: LpFix.toStringAsFixed(0),
+                      ProdAcv: skmFix,
+                      DT: dtFix.toStringAsFixed(0),
+                      BD: bdFix.toStringAsFixed(0));
+                }),
             SizedBox(width: width * 0.042),
             DashboardCard(
                 color: Color(0xff2BB8C1),

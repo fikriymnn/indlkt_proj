@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:table_plus/table_plus.dart';
@@ -47,6 +48,18 @@ class _tabel_idletimeState extends State<tabel_idletime> {
       ));
     }
     return values;
+  }
+
+  getData() {
+    FirebaseFirestore.instance.collection("product").get().then(
+      (querySnapshot) {
+        print("Successfully completed");
+        for (var docSnapshot in querySnapshot.docs) {
+          print('${docSnapshot.id} => ${docSnapshot.data()}');
+        }
+      },
+      onError: (e) => print("Error completing: $e"),
+    );
   }
 
   List<DataRow> dataRowsValues() {
