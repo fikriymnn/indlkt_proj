@@ -157,16 +157,36 @@ class _tabel_downtimeState extends State<tabel_downtime> {
     names = List.generate(
         dataDowntime.length,
         (index) => Name(
-            date: dataDowntime[index]["date"],
-            product: dataDowntime[index]["product"],
-            departement: dataDowntime[index]["departement"],
-            shift: dataDowntime[index]["shift"],
-            line: dataDowntime[index]["line"],
-            dt: dataDowntime[index]["dt"],
-            subDt: dataDowntime[index]["subDt"],
-            STD: dataDowntime[index]["std"],
-            actMin: dataDowntime[index]["actMin"],
-            actHour: dataDowntime[index]["actHour"]));
+            date: dataDowntime[index]["date"] == null
+                ? "-"
+                : dataDowntime[index]["date"],
+            product: dataDowntime[index]["product"] == null
+                ? "-"
+                : dataDowntime[index]["product"],
+            departement: dataDowntime[index]["departement"] == null
+                ? "-"
+                : dataDowntime[index]["departement"],
+            shift: dataDowntime[index]["shift"] == null
+                ? "-"
+                : dataDowntime[index]["shift"],
+            line: dataDowntime[index]["line"] == null
+                ? "-"
+                : dataDowntime[index]["line"],
+            dt: dataDowntime[index]["dt"] == null
+                ? "-"
+                : dataDowntime[index]["dt"],
+            subDt: dataDowntime[index]["subDt"] == null
+                ? "-"
+                : dataDowntime[index]["subDt"],
+            STD: dataDowntime[index]["std"] == null
+                ? "-"
+                : dataDowntime[index]["std"],
+            actMin: dataDowntime[index]["actMin"] == null
+                ? "-"
+                : dataDowntime[index]["actMin"],
+            actHour: dataDowntime[index]["actHour"] == null
+                ? "-"
+                : dataDowntime[index]["actHour"]));
 
     setState(() {
       searchNameList = names;

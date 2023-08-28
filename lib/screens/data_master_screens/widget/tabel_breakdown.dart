@@ -164,17 +164,39 @@ class _tabel_breakdownState extends State<tabel_breakdown> {
     names = List.generate(
         dataBreakdown.length,
         (index) => Name(
-            date: dataBreakdown[index]["date"],
-            product: dataBreakdown[index]["product"],
-            departement: dataBreakdown[index]["departement"],
-            shift: dataBreakdown[index]["shift"],
-            line: dataBreakdown[index]["line"],
-            mesin: dataBreakdown[index]["mesin"],
-            reasonBreakdown: dataBreakdown[index]["reason"],
-            freq: dataBreakdown[index]["freq"],
-            bdHourMin: dataBreakdown[index]["bdMin"],
-            bdHour: dataBreakdown[index]["bdHour"],
-            problem: dataBreakdown[index]["problem"]));
+            date: dataBreakdown[index]["date"] == null
+                ? "-"
+                : dataBreakdown[index]["date"],
+            product: dataBreakdown[index]["product"] == null
+                ? "-"
+                : dataBreakdown[index]["product"],
+            departement: dataBreakdown[index]["departement"] == null
+                ? "-"
+                : dataBreakdown[index]["departement"],
+            shift: dataBreakdown[index]["shift"] == null
+                ? "-"
+                : dataBreakdown[index]["shift"],
+            line: dataBreakdown[index]["line"] == null
+                ? "-"
+                : dataBreakdown[index]["line"],
+            mesin: dataBreakdown[index]["mesin"] == null
+                ? "-"
+                : dataBreakdown[index]["mesin"],
+            reasonBreakdown: dataBreakdown[index]["reason"] == null
+                ? "-"
+                : dataBreakdown[index]["reason"],
+            freq: dataBreakdown[index]["freq"] == null
+                ? "-"
+                : dataBreakdown[index]["freq"],
+            bdHourMin: dataBreakdown[index]["bdMin"] == null
+                ? "-"
+                : dataBreakdown[index]["bdMin"],
+            bdHour: dataBreakdown[index]["bdHour"] == null
+                ? "-"
+                : dataBreakdown[index]["bdHour"],
+            problem: dataBreakdown[index]["problem"] == null
+                ? "-"
+                : dataBreakdown[index]["problem"]));
 
     setState(() {
       searchNameList = names;

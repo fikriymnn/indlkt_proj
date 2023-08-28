@@ -4,40 +4,42 @@ import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.da
 
 import '../../../constants/style.dart';
 
-class Detail1 extends StatefulWidget {
-  const Detail1({super.key, this.selectedShift, this.dropdownValue});
+class Detail3 extends StatefulWidget {
+  const Detail3({super.key, this.selectedShift, this.dropdownValue});
   final dynamic selectedShift, dropdownValue;
 
   @override
-  State<Detail1> createState() => _Detail1State();
+  State<Detail3> createState() => _Detail3State();
 }
 
-class _Detail1State extends State<Detail1> {
+class _Detail3State extends State<Detail3> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
         stream: widget.selectedShift == 0 && widget.dropdownValue == 0
             ? FirebaseFirestore.instance
                 .collection('product')
-                .where("product", isEqualTo: "Process_SKM")
+                .where("product", isEqualTo: "Filling_Packing_SKM_Tall_Can")
                 .snapshots()
             : widget.selectedShift != 0 && widget.dropdownValue == 0
                 ? FirebaseFirestore.instance
                     .collection('product')
-                    .where("product", isEqualTo: "Process_SKM")
+                    .where("product", isEqualTo: "Filling_Packing_SKM_Tall_Can")
                     .where("shift", isEqualTo: widget.selectedShift.toString())
                     .snapshots()
                 : widget.selectedShift == 0 && widget.dropdownValue != 0
                     ? FirebaseFirestore.instance
                         .collection('product')
-                        .where("product", isEqualTo: "Process_SKM")
+                        .where("product",
+                            isEqualTo: "Filling_Packing_SKM_Tall_Can")
                         .where("line",
                             isEqualTo: widget.dropdownValue.toString())
                         .snapshots()
                     : widget.selectedShift != 0 && widget.dropdownValue != 0
                         ? FirebaseFirestore.instance
                             .collection('product')
-                            .where("product", isEqualTo: "Process_SKM")
+                            .where("product",
+                                isEqualTo: "Filling_Packing_SKM_Tall_Can")
                             .where("shift",
                                 isEqualTo: widget.selectedShift.toString())
                             .where("line",
@@ -109,7 +111,7 @@ class _Detail1State extends State<Detail1> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 20),
-                    Text("Process SKM"),
+                    Text("Filling Packing SKM Tall Can"),
                     SizedBox(
                       height: 5,
                     ),
@@ -130,7 +132,7 @@ class _Detail1State extends State<Detail1> {
                         SizedBox(
                           width: 7,
                         ),
-                        Text("$rataRataFix/45000")
+                        Text("$rataRataFix/1705")
                       ],
                     ),
                   ],

@@ -7,6 +7,7 @@ import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.da
 import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
 import 'package:indlkt_proj/constants/style.dart';
+import 'package:indlkt_proj/screens/dashboard_screens/widgets/detail_pouch.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/detail_proses.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_card.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_container.dart';
@@ -15,6 +16,8 @@ import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_overview
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_overview_chart.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_overview_datepicker.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/dashboard_overview_radial.dart';
+import 'package:indlkt_proj/screens/dashboard_screens/widgets/detail_sachet.dart';
+import 'package:indlkt_proj/screens/dashboard_screens/widgets/detail_tall_can.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -102,11 +105,20 @@ class _DashboardOverviewState extends State<DashboardOverview> {
           selectedShift: selectedShift,
         );
       } else if (v == 2) {
-        return Detail().detail2;
+        return Detail2(
+          dropdownValue: dropdownValue,
+          selectedShift: selectedShift,
+        );
       } else if (v == 3) {
-        return Detail().detail3;
+        return Detail3(
+          dropdownValue: dropdownValue,
+          selectedShift: selectedShift,
+        );
       } else if (v == 4) {
-        return Detail().detail4;
+        return Detail4(
+          dropdownValue: dropdownValue,
+          selectedShift: selectedShift,
+        );
       } else {
         return Container();
       }
@@ -189,7 +201,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                       Product: "SKM",
                       LE: LeFix.toStringAsFixed(0),
                       LP: LpFix.toStringAsFixed(0),
-                      ProdAcv: skmFix,
+                      ProdAcv: skmFix.toStringAsFixed(0),
                       DT: dtFix.toStringAsFixed(0),
                       BD: bdFix.toStringAsFixed(0));
                 }),
@@ -546,73 +558,82 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                       children: [
                                         // Radial Bar 1
                                         StreamBuilder(
-                                            stream:
-                                                // selectedShift == 0 &&
-                                                //         dropdownValue == 0
-                                                //     ?
-                                                FirebaseFirestore.instance
+                                            stream: selectedShift == 0 &&
+                                                    dropdownValue == 0
+                                                ? FirebaseFirestore.instance
                                                     .collection('product')
-                                                    .where("createdAt",
-                                                        isGreaterThanOrEqualTo:
-                                                            FromFix)
-                                                    .where("createdAt",
-                                                        isLessThanOrEqualTo:
-                                                            ToFix)
+                                                    // .where("createdAt",
+                                                    //     isGreaterThanOrEqualTo:
+                                                    //         FromFix)
+                                                    // .where("createdAt",
+                                                    //     isLessThanOrEqualTo:
+                                                    //         ToFix)
 
-                                                    // .where("product",
-                                                    //     isEqualTo:
-                                                    //         "Process_SKM")
-                                                    .snapshots(),
-                                            // : selectedShift != 0 &&
-                                            //         dropdownValue == 0
-                                            //     ? FirebaseFirestore.instance
-                                            //         .collection('product')
-                                            //         .where("product",
-                                            //             isEqualTo:
-                                            //                 "Process_SKM")
-                                            //         .where("shift",
-                                            //             isEqualTo: selectedShift
-                                            //                 .toString())
-                                            //         .where("createdAt",
-                                            //             isGreaterThanOrEqualTo:
-                                            //                 FromFix)
-                                            //         .where("createdAt",
-                                            //             isLessThanOrEqualTo:
-                                            //                 ToFix)
-                                            //         .snapshots()
-                                            //     : selectedShift == 0 &&
-                                            //             dropdownValue != 0
-                                            //         ? FirebaseFirestore.instance
-                                            //             .collection(
-                                            //                 'product')
-                                            //             .where("product",
-                                            //                 isEqualTo:
-                                            //                     "Process_SKM")
-                                            //             .where("line",
-                                            //                 isEqualTo: dropdownValue
-                                            //                     .toString())
-                                            //             .where("createdAt",
-                                            //                 isGreaterThanOrEqualTo:
-                                            //                     FromFix)
-                                            //             .where("createdAt",
-                                            //                 isLessThanOrEqualTo:
-                                            //                     ToFix)
-                                            //             .snapshots()
-                                            //         : selectedShift != 0 &&
-                                            //                 dropdownValue !=
-                                            //                     0
-                                            //             ? FirebaseFirestore
-                                            //                 .instance
-                                            //                 .collection(
-                                            //                     'product')
-                                            //                 .where("product",
-                                            //                     isEqualTo: "Process_SKM")
-                                            //                 .where("shift", isEqualTo: selectedShift.toString())
-                                            //                 .where("line", isEqualTo: dropdownValue.toString())
-                                            //                 .where("createdAt", isGreaterThanOrEqualTo: FromFix)
-                                            //                 .where("createdAt", isLessThanOrEqualTo: ToFix)
-                                            //                 .snapshots()
-                                            //             : null,
+                                                    .where("product",
+                                                        isEqualTo:
+                                                            "Process_SKM")
+                                                    .snapshots()
+                                                : selectedShift != 0 &&
+                                                        dropdownValue == 0
+                                                    ? FirebaseFirestore.instance
+                                                        .collection('product')
+                                                        .where("product",
+                                                            isEqualTo:
+                                                                "Process_SKM")
+                                                        .where("shift",
+                                                            isEqualTo:
+                                                                selectedShift
+                                                                    .toString())
+                                                        // .where("createdAt",
+                                                        //     isGreaterThanOrEqualTo:
+                                                        //         FromFix)
+                                                        // .where("createdAt",
+                                                        //     isLessThanOrEqualTo:
+                                                        //         ToFix)
+                                                        .snapshots()
+                                                    : selectedShift == 0 &&
+                                                            dropdownValue != 0
+                                                        ? FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                'product')
+                                                            .where("product",
+                                                                isEqualTo:
+                                                                    "Process_SKM")
+                                                            .where("line",
+                                                                isEqualTo:
+                                                                    dropdownValue
+                                                                        .toString())
+                                                            // .where("createdAt",
+                                                            //     isGreaterThanOrEqualTo:
+                                                            //         FromFix)
+                                                            // .where("createdAt",
+                                                            //     isLessThanOrEqualTo:
+                                                            //         ToFix)
+                                                            .snapshots()
+                                                        : selectedShift != 0 &&
+                                                                dropdownValue !=
+                                                                    0
+                                                            ? FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                    'product')
+                                                                .where(
+                                                                    "product",
+                                                                    isEqualTo:
+                                                                        "Process_SKM")
+                                                                .where("shift",
+                                                                    isEqualTo:
+                                                                        selectedShift
+                                                                            .toString())
+                                                                .where("line",
+                                                                    isEqualTo:
+                                                                        dropdownValue
+                                                                            .toString())
+                                                                // .where("createdAt", isGreaterThanOrEqualTo: FromFix)
+                                                                // .where("createdAt", isLessThanOrEqualTo: ToFix)
+                                                                .snapshots()
+                                                            : null,
                                             builder: (context,
                                                 AsyncSnapshot snapshot) {
                                               if (!snapshot.hasData) {
@@ -786,233 +807,752 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                             }),
 
                                         // Radial Bar 2
-                                        InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              showProgress = 2;
-                                            });
-                                          },
-                                          child: Column(
-                                            children: [
-                                              Center(
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          bottom: 5),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Container(
-                                                        margin: EdgeInsets.only(
-                                                            right: 5),
-                                                        height: 10,
-                                                        width: 10,
-                                                        decoration: BoxDecoration(
-                                                            color: blue,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        20)),
+                                        StreamBuilder(
+                                            stream: selectedShift == 0 &&
+                                                    dropdownValue == 0
+                                                ? FirebaseFirestore.instance
+                                                    .collection('product')
+                                                    // .where("createdAt",
+                                                    //     isGreaterThanOrEqualTo:
+                                                    //         FromFix)
+                                                    // .where("createdAt",
+                                                    //     isLessThanOrEqualTo:
+                                                    //         ToFix)
+
+                                                    .where("product",
+                                                        isEqualTo:
+                                                            "Filling_Packing_SKM_Pouch")
+                                                    .snapshots()
+                                                : selectedShift != 0 &&
+                                                        dropdownValue == 0
+                                                    ? FirebaseFirestore.instance
+                                                        .collection('product')
+                                                        .where("product",
+                                                            isEqualTo:
+                                                                "Filling_Packing_SKM_Pouch")
+                                                        .where("shift",
+                                                            isEqualTo:
+                                                                selectedShift
+                                                                    .toString())
+                                                        // .where("createdAt",
+                                                        //     isGreaterThanOrEqualTo:
+                                                        //         FromFix)
+                                                        // .where("createdAt",
+                                                        //     isLessThanOrEqualTo:
+                                                        //         ToFix)
+                                                        .snapshots()
+                                                    : selectedShift == 0 &&
+                                                            dropdownValue != 0
+                                                        ? FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                'product')
+                                                            .where("product",
+                                                                isEqualTo:
+                                                                    "Filling_Packing_SKM_Pouch")
+                                                            .where("line",
+                                                                isEqualTo:
+                                                                    dropdownValue
+                                                                        .toString())
+                                                            // .where("createdAt",
+                                                            //     isGreaterThanOrEqualTo:
+                                                            //         FromFix)
+                                                            // .where("createdAt",
+                                                            //     isLessThanOrEqualTo:
+                                                            //         ToFix)
+                                                            .snapshots()
+                                                        : selectedShift != 0 &&
+                                                                dropdownValue !=
+                                                                    0
+                                                            ? FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                    'product')
+                                                                .where(
+                                                                    "product",
+                                                                    isEqualTo:
+                                                                        "Filling_Packing_SKM_Pouch")
+                                                                .where("shift",
+                                                                    isEqualTo:
+                                                                        selectedShift
+                                                                            .toString())
+                                                                .where("line",
+                                                                    isEqualTo:
+                                                                        dropdownValue
+                                                                            .toString())
+                                                                // .where("createdAt", isGreaterThanOrEqualTo: FromFix)
+                                                                // .where("createdAt", isLessThanOrEqualTo: ToFix)
+                                                                .snapshots()
+                                                            : null,
+                                            builder: (context,
+                                                AsyncSnapshot snapshot) {
+                                              if (!snapshot.hasData) {
+                                                return Text("no Data");
+                                              }
+
+                                              final doc = snapshot.data.docs;
+
+                                              var leCuy = List.generate(
+                                                  doc.length, (index) {
+                                                double x = double.parse(
+                                                    doc[index]['le']);
+                                                String z = x.toStringAsFixed(0);
+                                                int a = int.parse(z);
+
+                                                return a;
+                                              }).fold(0, (p, c) => p + c);
+                                              var lpCuy = List.generate(
+                                                  doc.length, (index) {
+                                                double x = double.parse(
+                                                    doc[index]['lp']);
+                                                String z = x.toStringAsFixed(0);
+                                                int a = int.parse(z);
+
+                                                return a;
+                                              }).fold(0, (p, c) => p + c);
+                                              var bdCuy = List.generate(
+                                                  doc.length, (index) {
+                                                double x = double.parse(
+                                                    doc[index]['bd']);
+                                                String z = x.toStringAsFixed(0);
+                                                int a = int.parse(z);
+
+                                                return a;
+                                              }).fold(0, (p, c) => p + c);
+                                              var dtCuy = List.generate(
+                                                  doc.length, (index) {
+                                                double x = double.parse(
+                                                    doc[index]['dt']);
+                                                String z = x.toStringAsFixed(0);
+                                                int a = int.parse(z);
+
+                                                return a;
+                                              }).fold(0, (p, c) => p + c);
+
+                                              var actualO = List.generate(
+                                                  doc.length, (index) {
+                                                double x = double.parse(
+                                                    doc[index]
+                                                        ['actual_output']);
+                                                String z = x.toStringAsFixed(0);
+                                                int a = int.parse(z);
+
+                                                return a;
+                                              }).fold(0, (p, c) => p + c);
+                                              var planingO = List.generate(
+                                                  doc.length, (index) {
+                                                double x = double.parse(
+                                                    doc[index]
+                                                        ['planing_output']);
+                                                String z = x.toStringAsFixed(0);
+                                                int a = int.parse(z);
+
+                                                return a;
+                                              }).fold(0, (p, c) => p + c);
+
+                                              double LeFix = leCuy / doc.length;
+                                              double LpFix = lpCuy / doc.length;
+                                              double dtFix = dtCuy / doc.length;
+                                              double bdFix = bdCuy / doc.length;
+                                              double SkmFix =
+                                                  actualO / planingO;
+
+                                              return InkWell(
+                                                onTap: () {
+                                                  setState(() {
+                                                    showProgress = 2;
+                                                  });
+                                                },
+                                                child: Column(
+                                                  children: [
+                                                    Center(
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                bottom: 5),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Container(
+                                                              margin: EdgeInsets
+                                                                  .only(
+                                                                      right: 5),
+                                                              height: 15,
+                                                              width: 15,
+                                                              decoration: BoxDecoration(
+                                                                  color: Color(
+                                                                      0xff872643),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              20)),
+                                                            ),
+                                                            Text(
+                                                              "Filling Packing SKM Pouch",
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                          ],
+                                                        ),
                                                       ),
-                                                      Text(
-                                                          "Filling_packing_SKM"),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Stack(
-                                                alignment: Alignment.center,
-                                                children: [
-                                                  CircularPercentIndicator(
-                                                    radius: 80.0,
-                                                    lineWidth: 16.0,
-                                                    percent: 0.8,
-                                                    center: RadialBar(
-                                                      chartData: [
-                                                        ChartData('David', 25,
-                                                            Colors.cyanAccent),
-                                                        ChartData('Steve', 38,
-                                                            Colors.blueGrey),
-                                                        ChartData(
-                                                            'Jack',
-                                                            34,
-                                                            Colors
-                                                                .deepOrangeAccent),
-                                                        ChartData('Others', 52,
-                                                            Colors.greenAccent)
-                                                      ],
                                                     ),
-                                                    progressColor: Colors.pink,
-                                                  ),
-                                                  CircularPercentIndicator(
-                                                    radius: 30.0,
-                                                    lineWidth: 12,
-                                                    percent: 0.2,
-                                                    center: Text("SKM"),
-                                                    progressColor: Colors.pink,
-                                                  )
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                                    SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    Container(
+                                                      child: Stack(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        children: [
+                                                          Container(
+                                                            child:
+                                                                CircularPercentIndicator(
+                                                              radius: 80.0,
+                                                              lineWidth: 16.0,
+                                                              percent: SkmFix,
+                                                              center: RadialBar(
+                                                                chartData: [
+                                                                  ChartData(
+                                                                      'LE',
+                                                                      LeFix,
+                                                                      blueLE),
+                                                                  ChartData(
+                                                                      'LP',
+                                                                      LpFix,
+                                                                      greenLP),
+                                                                  ChartData(
+                                                                      'DT',
+                                                                      dtFix,
+                                                                      redDT),
+                                                                  ChartData(
+                                                                      'BD',
+                                                                      bdFix,
+                                                                      orangeBD),
+                                                                ],
+                                                              ),
+                                                              progressColor:
+                                                                  const Color(
+                                                                      0xff872643),
+                                                            ),
+                                                          ),
+                                                          CircularPercentIndicator(
+                                                            radius: 30.0,
+                                                            lineWidth: 12,
+                                                            percent: 0.2,
+                                                            center: Text("SKM"),
+                                                            progressColor:
+                                                                redSKM,
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            }),
                                         // Radial Bar 3
-                                        InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              showProgress = 3;
-                                            });
-                                          },
-                                          child: Column(
-                                            children: [
-                                              Center(
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          bottom: 5),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Container(
-                                                        margin: EdgeInsets.only(
-                                                            right: 5),
-                                                        height: 10,
-                                                        width: 10,
-                                                        decoration: BoxDecoration(
-                                                            color: blue,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        20)),
+                                        StreamBuilder(
+                                            stream: selectedShift == 0 &&
+                                                    dropdownValue == 0
+                                                ? FirebaseFirestore.instance
+                                                    .collection('product')
+                                                    // .where("createdAt",
+                                                    //     isGreaterThanOrEqualTo:
+                                                    //         FromFix)
+                                                    // .where("createdAt",
+                                                    //     isLessThanOrEqualTo:
+                                                    //         ToFix)
+
+                                                    .where("product",
+                                                        isEqualTo:
+                                                            "Filling_Packing_SKM_Tall_Can")
+                                                    .snapshots()
+                                                : selectedShift != 0 &&
+                                                        dropdownValue == 0
+                                                    ? FirebaseFirestore.instance
+                                                        .collection('product')
+                                                        .where("product",
+                                                            isEqualTo:
+                                                                "Filling_Packing_SKM_Tall_Can")
+                                                        .where("shift",
+                                                            isEqualTo:
+                                                                selectedShift
+                                                                    .toString())
+                                                        // .where("createdAt",
+                                                        //     isGreaterThanOrEqualTo:
+                                                        //         FromFix)
+                                                        // .where("createdAt",
+                                                        //     isLessThanOrEqualTo:
+                                                        //         ToFix)
+                                                        .snapshots()
+                                                    : selectedShift == 0 &&
+                                                            dropdownValue != 0
+                                                        ? FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                'product')
+                                                            .where("product",
+                                                                isEqualTo:
+                                                                    "Filling_Packing_SKM_Tall_Can")
+                                                            .where("line",
+                                                                isEqualTo:
+                                                                    dropdownValue
+                                                                        .toString())
+                                                            // .where("createdAt",
+                                                            //     isGreaterThanOrEqualTo:
+                                                            //         FromFix)
+                                                            // .where("createdAt",
+                                                            //     isLessThanOrEqualTo:
+                                                            //         ToFix)
+                                                            .snapshots()
+                                                        : selectedShift != 0 &&
+                                                                dropdownValue !=
+                                                                    0
+                                                            ? FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                    'product')
+                                                                .where(
+                                                                    "product",
+                                                                    isEqualTo:
+                                                                        "Filling_Packing_SKM_Tall_Can")
+                                                                .where("shift",
+                                                                    isEqualTo:
+                                                                        selectedShift
+                                                                            .toString())
+                                                                .where("line",
+                                                                    isEqualTo:
+                                                                        dropdownValue
+                                                                            .toString())
+                                                                // .where("createdAt", isGreaterThanOrEqualTo: FromFix)
+                                                                // .where("createdAt", isLessThanOrEqualTo: ToFix)
+                                                                .snapshots()
+                                                            : null,
+                                            builder: (context,
+                                                AsyncSnapshot snapshot) {
+                                              if (!snapshot.hasData) {
+                                                return Text("no Data");
+                                              }
+
+                                              final doc = snapshot.data.docs;
+
+                                              var leCuy = List.generate(
+                                                  doc.length, (index) {
+                                                double x = double.parse(
+                                                    doc[index]['le']);
+                                                String z = x.toStringAsFixed(0);
+                                                int a = int.parse(z);
+
+                                                return a;
+                                              }).fold(0, (p, c) => p + c);
+                                              var lpCuy = List.generate(
+                                                  doc.length, (index) {
+                                                double x = double.parse(
+                                                    doc[index]['lp']);
+                                                String z = x.toStringAsFixed(0);
+                                                int a = int.parse(z);
+
+                                                return a;
+                                              }).fold(0, (p, c) => p + c);
+                                              var bdCuy = List.generate(
+                                                  doc.length, (index) {
+                                                double x = double.parse(
+                                                    doc[index]['bd']);
+                                                String z = x.toStringAsFixed(0);
+                                                int a = int.parse(z);
+
+                                                return a;
+                                              }).fold(0, (p, c) => p + c);
+                                              var dtCuy = List.generate(
+                                                  doc.length, (index) {
+                                                double x = double.parse(
+                                                    doc[index]['dt']);
+                                                String z = x.toStringAsFixed(0);
+                                                int a = int.parse(z);
+
+                                                return a;
+                                              }).fold(0, (p, c) => p + c);
+
+                                              var actualO = List.generate(
+                                                  doc.length, (index) {
+                                                double x = double.parse(
+                                                    doc[index]
+                                                        ['actual_output']);
+                                                String z = x.toStringAsFixed(0);
+                                                int a = int.parse(z);
+
+                                                return a;
+                                              }).fold(0, (p, c) => p + c);
+                                              var planingO = List.generate(
+                                                  doc.length, (index) {
+                                                double x = double.parse(
+                                                    doc[index]
+                                                        ['planing_output']);
+                                                String z = x.toStringAsFixed(0);
+                                                int a = int.parse(z);
+
+                                                return a;
+                                              }).fold(0, (p, c) => p + c);
+
+                                              double LeFix = leCuy / doc.length;
+                                              double LpFix = lpCuy / doc.length;
+                                              double dtFix = dtCuy / doc.length;
+                                              double bdFix = bdCuy / doc.length;
+                                              double SkmFix =
+                                                  actualO / planingO;
+
+                                              return InkWell(
+                                                onTap: () {
+                                                  setState(() {
+                                                    showProgress = 3;
+                                                  });
+                                                },
+                                                child: Column(
+                                                  children: [
+                                                    Center(
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                bottom: 5),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Container(
+                                                              margin: EdgeInsets
+                                                                  .only(
+                                                                      right: 5),
+                                                              height: 15,
+                                                              width: 15,
+                                                              decoration: BoxDecoration(
+                                                                  color: Color(
+                                                                      0xff194B6D),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              20)),
+                                                            ),
+                                                            Text(
+                                                              "Filling Packing SKM Tall Can",
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                          ],
+                                                        ),
                                                       ),
-                                                      Text(
-                                                          "Filling_packing_SKM"),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Stack(
-                                                alignment: Alignment.center,
-                                                children: [
-                                                  CircularPercentIndicator(
-                                                    radius: 80.0,
-                                                    lineWidth: 16.0,
-                                                    percent: 0.8,
-                                                    center: RadialBar(
-                                                      chartData: [
-                                                        ChartData('David', 25,
-                                                            Colors.cyanAccent),
-                                                        ChartData('Steve', 38,
-                                                            Colors.blueGrey),
-                                                        ChartData(
-                                                            'Jack',
-                                                            34,
-                                                            Colors
-                                                                .deepOrangeAccent),
-                                                        ChartData('Others', 52,
-                                                            Colors.greenAccent)
-                                                      ],
                                                     ),
-                                                    progressColor: Colors.pink,
-                                                  ),
-                                                  CircularPercentIndicator(
-                                                    radius: 30.0,
-                                                    lineWidth: 12,
-                                                    percent: 0.2,
-                                                    center: Text("SKM"),
-                                                    progressColor: Colors.pink,
-                                                  )
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                                    SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    Container(
+                                                      child: Stack(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        children: [
+                                                          Container(
+                                                            child:
+                                                                CircularPercentIndicator(
+                                                              radius: 80.0,
+                                                              lineWidth: 16.0,
+                                                              percent: SkmFix,
+                                                              center: RadialBar(
+                                                                chartData: [
+                                                                  ChartData(
+                                                                      'LE',
+                                                                      LeFix,
+                                                                      blueLE),
+                                                                  ChartData(
+                                                                      'LP',
+                                                                      LpFix,
+                                                                      greenLP),
+                                                                  ChartData(
+                                                                      'DT',
+                                                                      dtFix,
+                                                                      redDT),
+                                                                  ChartData(
+                                                                      'BD',
+                                                                      bdFix,
+                                                                      orangeBD),
+                                                                ],
+                                                              ),
+                                                              progressColor:
+                                                                  const Color(
+                                                                      0xff194B6D),
+                                                            ),
+                                                          ),
+                                                          CircularPercentIndicator(
+                                                            radius: 30.0,
+                                                            lineWidth: 12,
+                                                            percent: 0.2,
+                                                            center: Text("SKM"),
+                                                            progressColor:
+                                                                redSKM,
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            }),
                                         // Radial Bar 4
-                                        InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              showProgress = 4;
-                                            });
-                                          },
-                                          child: Column(
-                                            children: [
-                                              Center(
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          bottom: 5),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Container(
-                                                        margin: EdgeInsets.only(
-                                                            right: 5),
-                                                        height: 10,
-                                                        width: 10,
-                                                        decoration: BoxDecoration(
-                                                            color: blue,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        20)),
+                                        StreamBuilder(
+                                            stream: selectedShift == 0 &&
+                                                    dropdownValue == 0
+                                                ? FirebaseFirestore.instance
+                                                    .collection('product')
+                                                    // .where("createdAt",
+                                                    //     isGreaterThanOrEqualTo:
+                                                    //         FromFix)
+                                                    // .where("createdAt",
+                                                    //     isLessThanOrEqualTo:
+                                                    //         ToFix)
+
+                                                    .where("product",
+                                                        isEqualTo:
+                                                            "Filling_Packing_SKM_Sachet")
+                                                    .snapshots()
+                                                : selectedShift != 0 &&
+                                                        dropdownValue == 0
+                                                    ? FirebaseFirestore.instance
+                                                        .collection('product')
+                                                        .where("product",
+                                                            isEqualTo:
+                                                                "Filling_Packing_SKM_Sachet")
+                                                        .where("shift",
+                                                            isEqualTo:
+                                                                selectedShift
+                                                                    .toString())
+                                                        // .where("createdAt",
+                                                        //     isGreaterThanOrEqualTo:
+                                                        //         FromFix)
+                                                        // .where("createdAt",
+                                                        //     isLessThanOrEqualTo:
+                                                        //         ToFix)
+                                                        .snapshots()
+                                                    : selectedShift == 0 &&
+                                                            dropdownValue != 0
+                                                        ? FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                'product')
+                                                            .where("product",
+                                                                isEqualTo:
+                                                                    "Filling_Packing_SKM_Sachet")
+                                                            .where("line",
+                                                                isEqualTo:
+                                                                    dropdownValue
+                                                                        .toString())
+                                                            // .where("createdAt",
+                                                            //     isGreaterThanOrEqualTo:
+                                                            //         FromFix)
+                                                            // .where("createdAt",
+                                                            //     isLessThanOrEqualTo:
+                                                            //         ToFix)
+                                                            .snapshots()
+                                                        : selectedShift != 0 &&
+                                                                dropdownValue !=
+                                                                    0
+                                                            ? FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                    'product')
+                                                                .where(
+                                                                    "product",
+                                                                    isEqualTo:
+                                                                        "Filling_Packing_SKM_Sachet")
+                                                                .where("shift",
+                                                                    isEqualTo:
+                                                                        selectedShift
+                                                                            .toString())
+                                                                .where("line",
+                                                                    isEqualTo:
+                                                                        dropdownValue
+                                                                            .toString())
+                                                                // .where("createdAt", isGreaterThanOrEqualTo: FromFix)
+                                                                // .where("createdAt", isLessThanOrEqualTo: ToFix)
+                                                                .snapshots()
+                                                            : null,
+                                            builder: (context,
+                                                AsyncSnapshot snapshot) {
+                                              if (!snapshot.hasData) {
+                                                return Text("no Data");
+                                              }
+
+                                              final doc = snapshot.data.docs;
+
+                                              var leCuy = List.generate(
+                                                  doc.length, (index) {
+                                                double x = double.parse(
+                                                    doc[index]['le']);
+                                                String z = x.toStringAsFixed(0);
+                                                int a = int.parse(z);
+
+                                                return a;
+                                              }).fold(0, (p, c) => p + c);
+                                              var lpCuy = List.generate(
+                                                  doc.length, (index) {
+                                                double x = double.parse(
+                                                    doc[index]['lp']);
+                                                String z = x.toStringAsFixed(0);
+                                                int a = int.parse(z);
+
+                                                return a;
+                                              }).fold(0, (p, c) => p + c);
+                                              var bdCuy = List.generate(
+                                                  doc.length, (index) {
+                                                double x = double.parse(
+                                                    doc[index]['bd']);
+                                                String z = x.toStringAsFixed(0);
+                                                int a = int.parse(z);
+
+                                                return a;
+                                              }).fold(0, (p, c) => p + c);
+                                              var dtCuy = List.generate(
+                                                  doc.length, (index) {
+                                                double x = double.parse(
+                                                    doc[index]['dt']);
+                                                String z = x.toStringAsFixed(0);
+                                                int a = int.parse(z);
+
+                                                return a;
+                                              }).fold(0, (p, c) => p + c);
+
+                                              var actualO = List.generate(
+                                                  doc.length, (index) {
+                                                double x = double.parse(
+                                                    doc[index]
+                                                        ['actual_output']);
+                                                String z = x.toStringAsFixed(0);
+                                                int a = int.parse(z);
+
+                                                return a;
+                                              }).fold(0, (p, c) => p + c);
+                                              var planingO = List.generate(
+                                                  doc.length, (index) {
+                                                double x = double.parse(
+                                                    doc[index]
+                                                        ['planing_output']);
+                                                String z = x.toStringAsFixed(0);
+                                                int a = int.parse(z);
+
+                                                return a;
+                                              }).fold(0, (p, c) => p + c);
+
+                                              double LeFix = leCuy / doc.length;
+                                              double LpFix = lpCuy / doc.length;
+                                              double dtFix = dtCuy / doc.length;
+                                              double bdFix = bdCuy / doc.length;
+                                              double SkmFix =
+                                                  actualO / planingO;
+
+                                              return InkWell(
+                                                onTap: () {
+                                                  setState(() {
+                                                    showProgress = 4;
+                                                  });
+                                                },
+                                                child: Column(
+                                                  children: [
+                                                    Center(
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                bottom: 5),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Container(
+                                                              margin: EdgeInsets
+                                                                  .only(
+                                                                      right: 5),
+                                                              height: 15,
+                                                              width: 15,
+                                                              decoration: BoxDecoration(
+                                                                  color: Color(
+                                                                      0xff297E6F),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              20)),
+                                                            ),
+                                                            Text(
+                                                              "Filling Packing SKM Sachet",
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                          ],
+                                                        ),
                                                       ),
-                                                      Text(
-                                                          "Filling_packing_SKM"),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Stack(
-                                                alignment: Alignment.center,
-                                                children: [
-                                                  CircularPercentIndicator(
-                                                    radius: 80.0,
-                                                    lineWidth: 16.0,
-                                                    percent: 0.8,
-                                                    center: RadialBar(
-                                                      chartData: [
-                                                        ChartData('Gogin', 100,
-                                                            Colors.cyanAccent),
-                                                        ChartData('Steve', 2.5,
-                                                            Colors.blueGrey),
-                                                        ChartData(
-                                                            'Jack',
-                                                            3.4,
-                                                            Colors
-                                                                .deepOrangeAccent),
-                                                        ChartData('Others', 2.6,
-                                                            Colors.greenAccent)
-                                                      ],
                                                     ),
-                                                    progressColor: Colors.pink,
-                                                  ),
-                                                  CircularPercentIndicator(
-                                                    radius: 30.0,
-                                                    lineWidth: 12,
-                                                    percent: 0.2,
-                                                    center: Text("SKM"),
-                                                    progressColor: Colors.pink,
-                                                  )
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                                    SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    Container(
+                                                      child: Stack(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        children: [
+                                                          Container(
+                                                            child:
+                                                                CircularPercentIndicator(
+                                                              radius: 80.0,
+                                                              lineWidth: 16.0,
+                                                              percent: SkmFix,
+                                                              center: RadialBar(
+                                                                chartData: [
+                                                                  ChartData(
+                                                                      'LE',
+                                                                      LeFix,
+                                                                      blueLE),
+                                                                  ChartData(
+                                                                      'LP',
+                                                                      LpFix,
+                                                                      greenLP),
+                                                                  ChartData(
+                                                                      'DT',
+                                                                      dtFix,
+                                                                      redDT),
+                                                                  ChartData(
+                                                                      'BD',
+                                                                      bdFix,
+                                                                      orangeBD),
+                                                                ],
+                                                              ),
+                                                              progressColor:
+                                                                  const Color(
+                                                                      0xff297E6F),
+                                                            ),
+                                                          ),
+                                                          CircularPercentIndicator(
+                                                            radius: 30.0,
+                                                            lineWidth: 12,
+                                                            percent: 0.2,
+                                                            center: Text("SKM"),
+                                                            progressColor:
+                                                                redSKM,
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            }),
                                       ]),
                                 ),
                                 SizedBox(

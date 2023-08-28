@@ -1606,7 +1606,7 @@ class _FormInputDataState extends State<FormInputData> {
                                     var idd = uuid.v4();
                                     if (downtime[i] != null ||
                                         subDT[i] != null ||
-                                        std[i] != null ||
+                                        std[i] != "" ||
                                         actMin[i].text != "0") {
                                       FirebaseFirestore.instance
                                           .collection("downtime")

@@ -147,14 +147,28 @@ class _tabel_idletimeState extends State<tabel_idletime> {
     names = List.generate(
         dataIdle.length,
         (index) => Name(
-            date: dataIdle[index]["date"],
-            product: dataIdle[index]["product"],
-            departement: dataIdle[index]["departement"],
-            shift: dataIdle[index]["shift"],
-            line: dataIdle[index]["line"],
-            idleDesc: dataIdle[index]["idleDesc"],
-            idleMin: dataIdle[index]["idleMin"],
-            idleHour: dataIdle[index]["idleHour"]));
+            date:
+                dataIdle[index]["date"] == null ? "-" : dataIdle[index]["date"],
+            product: dataIdle[index]["product"] == null
+                ? "-"
+                : dataIdle[index]["product"],
+            departement: dataIdle[index]["departement"] == null
+                ? "-"
+                : dataIdle[index]["departement"],
+            shift: dataIdle[index]["shift"] == null
+                ? "-"
+                : dataIdle[index]["shift"],
+            line:
+                dataIdle[index]["line"] == null ? "-" : dataIdle[index]["line"],
+            idleDesc: dataIdle[index]["idleDesc"] == null
+                ? "-"
+                : dataIdle[index]["idleDesc"],
+            idleMin: dataIdle[index]["idleMin"] == null
+                ? "-"
+                : dataIdle[index]["idleMin"],
+            idleHour: dataIdle[index]["idleHour"] == null
+                ? "-"
+                : dataIdle[index]["idleHour"]));
 
     setState(() {
       searchNameList = names;

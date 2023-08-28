@@ -170,23 +170,57 @@ class _tabel_plusState extends State<tabel_plus> {
     names = List.generate(
         dataProduct.length,
         (index) => Name(
-            product: dataProduct[index]["product"],
-            departement: dataProduct[index]["departement"],
-            shift: dataProduct[index]["shift"],
-            line: dataProduct[index]["line"],
-            date: dataProduct[index]["date"],
-            Bd: dataProduct[index]["bd"],
-            Dt: dataProduct[index]["dt"],
-            Le: dataProduct[index]["le"],
-            Lp: dataProduct[index]["lp"],
-            actualOutput: dataProduct[index]["actual_output"],
-            grossHour: dataProduct[index]["gross_hour"],
-            netHour: dataProduct[index]["net_hour"],
-            nominalSpeed: dataProduct[index]["nominal_speed"],
-            planingOutput: dataProduct[index]["planing_output"],
-            targetHour: dataProduct[index]["target_hour"],
-            totalHour: dataProduct[index]["total_hour"],
-            id: dataProduct[index]["uid"]));
+            product: dataProduct[index]["product"] == null
+                ? "-"
+                : dataProduct[index]["product"],
+            departement: dataProduct[index]["departement"] == null
+                ? "-"
+                : dataProduct[index]["departement"],
+            shift: dataProduct[index]["shift"] == null
+                ? "-"
+                : dataProduct[index]["shift"],
+            line: dataProduct[index]["line"] == null
+                ? "-"
+                : dataProduct[index]["line"],
+            date: dataProduct[index]["date"] == null
+                ? "-"
+                : dataProduct[index]["date"],
+            Bd: dataProduct[index]["bd"] == null
+                ? "-"
+                : dataProduct[index]["bd"],
+            Dt: dataProduct[index]["dt"] == null
+                ? "-"
+                : dataProduct[index]["dt"],
+            Le: dataProduct[index]["le"] == null
+                ? "-"
+                : dataProduct[index]["le"],
+            Lp: dataProduct[index]["lp"] == null
+                ? "-"
+                : dataProduct[index]["lp"],
+            actualOutput: dataProduct[index]["actual_output"] == null
+                ? "-"
+                : dataProduct[index]["actual_output"],
+            grossHour: dataProduct[index]["gross_hour"] == null
+                ? "-"
+                : dataProduct[index]["gross_hour"],
+            netHour: dataProduct[index]["net_hour"] == null
+                ? "-"
+                : dataProduct[index]["net_hour"],
+            nominalSpeed: dataProduct[index]["nominal_speed"] == null
+                ? "-"
+                : dataProduct[index]["nominal_speed"],
+            planingOutput: dataProduct[index]["planing_output"] == null
+                ? "-"
+                : dataProduct[index]["planing_output"],
+            targetHour: dataProduct[index]["target_hour"] == null
+                ? "-"
+                : dataProduct[index]["target_hour"],
+            totalHour: dataProduct[index]["total_hour"] == null
+                ? "-"
+                : dataProduct[index]["total_hour"],
+            id: dataProduct[index]["uid"] == null
+                ? "-"
+                : dataProduct[index]["uid"]));
 
     setState(() {
       searchNameList = names;
