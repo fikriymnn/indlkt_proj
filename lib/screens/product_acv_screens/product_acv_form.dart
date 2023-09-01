@@ -1561,9 +1561,10 @@ class _FormInputDataState extends State<FormInputData> {
                                         .toStringAsFixed(3),
                                     "bd": (double.parse(bd) * 100)
                                         .toStringAsFixed(3),
-                                    "week": weekController.text,
+                                    "week": int.parse(weekController.text),
                                     "bulan": DateFormat.MMMM().format(now),
-                                    "tahun": DateFormat.y().format(now),
+                                    "tahun":
+                                        int.parse(DateFormat.y().format(now)),
                                     "date": DateFormat('dd/MM/yy').format(now),
                                     "createdAt": dateFix
                                   });
@@ -1594,6 +1595,10 @@ class _FormInputDataState extends State<FormInputData> {
                                         "bdMin": dbMin[i].text,
                                         "bdHour": bdHourList[i],
                                         "problem": problem[i].text,
+                                        "week": int.parse(weekController.text),
+                                        "bulan": DateFormat.MMMM().format(now),
+                                        "tahun": int.parse(
+                                            DateFormat.y().format(now)),
                                         "createdAt": dateFix
                                       });
                                     } else {
@@ -1625,6 +1630,10 @@ class _FormInputDataState extends State<FormInputData> {
                                         "std": std[i],
                                         "actMin": actMin[i].text,
                                         "actHour": actHourList[i],
+                                        "week": int.parse(weekController.text),
+                                        "bulan": DateFormat.MMMM().format(now),
+                                        "tahun": int.parse(
+                                            DateFormat.y().format(now)),
                                         "createdAt": dateFix
                                       });
                                     } else {
@@ -1651,6 +1660,10 @@ class _FormInputDataState extends State<FormInputData> {
                                         "idleDesc": idleDesc[i],
                                         "idleMin": idleMin[i].text,
                                         "idleHour": idleHourList[i],
+                                        "week": int.parse(weekController.text),
+                                        "bulan": DateFormat.MMMM().format(now),
+                                        "tahun": int.parse(
+                                            DateFormat.y().format(now)),
                                         "createdAt": dateFix
                                       });
                                     } else {

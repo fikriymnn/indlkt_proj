@@ -1600,6 +1600,10 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                             .snapshots(),
                         builder: (context, snapshot) {
                           final doc = snapshot.data!.docs;
+
+                          if (!snapshot.hasData) {
+                            Text("no data");
+                          }
                           return TextButton(
                               onPressed: onClik = () {
                                 var myList2 = List.generate(
