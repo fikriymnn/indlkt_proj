@@ -29,56 +29,13 @@ class DashboardOverview extends StatefulWidget {
 }
 
 class _DashboardOverviewState extends State<DashboardOverview> {
-  final List<DataItem> dataset = [
-    DataItem(
-        0.25,
-        RichText(
-          text: TextSpan(children: [
-            TextSpan(
-              text: 'Tap here.',
-              recognizer: TapGestureRecognizer()
-                ..onTap = () => print('Tap Here onTap'),
-            )
-          ]),
-        ),
-        active),
-    DataItem(
-        0.25,
-        RichText(
-          text: TextSpan(children: [
-            TextSpan(
-              text: 'Tap here.',
-              recognizer: TapGestureRecognizer()
-                ..onTap = () => print('Tap Here onTap'),
-            )
-          ]),
-        ),
-        blue),
-    DataItem(
-        0.25,
-        RichText(
-          text: TextSpan(children: [
-            TextSpan(
-              text: 'Tap here.',
-              recognizer: TapGestureRecognizer()
-                ..onTap = () => print('Tap Here onTap'),
-            )
-          ]),
-        ),
-        light),
-    DataItem(
-        0.25,
-        RichText(
-          text: TextSpan(children: [
-            TextSpan(
-              text: 'Tap here.',
-              recognizer: TapGestureRecognizer()
-                ..onTap = () => print('Tap Here onTap'),
-            )
-          ]),
-        ),
-        lightGrey),
-  ];
+  List dataaa = [];
+
+  List dataProses = [];
+  List dataFilterProses = [];
+
+  List dataPouch = [];
+  List dataFilterPouch = [];
 
   int selectedShift = 0;
   int dropdownValue = 0;
@@ -89,11 +46,115 @@ class _DashboardOverviewState extends State<DashboardOverview> {
   int? FromFix;
   int? ToFix;
 
-  List<String> output2 = ["a"];
+  List<String> output2 = ["1", "2", "3", "4", "5"];
   Function? onClik;
 
   String selectedDateText(select) {
     return DateFormat("dd/MMMM/yyyy").format(select);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    topBreakdown();
+    DataProses();
+  }
+
+  List dataBreakdown = [];
+  final map2 = <String, int>{};
+
+  void topBreakdown() async {
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection("breakdown").get();
+    setState(() {
+      dataBreakdown = querySnapshot.docs.map((doc) => doc.data()).toList();
+      var myList2 = List.generate(
+          dataBreakdown.length, (index) => dataBreakdown[index]["top"]);
+
+      for (final m in myList2) {
+        final letter = m;
+        map2[letter] = map2.containsKey(letter) ? map2[letter]! + 1 : 1;
+      }
+
+      output2 = map2.keys.toList(growable: false);
+      output2.sort((k1, k2) => map2[k2]!.compareTo(map2[k1] as num));
+
+      print(output2);
+    });
+  }
+
+  void DataProses() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("product")
+        .where("createdAt", isGreaterThanOrEqualTo: FromFix)
+        .where("createdAt", isLessThanOrEqualTo: ToFix)
+        .get();
+    setState(() {
+      dataProses = querySnapshot.docs.map((doc) => doc.data()).toList();
+      dataProsesFilter();
+      // for (var i = 0; i < dataaa.length; i++) {
+      //   if (dataaa[i]["product"] == "Process_SKM") {
+      //     dataProses.add(dataaa[i]);
+      //   }
+      // }
+
+      // for (var i = 0; i < dataaa.length; i++) {
+      //   if (dataaa[i]["product"] == "Filling_Packing_SKM_Pouch") {
+      //     dataPouch.add(dataaa[i]);
+      //   }
+      // }
+    });
+  }
+
+  void dataProsesFilter() {
+    if (selectedShift == 0 && dropdownValue == 0) {
+      var data = [];
+      for (var i = 0; i < dataProses.length; i++) {
+        if (dataProses[i]["product"] == "Filling_Packing_SKM_Pouch") {
+          data.add(dataProses[i]);
+        }
+      }
+      setState(() {
+        dataFilterProses = data;
+      });
+    } else if (selectedShift != 0 && dropdownValue == 0) {
+      var data = [];
+      for (var i = 0; i < dataProses.length; i++) {
+        if (dataProses[i]["shift"] == selectedShift.toString() &&
+            dataProses[i]["product"] == "Filling_Packing_SKM_Pouch") {
+          data.add(dataProses[i]);
+        }
+      }
+      setState(() {
+        dataFilterProses = data;
+      });
+    } else if (selectedShift == 0 && dropdownValue != 0) {
+      var data = [];
+      for (var i = 0; i < dataProses.length; i++) {
+        if (dataProses[i]["line"] == dropdownValue.toString() &&
+            dataProses[i]["product"] == "Filling_Packing_SKM_Pouch") {
+          data.add(dataProses[i]);
+        }
+      }
+      setState(() {
+        dataFilterProses = data;
+      });
+    } else if (selectedShift != 0 && dropdownValue != 0) {
+      var data = [];
+      for (var i = 0; i < dataProses.length; i++) {
+        if (dataProses[i]["shift"] == selectedShift.toString() &&
+            dataProses[i]["line"] == dropdownValue.toString() &&
+            dataProses[i]["product"] == "Filling_Packing_SKM_Pouch ") {
+          data.add(dataProses[i]);
+        }
+        setState(() {
+          dataFilterProses = data;
+        });
+      }
+    }
+
+    print(dataFilterProses);
   }
 
   Widget build(BuildContext context) {
@@ -101,6 +162,8 @@ class _DashboardOverviewState extends State<DashboardOverview> {
     Widget detail(v) {
       if (v == 1) {
         return Detail1(
+          from: FromFix,
+          to: ToFix,
           dropdownValue: dropdownValue,
           selectedShift: selectedShift,
         );
@@ -134,76 +197,101 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                     .collection('product')
                     .where("createdAt", isGreaterThanOrEqualTo: FromFix)
                     .where("createdAt", isLessThanOrEqualTo: ToFix)
-
-                    // .where("product",
-                    //     isEqualTo:
-                    //         "Process_SKM")
                     .snapshots(),
                 builder: (context, snapshot) {
+                  var Le, Lp, Bd, Dt, ActOutput, PlaningOutput, Skm;
+                  double LeFix, LpFix, BdFix, DtFix, SkmFix;
                   if (!snapshot.hasData) {
-                    return Text("no Data");
+                    LeFix = 0.0;
+                    LpFix = 0.0;
+                    BdFix = 0.0;
+                    DtFix = 0.0;
+                    SkmFix = 0.0;
+                  } else {
+                    final doc = snapshot.data!.docs;
+
+                    Le = List.generate(doc.length, (index) {
+                      double x = double.parse(doc[index]['le']);
+                      String z = x.toStringAsFixed(0);
+                      int a = int.parse(z);
+
+                      return a;
+                    }).fold(0, (p, c) => p + c);
+                    Lp = List.generate(doc.length, (index) {
+                      double x = double.parse(doc[index]['lp']);
+                      String z = x.toStringAsFixed(0);
+                      int a = int.parse(z);
+
+                      return a;
+                    }).fold(0, (p, c) => p + c);
+                    Bd = List.generate(doc.length, (index) {
+                      double x = double.parse(doc[index]['bd']);
+                      String z = x.toStringAsFixed(0);
+                      int a = int.parse(z);
+
+                      return a;
+                    }).fold(0, (p, c) => p + c);
+                    Dt = List.generate(doc.length, (index) {
+                      double x = double.parse(doc[index]['dt']);
+                      String z = x.toStringAsFixed(0);
+                      int a = int.parse(z);
+
+                      return a;
+                    }).fold(0, (p, c) => p + c);
+
+                    ActOutput = List.generate(doc.length, (index) {
+                      double x = double.parse(doc[index]['actual_output']);
+                      String z = x.toStringAsFixed(0);
+                      int a = int.parse(z);
+
+                      return a;
+                    }).fold(0, (p, c) => p + c);
+                    PlaningOutput = List.generate(doc.length, (index) {
+                      double x = double.parse(doc[index]['planing_output']);
+                      String z = x.toStringAsFixed(0);
+                      int a = int.parse(z);
+
+                      return a;
+                    }).fold(0, (p, c) => p + c);
+
+                    if (Le == 0) {
+                      LeFix = 0;
+                    } else {
+                      LeFix = Le / doc.length;
+                    }
+
+                    if (Lp == 0) {
+                      LpFix = 0;
+                    } else {
+                      LpFix = Lp / doc.length;
+                    }
+
+                    if (Dt == 0) {
+                      DtFix = 0;
+                    } else {
+                      DtFix = Dt / doc.length;
+                    }
+                    if (Bd == 0) {
+                      BdFix = 0;
+                    } else {
+                      BdFix = Bd / doc.length;
+                    }
+                    if (ActOutput == 0 && PlaningOutput == 0) {
+                      SkmFix = 0;
+                    } else {
+                      Skm = ActOutput / PlaningOutput;
+                      SkmFix = Skm * 100;
+                    }
                   }
 
-                  final doc = snapshot.data!.docs;
-
-                  var leCuy = List.generate(doc.length, (index) {
-                    double x = double.parse(doc[index]['le']);
-                    String z = x.toStringAsFixed(0);
-                    int a = int.parse(z);
-
-                    return a;
-                  }).fold(0, (p, c) => p + c);
-                  var lpCuy = List.generate(doc.length, (index) {
-                    double x = double.parse(doc[index]['lp']);
-                    String z = x.toStringAsFixed(0);
-                    int a = int.parse(z);
-
-                    return a;
-                  }).fold(0, (p, c) => p + c);
-                  var bdCuy = List.generate(doc.length, (index) {
-                    double x = double.parse(doc[index]['bd']);
-                    String z = x.toStringAsFixed(0);
-                    int a = int.parse(z);
-
-                    return a;
-                  }).fold(0, (p, c) => p + c);
-                  var dtCuy = List.generate(doc.length, (index) {
-                    double x = double.parse(doc[index]['dt']);
-                    String z = x.toStringAsFixed(0);
-                    int a = int.parse(z);
-
-                    return a;
-                  }).fold(0, (p, c) => p + c);
-
-                  var actualO = List.generate(doc.length, (index) {
-                    double x = double.parse(doc[index]['actual_output']);
-                    String z = x.toStringAsFixed(0);
-                    int a = int.parse(z);
-
-                    return a;
-                  }).fold(0, (p, c) => p + c);
-                  var planingO = List.generate(doc.length, (index) {
-                    double x = double.parse(doc[index]['planing_output']);
-                    String z = x.toStringAsFixed(0);
-                    int a = int.parse(z);
-
-                    return a;
-                  }).fold(0, (p, c) => p + c);
-
-                  double LeFix = leCuy / doc.length;
-                  double LpFix = lpCuy / doc.length;
-                  double dtFix = dtCuy / doc.length;
-                  double bdFix = bdCuy / doc.length;
-                  double Skm = actualO / planingO;
-                  double skmFix = Skm * 100;
                   return DashboardCard(
                       color: active,
                       Product: "SKM",
                       LE: LeFix.toStringAsFixed(0),
                       LP: LpFix.toStringAsFixed(0),
-                      ProdAcv: skmFix.toStringAsFixed(0),
-                      DT: dtFix.toStringAsFixed(0),
-                      BD: bdFix.toStringAsFixed(0));
+                      ProdAcv: SkmFix.toStringAsFixed(0),
+                      DT: DtFix.toStringAsFixed(0),
+                      BD: BdFix.toStringAsFixed(0));
                 }),
             SizedBox(width: width * 0.042),
             DashboardCard(
@@ -257,11 +345,34 @@ class _DashboardOverviewState extends State<DashboardOverview> {
 
                           DateTime date =
                               DateTime.fromMillisecondsSinceEpoch(noww);
-                          String datetime = date.year.toString() +
-                              date.month.toString() +
-                              date.day.toString();
+                          var moon;
+                          var day;
+
+                          if (date.month == 10 ||
+                              date.month == 11 ||
+                              date.month == 12) {
+                            moon = "${date.month}";
+                          } else {
+                            moon = "0" + "${date.month}";
+                          }
+
+                          if (date.day == 1 ||
+                              date.day == 2 ||
+                              date.day == 3 ||
+                              date.day == 4 ||
+                              date.day == 5 ||
+                              date.day == 6 ||
+                              date.day == 7 ||
+                              date.day == 8 ||
+                              date.day == 9) {
+                            day = "0" + "${date.day}";
+                          } else {
+                            day = "${date.day}";
+                          }
+                          String datetime = date.year.toString() + moon + day;
                           FromFix = int.parse(datetime);
                           print(FromFix);
+                          DataProses();
                         });
                       },
                       child: Padding(
@@ -306,11 +417,34 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                           int noww = _toSelectedDate!.millisecondsSinceEpoch;
                           DateTime date =
                               DateTime.fromMillisecondsSinceEpoch(noww);
-                          String datetime = date.year.toString() +
-                              date.month.toString() +
-                              date.day.toString();
+                          var moon;
+                          var day;
+
+                          if (date.month == 10 ||
+                              date.month == 11 ||
+                              date.month == 12) {
+                            moon = "${date.month}";
+                          } else {
+                            moon = "0" + "${date.month}";
+                          }
+
+                          if (date.day == 1 ||
+                              date.day == 2 ||
+                              date.day == 3 ||
+                              date.day == 4 ||
+                              date.day == 5 ||
+                              date.day == 6 ||
+                              date.day == 7 ||
+                              date.day == 8 ||
+                              date.day == 9) {
+                            day = "0" + "${date.day}";
+                          } else {
+                            day = "${date.day}";
+                          }
+                          String datetime = date.year.toString() + moon + day;
                           ToFix = int.parse(datetime);
                           print(ToFix);
+                          DataProses();
                         });
                       },
                       child: Padding(
@@ -377,6 +511,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                               setState(() {
                                                 selectedShift = 1;
                                               });
+                                              dataProsesFilter();
                                             },
                                             child: Padding(
                                               padding: EdgeInsets.only(
@@ -403,6 +538,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                               setState(() {
                                                 selectedShift = 2;
                                               });
+                                              dataProsesFilter();
                                             },
                                             child: Padding(
                                               padding: EdgeInsets.only(
@@ -433,6 +569,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                               setState(() {
                                                 selectedShift = 3;
                                               });
+                                              dataProsesFilter();
                                             },
                                             child: Padding(
                                               padding: EdgeInsets.only(
@@ -470,6 +607,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                         setState(() {
                                           selectedShift = 0;
                                         });
+                                        dataProsesFilter();
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.only(
@@ -516,6 +654,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                               setState(() {
                                                 dropdownValue = e!;
                                               });
+                                              dataProsesFilter();
                                             },
                                             items: [
                                               DropdownMenuItem(
@@ -562,16 +701,15 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                                     dropdownValue == 0
                                                 ? FirebaseFirestore.instance
                                                     .collection('product')
-                                                    // .where("createdAt",
-                                                    //     isGreaterThanOrEqualTo:
-                                                    //         FromFix)
-                                                    // .where("createdAt",
-                                                    //     isLessThanOrEqualTo:
-                                                    //         ToFix)
-
-                                                    .where("product",
-                                                        isEqualTo:
-                                                            "Process_SKM")
+                                                    // .where("product",
+                                                    //     isEqualTo:
+                                                    //         "Process_SKM")
+                                                    .where("createdAt",
+                                                        isGreaterThanOrEqualTo:
+                                                            FromFix)
+                                                    .where("createdAt",
+                                                        isLessThanOrEqualTo:
+                                                            ToFix)
                                                     .snapshots()
                                                 : selectedShift != 0 &&
                                                         dropdownValue == 0
@@ -1582,69 +1720,55 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                   )
                 ])),
             SizedBox(width: 12),
-            DashboardContainer(
-                height: 620,
-                width: 375,
-                child: Column(
-                  children: [
-                    SizedBox(height: 15),
-                    Text(
-                      "TOP 5 BREAKDOWN MESIN",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 45),
-                    StreamBuilder(
-                        stream: FirebaseFirestore.instance
-                            .collection('breakdown')
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          final doc = snapshot.data!.docs;
+            // DashboardContainer(
+            //     height: 620,
+            //     width: 375,
+            //     child: Column(
+            //       children: [
+            //         SizedBox(height: 15),
+            //         Text(
+            //           "TOP 5 BREAKDOWN MESIN",
+            //           style:
+            //               TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            //         ),
+            //         SizedBox(height: 45),
+            //         ListView.builder(
+            //             itemCount: output2.length >= 6 ? 5 : output2.length,
+            //             shrinkWrap: true,
+            //             itemBuilder: (context, index) {
+            //               return Column(
+            //                 children: [
+            //                   StreamBuilder(
+            //                       stream: FirebaseFirestore.instance
+            //                           .collection('breakdown')
+            //                           .where("top", isEqualTo: output2[index])
+            //                           .snapshots(),
+            //                       builder: (context, snapshot) {
+            //                         final doc = snapshot.data!.docs;
+            //                         if (!snapshot.hasData) {
+            //                           return Text("no Data");
+            //                         }
 
-                          if (!snapshot.hasData) {
-                            Text("no data");
-                          }
-                          return TextButton(
-                              onPressed: onClik = () {
-                                var myList2 = List.generate(
-                                    doc.length, (index) => doc[index]["mesin"]);
+            //                         var totalHour =
+            //                             List.generate(doc.length, (index) {
+            //                           double x =
+            //                               double.parse(doc[index]['bdHour']);
 
-                                final map2 = <String, int>{};
-                                for (final m in myList2) {
-                                  final letter = m;
-                                  map2[letter] = map2.containsKey(letter)
-                                      ? map2[letter]! + 1
-                                      : 1;
-                                }
-
-                                setState(() {
-                                  output2 = map2.keys.toList(growable: false);
-                                  output2.sort((k1, k2) =>
-                                      map2[k2]!.compareTo(map2[k1] as num));
-                                });
-
-                                print(output2);
-                              },
-                              child: Text("jhbxc"));
-                        }),
-                    ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: output2.length,
-                        itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              BreakdownItem(
-                                  title: output2[index],
-                                  desc: "Listrik Trip/Deep Sag",
-                                  number: 140),
-                              SizedBox(
-                                height: 35,
-                              )
-                            ],
-                          );
-                        })
-                  ],
-                ))
+            //                           return x;
+            //                         }).reduce((a, b) => a + b);
+            //                         return BreakdownItem(
+            //                             title: doc[0]["mesin"],
+            //                             desc: doc[0]["reason"],
+            //                             number: totalHour.toStringAsFixed(2));
+            //                       }),
+            //                   SizedBox(
+            //                     height: 25,
+            //                   )
+            //                 ],
+            //               );
+            //             })
+            //       ],
+            //     ))
           ],
         )
       ],

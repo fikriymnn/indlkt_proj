@@ -1527,9 +1527,32 @@ class _FormInputDataState extends State<FormInputData> {
 
                                 DateTime date =
                                     DateTime.fromMillisecondsSinceEpoch(noww);
-                                String datetime = date.year.toString() +
-                                    date.month.toString() +
-                                    date.day.toString();
+                                var moon;
+                                var day;
+
+                                if (date.month == 10 ||
+                                    date.month == 11 ||
+                                    date.month == 12) {
+                                  moon = "${date.month}";
+                                } else {
+                                  moon = "0" + "${date.month}";
+                                }
+
+                                if (date.day == 1 ||
+                                    date.day == 2 ||
+                                    date.day == 3 ||
+                                    date.day == 4 ||
+                                    date.day == 5 ||
+                                    date.day == 6 ||
+                                    date.day == 7 ||
+                                    date.day == 8 ||
+                                    date.day == 9) {
+                                  day = "0" + "${date.day}";
+                                } else {
+                                  day = "${date.day}";
+                                }
+                                String datetime =
+                                    date.year.toString() + moon + day;
                                 int dateFix = int.parse(datetime);
 
                                 try {
@@ -1596,6 +1619,7 @@ class _FormInputDataState extends State<FormInputData> {
                                         "bdHour": bdHourList[i],
                                         "problem": problem[i].text,
                                         "week": int.parse(weekController.text),
+                                        "top": "${mesin[i]}" + "${reason[i]}",
                                         "bulan": DateFormat.MMMM().format(now),
                                         "tahun": int.parse(
                                             DateFormat.y().format(now)),
