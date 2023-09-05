@@ -216,6 +216,7 @@ class _exportBreakdownState extends State<exportBreakdown> {
             child: StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection("breakdown")
+                    .orderBy("createdAt", descending: true)
                     .snapshots(),
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {

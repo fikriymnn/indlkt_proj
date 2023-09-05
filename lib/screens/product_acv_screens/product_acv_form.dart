@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:js_interop';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:custom_searchable_dropdown/custom_searchable_dropdown.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
@@ -83,7 +84,7 @@ class _FormInputDataState extends State<FormInputData> {
   TextEditingController weekController = TextEditingController();
 
   //Breakdown
-  int bLength = 1;
+  int bLength = 0;
 
   String? mesins;
   String? reasons;
@@ -95,10 +96,9 @@ class _FormInputDataState extends State<FormInputData> {
   List<TextEditingController> freq = [];
   List<TextEditingController> dbMin = [];
   List<TextEditingController> problem = [];
-  List<String?> bdHour = [];
 
   //DownTime
-  int dLength = 1;
+  int dLength = 0;
 
   String? downtimes;
   String? subDTs;
@@ -110,7 +110,7 @@ class _FormInputDataState extends State<FormInputData> {
   List<TextEditingController> actMin = [];
 
   //IdleTime
-  int iLength = 1;
+  int iLength = 0;
 
   String? idleDescs;
 
@@ -217,7 +217,7 @@ class _FormInputDataState extends State<FormInputData> {
                                     padding: const EdgeInsets.only(
                                         left: 8, right: 8),
                                     child: DropdownButton(
-                                        hint: Text("Pilih Nama Laporan"),
+                                        hint: Text("Pilih Nama Laporan *"),
                                         underline: Container(),
                                         borderRadius: BorderRadius.circular(10),
                                         value: namaLaporan,
@@ -228,11 +228,6 @@ class _FormInputDataState extends State<FormInputData> {
                                               bdMesinList =
                                                   DataBD().process_SKM_Mesin;
                                               lineList = Line().process;
-                                            } else if (namaLaporan ==
-                                                "Filling_Packing_SKM_Can") {
-                                              bdMesinList = DataBD()
-                                                  .filling_SKM_Can_Mesin;
-                                              lineList = Line().skm_can;
                                             } else if (namaLaporan ==
                                                 "Filling_Packing_SKM_Tall_Can") {
                                               bdMesinList =
@@ -249,6 +244,8 @@ class _FormInputDataState extends State<FormInputData> {
                                                   DataBD().filling_SKM_Pouch;
                                               lineList = Line().skm_pouch;
                                             }
+
+                                            product = namaLaporan;
                                           });
                                         },
                                         items: [
@@ -267,11 +264,6 @@ class _FormInputDataState extends State<FormInputData> {
                                                 "Filling_Packing_SKM_Tall_Can"),
                                             value:
                                                 "Filling_Packing_SKM_Tall_Can",
-                                          ),
-                                          DropdownMenuItem(
-                                            child:
-                                                Text("Filling_Packing_SKM_Can"),
-                                            value: "Filling_Packing_SKM_Can",
                                           ),
                                           DropdownMenuItem(
                                             child: Text("Process_SKM"),
@@ -294,7 +286,7 @@ class _FormInputDataState extends State<FormInputData> {
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(left: 30),
-                                          child: Text("Shift",
+                                          child: Text("Shift *",
                                               style: TextStyle(
                                                   color: dark.withOpacity(0.8),
                                                   fontSize: 25,
@@ -336,7 +328,7 @@ class _FormInputDataState extends State<FormInputData> {
                                           Padding(
                                             padding:
                                                 const EdgeInsets.only(left: 30),
-                                            child: Text("Actual Output",
+                                            child: Text("Actual Output *",
                                                 style: TextStyle(
                                                     color:
                                                         dark.withOpacity(0.8),
@@ -391,7 +383,7 @@ class _FormInputDataState extends State<FormInputData> {
                                           Padding(
                                             padding:
                                                 const EdgeInsets.only(left: 30),
-                                            child: Text("Gross Hour",
+                                            child: Text("Gross Hour ",
                                                 style: TextStyle(
                                                     color:
                                                         dark.withOpacity(0.8),
@@ -419,7 +411,7 @@ class _FormInputDataState extends State<FormInputData> {
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(left: 30),
-                                          child: Text("Departement",
+                                          child: Text("Departement *",
                                               style: TextStyle(
                                                   color: dark.withOpacity(0.8),
                                                   fontSize: 25,
@@ -450,7 +442,7 @@ class _FormInputDataState extends State<FormInputData> {
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(left: 30),
-                                          child: Text("Nominal Speed",
+                                          child: Text("Nominal Speed *",
                                               style: TextStyle(
                                                   color: dark.withOpacity(0.8),
                                                   fontSize: 25,
@@ -519,7 +511,7 @@ class _FormInputDataState extends State<FormInputData> {
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(left: 30),
-                                          child: Text("Product",
+                                          child: Text("Product *",
                                               style: TextStyle(
                                                   color: dark.withOpacity(0.8),
                                                   fontSize: 25,
@@ -535,30 +527,28 @@ class _FormInputDataState extends State<FormInputData> {
                                             value: product,
                                             dropdownItems: [
                                               DropdownMenuItem(
+                                                enabled: false,
                                                 child: Text(
                                                     "Filling_Packing_SKM_Pouch"),
                                                 value:
                                                     "Filling_Packing_SKM_Pouch",
                                               ),
                                               DropdownMenuItem(
+                                                enabled: false,
                                                 child: Text(
                                                     "Filling_Packing_SKM_Sachet"),
                                                 value:
                                                     "Filling_Packing_SKM_Sachet",
                                               ),
                                               DropdownMenuItem(
+                                                enabled: false,
                                                 child: Text(
                                                     "Filling_Packing_SKM_Tall_Can"),
                                                 value:
                                                     "Filling_Packing_SKM_Tall_Can",
                                               ),
                                               DropdownMenuItem(
-                                                child: Text(
-                                                    "Filling_Packing_SKM_Can"),
-                                                value:
-                                                    "Filling_Packing_SKM_Can",
-                                              ),
-                                              DropdownMenuItem(
+                                                enabled: false,
                                                 child: Text("Process_SKM"),
                                                 value: "Process_SKM",
                                               )
@@ -574,7 +564,7 @@ class _FormInputDataState extends State<FormInputData> {
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(left: 30),
-                                          child: Text("Total Hour",
+                                          child: Text("Total Hour *",
                                               style: TextStyle(
                                                   color: dark.withOpacity(0.8),
                                                   fontSize: 25,
@@ -646,7 +636,7 @@ class _FormInputDataState extends State<FormInputData> {
                                       Padding(
                                         padding:
                                             const EdgeInsets.only(left: 30),
-                                        child: Text("Line",
+                                        child: Text("Line *",
                                             style: TextStyle(
                                                 color: dark.withOpacity(0.8),
                                                 fontSize: 25,
@@ -758,7 +748,7 @@ class _FormInputDataState extends State<FormInputData> {
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(left: 30),
-                                          child: Text("Planning Output",
+                                          child: Text("Planning Output *",
                                               style: TextStyle(
                                                   color: dark.withOpacity(0.8),
                                                   fontSize: 25,
@@ -786,7 +776,7 @@ class _FormInputDataState extends State<FormInputData> {
                                       Padding(
                                         padding:
                                             const EdgeInsets.only(left: 30),
-                                        child: Text("Week",
+                                        child: Text("Week *",
                                             style: TextStyle(
                                                 color: dark.withOpacity(0.8),
                                                 fontSize: 25,
@@ -1563,185 +1553,249 @@ class _FormInputDataState extends State<FormInputData> {
                                     date.year.toString() + moon + day;
                                 int dateFix = int.parse(datetime);
 
-                                try {
-                                  setState(() {
-                                    _isLoading = true;
-                                  });
-                                  await FirebaseFirestore.instance
-                                      .collection("product")
-                                      .doc(id)
-                                      .set({
-                                    "uid": id,
-                                    "laporan": namaLaporan,
-                                    "shift": shift,
-                                    "departement": departement,
-                                    "product": product,
-                                    "line": line,
-                                    "planing_output": planningOutput.text,
-                                    "actual_output": actualOutput.text,
-                                    "nominal_speed": nominalSpeed.text,
-                                    "total_hour": totalHour.text,
-                                    "gross_hour": grossHour,
-                                    "net_hour": netHour,
-                                    "type": type,
-                                    "target_hour": targetHour,
-                                    "le": (double.parse(le) * 100)
-                                        .toStringAsFixed(3),
-                                    "lp": (double.parse(lp) * 100)
-                                        .toStringAsFixed(3),
-                                    "dt": (double.parse(dt) * 100)
-                                        .toStringAsFixed(3),
-                                    "bd": (double.parse(bd) * 100)
-                                        .toStringAsFixed(3),
-                                    "week": int.parse(weekController.text),
-                                    "bulan": DateFormat.MMMM().format(now),
-                                    "tahun":
-                                        int.parse(DateFormat.y().format(now)),
-                                    "date": DateFormat('dd/MM/yy').format(now),
-                                    "createdAt": dateFix
-                                  });
+                                if (namaLaporan == null ||
+                                    shift == null ||
+                                    product == null ||
+                                    departement == null ||
+                                    line == null ||
+                                    planningOutput.text == "" ||
+                                    actualOutput.text == "" ||
+                                    nominalSpeed.text == "" ||
+                                    totalHour.text == "" ||
+                                    weekController.text == "") {
+                                  CoolAlert.show(
+                                    width: 500,
+                                    context: context,
+                                    type: CoolAlertType.warning,
+                                    text: "Field * Tidak Boleh Kosong",
+                                  );
+                                } else {
+                                  try {
+                                    setState(() {
+                                      _isLoading = true;
+                                    });
+                                    await FirebaseFirestore.instance
+                                        .collection("product")
+                                        .doc(id)
+                                        .set({
+                                      "uid": id,
+                                      "laporan": namaLaporan,
+                                      "shift": shift,
+                                      "departement": departement,
+                                      "product": product,
+                                      "line": line,
+                                      "planing_output": planningOutput.text,
+                                      "actual_output": actualOutput.text,
+                                      "nominal_speed": nominalSpeed.text,
+                                      "total_hour": totalHour.text,
+                                      "gross_hour": grossHour,
+                                      "net_hour": netHour,
+                                      "type": type,
+                                      "target_hour": targetHour,
+                                      "le": (double.parse(le) * 100)
+                                          .toStringAsFixed(3),
+                                      "lp": (double.parse(lp) * 100)
+                                          .toStringAsFixed(3),
+                                      "dt": (double.parse(dt) * 100)
+                                          .toStringAsFixed(3),
+                                      "bd": (double.parse(bd) * 100)
+                                          .toStringAsFixed(3),
+                                      "week": int.parse(weekController.text),
+                                      "bulan": DateFormat.MMMM().format(now),
+                                      "tahun":
+                                          int.parse(DateFormat.y().format(now)),
+                                      "date":
+                                          DateFormat('dd/MM/yy').format(now),
+                                      "createdAt": dateFix
+                                    });
 
-                                  for (int i = 0; i < bLength; i++) {
-                                    var uuid = Uuid();
-                                    var idB = uuid.v4();
-                                    if (mesin[i] != null ||
-                                        reason[i] != null ||
-                                        problem[i].text != "" ||
-                                        freq[i].text != "" ||
-                                        dbMin[i].text != "0") {
-                                      FirebaseFirestore.instance
-                                          .collection("breakdown")
-                                          .doc(idB)
-                                          .set({
-                                        "uid": idB,
-                                        "product_id": id,
-                                        "date":
-                                            DateFormat('dd/MM/yy').format(now),
-                                        "shift": shift,
-                                        "departement": departement,
-                                        "product": product,
-                                        "line": line,
-                                        "mesin": mesin[i],
-                                        "reason": reason[i],
-                                        "freq": freq[i].text,
-                                        "bdMin": dbMin[i].text,
-                                        "bdHour": bdHourList[i],
-                                        "problem": problem[i].text,
-                                        "week": int.parse(weekController.text),
-                                        "top": "${mesin[i]}" + "${reason[i]}",
-                                        "bulan": DateFormat.MMMM().format(now),
-                                        "tahun": int.parse(
-                                            DateFormat.y().format(now)),
-                                        "createdAt": dateFix
-                                      });
-                                    } else {
-                                      print("no data");
+                                    for (int i = 0; i < bLength; i++) {
+                                      var uuid = Uuid();
+                                      var idB = uuid.v4();
+                                      if (mesin[i] != null ||
+                                          reason[i] != null ||
+                                          problem[i].text != "" ||
+                                          freq[i].text != "" ||
+                                          dbMin[i].text != "0") {
+                                        FirebaseFirestore.instance
+                                            .collection("breakdown")
+                                            .doc(idB)
+                                            .set({
+                                          "uid": idB,
+                                          "product_id": id,
+                                          "date": DateFormat('dd/MM/yy')
+                                              .format(now),
+                                          "shift": shift,
+                                          "departement": departement,
+                                          "product": product,
+                                          "line": line,
+                                          "mesin": mesin[i],
+                                          "reason": reason[i],
+                                          "freq": freq[i].text,
+                                          "bdMin": dbMin[i].text,
+                                          "bdHour": bdHourList[i],
+                                          "problem": problem[i].text,
+                                          "week":
+                                              int.parse(weekController.text),
+                                          "top": "${mesin[i]}" + "${reason[i]}",
+                                          "bulan":
+                                              DateFormat.MMMM().format(now),
+                                          "tahun": int.parse(
+                                              DateFormat.y().format(now)),
+                                          "createdAt": dateFix
+                                        });
+                                      } else {
+                                        print("no data");
+                                      }
                                     }
-                                  }
 
-                                  for (int i = 0; i < dLength; i++) {
-                                    var uuid = Uuid();
-                                    var idd = uuid.v4();
-                                    if (downtime[i] != null ||
-                                        subDT[i] != null ||
-                                        std[i] != "" ||
-                                        actMin[i].text != "0") {
-                                      FirebaseFirestore.instance
-                                          .collection("downtime")
-                                          .doc(idd)
-                                          .set({
-                                        "uid": idd,
-                                        "product_id": id,
-                                        "date":
-                                            DateFormat('dd/MM/yy').format(now),
-                                        "shift": shift,
-                                        "departement": departement,
-                                        "product": product,
-                                        "line": line,
-                                        "dt": downtime[i],
-                                        "subDt": subDT[i],
-                                        "std": std[i],
-                                        "actMin": actMin[i].text,
-                                        "actHour": actHourList[i],
-                                        "week": int.parse(weekController.text),
-                                        "bulan": DateFormat.MMMM().format(now),
-                                        "tahun": int.parse(
-                                            DateFormat.y().format(now)),
-                                        "createdAt": dateFix
-                                      });
-                                    } else {
-                                      print("no data");
+                                    for (int i = 0; i < dLength; i++) {
+                                      var uuid = Uuid();
+                                      var idd = uuid.v4();
+                                      if (downtime[i] != null ||
+                                          subDT[i] != null ||
+                                          std[i] != "" ||
+                                          actMin[i].text != "0") {
+                                        FirebaseFirestore.instance
+                                            .collection("downtime")
+                                            .doc(idd)
+                                            .set({
+                                          "uid": idd,
+                                          "product_id": id,
+                                          "date": DateFormat('dd/MM/yy')
+                                              .format(now),
+                                          "shift": shift,
+                                          "departement": departement,
+                                          "product": product,
+                                          "line": line,
+                                          "dt": downtime[i],
+                                          "subDt": subDT[i],
+                                          "std": std[i],
+                                          "actMin": actMin[i].text,
+                                          "actHour": actHourList[i],
+                                          "week":
+                                              int.parse(weekController.text),
+                                          "bulan":
+                                              DateFormat.MMMM().format(now),
+                                          "tahun": int.parse(
+                                              DateFormat.y().format(now)),
+                                          "createdAt": dateFix
+                                        });
+                                      } else {
+                                        print("no data");
+                                      }
                                     }
-                                  }
-                                  for (int i = 0; i < iLength; i++) {
-                                    var uuid = Uuid();
-                                    var idi = uuid.v4();
-                                    if (idleDesc[i] != null ||
-                                        idleMin[i].text != "0") {
-                                      FirebaseFirestore.instance
-                                          .collection("idle_time")
-                                          .doc(idi)
-                                          .set({
-                                        "uid": idi,
-                                        "product_id": id,
-                                        "date":
-                                            DateFormat('dd/MM/yy').format(now),
-                                        "shift": shift,
-                                        "departement": departement,
-                                        "product": product,
-                                        "line": line,
-                                        "idleDesc": idleDesc[i],
-                                        "idleMin": idleMin[i].text,
-                                        "idleHour": idleHourList[i],
-                                        "week": int.parse(weekController.text),
-                                        "bulan": DateFormat.MMMM().format(now),
-                                        "tahun": int.parse(
-                                            DateFormat.y().format(now)),
-                                        "createdAt": dateFix
-                                      });
-                                    } else {
-                                      print("no data");
+                                    for (int i = 0; i < iLength; i++) {
+                                      var uuid = Uuid();
+                                      var idi = uuid.v4();
+                                      if (idleDesc[i] != null ||
+                                          idleMin[i].text != "0") {
+                                        FirebaseFirestore.instance
+                                            .collection("idle_time")
+                                            .doc(idi)
+                                            .set({
+                                          "uid": idi,
+                                          "product_id": id,
+                                          "date": DateFormat('dd/MM/yy')
+                                              .format(now),
+                                          "shift": shift,
+                                          "departement": departement,
+                                          "product": product,
+                                          "line": line,
+                                          "idleDesc": idleDesc[i],
+                                          "idleMin": idleMin[i].text,
+                                          "idleHour": idleHourList[i],
+                                          "week":
+                                              int.parse(weekController.text),
+                                          "bulan":
+                                              DateFormat.MMMM().format(now),
+                                          "tahun": int.parse(
+                                              DateFormat.y().format(now)),
+                                          "createdAt": dateFix
+                                        });
+                                      } else {
+                                        print("no data");
+                                      }
                                     }
-                                  }
 
-                                  setState(() {
-                                    _isLoading = false;
-                                  });
-                                } catch (e) {
-                                  print(e);
+                                    setState(() {
+                                      namaLaporan = null;
+                                      shift = null;
+                                      departement = null;
+                                      product = null;
+                                      line = null;
+                                      planningOutput.clear();
+                                      actualOutput.clear();
+                                      nominalSpeed.clear();
+                                      totalHour.clear();
+                                      weekController.clear();
+                                      grossHour = "0";
+                                      netHour = "0";
+                                      targetHour = "0";
+                                      le = "0";
+                                      lp = "0";
+                                      dt = "0";
+                                      bd = "0";
+
+                                      mesin.clear();
+                                      reason.clear();
+                                      problem.clear();
+                                      freq.clear();
+                                      downtime.clear();
+                                      subDT.clear();
+                                      std.clear();
+                                      idleDesc.clear();
+
+                                      for (var i = 0; i < bLength; i++) {
+                                        dbMin[i].text = "0";
+                                        bdHourList[i] = "0";
+                                        bdHourChild = "0";
+                                        bdHourTotal = "0";
+                                      }
+
+                                      for (var i = 0; i < dLength; i++) {
+                                        actMin[i].text = "0";
+                                        actHourList[i] = "0";
+                                        actHourChild = "0";
+                                        actHourTotal = "0";
+                                      }
+
+                                      for (var i = 0; i < iLength; i++) {
+                                        idleMin[i].text = "0";
+                                        idleHourList[i] = "0";
+                                        idleHourChild = "0";
+                                        idleHourTotal = "0";
+                                      }
+                                      bLength = 0;
+                                      dLength = 0;
+                                      iLength = 0;
+                                    });
+
+                                    setState(() {
+                                      _isLoading = false;
+                                    });
+                                    CoolAlert.show(
+                                      width: 500,
+                                      context: context,
+                                      type: CoolAlertType.success,
+                                      text: "Data Berhasil di Upload",
+                                    );
+                                  } on FirebaseException catch (e) {
+                                    CoolAlert.show(
+                                      width: 500,
+                                      context: context,
+                                      type: CoolAlertType.error,
+                                      text: e.message.toString(),
+                                    );
+                                  } catch (e) {
+                                    CoolAlert.show(
+                                      width: 500,
+                                      context: context,
+                                      type: CoolAlertType.error,
+                                      text: e.toString(),
+                                    );
+                                  }
                                 }
-
-                                // for (int i = 0; i < bLength; i++) {
-                                //   var uuid = Uuid();
-                                //   var idB = uuid.v4();
-                                //   var a = freq[i].text;
-                                //   var b = dbMin[i].text;
-                                //   var c = problem[i].text;
-                                //   var d = mesin[i];
-                                //   var e = reason[i];
-                                //   // var n = bdHour[i];
-
-                                //   FirebaseFirestore.instance
-                                //       .collection("breakdown")
-                                //       .doc(idB)
-                                //       .set({
-                                //     "uid": idB,
-                                //     "product_id": id,
-                                //     "date": DateFormat('dd/MM/yy').format(now),
-                                //     "mesin": d,
-                                //     "reason": e,
-                                //     "freq": a,
-                                //     "bdMin": b,
-                                //     "problem": c
-                                //   });
-
-                                //   print(a);
-                                //   print(b);
-                                //   print(c);
-                                //   print(d);
-                                //   print(e);
-                                //   // print(n);
-                                // }
                               },
                               child: Container(
                                   margin: EdgeInsets.all(25),

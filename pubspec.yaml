@@ -65,6 +65,7 @@ dependencies:
   custom_searchable_dropdown: ^2.1.1
   unique_simple_bar_chart: ^0.0.4
   chart_components: ^1.0.1
+  cool_alert: ^2.0.1
 
 
 dev_dependencies:

@@ -135,7 +135,10 @@ class _tabel_idletimeState extends State<tabel_idletime> {
   }
 
   getData() async {
-    QuerySnapshot querySnapshot = await db.collection("idle_time").get();
+    QuerySnapshot querySnapshot = await db
+        .collection("idle_time")
+        .orderBy("createdAt", descending: true)
+        .get();
     setState(() {
       dataIdle = querySnapshot.docs.map((doc) => doc.data()).toList();
     });

@@ -211,6 +211,7 @@ class _exportDowntimeState extends State<exportDowntime> {
             child: StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection("downtime")
+                    .orderBy("createdAt", descending: true)
                     .snapshots(),
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
