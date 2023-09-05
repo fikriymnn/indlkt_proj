@@ -5,8 +5,8 @@ import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.da
 import '../../../constants/style.dart';
 
 class Detail1 extends StatefulWidget {
-  const Detail1({super.key, this.selectedShift, this.dropdownValue});
-  final dynamic selectedShift, dropdownValue;
+  const Detail1({super.key, this.selectedShift, this.dropdownValue, this.from, this.to});
+  final dynamic selectedShift, dropdownValue,from,to;
 
   @override
   State<Detail1> createState() => _Detail1State();

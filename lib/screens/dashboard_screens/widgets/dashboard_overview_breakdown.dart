@@ -5,7 +5,7 @@ import '../../../constants/style.dart';
 class BreakdownItem extends StatefulWidget {
   final String title;
   final String desc;
-  final int number;
+  final dynamic number;
 
   const BreakdownItem(
       {required this.title, required this.desc, required this.number});
