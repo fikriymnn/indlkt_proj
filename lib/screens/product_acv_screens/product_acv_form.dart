@@ -71,6 +71,7 @@ class _FormInputDataState extends State<FormInputData> {
   String? departement;
   String? product;
   String? line;
+  String? type;
 
   TextEditingController actualOutput = TextEditingController();
   TextEditingController _controller = TextEditingController();
@@ -1527,6 +1528,13 @@ class _FormInputDataState extends State<FormInputData> {
 
                                 DateTime date =
                                     DateTime.fromMillisecondsSinceEpoch(noww);
+                                setState(() {
+                                  if (product == "Process_SKM") {
+                                    type = "process";
+                                  } else {
+                                    type = "fillpack";
+                                  }
+                                });
                                 var moon;
                                 var day;
 
@@ -1575,6 +1583,7 @@ class _FormInputDataState extends State<FormInputData> {
                                     "total_hour": totalHour.text,
                                     "gross_hour": grossHour,
                                     "net_hour": netHour,
+                                    "type": type,
                                     "target_hour": targetHour,
                                     "le": (double.parse(le) * 100)
                                         .toStringAsFixed(3),

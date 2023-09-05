@@ -31,7 +31,7 @@ class _DetailTallCanState extends State<DetailTallCan> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 20),
-              Text("Process SKM"),
+              Text("Filling Packing SKM Tall Can"),
               SizedBox(
                 height: 5,
               ),
@@ -53,7 +53,7 @@ class _DetailTallCanState extends State<DetailTallCan> {
                     width: 7,
                   ),
                   Text(
-                      "${widget.Ratarata.isNaN ? "-" : widget.Ratarata.toStringAsFixed(0)}/45000")
+                      "${widget.Ratarata.isNaN ? "-" : widget.Ratarata.toStringAsFixed(0)}/1705")
                 ],
               ),
             ],
