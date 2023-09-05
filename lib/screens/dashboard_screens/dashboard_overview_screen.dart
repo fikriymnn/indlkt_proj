@@ -32,19 +32,52 @@ class _DashboardOverviewState extends State<DashboardOverview> {
   List dataaa = [];
 
   List dataProses = [];
-  List dataFilterProses = [];
-
-  List dataPouch = [];
-  List dataFilterPouch = [];
 
   int selectedShift = 0;
-  int dropdownValue = 0;
+  dynamic dropdownValue = 0;
   int showProgress = 0;
   DateTime? _fromSelectedDate = DateTime.now();
   DateTime? _toSelectedDate = DateTime.now();
 
   int? FromFix;
   int? ToFix;
+
+//data Chart
+  List dataFilterProses = [];
+  List dataFilterPouch = [];
+  List dataFilterSacet = [];
+  List dataFilterTallCan = [];
+
+  dynamic RatarataProses = 0;
+  dynamic RatarataPouch = 0;
+  dynamic RatarataSacet = 0;
+  dynamic RatarataTallCan = 0;
+
+  dynamic SkmAllFix = 0;
+  dynamic SkmFixProses = 0;
+  dynamic SkmFixPouch = 0;
+  dynamic SkmFixSacet = 0;
+  dynamic SkmFixTallCan = 0;
+
+  dynamic LeFixProses = 0;
+  dynamic LeFixPouch = 0;
+  dynamic LeFixSacet = 0;
+  dynamic LeFixTallCan = 0;
+
+  dynamic LpFixProses = 0;
+  dynamic LpFixPouch = 0;
+  dynamic LpFixSacet = 0;
+  dynamic LpFixTallCan = 0;
+
+  dynamic DtFixProses = 0;
+  dynamic DtFixPouch = 0;
+  dynamic DtFixSacet = 0;
+  dynamic DtFixTallCan = 0;
+
+  dynamic BdFixProses = 0;
+  dynamic BdFixPouch = 0;
+  dynamic BdFixSacet = 0;
+  dynamic BdFixTallCan = 0;
 
   List<String> output2 = ["1", "2", "3", "4", "5"];
   Function? onClik;
@@ -58,7 +91,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
     // TODO: implement initState
     super.initState();
     topBreakdown();
-    DataProses();
+    DataProduct();
   }
 
   List dataBreakdown = [];
@@ -68,23 +101,26 @@ class _DashboardOverviewState extends State<DashboardOverview> {
     QuerySnapshot querySnapshot =
         await FirebaseFirestore.instance.collection("breakdown").get();
     setState(() {
-      dataBreakdown = querySnapshot.docs.map((doc) => doc.data()).toList();
-      var myList2 = List.generate(
-          dataBreakdown.length, (index) => dataBreakdown[index]["top"]);
+      if (querySnapshot.docs.isNotEmpty) {
+        dataBreakdown = querySnapshot.docs.map((doc) => doc.data()).toList();
 
-      for (final m in myList2) {
-        final letter = m;
-        map2[letter] = map2.containsKey(letter) ? map2[letter]! + 1 : 1;
+        var myList2 = List.generate(
+            dataBreakdown.length, (index) => dataBreakdown[index]["top"]);
+
+        for (final m in myList2) {
+          final letter = m;
+          map2[letter] = map2.containsKey(letter) ? map2[letter]! + 1 : 1;
+        }
+
+        output2 = map2.keys.toList(growable: false);
+        output2.sort((k1, k2) => map2[k2]!.compareTo(map2[k1] as num));
+      } else {
+        output2 = [];
       }
-
-      output2 = map2.keys.toList(growable: false);
-      output2.sort((k1, k2) => map2[k2]!.compareTo(map2[k1] as num));
-
-      print(output2);
     });
   }
 
-  void DataProses() async {
+  void DataProduct() async {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection("product")
         .where("createdAt", isGreaterThanOrEqualTo: FromFix)
@@ -92,18 +128,27 @@ class _DashboardOverviewState extends State<DashboardOverview> {
         .get();
     setState(() {
       dataProses = querySnapshot.docs.map((doc) => doc.data()).toList();
-      dataProsesFilter();
-      // for (var i = 0; i < dataaa.length; i++) {
-      //   if (dataaa[i]["product"] == "Process_SKM") {
-      //     dataProses.add(dataaa[i]);
-      //   }
-      // }
+      var actualO = List.generate(dataProses.length, (index) {
+        double x = double.parse(dataProses[index]['actual_output']);
+        String z = x.toStringAsFixed(0);
+        int a = int.parse(z);
 
-      // for (var i = 0; i < dataaa.length; i++) {
-      //   if (dataaa[i]["product"] == "Filling_Packing_SKM_Pouch") {
-      //     dataPouch.add(dataaa[i]);
-      //   }
-      // }
+        return a;
+      }).fold(0, (p, c) => p + c);
+      var planingO = List.generate(dataProses.length, (index) {
+        double x = double.parse(dataProses[index]['planing_output']);
+        String z = x.toStringAsFixed(0);
+        int a = int.parse(z);
+
+        return a;
+      }).fold(0, (p, c) => p + c);
+
+      SkmAllFix = actualO / planingO;
+
+      dataProsesFilter();
+      dataPouchFilter();
+      dataSacetFilter();
+      dataTallCanFilter();
     });
   }
 
@@ -111,7 +156,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
     if (selectedShift == 0 && dropdownValue == 0) {
       var data = [];
       for (var i = 0; i < dataProses.length; i++) {
-        if (dataProses[i]["product"] == "Filling_Packing_SKM_Pouch") {
+        if (dataProses[i]["product"] == "Process_SKM") {
           data.add(dataProses[i]);
         }
       }
@@ -122,7 +167,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
       var data = [];
       for (var i = 0; i < dataProses.length; i++) {
         if (dataProses[i]["shift"] == selectedShift.toString() &&
-            dataProses[i]["product"] == "Filling_Packing_SKM_Pouch") {
+            dataProses[i]["product"] == "Process_SKM") {
           data.add(dataProses[i]);
         }
       }
@@ -133,7 +178,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
       var data = [];
       for (var i = 0; i < dataProses.length; i++) {
         if (dataProses[i]["line"] == dropdownValue.toString() &&
-            dataProses[i]["product"] == "Filling_Packing_SKM_Pouch") {
+            dataProses[i]["product"] == "Process_SKM") {
           data.add(dataProses[i]);
         }
       }
@@ -143,44 +188,426 @@ class _DashboardOverviewState extends State<DashboardOverview> {
     } else if (selectedShift != 0 && dropdownValue != 0) {
       var data = [];
       for (var i = 0; i < dataProses.length; i++) {
-        if (dataProses[i]["shift"] == selectedShift.toString() &&
-            dataProses[i]["line"] == dropdownValue.toString() &&
-            dataProses[i]["product"] == "Filling_Packing_SKM_Pouch ") {
+        if (dataProses[i]["line"] == dropdownValue.toString() &&
+            dataProses[i]["shift"] == selectedShift.toString() &&
+            dataProses[i]["product"] == "Process_SKM") {
           data.add(dataProses[i]);
         }
-        setState(() {
-          dataFilterProses = data;
-        });
       }
+      setState(() {
+        dataFilterProses = data;
+      });
+      print(dropdownValue.toString());
+      print(selectedShift.toString());
     }
 
-    print(dataFilterProses);
+    // print(dataFilterProses);
+    DataProsesFix(dataFilterProses);
+  }
+
+  void DataProsesFix(doc) {
+    var leCuy = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['le']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+    var lpCuy = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['lp']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+    var bdCuy = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['bd']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+    var dtCuy = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['dt']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+
+    var actualO = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['actual_output']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+    var planingO = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['planing_output']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+
+    LeFixProses = leCuy / doc.length;
+    LpFixProses = lpCuy / doc.length;
+    DtFixProses = dtCuy / doc.length;
+    BdFixProses = bdCuy / doc.length;
+    SkmFixProses = actualO / planingO;
+    RatarataProses = actualO / doc.length;
+  }
+
+  void dataPouchFilter() {
+    if (selectedShift == 0 && dropdownValue == 0) {
+      var data = [];
+      for (var i = 0; i < dataProses.length; i++) {
+        if (dataProses[i]["product"] == "Filling_Packing_SKM_Pouch") {
+          data.add(dataProses[i]);
+        }
+      }
+      setState(() {
+        dataFilterPouch = data;
+      });
+    } else if (selectedShift != 0 && dropdownValue == 0) {
+      var data = [];
+      for (var i = 0; i < dataProses.length; i++) {
+        if (dataProses[i]["shift"] == selectedShift.toString() &&
+            dataProses[i]["product"] == "Filling_Packing_SKM_Pouch") {
+          data.add(dataProses[i]);
+        }
+      }
+      setState(() {
+        dataFilterPouch = data;
+      });
+    } else if (selectedShift == 0 && dropdownValue != 0) {
+      var data = [];
+      for (var i = 0; i < dataProses.length; i++) {
+        if (dataProses[i]["line"] == dropdownValue.toString() &&
+            dataProses[i]["product"] == "Filling_Packing_SKM_Pouch") {
+          data.add(dataProses[i]);
+        }
+      }
+      setState(() {
+        dataFilterPouch = data;
+      });
+    } else if (selectedShift != 0 && dropdownValue != 0) {
+      var data = [];
+      for (var i = 0; i < dataProses.length; i++) {
+        if (dataProses[i]["line"] == dropdownValue.toString() &&
+            dataProses[i]["shift"] == selectedShift.toString() &&
+            dataProses[i]["product"] == "Filling_Packing_SKM_Pouch") {
+          data.add(dataProses[i]);
+        }
+      }
+      setState(() {
+        dataFilterPouch = data;
+      });
+    }
+
+    // print(dataFilterProses);
+    DataPouchFix(dataFilterPouch);
+  }
+
+  void DataPouchFix(doc) {
+    var leCuy = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['le']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+    var lpCuy = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['lp']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+    var bdCuy = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['bd']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+    var dtCuy = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['dt']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+
+    var actualO = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['actual_output']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+    var planingO = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['planing_output']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+
+    LeFixPouch = leCuy / doc.length;
+    LpFixPouch = lpCuy / doc.length;
+    DtFixPouch = dtCuy / doc.length;
+    BdFixPouch = bdCuy / doc.length;
+    SkmFixPouch = actualO / planingO;
+    RatarataPouch = actualO / doc.length;
+  }
+
+  void dataSacetFilter() {
+    if (selectedShift == 0 && dropdownValue == 0) {
+      var data = [];
+      for (var i = 0; i < dataProses.length; i++) {
+        if (dataProses[i]["product"] == "Filling_Packing_SKM_Sachet") {
+          data.add(dataProses[i]);
+        }
+      }
+      setState(() {
+        dataFilterSacet = data;
+      });
+    } else if (selectedShift != 0 && dropdownValue == 0) {
+      var data = [];
+      for (var i = 0; i < dataProses.length; i++) {
+        if (dataProses[i]["shift"] == selectedShift.toString() &&
+            dataProses[i]["product"] == "Filling_Packing_SKM_Sachet") {
+          data.add(dataProses[i]);
+        }
+      }
+      setState(() {
+        dataFilterSacet = data;
+      });
+    } else if (selectedShift == 0 && dropdownValue != 0) {
+      var data = [];
+      for (var i = 0; i < dataProses.length; i++) {
+        if (dataProses[i]["line"] == dropdownValue.toString() &&
+            dataProses[i]["product"] == "Filling_Packing_SKM_Sachet") {
+          data.add(dataProses[i]);
+        }
+      }
+      setState(() {
+        dataFilterSacet = data;
+      });
+    } else if (selectedShift != 0 && dropdownValue != 0) {
+      var data = [];
+      for (var i = 0; i < dataProses.length; i++) {
+        if (dataProses[i]["line"] == dropdownValue.toString() &&
+            dataProses[i]["shift"] == selectedShift.toString() &&
+            dataProses[i]["product"] == "Filling_Packing_SKM_Sachet") {
+          data.add(dataProses[i]);
+        }
+      }
+      setState(() {
+        dataFilterSacet = data;
+      });
+    }
+
+    // print(dataFilterProses);
+    DataSacetFix(dataFilterSacet);
+  }
+
+  void DataSacetFix(doc) {
+    var leCuy = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['le']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+    var lpCuy = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['lp']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+    var bdCuy = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['bd']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+    var dtCuy = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['dt']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+
+    var actualO = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['actual_output']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+    var planingO = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['planing_output']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+
+    LeFixSacet = leCuy / doc.length;
+    LpFixSacet = lpCuy / doc.length;
+    DtFixSacet = dtCuy / doc.length;
+    BdFixSacet = bdCuy / doc.length;
+    SkmFixSacet = actualO / planingO;
+    RatarataSacet = actualO / doc.length;
+  }
+
+  void dataTallCanFilter() {
+    if (selectedShift == 0 && dropdownValue == 0) {
+      var data = [];
+      for (var i = 0; i < dataProses.length; i++) {
+        if (dataProses[i]["product"] == "Filling_Packing_SKM_Tall_Can") {
+          data.add(dataProses[i]);
+        }
+      }
+      setState(() {
+        dataFilterTallCan = data;
+      });
+    } else if (selectedShift != 0 && dropdownValue == 0) {
+      var data = [];
+      for (var i = 0; i < dataProses.length; i++) {
+        if (dataProses[i]["shift"] == selectedShift.toString() &&
+            dataProses[i]["product"] == "Filling_Packing_SKM_Tall_Can") {
+          data.add(dataProses[i]);
+        }
+      }
+      setState(() {
+        dataFilterTallCan = data;
+      });
+    } else if (selectedShift == 0 && dropdownValue != 0) {
+      var data = [];
+      for (var i = 0; i < dataProses.length; i++) {
+        if (dataProses[i]["line"] == dropdownValue.toString() &&
+            dataProses[i]["product"] == "Filling_Packing_SKM_Tall_Can") {
+          data.add(dataProses[i]);
+        }
+      }
+      setState(() {
+        dataFilterTallCan = data;
+      });
+    } else if (selectedShift != 0 && dropdownValue != 0) {
+      var data = [];
+      for (var i = 0; i < dataProses.length; i++) {
+        if (dataProses[i]["line"] == dropdownValue.toString() &&
+            dataProses[i]["shift"] == selectedShift.toString() &&
+            dataProses[i]["product"] == "Filling_Packing_SKM_Tall_Can") {
+          data.add(dataProses[i]);
+        }
+      }
+      setState(() {
+        dataFilterTallCan = data;
+      });
+    }
+
+    // print(dataFilterProses);
+    DataTallCanFix(dataFilterTallCan);
+  }
+
+  void DataTallCanFix(doc) {
+    var leCuy = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['le']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+    var lpCuy = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['lp']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+    var bdCuy = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['bd']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+    var dtCuy = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['dt']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+
+    var actualO = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['actual_output']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+    var planingO = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['planing_output']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+
+    LeFixTallCan = leCuy / doc.length;
+    LpFixTallCan = lpCuy / doc.length;
+    DtFixTallCan = dtCuy / doc.length;
+    BdFixTallCan = bdCuy / doc.length;
+    SkmFixTallCan = actualO / planingO;
+    RatarataTallCan = actualO / doc.length;
   }
 
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     Widget detail(v) {
       if (v == 1) {
-        return Detail1(
-          from: FromFix,
-          to: ToFix,
-          dropdownValue: dropdownValue,
-          selectedShift: selectedShift,
+        return DetailProses(
+          Bd: BdFixProses,
+          Dt: DtFixProses,
+          Le: LeFixProses,
+          Lp: LpFixProses,
+          Skm: SkmFixProses,
+          Ratarata: RatarataProses,
         );
       } else if (v == 2) {
-        return Detail2(
-          dropdownValue: dropdownValue,
-          selectedShift: selectedShift,
+        return DetailPouch(
+          Bd: BdFixPouch,
+          Dt: DtFixPouch,
+          Le: LeFixPouch,
+          Lp: LpFixPouch,
+          Skm: SkmFixPouch,
+          Ratarata: RatarataPouch,
         );
       } else if (v == 3) {
-        return Detail3(
-          dropdownValue: dropdownValue,
-          selectedShift: selectedShift,
+        return DetailTallCan(
+          Bd: BdFixTallCan,
+          Dt: DtFixTallCan,
+          Le: LeFixTallCan,
+          Lp: LpFixTallCan,
+          Skm: SkmFixTallCan,
+          Ratarata: RatarataTallCan,
         );
       } else if (v == 4) {
-        return Detail4(
-          dropdownValue: dropdownValue,
-          selectedShift: selectedShift,
+        return DetailSacet(
+          Bd: BdFixSacet,
+          Dt: DtFixSacet,
+          Le: LeFixSacet,
+          Lp: LpFixSacet,
+          Skm: SkmFixSacet,
+          Ratarata: RatarataSacet,
         );
       } else {
         return Container();
@@ -372,7 +799,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                           String datetime = date.year.toString() + moon + day;
                           FromFix = int.parse(datetime);
                           print(FromFix);
-                          DataProses();
+                          DataProduct();
                         });
                       },
                       child: Padding(
@@ -444,7 +871,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                           String datetime = date.year.toString() + moon + day;
                           ToFix = int.parse(datetime);
                           print(ToFix);
-                          DataProses();
+                          DataProduct();
                         });
                       },
                       child: Padding(
@@ -512,6 +939,9 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                                 selectedShift = 1;
                                               });
                                               dataProsesFilter();
+                                              dataPouchFilter();
+                                              dataSacetFilter();
+                                              dataTallCanFilter();
                                             },
                                             child: Padding(
                                               padding: EdgeInsets.only(
@@ -539,6 +969,9 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                                 selectedShift = 2;
                                               });
                                               dataProsesFilter();
+                                              dataPouchFilter();
+                                              dataSacetFilter();
+                                              dataTallCanFilter();
                                             },
                                             child: Padding(
                                               padding: EdgeInsets.only(
@@ -570,6 +1003,9 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                                 selectedShift = 3;
                                               });
                                               dataProsesFilter();
+                                              dataPouchFilter();
+                                              dataSacetFilter();
+                                              dataTallCanFilter();
                                             },
                                             child: Padding(
                                               padding: EdgeInsets.only(
@@ -608,6 +1044,9 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                           selectedShift = 0;
                                         });
                                         dataProsesFilter();
+                                        dataPouchFilter();
+                                        dataSacetFilter();
+                                        dataTallCanFilter();
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.only(
@@ -655,6 +1094,9 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                                 dropdownValue = e!;
                                               });
                                               dataProsesFilter();
+                                              dataPouchFilter();
+                                              dataSacetFilter();
+                                              dataTallCanFilter();
                                             },
                                             items: [
                                               DropdownMenuItem(
@@ -670,9 +1112,29 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                                 value: 2,
                                               ),
                                               DropdownMenuItem(
-                                                child: Text("3"),
-                                                value: 3,
-                                              )
+                                                child: Text("A"),
+                                                value: "A",
+                                              ),
+                                              DropdownMenuItem(
+                                                child: Text("B"),
+                                                value: "B",
+                                              ),
+                                              DropdownMenuItem(
+                                                child: Text("C"),
+                                                value: "C",
+                                              ),
+                                              DropdownMenuItem(
+                                                child: Text("D"),
+                                                value: "D",
+                                              ),
+                                              DropdownMenuItem(
+                                                child: Text("E"),
+                                                value: "E",
+                                              ),
+                                              DropdownMenuItem(
+                                                child: Text("F"),
+                                                value: "F",
+                                              ),
                                             ]),
                                       ),
                                     ),
@@ -696,1001 +1158,385 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                       crossAxisCount: 2,
                                       children: [
                                         // Radial Bar 1
-                                        StreamBuilder(
-                                            stream: selectedShift == 0 &&
-                                                    dropdownValue == 0
-                                                ? FirebaseFirestore.instance
-                                                    .collection('product')
-                                                    // .where("product",
-                                                    //     isEqualTo:
-                                                    //         "Process_SKM")
-                                                    .where("createdAt",
-                                                        isGreaterThanOrEqualTo:
-                                                            FromFix)
-                                                    .where("createdAt",
-                                                        isLessThanOrEqualTo:
-                                                            ToFix)
-                                                    .snapshots()
-                                                : selectedShift != 0 &&
-                                                        dropdownValue == 0
-                                                    ? FirebaseFirestore.instance
-                                                        .collection('product')
-                                                        .where("product",
-                                                            isEqualTo:
-                                                                "Process_SKM")
-                                                        .where("shift",
-                                                            isEqualTo:
-                                                                selectedShift
-                                                                    .toString())
-                                                        // .where("createdAt",
-                                                        //     isGreaterThanOrEqualTo:
-                                                        //         FromFix)
-                                                        // .where("createdAt",
-                                                        //     isLessThanOrEqualTo:
-                                                        //         ToFix)
-                                                        .snapshots()
-                                                    : selectedShift == 0 &&
-                                                            dropdownValue != 0
-                                                        ? FirebaseFirestore
-                                                            .instance
-                                                            .collection(
-                                                                'product')
-                                                            .where("product",
-                                                                isEqualTo:
-                                                                    "Process_SKM")
-                                                            .where("line",
-                                                                isEqualTo:
-                                                                    dropdownValue
-                                                                        .toString())
-                                                            // .where("createdAt",
-                                                            //     isGreaterThanOrEqualTo:
-                                                            //         FromFix)
-                                                            // .where("createdAt",
-                                                            //     isLessThanOrEqualTo:
-                                                            //         ToFix)
-                                                            .snapshots()
-                                                        : selectedShift != 0 &&
-                                                                dropdownValue !=
-                                                                    0
-                                                            ? FirebaseFirestore
-                                                                .instance
-                                                                .collection(
-                                                                    'product')
-                                                                .where(
-                                                                    "product",
-                                                                    isEqualTo:
-                                                                        "Process_SKM")
-                                                                .where("shift",
-                                                                    isEqualTo:
-                                                                        selectedShift
-                                                                            .toString())
-                                                                .where("line",
-                                                                    isEqualTo:
-                                                                        dropdownValue
-                                                                            .toString())
-                                                                // .where("createdAt", isGreaterThanOrEqualTo: FromFix)
-                                                                // .where("createdAt", isLessThanOrEqualTo: ToFix)
-                                                                .snapshots()
-                                                            : null,
-                                            builder: (context,
-                                                AsyncSnapshot snapshot) {
-                                              if (!snapshot.hasData) {
-                                                return Text("no Data");
-                                              }
 
-                                              final doc = snapshot.data.docs;
-
-                                              var leCuy = List.generate(
-                                                  doc.length, (index) {
-                                                double x = double.parse(
-                                                    doc[index]['le']);
-                                                String z = x.toStringAsFixed(0);
-                                                int a = int.parse(z);
-
-                                                return a;
-                                              }).fold(0, (p, c) => p + c);
-                                              var lpCuy = List.generate(
-                                                  doc.length, (index) {
-                                                double x = double.parse(
-                                                    doc[index]['lp']);
-                                                String z = x.toStringAsFixed(0);
-                                                int a = int.parse(z);
-
-                                                return a;
-                                              }).fold(0, (p, c) => p + c);
-                                              var bdCuy = List.generate(
-                                                  doc.length, (index) {
-                                                double x = double.parse(
-                                                    doc[index]['bd']);
-                                                String z = x.toStringAsFixed(0);
-                                                int a = int.parse(z);
-
-                                                return a;
-                                              }).fold(0, (p, c) => p + c);
-                                              var dtCuy = List.generate(
-                                                  doc.length, (index) {
-                                                double x = double.parse(
-                                                    doc[index]['dt']);
-                                                String z = x.toStringAsFixed(0);
-                                                int a = int.parse(z);
-
-                                                return a;
-                                              }).fold(0, (p, c) => p + c);
-
-                                              var actualO = List.generate(
-                                                  doc.length, (index) {
-                                                double x = double.parse(
-                                                    doc[index]
-                                                        ['actual_output']);
-                                                String z = x.toStringAsFixed(0);
-                                                int a = int.parse(z);
-
-                                                return a;
-                                              }).fold(0, (p, c) => p + c);
-                                              var planingO = List.generate(
-                                                  doc.length, (index) {
-                                                double x = double.parse(
-                                                    doc[index]
-                                                        ['planing_output']);
-                                                String z = x.toStringAsFixed(0);
-                                                int a = int.parse(z);
-
-                                                return a;
-                                              }).fold(0, (p, c) => p + c);
-
-                                              double LeFix = leCuy / doc.length;
-                                              double LpFix = lpCuy / doc.length;
-                                              double dtFix = dtCuy / doc.length;
-                                              double bdFix = bdCuy / doc.length;
-                                              double SkmFix =
-                                                  actualO / planingO;
-
-                                              return InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    showProgress = 1;
-                                                  });
-                                                },
-                                                child: Column(
+                                        InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              showProgress = 1;
+                                            });
+                                          },
+                                          child: Column(
+                                            children: [
+                                              Center(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 5),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        margin: EdgeInsets.only(
+                                                            right: 5),
+                                                        height: 15,
+                                                        width: 15,
+                                                        decoration: BoxDecoration(
+                                                            color: Color(
+                                                                0xffE48D9D),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20)),
+                                                      ),
+                                                      Text(
+                                                        "Process_SKM",
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Container(
+                                                child: Stack(
+                                                  alignment: Alignment.center,
                                                   children: [
-                                                    Center(
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                bottom: 5),
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Container(
-                                                              margin: EdgeInsets
-                                                                  .only(
-                                                                      right: 5),
-                                                              height: 15,
-                                                              width: 15,
-                                                              decoration: BoxDecoration(
-                                                                  color: Color(
-                                                                      0xffE48D9D),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              20)),
-                                                            ),
-                                                            Text(
-                                                              "Process_SKM",
-                                                              style: TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                            ),
+                                                    Container(
+                                                      child:
+                                                          CircularPercentIndicator(
+                                                        radius: 80.0,
+                                                        lineWidth: 16.0,
+                                                        percent: SkmFixProses,
+                                                        center: RadialBar(
+                                                          chartData: [
+                                                            ChartData(
+                                                                'LE',
+                                                                LeFixProses,
+                                                                blueLE),
+                                                            ChartData(
+                                                                'LP',
+                                                                LpFixProses,
+                                                                greenLP),
+                                                            ChartData(
+                                                                'DT',
+                                                                DtFixProses,
+                                                                redDT),
+                                                            ChartData(
+                                                                'BD',
+                                                                BdFixProses,
+                                                                orangeBD),
                                                           ],
                                                         ),
+                                                        progressColor:
+                                                            const Color(
+                                                                0xffE48D9D),
                                                       ),
                                                     ),
-                                                    SizedBox(
-                                                      height: 5,
-                                                    ),
-                                                    Container(
-                                                      child: Stack(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        children: [
-                                                          Container(
-                                                            child:
-                                                                CircularPercentIndicator(
-                                                              radius: 80.0,
-                                                              lineWidth: 16.0,
-                                                              percent: SkmFix,
-                                                              center: RadialBar(
-                                                                chartData: [
-                                                                  ChartData(
-                                                                      'LE',
-                                                                      LeFix,
-                                                                      blueLE),
-                                                                  ChartData(
-                                                                      'LP',
-                                                                      LpFix,
-                                                                      greenLP),
-                                                                  ChartData(
-                                                                      'DT',
-                                                                      dtFix,
-                                                                      redDT),
-                                                                  ChartData(
-                                                                      'BD',
-                                                                      bdFix,
-                                                                      orangeBD),
-                                                                ],
-                                                              ),
-                                                              progressColor:
-                                                                  const Color(
-                                                                      0xffE48D9D),
-                                                            ),
-                                                          ),
-                                                          CircularPercentIndicator(
-                                                            radius: 30.0,
-                                                            lineWidth: 12,
-                                                            percent: 0.2,
-                                                            center: Text("SKM"),
-                                                            progressColor:
-                                                                redSKM,
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
+                                                    CircularPercentIndicator(
+                                                      radius: 30.0,
+                                                      lineWidth: 12,
+                                                      percent: SkmAllFix,
+                                                      center: Text("SKM"),
+                                                      progressColor: redSKM,
+                                                    )
                                                   ],
                                                 ),
-                                              );
-                                            }),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
 
                                         // Radial Bar 2
-                                        StreamBuilder(
-                                            stream: selectedShift == 0 &&
-                                                    dropdownValue == 0
-                                                ? FirebaseFirestore.instance
-                                                    .collection('product')
-                                                    // .where("createdAt",
-                                                    //     isGreaterThanOrEqualTo:
-                                                    //         FromFix)
-                                                    // .where("createdAt",
-                                                    //     isLessThanOrEqualTo:
-                                                    //         ToFix)
-
-                                                    .where("product",
-                                                        isEqualTo:
-                                                            "Filling_Packing_SKM_Pouch")
-                                                    .snapshots()
-                                                : selectedShift != 0 &&
-                                                        dropdownValue == 0
-                                                    ? FirebaseFirestore.instance
-                                                        .collection('product')
-                                                        .where("product",
-                                                            isEqualTo:
-                                                                "Filling_Packing_SKM_Pouch")
-                                                        .where("shift",
-                                                            isEqualTo:
-                                                                selectedShift
-                                                                    .toString())
-                                                        // .where("createdAt",
-                                                        //     isGreaterThanOrEqualTo:
-                                                        //         FromFix)
-                                                        // .where("createdAt",
-                                                        //     isLessThanOrEqualTo:
-                                                        //         ToFix)
-                                                        .snapshots()
-                                                    : selectedShift == 0 &&
-                                                            dropdownValue != 0
-                                                        ? FirebaseFirestore
-                                                            .instance
-                                                            .collection(
-                                                                'product')
-                                                            .where("product",
-                                                                isEqualTo:
-                                                                    "Filling_Packing_SKM_Pouch")
-                                                            .where("line",
-                                                                isEqualTo:
-                                                                    dropdownValue
-                                                                        .toString())
-                                                            // .where("createdAt",
-                                                            //     isGreaterThanOrEqualTo:
-                                                            //         FromFix)
-                                                            // .where("createdAt",
-                                                            //     isLessThanOrEqualTo:
-                                                            //         ToFix)
-                                                            .snapshots()
-                                                        : selectedShift != 0 &&
-                                                                dropdownValue !=
-                                                                    0
-                                                            ? FirebaseFirestore
-                                                                .instance
-                                                                .collection(
-                                                                    'product')
-                                                                .where(
-                                                                    "product",
-                                                                    isEqualTo:
-                                                                        "Filling_Packing_SKM_Pouch")
-                                                                .where("shift",
-                                                                    isEqualTo:
-                                                                        selectedShift
-                                                                            .toString())
-                                                                .where("line",
-                                                                    isEqualTo:
-                                                                        dropdownValue
-                                                                            .toString())
-                                                                // .where("createdAt", isGreaterThanOrEqualTo: FromFix)
-                                                                // .where("createdAt", isLessThanOrEqualTo: ToFix)
-                                                                .snapshots()
-                                                            : null,
-                                            builder: (context,
-                                                AsyncSnapshot snapshot) {
-                                              if (!snapshot.hasData) {
-                                                return Text("no Data");
-                                              }
-
-                                              final doc = snapshot.data.docs;
-
-                                              var leCuy = List.generate(
-                                                  doc.length, (index) {
-                                                double x = double.parse(
-                                                    doc[index]['le']);
-                                                String z = x.toStringAsFixed(0);
-                                                int a = int.parse(z);
-
-                                                return a;
-                                              }).fold(0, (p, c) => p + c);
-                                              var lpCuy = List.generate(
-                                                  doc.length, (index) {
-                                                double x = double.parse(
-                                                    doc[index]['lp']);
-                                                String z = x.toStringAsFixed(0);
-                                                int a = int.parse(z);
-
-                                                return a;
-                                              }).fold(0, (p, c) => p + c);
-                                              var bdCuy = List.generate(
-                                                  doc.length, (index) {
-                                                double x = double.parse(
-                                                    doc[index]['bd']);
-                                                String z = x.toStringAsFixed(0);
-                                                int a = int.parse(z);
-
-                                                return a;
-                                              }).fold(0, (p, c) => p + c);
-                                              var dtCuy = List.generate(
-                                                  doc.length, (index) {
-                                                double x = double.parse(
-                                                    doc[index]['dt']);
-                                                String z = x.toStringAsFixed(0);
-                                                int a = int.parse(z);
-
-                                                return a;
-                                              }).fold(0, (p, c) => p + c);
-
-                                              var actualO = List.generate(
-                                                  doc.length, (index) {
-                                                double x = double.parse(
-                                                    doc[index]
-                                                        ['actual_output']);
-                                                String z = x.toStringAsFixed(0);
-                                                int a = int.parse(z);
-
-                                                return a;
-                                              }).fold(0, (p, c) => p + c);
-                                              var planingO = List.generate(
-                                                  doc.length, (index) {
-                                                double x = double.parse(
-                                                    doc[index]
-                                                        ['planing_output']);
-                                                String z = x.toStringAsFixed(0);
-                                                int a = int.parse(z);
-
-                                                return a;
-                                              }).fold(0, (p, c) => p + c);
-
-                                              double LeFix = leCuy / doc.length;
-                                              double LpFix = lpCuy / doc.length;
-                                              double dtFix = dtCuy / doc.length;
-                                              double bdFix = bdCuy / doc.length;
-                                              double SkmFix =
-                                                  actualO / planingO;
-
-                                              return InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    showProgress = 2;
-                                                  });
-                                                },
-                                                child: Column(
+                                        InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              showProgress = 2;
+                                            });
+                                          },
+                                          child: Column(
+                                            children: [
+                                              Center(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 5),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        margin: EdgeInsets.only(
+                                                            right: 5),
+                                                        height: 15,
+                                                        width: 15,
+                                                        decoration: BoxDecoration(
+                                                            color: Color(
+                                                                0xff872643),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20)),
+                                                      ),
+                                                      Text(
+                                                        "Filling Packing SKM Pouch",
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Container(
+                                                child: Stack(
+                                                  alignment: Alignment.center,
                                                   children: [
-                                                    Center(
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                bottom: 5),
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Container(
-                                                              margin: EdgeInsets
-                                                                  .only(
-                                                                      right: 5),
-                                                              height: 15,
-                                                              width: 15,
-                                                              decoration: BoxDecoration(
-                                                                  color: Color(
-                                                                      0xff872643),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              20)),
-                                                            ),
-                                                            Text(
-                                                              "Filling Packing SKM Pouch",
-                                                              style: TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                            ),
+                                                    Container(
+                                                      child:
+                                                          CircularPercentIndicator(
+                                                        radius: 80.0,
+                                                        lineWidth: 16.0,
+                                                        percent: SkmFixPouch,
+                                                        center: RadialBar(
+                                                          chartData: [
+                                                            ChartData(
+                                                                'LE',
+                                                                LeFixPouch,
+                                                                blueLE),
+                                                            ChartData(
+                                                                'LP',
+                                                                LpFixPouch,
+                                                                greenLP),
+                                                            ChartData(
+                                                                'DT',
+                                                                DtFixPouch,
+                                                                redDT),
+                                                            ChartData(
+                                                                'BD',
+                                                                BdFixPouch,
+                                                                orangeBD),
                                                           ],
                                                         ),
+                                                        progressColor:
+                                                            const Color(
+                                                                0xff872643),
                                                       ),
                                                     ),
-                                                    SizedBox(
-                                                      height: 5,
-                                                    ),
-                                                    Container(
-                                                      child: Stack(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        children: [
-                                                          Container(
-                                                            child:
-                                                                CircularPercentIndicator(
-                                                              radius: 80.0,
-                                                              lineWidth: 16.0,
-                                                              percent: SkmFix,
-                                                              center: RadialBar(
-                                                                chartData: [
-                                                                  ChartData(
-                                                                      'LE',
-                                                                      LeFix,
-                                                                      blueLE),
-                                                                  ChartData(
-                                                                      'LP',
-                                                                      LpFix,
-                                                                      greenLP),
-                                                                  ChartData(
-                                                                      'DT',
-                                                                      dtFix,
-                                                                      redDT),
-                                                                  ChartData(
-                                                                      'BD',
-                                                                      bdFix,
-                                                                      orangeBD),
-                                                                ],
-                                                              ),
-                                                              progressColor:
-                                                                  const Color(
-                                                                      0xff872643),
-                                                            ),
-                                                          ),
-                                                          CircularPercentIndicator(
-                                                            radius: 30.0,
-                                                            lineWidth: 12,
-                                                            percent: 0.2,
-                                                            center: Text("SKM"),
-                                                            progressColor:
-                                                                redSKM,
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
+                                                    CircularPercentIndicator(
+                                                      radius: 30.0,
+                                                      lineWidth: 12,
+                                                      percent: SkmAllFix,
+                                                      center: Text("SKM"),
+                                                      progressColor: redSKM,
+                                                    )
                                                   ],
                                                 ),
-                                              );
-                                            }),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+
                                         // Radial Bar 3
-                                        StreamBuilder(
-                                            stream: selectedShift == 0 &&
-                                                    dropdownValue == 0
-                                                ? FirebaseFirestore.instance
-                                                    .collection('product')
-                                                    // .where("createdAt",
-                                                    //     isGreaterThanOrEqualTo:
-                                                    //         FromFix)
-                                                    // .where("createdAt",
-                                                    //     isLessThanOrEqualTo:
-                                                    //         ToFix)
-
-                                                    .where("product",
-                                                        isEqualTo:
-                                                            "Filling_Packing_SKM_Tall_Can")
-                                                    .snapshots()
-                                                : selectedShift != 0 &&
-                                                        dropdownValue == 0
-                                                    ? FirebaseFirestore.instance
-                                                        .collection('product')
-                                                        .where("product",
-                                                            isEqualTo:
-                                                                "Filling_Packing_SKM_Tall_Can")
-                                                        .where("shift",
-                                                            isEqualTo:
-                                                                selectedShift
-                                                                    .toString())
-                                                        // .where("createdAt",
-                                                        //     isGreaterThanOrEqualTo:
-                                                        //         FromFix)
-                                                        // .where("createdAt",
-                                                        //     isLessThanOrEqualTo:
-                                                        //         ToFix)
-                                                        .snapshots()
-                                                    : selectedShift == 0 &&
-                                                            dropdownValue != 0
-                                                        ? FirebaseFirestore
-                                                            .instance
-                                                            .collection(
-                                                                'product')
-                                                            .where("product",
-                                                                isEqualTo:
-                                                                    "Filling_Packing_SKM_Tall_Can")
-                                                            .where("line",
-                                                                isEqualTo:
-                                                                    dropdownValue
-                                                                        .toString())
-                                                            // .where("createdAt",
-                                                            //     isGreaterThanOrEqualTo:
-                                                            //         FromFix)
-                                                            // .where("createdAt",
-                                                            //     isLessThanOrEqualTo:
-                                                            //         ToFix)
-                                                            .snapshots()
-                                                        : selectedShift != 0 &&
-                                                                dropdownValue !=
-                                                                    0
-                                                            ? FirebaseFirestore
-                                                                .instance
-                                                                .collection(
-                                                                    'product')
-                                                                .where(
-                                                                    "product",
-                                                                    isEqualTo:
-                                                                        "Filling_Packing_SKM_Tall_Can")
-                                                                .where("shift",
-                                                                    isEqualTo:
-                                                                        selectedShift
-                                                                            .toString())
-                                                                .where("line",
-                                                                    isEqualTo:
-                                                                        dropdownValue
-                                                                            .toString())
-                                                                // .where("createdAt", isGreaterThanOrEqualTo: FromFix)
-                                                                // .where("createdAt", isLessThanOrEqualTo: ToFix)
-                                                                .snapshots()
-                                                            : null,
-                                            builder: (context,
-                                                AsyncSnapshot snapshot) {
-                                              if (!snapshot.hasData) {
-                                                return Text("no Data");
-                                              }
-
-                                              final doc = snapshot.data.docs;
-
-                                              var leCuy = List.generate(
-                                                  doc.length, (index) {
-                                                double x = double.parse(
-                                                    doc[index]['le']);
-                                                String z = x.toStringAsFixed(0);
-                                                int a = int.parse(z);
-
-                                                return a;
-                                              }).fold(0, (p, c) => p + c);
-                                              var lpCuy = List.generate(
-                                                  doc.length, (index) {
-                                                double x = double.parse(
-                                                    doc[index]['lp']);
-                                                String z = x.toStringAsFixed(0);
-                                                int a = int.parse(z);
-
-                                                return a;
-                                              }).fold(0, (p, c) => p + c);
-                                              var bdCuy = List.generate(
-                                                  doc.length, (index) {
-                                                double x = double.parse(
-                                                    doc[index]['bd']);
-                                                String z = x.toStringAsFixed(0);
-                                                int a = int.parse(z);
-
-                                                return a;
-                                              }).fold(0, (p, c) => p + c);
-                                              var dtCuy = List.generate(
-                                                  doc.length, (index) {
-                                                double x = double.parse(
-                                                    doc[index]['dt']);
-                                                String z = x.toStringAsFixed(0);
-                                                int a = int.parse(z);
-
-                                                return a;
-                                              }).fold(0, (p, c) => p + c);
-
-                                              var actualO = List.generate(
-                                                  doc.length, (index) {
-                                                double x = double.parse(
-                                                    doc[index]
-                                                        ['actual_output']);
-                                                String z = x.toStringAsFixed(0);
-                                                int a = int.parse(z);
-
-                                                return a;
-                                              }).fold(0, (p, c) => p + c);
-                                              var planingO = List.generate(
-                                                  doc.length, (index) {
-                                                double x = double.parse(
-                                                    doc[index]
-                                                        ['planing_output']);
-                                                String z = x.toStringAsFixed(0);
-                                                int a = int.parse(z);
-
-                                                return a;
-                                              }).fold(0, (p, c) => p + c);
-
-                                              double LeFix = leCuy / doc.length;
-                                              double LpFix = lpCuy / doc.length;
-                                              double dtFix = dtCuy / doc.length;
-                                              double bdFix = bdCuy / doc.length;
-                                              double SkmFix =
-                                                  actualO / planingO;
-
-                                              return InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    showProgress = 3;
-                                                  });
-                                                },
-                                                child: Column(
+                                        InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              showProgress = 3;
+                                            });
+                                          },
+                                          child: Column(
+                                            children: [
+                                              Center(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 5),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        margin: EdgeInsets.only(
+                                                            right: 5),
+                                                        height: 15,
+                                                        width: 15,
+                                                        decoration: BoxDecoration(
+                                                            color: Color(
+                                                                0xff194B6D),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20)),
+                                                      ),
+                                                      Text(
+                                                        "Filling Packing SKM Tall Can",
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Container(
+                                                child: Stack(
+                                                  alignment: Alignment.center,
                                                   children: [
-                                                    Center(
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                bottom: 5),
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Container(
-                                                              margin: EdgeInsets
-                                                                  .only(
-                                                                      right: 5),
-                                                              height: 15,
-                                                              width: 15,
-                                                              decoration: BoxDecoration(
-                                                                  color: Color(
-                                                                      0xff194B6D),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              20)),
-                                                            ),
-                                                            Text(
-                                                              "Filling Packing SKM Tall Can",
-                                                              style: TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                            ),
+                                                    Container(
+                                                      child:
+                                                          CircularPercentIndicator(
+                                                        radius: 80.0,
+                                                        lineWidth: 16.0,
+                                                        percent: SkmFixTallCan,
+                                                        center: RadialBar(
+                                                          chartData: [
+                                                            ChartData(
+                                                                'LE',
+                                                                LeFixTallCan,
+                                                                blueLE),
+                                                            ChartData(
+                                                                'LP',
+                                                                LpFixTallCan,
+                                                                greenLP),
+                                                            ChartData(
+                                                                'DT',
+                                                                DtFixTallCan,
+                                                                redDT),
+                                                            ChartData(
+                                                                'BD',
+                                                                BdFixTallCan,
+                                                                orangeBD),
                                                           ],
                                                         ),
+                                                        progressColor:
+                                                            const Color(
+                                                                0xff194B6D),
                                                       ),
                                                     ),
-                                                    SizedBox(
-                                                      height: 5,
-                                                    ),
-                                                    Container(
-                                                      child: Stack(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        children: [
-                                                          Container(
-                                                            child:
-                                                                CircularPercentIndicator(
-                                                              radius: 80.0,
-                                                              lineWidth: 16.0,
-                                                              percent: SkmFix,
-                                                              center: RadialBar(
-                                                                chartData: [
-                                                                  ChartData(
-                                                                      'LE',
-                                                                      LeFix,
-                                                                      blueLE),
-                                                                  ChartData(
-                                                                      'LP',
-                                                                      LpFix,
-                                                                      greenLP),
-                                                                  ChartData(
-                                                                      'DT',
-                                                                      dtFix,
-                                                                      redDT),
-                                                                  ChartData(
-                                                                      'BD',
-                                                                      bdFix,
-                                                                      orangeBD),
-                                                                ],
-                                                              ),
-                                                              progressColor:
-                                                                  const Color(
-                                                                      0xff194B6D),
-                                                            ),
-                                                          ),
-                                                          CircularPercentIndicator(
-                                                            radius: 30.0,
-                                                            lineWidth: 12,
-                                                            percent: 0.2,
-                                                            center: Text("SKM"),
-                                                            progressColor:
-                                                                redSKM,
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
+                                                    CircularPercentIndicator(
+                                                      radius: 30.0,
+                                                      lineWidth: 12,
+                                                      percent: SkmAllFix,
+                                                      center: Text("SKM"),
+                                                      progressColor: redSKM,
+                                                    )
                                                   ],
                                                 ),
-                                              );
-                                            }),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+
                                         // Radial Bar 4
-                                        StreamBuilder(
-                                            stream: selectedShift == 0 &&
-                                                    dropdownValue == 0
-                                                ? FirebaseFirestore.instance
-                                                    .collection('product')
-                                                    // .where("createdAt",
-                                                    //     isGreaterThanOrEqualTo:
-                                                    //         FromFix)
-                                                    // .where("createdAt",
-                                                    //     isLessThanOrEqualTo:
-                                                    //         ToFix)
-
-                                                    .where("product",
-                                                        isEqualTo:
-                                                            "Filling_Packing_SKM_Sachet")
-                                                    .snapshots()
-                                                : selectedShift != 0 &&
-                                                        dropdownValue == 0
-                                                    ? FirebaseFirestore.instance
-                                                        .collection('product')
-                                                        .where("product",
-                                                            isEqualTo:
-                                                                "Filling_Packing_SKM_Sachet")
-                                                        .where("shift",
-                                                            isEqualTo:
-                                                                selectedShift
-                                                                    .toString())
-                                                        // .where("createdAt",
-                                                        //     isGreaterThanOrEqualTo:
-                                                        //         FromFix)
-                                                        // .where("createdAt",
-                                                        //     isLessThanOrEqualTo:
-                                                        //         ToFix)
-                                                        .snapshots()
-                                                    : selectedShift == 0 &&
-                                                            dropdownValue != 0
-                                                        ? FirebaseFirestore
-                                                            .instance
-                                                            .collection(
-                                                                'product')
-                                                            .where("product",
-                                                                isEqualTo:
-                                                                    "Filling_Packing_SKM_Sachet")
-                                                            .where("line",
-                                                                isEqualTo:
-                                                                    dropdownValue
-                                                                        .toString())
-                                                            // .where("createdAt",
-                                                            //     isGreaterThanOrEqualTo:
-                                                            //         FromFix)
-                                                            // .where("createdAt",
-                                                            //     isLessThanOrEqualTo:
-                                                            //         ToFix)
-                                                            .snapshots()
-                                                        : selectedShift != 0 &&
-                                                                dropdownValue !=
-                                                                    0
-                                                            ? FirebaseFirestore
-                                                                .instance
-                                                                .collection(
-                                                                    'product')
-                                                                .where(
-                                                                    "product",
-                                                                    isEqualTo:
-                                                                        "Filling_Packing_SKM_Sachet")
-                                                                .where("shift",
-                                                                    isEqualTo:
-                                                                        selectedShift
-                                                                            .toString())
-                                                                .where("line",
-                                                                    isEqualTo:
-                                                                        dropdownValue
-                                                                            .toString())
-                                                                // .where("createdAt", isGreaterThanOrEqualTo: FromFix)
-                                                                // .where("createdAt", isLessThanOrEqualTo: ToFix)
-                                                                .snapshots()
-                                                            : null,
-                                            builder: (context,
-                                                AsyncSnapshot snapshot) {
-                                              if (!snapshot.hasData) {
-                                                return Text("no Data");
-                                              }
-
-                                              final doc = snapshot.data.docs;
-
-                                              var leCuy = List.generate(
-                                                  doc.length, (index) {
-                                                double x = double.parse(
-                                                    doc[index]['le']);
-                                                String z = x.toStringAsFixed(0);
-                                                int a = int.parse(z);
-
-                                                return a;
-                                              }).fold(0, (p, c) => p + c);
-                                              var lpCuy = List.generate(
-                                                  doc.length, (index) {
-                                                double x = double.parse(
-                                                    doc[index]['lp']);
-                                                String z = x.toStringAsFixed(0);
-                                                int a = int.parse(z);
-
-                                                return a;
-                                              }).fold(0, (p, c) => p + c);
-                                              var bdCuy = List.generate(
-                                                  doc.length, (index) {
-                                                double x = double.parse(
-                                                    doc[index]['bd']);
-                                                String z = x.toStringAsFixed(0);
-                                                int a = int.parse(z);
-
-                                                return a;
-                                              }).fold(0, (p, c) => p + c);
-                                              var dtCuy = List.generate(
-                                                  doc.length, (index) {
-                                                double x = double.parse(
-                                                    doc[index]['dt']);
-                                                String z = x.toStringAsFixed(0);
-                                                int a = int.parse(z);
-
-                                                return a;
-                                              }).fold(0, (p, c) => p + c);
-
-                                              var actualO = List.generate(
-                                                  doc.length, (index) {
-                                                double x = double.parse(
-                                                    doc[index]
-                                                        ['actual_output']);
-                                                String z = x.toStringAsFixed(0);
-                                                int a = int.parse(z);
-
-                                                return a;
-                                              }).fold(0, (p, c) => p + c);
-                                              var planingO = List.generate(
-                                                  doc.length, (index) {
-                                                double x = double.parse(
-                                                    doc[index]
-                                                        ['planing_output']);
-                                                String z = x.toStringAsFixed(0);
-                                                int a = int.parse(z);
-
-                                                return a;
-                                              }).fold(0, (p, c) => p + c);
-
-                                              double LeFix = leCuy / doc.length;
-                                              double LpFix = lpCuy / doc.length;
-                                              double dtFix = dtCuy / doc.length;
-                                              double bdFix = bdCuy / doc.length;
-                                              double SkmFix =
-                                                  actualO / planingO;
-
-                                              return InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    showProgress = 4;
-                                                  });
-                                                },
-                                                child: Column(
+                                        InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              showProgress = 4;
+                                            });
+                                          },
+                                          child: Column(
+                                            children: [
+                                              Center(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 5),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        margin: EdgeInsets.only(
+                                                            right: 5),
+                                                        height: 15,
+                                                        width: 15,
+                                                        decoration: BoxDecoration(
+                                                            color: Color(
+                                                                0xff297E6F),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20)),
+                                                      ),
+                                                      Text(
+                                                        "Filling Packing SKM Sachet",
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Container(
+                                                child: Stack(
+                                                  alignment: Alignment.center,
                                                   children: [
-                                                    Center(
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                bottom: 5),
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Container(
-                                                              margin: EdgeInsets
-                                                                  .only(
-                                                                      right: 5),
-                                                              height: 15,
-                                                              width: 15,
-                                                              decoration: BoxDecoration(
-                                                                  color: Color(
-                                                                      0xff297E6F),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              20)),
-                                                            ),
-                                                            Text(
-                                                              "Filling Packing SKM Sachet",
-                                                              style: TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                            ),
+                                                    Container(
+                                                      child:
+                                                          CircularPercentIndicator(
+                                                        radius: 80.0,
+                                                        lineWidth: 16.0,
+                                                        percent: SkmFixSacet,
+                                                        center: RadialBar(
+                                                          chartData: [
+                                                            ChartData(
+                                                                'LE',
+                                                                LeFixSacet,
+                                                                blueLE),
+                                                            ChartData(
+                                                                'LP',
+                                                                LpFixSacet,
+                                                                greenLP),
+                                                            ChartData(
+                                                                'DT',
+                                                                DtFixSacet,
+                                                                redDT),
+                                                            ChartData(
+                                                                'BD',
+                                                                BdFixSacet,
+                                                                orangeBD),
                                                           ],
                                                         ),
+                                                        progressColor:
+                                                            const Color(
+                                                                0xff297E6F),
                                                       ),
                                                     ),
-                                                    SizedBox(
-                                                      height: 5,
-                                                    ),
-                                                    Container(
-                                                      child: Stack(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        children: [
-                                                          Container(
-                                                            child:
-                                                                CircularPercentIndicator(
-                                                              radius: 80.0,
-                                                              lineWidth: 16.0,
-                                                              percent: SkmFix,
-                                                              center: RadialBar(
-                                                                chartData: [
-                                                                  ChartData(
-                                                                      'LE',
-                                                                      LeFix,
-                                                                      blueLE),
-                                                                  ChartData(
-                                                                      'LP',
-                                                                      LpFix,
-                                                                      greenLP),
-                                                                  ChartData(
-                                                                      'DT',
-                                                                      dtFix,
-                                                                      redDT),
-                                                                  ChartData(
-                                                                      'BD',
-                                                                      bdFix,
-                                                                      orangeBD),
-                                                                ],
-                                                              ),
-                                                              progressColor:
-                                                                  const Color(
-                                                                      0xff297E6F),
-                                                            ),
-                                                          ),
-                                                          CircularPercentIndicator(
-                                                            radius: 30.0,
-                                                            lineWidth: 12,
-                                                            percent: 0.2,
-                                                            center: Text("SKM"),
-                                                            progressColor:
-                                                                redSKM,
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
+                                                    CircularPercentIndicator(
+                                                      radius: 30.0,
+                                                      lineWidth: 12,
+                                                      percent: SkmAllFix,
+                                                      center: Text("SKM"),
+                                                      progressColor: redSKM,
+                                                    )
                                                   ],
                                                 ),
-                                              );
-                                            }),
+                                              ),
+                                            ],
+                                          ),
+                                        )
                                       ]),
                                 ),
                                 SizedBox(
@@ -1720,55 +1566,57 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                   )
                 ])),
             SizedBox(width: 12),
-            // DashboardContainer(
-            //     height: 620,
-            //     width: 375,
-            //     child: Column(
-            //       children: [
-            //         SizedBox(height: 15),
-            //         Text(
-            //           "TOP 5 BREAKDOWN MESIN",
-            //           style:
-            //               TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            //         ),
-            //         SizedBox(height: 45),
-            //         ListView.builder(
-            //             itemCount: output2.length >= 6 ? 5 : output2.length,
-            //             shrinkWrap: true,
-            //             itemBuilder: (context, index) {
-            //               return Column(
-            //                 children: [
-            //                   StreamBuilder(
-            //                       stream: FirebaseFirestore.instance
-            //                           .collection('breakdown')
-            //                           .where("top", isEqualTo: output2[index])
-            //                           .snapshots(),
-            //                       builder: (context, snapshot) {
-            //                         final doc = snapshot.data!.docs;
-            //                         if (!snapshot.hasData) {
-            //                           return Text("no Data");
-            //                         }
+            DashboardContainer(
+                height: 620,
+                width: 375,
+                child: Column(
+                  children: [
+                    SizedBox(height: 15),
+                    Text(
+                      "TOP 5 BREAKDOWN MESIN",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 45),
+                    Container(
+                      child: ListView.builder(
+                          itemCount: output2.length >= 6 ? 5 : output2.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                StreamBuilder(
+                                    stream: FirebaseFirestore.instance
+                                        .collection('breakdown')
+                                        .where("top", isEqualTo: output2[index])
+                                        .snapshots(),
+                                    builder: (context, snapshot) {
+                                      final doc = snapshot.data!.docs;
+                                      if (!snapshot.hasData) {
+                                        return Text("no Data");
+                                      }
 
-            //                         var totalHour =
-            //                             List.generate(doc.length, (index) {
-            //                           double x =
-            //                               double.parse(doc[index]['bdHour']);
+                                      var totalHour =
+                                          List.generate(doc.length, (index) {
+                                        double x =
+                                            double.parse(doc[index]['bdHour']);
 
-            //                           return x;
-            //                         }).reduce((a, b) => a + b);
-            //                         return BreakdownItem(
-            //                             title: doc[0]["mesin"],
-            //                             desc: doc[0]["reason"],
-            //                             number: totalHour.toStringAsFixed(2));
-            //                       }),
-            //                   SizedBox(
-            //                     height: 25,
-            //                   )
-            //                 ],
-            //               );
-            //             })
-            //       ],
-            //     ))
+                                        return x;
+                                      }).reduce((a, b) => a + b);
+                                      return BreakdownItem(
+                                          title: doc[0]["mesin"],
+                                          desc: doc[0]["reason"],
+                                          number: totalHour.toStringAsFixed(2));
+                                    }),
+                                SizedBox(
+                                  height: 25,
+                                )
+                              ],
+                            );
+                          }),
+                    )
+                  ],
+                ))
           ],
         )
       ],
