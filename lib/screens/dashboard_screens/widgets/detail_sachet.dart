@@ -23,6 +23,7 @@ class DetailSacet extends StatefulWidget {
 class _DetailSacetState extends State<DetailSacet> {
   @override
   Widget build(BuildContext context) {
+    var Skm = widget.Skm * 100;
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,7 +54,9 @@ class _DetailSacetState extends State<DetailSacet> {
                     width: 7,
                   ),
                   Text(
-                      "${widget.Ratarata.isNaN ? "-" : widget.Ratarata.toStringAsFixed(0)}/956")
+                      "${widget.Skm.isNaN ? "%" : Skm.toStringAsFixed(3) + "%"}"
+                      //"${widget.Ratarata.isNaN ? "-" : widget.Ratarata.toStringAsFixed(0)}/956"
+                      )
                 ],
               ),
             ],

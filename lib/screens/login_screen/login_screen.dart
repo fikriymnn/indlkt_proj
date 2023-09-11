@@ -324,6 +324,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       mediaQueryWidth * 0.0125),
                                               child: Container(
                                                 child: TextFormField(
+                                                  onEditingComplete: () {
+                                                    _submitFormOnLogin();
+                                                  },
                                                   obscureText: _obsecureText,
                                                   textInputAction:
                                                       TextInputAction.next,
@@ -370,137 +373,137 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 ),
                                               ),
                                             ),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                    left: mediaQueryWidth *
-                                                        0.0207,
-                                                    top: mediaQueryWidth *
-                                                        0.0081,
-                                                  ),
-                                                  child: Text("Chaptcha",
-                                                      style: GoogleFonts.rubik(
-                                                        textStyle:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .displayMedium,
-                                                        fontSize:
-                                                            mediaQueryWidth *
-                                                                0.008,
-                                                      )),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                      bottom: mediaQueryWidth *
-                                                          0.007),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      LocalCaptcha(
-                                                        key: ValueKey(
-                                                            _configFormData
-                                                                .toString()),
-                                                        controller:
-                                                            _localCaptchaController,
-                                                        height:
-                                                            mediaQueryWidth *
-                                                                0.0504,
-                                                        width: mediaQueryWidth *
-                                                            0.142,
-                                                        backgroundColor:
-                                                            Colors.grey[100]!,
-                                                        chars: _configFormData
-                                                            .chars,
-                                                        length: _configFormData
-                                                            .length,
-                                                        fontSize: _configFormData
-                                                                    .fontSize >
-                                                                0
-                                                            ? _configFormData
-                                                                .fontSize
-                                                            : null,
-                                                        caseSensitive:
-                                                            _configFormData
-                                                                .caseSensitive,
-                                                        codeExpireAfter:
-                                                            _configFormData
-                                                                .codeExpireAfter,
-                                                      ),
-                                                      InkWell(
-                                                        onTap: () =>
-                                                            _localCaptchaController
-                                                                .refresh(),
-                                                        child: Icon(
-                                                            Icons.repeat_sharp),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                  left:
-                                                      mediaQueryWidth * 0.0207,
-                                                  right:
-                                                      mediaQueryWidth * 0.0125,
-                                                  bottom:
-                                                      mediaQueryWidth * 0.0125),
-                                              child: TextFormField(
-                                                onEditingComplete: () {
-                                                  _submitFormOnLogin();
-                                                },
-                                                decoration: InputDecoration(
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                                    color:
-                                                                        blue)),
-                                                    hintText: 'Enter Chaptcha',
-                                                    border: OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                mediaQueryWidth *
-                                                                    0.008))),
-                                                validator: (value) {
-                                                  if (value != null &&
-                                                      value.isNotEmpty) {
-                                                    if (value.length !=
-                                                        _configFormData
-                                                            .length) {
-                                                      return '* Code must be length of ${_configFormData.length}.';
-                                                    }
+                                            // Column(
+                                            //   crossAxisAlignment:
+                                            //       CrossAxisAlignment.start,
+                                            //   children: [
+                                            //     Padding(
+                                            //       padding: EdgeInsets.only(
+                                            //         left: mediaQueryWidth *
+                                            //             0.0207,
+                                            //         top: mediaQueryWidth *
+                                            //             0.0081,
+                                            //       ),
+                                            //       child: Text("Chaptcha",
+                                            //           style: GoogleFonts.rubik(
+                                            //             textStyle:
+                                            //                 Theme.of(context)
+                                            //                     .textTheme
+                                            //                     .displayMedium,
+                                            //             fontSize:
+                                            //                 mediaQueryWidth *
+                                            //                     0.008,
+                                            //           )),
+                                            //     ),
+                                            //     Padding(
+                                            //       padding: EdgeInsets.only(
+                                            //           bottom: mediaQueryWidth *
+                                            //               0.007),
+                                            //       child: Row(
+                                            //         mainAxisAlignment:
+                                            //             MainAxisAlignment
+                                            //                 .center,
+                                            //         children: [
+                                            //           LocalCaptcha(
+                                            //             key: ValueKey(
+                                            //                 _configFormData
+                                            //                     .toString()),
+                                            //             controller:
+                                            //                 _localCaptchaController,
+                                            //             height:
+                                            //                 mediaQueryWidth *
+                                            //                     0.0504,
+                                            //             width: mediaQueryWidth *
+                                            //                 0.142,
+                                            //             backgroundColor:
+                                            //                 Colors.grey[100]!,
+                                            //             chars: _configFormData
+                                            //                 .chars,
+                                            //             length: _configFormData
+                                            //                 .length,
+                                            //             fontSize: _configFormData
+                                            //                         .fontSize >
+                                            //                     0
+                                            //                 ? _configFormData
+                                            //                     .fontSize
+                                            //                 : null,
+                                            //             caseSensitive:
+                                            //                 _configFormData
+                                            //                     .caseSensitive,
+                                            //             codeExpireAfter:
+                                            //                 _configFormData
+                                            //                     .codeExpireAfter,
+                                            //           ),
+                                            //           InkWell(
+                                            //             onTap: () =>
+                                            //                 _localCaptchaController
+                                            //                     .refresh(),
+                                            //             child: Icon(
+                                            //                 Icons.repeat_sharp),
+                                            //           ),
+                                            //         ],
+                                            //       ),
+                                            //     ),
+                                            //   ],
+                                            // ),
+                                            // Padding(
+                                            //   padding: EdgeInsets.only(
+                                            //       left:
+                                            //           mediaQueryWidth * 0.0207,
+                                            //       right:
+                                            //           mediaQueryWidth * 0.0125,
+                                            //       bottom:
+                                            //           mediaQueryWidth * 0.0125),
+                                            //   child: TextFormField(
+                                            //     onEditingComplete: () {
+                                            //       _submitFormOnLogin();
+                                            //     },
+                                            //     decoration: InputDecoration(
+                                            //         enabledBorder:
+                                            //             OutlineInputBorder(
+                                            //                 borderSide:
+                                            //                     BorderSide(
+                                            //                         color:
+                                            //                             blue)),
+                                            //         hintText: 'Enter Chaptcha',
+                                            //         border: OutlineInputBorder(
+                                            //             borderRadius:
+                                            //                 BorderRadius.circular(
+                                            //                     mediaQueryWidth *
+                                            //                         0.008))),
+                                            //     validator: (value) {
+                                            //       if (value != null &&
+                                            //           value.isNotEmpty) {
+                                            //         if (value.length !=
+                                            //             _configFormData
+                                            //                 .length) {
+                                            //           return '* Code must be length of ${_configFormData.length}.';
+                                            //         }
 
-                                                    final validation =
-                                                        _localCaptchaController
-                                                            .validate(value);
+                                            //         final validation =
+                                            //             _localCaptchaController
+                                            //                 .validate(value);
 
-                                                    switch (validation) {
-                                                      case LocalCaptchaValidation
-                                                            .invalidCode:
-                                                        return '* Invalid code.';
-                                                      case LocalCaptchaValidation
-                                                            .codeExpired:
-                                                        return '* Code expired.';
-                                                      case LocalCaptchaValidation
-                                                            .valid:
-                                                      default:
-                                                        return null;
-                                                    }
-                                                  }
+                                            //         switch (validation) {
+                                            //           case LocalCaptchaValidation
+                                            //                 .invalidCode:
+                                            //             return '* Invalid code.';
+                                            //           case LocalCaptchaValidation
+                                            //                 .codeExpired:
+                                            //             return '* Code expired.';
+                                            //           case LocalCaptchaValidation
+                                            //                 .valid:
+                                            //           default:
+                                            //             return null;
+                                            //         }
+                                            //       }
 
-                                                  return '* Required field.';
-                                                },
-                                                onSaved: (value) =>
-                                                    _inputCode = value ?? '',
-                                              ),
-                                            ),
+                                            //       return '* Required field.';
+                                            //     },
+                                            //     onSaved: (value) =>
+                                            //         _inputCode = value ?? '',
+                                            //   ),
+                                            // ),
                                             Container(
                                               child: Row(
                                                 mainAxisAlignment:

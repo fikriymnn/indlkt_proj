@@ -21,6 +21,8 @@ import 'package:indlkt_proj/screens/dashboard_screens/widgets/detail_tall_can.da
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
+import '../../widgets/custom_dropdown.dart';
+
 class DashboardOverview extends StatefulWidget {
   const DashboardOverview({super.key});
 
@@ -36,11 +38,22 @@ class _DashboardOverviewState extends State<DashboardOverview> {
   int selectedShift = 0;
   dynamic dropdownValue = 0;
   int showProgress = 0;
-  DateTime? _fromSelectedDate = null;
-  DateTime? _toSelectedDate = null;
+  DateTime? _fromSelectedDate = DateTime.now();
+  DateTime? _toSelectedDate = DateTime.now();
 
   int? FromFix;
   int? ToFix;
+
+  List dataFilterSkm = [];
+  dynamic RatarataSkm = [];
+  dynamic RatarataSkmProses = [];
+  dynamic RatarataSkmFillpack = [];
+  List dataSkm = [];
+  double ProdActSkm = 0;
+  double LeSkm = 0;
+  double LpSkm = 0;
+  double BdSkm = 0;
+  double DtSkm = 0;
 
 //data Chart
   List dataFilterProses = [];
@@ -58,6 +71,11 @@ class _DashboardOverviewState extends State<DashboardOverview> {
   dynamic SkmFixPouch = 0;
   dynamic SkmFixSacet = 0;
   dynamic SkmFixTallCan = 0;
+
+  dynamic SkmFixProsesDetail = 0;
+  dynamic SkmFixPouchDetail = 0;
+  dynamic SkmFixSacetDetail = 0;
+  dynamic SkmFixTallCanDetail = 0;
 
   dynamic LeFixProses = 0;
   dynamic LeFixPouch = 0;
@@ -90,34 +108,61 @@ class _DashboardOverviewState extends State<DashboardOverview> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    topBreakdown();
+    topBreakdown(3);
+    DataSkm();
     DataProduct();
   }
 
   List dataBreakdown = [];
   final map2 = <String, int>{};
 
-  void topBreakdown() async {
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection("breakdown").get();
-    setState(() {
-      if (querySnapshot.docs.isNotEmpty) {
-        dataBreakdown = querySnapshot.docs.map((doc) => doc.data()).toList();
+  void topBreakdown(type) async {
+    var a;
+    if (type == 0) {
+      a = await FirebaseFirestore.instance.collection("breakdown").get();
+    } else if (type == 1) {
+      a = await FirebaseFirestore.instance
+          .collection("breakdown")
+          .where("product", isEqualTo: "Process_SKM")
+          .get();
+    } else if (type == 2) {
+      a = await FirebaseFirestore.instance
+          .collection("breakdown")
+          .where("product", isEqualTo: "Filling_Packing_SKM_Pouch")
+          .get();
+    } else if (type == 3) {
+      a = await FirebaseFirestore.instance
+          .collection("breakdown")
+          .where("product", isEqualTo: "Filling_Packing_SKM_Tall_Can")
+          .get();
+    } else if (type == 4) {
+      a = await FirebaseFirestore.instance
+          .collection("breakdown")
+          .where("product", isEqualTo: "Filling_Packing_SKM_Sachet")
+          .get();
+    }
+    QuerySnapshot querySnapshot = a;
 
-        var myList2 = List.generate(
-            dataBreakdown.length, (index) => dataBreakdown[index]["top"]);
+    if (querySnapshot.docs.isNotEmpty) {
+      dataBreakdown = querySnapshot.docs.map((doc) => doc.data()).toList();
 
-        for (final m in myList2) {
-          final letter = m;
-          map2[letter] = map2.containsKey(letter) ? map2[letter]! + 1 : 1;
-        }
+      var myList2 = List.generate(
+          dataBreakdown.length, (index) => dataBreakdown[index]["top"]);
 
+      for (final m in myList2) {
+        final letter = m;
+        map2[letter] = map2.containsKey(letter) ? map2[letter]! + 1 : 1;
+      }
+
+      setState(() {
         output2 = map2.keys.toList(growable: false);
         output2.sort((k1, k2) => map2[k2]!.compareTo(map2[k1] as num));
-      } else {
+      });
+    } else {
+      setState(() {
         output2 = [];
-      }
-    });
+      });
+    }
   }
 
   void DataProduct() async {
@@ -254,7 +299,13 @@ class _DashboardOverviewState extends State<DashboardOverview> {
     LpFixProses = lpCuy / doc.length;
     DtFixProses = dtCuy / doc.length;
     BdFixProses = bdCuy / doc.length;
-    SkmFixProses = actualO / planingO;
+    SkmFixProsesDetail = actualO / planingO;
+    var SkmFixProsess = actualO / planingO;
+    if (SkmFixProsess > 1.00) {
+      SkmFixProses = 1.00;
+    } else {
+      SkmFixProses = SkmFixProsess;
+    }
     RatarataProses = actualO / doc.length;
   }
 
@@ -358,7 +409,13 @@ class _DashboardOverviewState extends State<DashboardOverview> {
     LpFixPouch = lpCuy / doc.length;
     DtFixPouch = dtCuy / doc.length;
     BdFixPouch = bdCuy / doc.length;
-    SkmFixPouch = actualO / planingO;
+    SkmFixPouchDetail = actualO / planingO;
+    var SkmFixPouchs = actualO / planingO;
+    if (SkmFixPouchs > 1.00) {
+      SkmFixPouch = 1.00;
+    } else {
+      SkmFixPouch = SkmFixPouchs;
+    }
     RatarataPouch = actualO / doc.length;
   }
 
@@ -462,7 +519,13 @@ class _DashboardOverviewState extends State<DashboardOverview> {
     LpFixSacet = lpCuy / doc.length;
     DtFixSacet = dtCuy / doc.length;
     BdFixSacet = bdCuy / doc.length;
-    SkmFixSacet = actualO / planingO;
+    SkmFixSacetDetail = actualO / planingO;
+    var SkmFixSacets = actualO / planingO;
+    if (SkmFixSacets > 1.00) {
+      SkmFixSacet = 1.00;
+    } else {
+      SkmFixSacet = SkmFixSacets;
+    }
     RatarataSacet = actualO / doc.length;
   }
 
@@ -566,8 +629,138 @@ class _DashboardOverviewState extends State<DashboardOverview> {
     LpFixTallCan = lpCuy / doc.length;
     DtFixTallCan = dtCuy / doc.length;
     BdFixTallCan = bdCuy / doc.length;
-    SkmFixTallCan = actualO / planingO;
+    SkmFixTallCanDetail = actualO / planingO;
+    var SkmFixTallCans = actualO / planingO;
+    if (SkmFixTallCans > 1.00) {
+      SkmFixTallCan = 1.00;
+    } else {
+      SkmFixTallCan = SkmFixTallCans;
+    }
     RatarataTallCan = actualO / doc.length;
+  }
+
+  int SkmFill = 1;
+
+  void DataSkm() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("product")
+        .where("createdAt", isGreaterThanOrEqualTo: FromFix)
+        .where("createdAt", isLessThanOrEqualTo: ToFix)
+        .get();
+    setState(() {
+      dataSkm = querySnapshot.docs.map((doc) => doc.data()).toList();
+      dataSkmFilter();
+    });
+  }
+
+  void dataSkmFilter() {
+    if (SkmFill == 1) {
+      var data = [];
+      for (var i = 0; i < dataSkm.length; i++) {
+        data.add(dataSkm[i]);
+      }
+      setState(() {
+        dataFilterSkm = data;
+      });
+    } else if (SkmFill == 2) {
+      var data = [];
+      for (var i = 0; i < dataSkm.length; i++) {
+        if (dataSkm[i]["type"] == "process") {
+          data.add(dataSkm[i]);
+        }
+      }
+      setState(() {
+        dataFilterSkm = data;
+      });
+    } else if (SkmFill == 3) {
+      var data = [];
+      for (var i = 0; i < dataSkm.length; i++) {
+        if (dataSkm[i]["type"] == "fillpack") {
+          data.add(dataSkm[i]);
+        }
+      }
+      setState(() {
+        dataFilterSkm = data;
+      });
+    }
+
+    // print(dataFilterProses);
+    DataSkmFix(dataFilterSkm);
+  }
+
+  void DataSkmFix(doc) {
+    var leCuy = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['le']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+    var lpCuy = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['lp']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+    var bdCuy = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['bd']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+    var dtCuy = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['dt']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+
+    var ActOutput = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['actual_output']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+    var PlaningOutput = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['planing_output']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+
+    if (leCuy == 0) {
+      LeSkm = 0;
+    } else {
+      LeSkm = leCuy / doc.length;
+    }
+
+    if (lpCuy == 0) {
+      LpSkm = 0;
+    } else {
+      LpSkm = lpCuy / doc.length;
+    }
+
+    if (dtCuy == 0) {
+      DtSkm = 0;
+    } else {
+      DtSkm = dtCuy / doc.length;
+    }
+    if (bdCuy == 0) {
+      BdSkm = 0;
+    } else {
+      BdSkm = bdCuy / doc.length;
+    }
+    if (ActOutput == 0 && PlaningOutput == 0) {
+      ProdActSkm = 0;
+    } else {
+      var Skm = ActOutput / PlaningOutput;
+      ProdActSkm = Skm * 100;
+    }
   }
 
   Widget build(BuildContext context) {
@@ -579,7 +772,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
           Dt: DtFixProses,
           Le: LeFixProses,
           Lp: LpFixProses,
-          Skm: SkmFixProses,
+          Skm: SkmFixProsesDetail,
           Ratarata: RatarataProses,
         );
       } else if (v == 2) {
@@ -588,7 +781,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
           Dt: DtFixPouch,
           Le: LeFixPouch,
           Lp: LpFixPouch,
-          Skm: SkmFixPouch,
+          Skm: SkmFixPouchDetail,
           Ratarata: RatarataPouch,
         );
       } else if (v == 3) {
@@ -597,7 +790,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
           Dt: DtFixTallCan,
           Le: LeFixTallCan,
           Lp: LpFixTallCan,
-          Skm: SkmFixTallCan,
+          Skm: SkmFixTallCanDetail,
           Ratarata: RatarataTallCan,
         );
       } else if (v == 4) {
@@ -606,7 +799,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
           Dt: DtFixSacet,
           Le: LeFixSacet,
           Lp: LpFixSacet,
-          Skm: SkmFixSacet,
+          Skm: SkmFixSacetDetail,
           Ratarata: RatarataSacet,
         );
       } else {
@@ -617,109 +810,64 @@ class _DashboardOverviewState extends State<DashboardOverview> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 30,
+              decoration: BoxDecoration(
+                color: lightGrey,
+                boxShadow: [
+                  BoxShadow(
+                      blurRadius: 4,
+                      offset: Offset(0, 0),
+                      color: dark.withOpacity(0.4))
+                ],
+                border: Border.all(width: 1, color: blue),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8, right: 8),
+                child: DropdownButton(
+                    hint: Text("Pilih Nama Laporan *"),
+                    underline: Container(),
+                    borderRadius: BorderRadius.circular(10),
+                    value: SkmFill,
+                    onChanged: (e) {
+                      setState(() {
+                        SkmFill = e!;
+                      });
+                      dataSkmFilter();
+                    },
+                    items: [
+                      DropdownMenuItem(
+                        child: Text("All"),
+                        value: 1,
+                      ),
+                      DropdownMenuItem(
+                        child: Text("Proccess"),
+                        value: 2,
+                      ),
+                      DropdownMenuItem(
+                        child: Text("FillPack"),
+                        value: 3,
+                      ),
+                    ]),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 10),
         Row(
           children: [
-            StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('product')
-                    .where("createdAt", isGreaterThanOrEqualTo: FromFix)
-                    .where("createdAt", isLessThanOrEqualTo: ToFix)
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  var Le, Lp, Bd, Dt, ActOutput, PlaningOutput, Skm;
-                  double LeFix, LpFix, BdFix, DtFix, SkmFix;
-                  if (!snapshot.hasData) {
-                    LeFix = 0.0;
-                    LpFix = 0.0;
-                    BdFix = 0.0;
-                    DtFix = 0.0;
-                    SkmFix = 0.0;
-                  } else {
-                    final doc = snapshot.data!.docs;
-
-                    Le = List.generate(doc.length, (index) {
-                      double x = double.parse(doc[index]['le']);
-                      String z = x.toStringAsFixed(0);
-                      int a = int.parse(z);
-
-                      return a;
-                    }).fold(0, (p, c) => p + c);
-                    Lp = List.generate(doc.length, (index) {
-                      double x = double.parse(doc[index]['lp']);
-                      String z = x.toStringAsFixed(0);
-                      int a = int.parse(z);
-
-                      return a;
-                    }).fold(0, (p, c) => p + c);
-                    Bd = List.generate(doc.length, (index) {
-                      double x = double.parse(doc[index]['bd']);
-                      String z = x.toStringAsFixed(0);
-                      int a = int.parse(z);
-
-                      return a;
-                    }).fold(0, (p, c) => p + c);
-                    Dt = List.generate(doc.length, (index) {
-                      double x = double.parse(doc[index]['dt']);
-                      String z = x.toStringAsFixed(0);
-                      int a = int.parse(z);
-
-                      return a;
-                    }).fold(0, (p, c) => p + c);
-
-                    ActOutput = List.generate(doc.length, (index) {
-                      double x = double.parse(doc[index]['actual_output']);
-                      String z = x.toStringAsFixed(0);
-                      int a = int.parse(z);
-
-                      return a;
-                    }).fold(0, (p, c) => p + c);
-                    PlaningOutput = List.generate(doc.length, (index) {
-                      double x = double.parse(doc[index]['planing_output']);
-                      String z = x.toStringAsFixed(0);
-                      int a = int.parse(z);
-
-                      return a;
-                    }).fold(0, (p, c) => p + c);
-
-                    if (Le == 0) {
-                      LeFix = 0;
-                    } else {
-                      LeFix = Le / doc.length;
-                    }
-
-                    if (Lp == 0) {
-                      LpFix = 0;
-                    } else {
-                      LpFix = Lp / doc.length;
-                    }
-
-                    if (Dt == 0) {
-                      DtFix = 0;
-                    } else {
-                      DtFix = Dt / doc.length;
-                    }
-                    if (Bd == 0) {
-                      BdFix = 0;
-                    } else {
-                      BdFix = Bd / doc.length;
-                    }
-                    if (ActOutput == 0 && PlaningOutput == 0) {
-                      SkmFix = 0;
-                    } else {
-                      Skm = ActOutput / PlaningOutput;
-                      SkmFix = Skm * 100;
-                    }
-                  }
-
-                  return DashboardCard(
-                      color: active,
-                      Product: "SKM",
-                      LE: LeFix.toStringAsFixed(0),
-                      LP: LpFix.toStringAsFixed(0),
-                      ProdAcv: SkmFix.toStringAsFixed(0),
-                      DT: DtFix.toStringAsFixed(0),
-                      BD: BdFix.toStringAsFixed(0));
-                }),
+            DashboardCard(
+                color: active,
+                Product: "SKM",
+                LE: LeSkm.toStringAsFixed(0),
+                LP: LpSkm.toStringAsFixed(0),
+                ProdAcv: ProdActSkm.toStringAsFixed(0),
+                DT: DtSkm.toStringAsFixed(0),
+                BD: BdSkm.toStringAsFixed(0)),
             SizedBox(width: width * 0.042),
             DashboardCard(
                 color: Color(0xff2BB8C1),
@@ -800,6 +948,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                           FromFix = int.parse(datetime);
                           print(FromFix);
                           DataProduct();
+                          DataSkm();
                         });
                       },
                       child: Padding(
@@ -872,6 +1021,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                           ToFix = int.parse(datetime);
                           print(ToFix);
                           DataProduct();
+                          DataSkm();
                         });
                       },
                       child: Padding(
@@ -1164,6 +1314,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                             setState(() {
                                               showProgress = 1;
                                             });
+                                            topBreakdown(1);
                                           },
                                           child: Column(
                                             children: [
@@ -1259,6 +1410,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                             setState(() {
                                               showProgress = 2;
                                             });
+                                            topBreakdown(2);
                                           },
                                           child: Column(
                                             children: [
@@ -1354,6 +1506,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                             setState(() {
                                               showProgress = 3;
                                             });
+                                            topBreakdown(3);
                                           },
                                           child: Column(
                                             children: [
@@ -1449,6 +1602,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                             setState(() {
                                               showProgress = 4;
                                             });
+                                            topBreakdown(4);
                                           },
                                           child: Column(
                                             children: [

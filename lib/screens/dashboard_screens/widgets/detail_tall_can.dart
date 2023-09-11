@@ -23,6 +23,7 @@ class DetailTallCan extends StatefulWidget {
 class _DetailTallCanState extends State<DetailTallCan> {
   @override
   Widget build(BuildContext context) {
+    var Skm = widget.Skm * 100;
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,7 +54,9 @@ class _DetailTallCanState extends State<DetailTallCan> {
                     width: 7,
                   ),
                   Text(
-                      "${widget.Ratarata.isNaN ? "-" : widget.Ratarata.toStringAsFixed(0)}/1705")
+                      "${widget.Skm.isNaN ? "%" : Skm.toStringAsFixed(3) + "%"}"
+                      //"${widget.Ratarata.isNaN ? "-" : widget.Ratarata.toStringAsFixed(0)}/1705"
+                      )
                 ],
               ),
             ],

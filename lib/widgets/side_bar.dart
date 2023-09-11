@@ -4,6 +4,7 @@ import 'package:indlkt_proj/methods/auth_methods.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/dashboard_screen.dart';
 import 'package:indlkt_proj/screens/login_screen/login_screen.dart';
 import 'package:indlkt_proj/screens/product_acv_screens/product_acv_form.dart';
+import 'package:indlkt_proj/screens/user_screens/user_screen.dart';
 import 'package:sidebarx/sidebarx.dart';
 import '../constants/style.dart';
 import '../screens/data_master_screens/data_master_screen.dart';
@@ -21,7 +22,8 @@ class _SideBarState extends State<SideBar> {
     DashboardScreen(),
     ProductAcvScreen(),
     DataMasterScreen(),
-    FormInputData()
+    FormInputData(),
+    UserScreen()
   ];
 
   int selectedIndex = 0;
@@ -226,6 +228,18 @@ class _SideBarState extends State<SideBar> {
                     setState(() {
                       selectedIndex = 2;
                       selectedIndexDisplay = 2;
+                    });
+                  }),
+              SidebarXItem(
+                  iconWidget: Icon(
+                    Icons.people_alt_outlined,
+                    size: 15,
+                  ),
+                  label: 'Users',
+                  onTap: () {
+                    setState(() {
+                      selectedIndex = 4;
+                      selectedIndexDisplay = 3;
                     });
                   }),
             ],

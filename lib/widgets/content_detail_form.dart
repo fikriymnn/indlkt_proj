@@ -582,12 +582,17 @@ class _detail_formState extends State<detail_form> {
                                       itemCount: doc.length,
                                       shrinkWrap: true,
                                       itemBuilder: (context, index) {
-                                        String mesin = doc[index]["mesin"];
-                                        String reason = doc[index]["reason"];
-                                        String freq = doc[index]["freq"];
-                                        String bdMin = doc[index]["bdMin"];
-                                        String bdHour = doc[index]["bdHour"];
-                                        String problem = doc[index]["problem"];
+                                        String mesin =
+                                            doc[index]["mesin"] ?? "-";
+                                        String reason =
+                                            doc[index]["reason"] ?? "-";
+                                        String freq = doc[index]["freq"] ?? "-";
+                                        String bdMin =
+                                            doc[index]["bdMin"] ?? "-";
+                                        String bdHour =
+                                            doc[index]["bdHour"] ?? "-";
+                                        String problem =
+                                            doc[index]["problem"] ?? "-";
                                         return Padding(
                                             padding: EdgeInsets.only(
                                                 left: 30, top: 50),
@@ -870,11 +875,14 @@ class _detail_formState extends State<detail_form> {
                                       itemCount: doc.length,
                                       shrinkWrap: true,
                                       itemBuilder: (context, index) {
-                                        String dt = doc[index]["dt"];
-                                        String subDt = doc[index]["subDt"];
-                                        String std = doc[index]["std"];
-                                        String actMin = doc[index]["actMin"];
-                                        String actHour = doc[index]["actHour"];
+                                        String dt = doc[index]["dt"] ?? "-";
+                                        String subDt =
+                                            doc[index]["subDt"] ?? "-";
+                                        String std = doc[index]["std"] ?? "-";
+                                        String actMin =
+                                            doc[index]["actMin"] ?? "-";
+                                        String actHour =
+                                            doc[index]["actHour"] ?? "-";
 
                                         return Padding(
                                             padding: EdgeInsets.only(
@@ -1077,10 +1085,12 @@ class _detail_formState extends State<detail_form> {
                                       itemCount: doc.length,
                                       shrinkWrap: true,
                                       itemBuilder: (context, index) {
-                                        String idleDes = doc[index]["idleDesc"];
-                                        String idleMin = doc[index]["idleMin"];
+                                        String idleDes =
+                                            doc[index]["idleDesc"] ?? "-";
+                                        String idleMin =
+                                            doc[index]["idleMin"] ?? "-";
                                         String idleHour =
-                                            doc[index]["idleHour"];
+                                            doc[index]["idleHour"] ?? "-";
 
                                         return Padding(
                                             padding: EdgeInsets.only(

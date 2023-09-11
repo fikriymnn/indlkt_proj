@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../constants/style.dart';
 
 class CustomDropdown extends StatefulWidget {
-  final List<DropdownMenuItem<String>> dropdownItems;
+  final List<DropdownMenuItem<dynamic>> dropdownItems;
   final dynamic value;
   final void Function(dynamic) onChange;
   final String hintText;
