@@ -201,6 +201,7 @@ class _exportIdleTimeState extends State<exportIdleTime> {
             child: StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection("idle_time")
+                    .orderBy("createdAt", descending: true)
                     .snapshots(),
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {

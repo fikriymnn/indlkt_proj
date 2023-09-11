@@ -151,8 +151,10 @@ class _tabel_breakdownState extends State<tabel_breakdown> {
   }
 
   getData() async {
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection("breakdown").get();
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("breakdown")
+        .orderBy("createdAt", descending: true)
+        .get();
     setState(() {
       dataBreakdown = querySnapshot.docs.map((doc) => doc.data()).toList();
     });

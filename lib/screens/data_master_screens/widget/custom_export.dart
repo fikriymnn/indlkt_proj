@@ -233,6 +233,7 @@ class _exportPageState extends State<exportPage> {
             child: StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection("product")
+                    .orderBy("createdAt", descending: true)
                     .snapshots(),
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {

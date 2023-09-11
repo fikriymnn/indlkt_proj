@@ -36,8 +36,8 @@ class _DashboardOverviewState extends State<DashboardOverview> {
   int selectedShift = 0;
   dynamic dropdownValue = 0;
   int showProgress = 0;
-  DateTime? _fromSelectedDate = DateTime.now();
-  DateTime? _toSelectedDate = DateTime.now();
+  DateTime? _fromSelectedDate = null;
+  DateTime? _toSelectedDate = null;
 
   int? FromFix;
   int? ToFix;
@@ -806,7 +806,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                         padding: const EdgeInsets.only(
                             left: 5, right: 5, top: 2, bottom: 2),
                         child: Text(
-                            "${_fromSelectedDate != null ? selectedDateText(_fromSelectedDate) : DateFormat("dd/MMMM/yyyy").format(DateTime.now())}"),
+                            "${_fromSelectedDate != null ? selectedDateText(_fromSelectedDate) : "                    -                   "}"),
                       )),
                 ),
               ],
@@ -878,7 +878,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                         padding: const EdgeInsets.only(
                             left: 5, right: 5, top: 2, bottom: 2),
                         child: Text(
-                            "${_toSelectedDate != null ? selectedDateText(_toSelectedDate) : DateFormat("dd/MMMM/yyyy").format(DateTime.now())}"),
+                            "${_toSelectedDate != null ? selectedDateText(_toSelectedDate) : "                    -                   "}"),
                       )),
                 ),
               ],

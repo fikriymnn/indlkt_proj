@@ -158,7 +158,10 @@ class _tabel_plusState extends State<tabel_plus> {
   }
 
   getData() async {
-    QuerySnapshot querySnapshot = await db.collection("product").get();
+    QuerySnapshot querySnapshot = await db
+        .collection("product")
+        .orderBy("createdAt", descending: true)
+        .get();
     setState(() {
       dataProduct = querySnapshot.docs.map((doc) => doc.data()).toList();
     });

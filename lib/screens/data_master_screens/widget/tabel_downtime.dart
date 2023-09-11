@@ -144,8 +144,10 @@ class _tabel_downtimeState extends State<tabel_downtime> {
   }
 
   getData() async {
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection("downtime").get();
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("downtime")
+        .orderBy("createdAt", descending: true)
+        .get();
     setState(() {
       dataDowntime = querySnapshot.docs.map((doc) => doc.data()).toList();
     });
