@@ -10,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:quickalert/quickalert.dart';
 
 import '../../constants/style.dart';
+import '../after_login_screens/after_login_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -67,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
             context,
             PageRouteBuilder(pageBuilder: (BuildContext context,
                 Animation animation, Animation secondaryAnimation) {
-              return SideBar();
+              return AfterLogin();
             }, transitionsBuilder: (BuildContext context,
                 Animation<double> animation,
                 Animation<double> secondaryAnimation,

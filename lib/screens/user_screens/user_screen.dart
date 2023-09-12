@@ -18,86 +18,204 @@ class _UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButtonLocation: ExpandableFab.location,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(right: 60, bottom: 30),
-        child: ExpandableFab(
-          distance: 80,
-          childrenOffset: Offset(10, 10),
-          backgroundColor: active,
-          child: Icon(Icons.people_alt_outlined, color: light),
-          collapsedFabSize: ExpandableFabSize.regular,
-          expandedFabSize: ExpandableFabSize.regular,
-          type: ExpandableFabType.up,
-          children: [
-            FloatingActionButton.small(
-              backgroundColor: active,
-              child: Icon(Icons.add),
-              heroTag: null,
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                      content: Padding(
-                        padding:
-                            const EdgeInsets.only(top: 85, right: 55, left: 38),
-                        child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height,
-                            child: CustomContainer(
-                                child: Column(children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    icon: const Icon(
-                                      Icons.cancel_outlined,
-                                      color: Colors.red,
-                                      size: 35,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              AddUser()
-                            ]))),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-          ],
-        ),
-      ),
       appBar: CustomAppBar(title: "Users"),
       body: SingleChildScrollView(
-        child: Container(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+            Positioned(
+                top: 0.0,
+                right: 0.0,
+                child: Image(
+                    width: 200,
+                    image: AssetImage("assets/images/circle_bg.png"))),
+            Positioned(
+                bottom: 0.0,
+                left: 0.0,
+                child: Image(
+                    width: 200,
+                    image: AssetImage("assets/images/circle_bg2.png"))),
+            Container(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 58, top: 20),
-                  child: Text('Users',
-                      style: TextStyle(
-                          color: blue,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 58, top: 20),
+                      child: Text('Users',
+                          style: TextStyle(
+                              color: blue,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold)),
+                    ),
+                  ],
                 ),
+                CustomContainer(child: UserTable()),
               ],
-            ),
-            CustomContainer(child: UserTable()),
+            )),
           ],
-        )),
+        ),
       ),
     );
   }
 }
+
+// Stack(
+//               children: [
+//                 Positioned(
+//                     top: 0.0,
+//                     right: 0.0,
+//                     child: Image(
+//                         width: 200,
+//                         image: AssetImage("assets/images/circle_bg.png"))),
+//                 Positioned(
+//                     bottom: 0.0,
+//                     left: 0.0,
+//                     child: Image(
+//                         width: 200,
+//                         image: AssetImage("assets/images/circle_bg2.png"))),
+//                Padding(
+//           padding: const EdgeInsets.only(top: 20, right: 55, left: 38),
+//           child: Column(
+//             children: [
+//               Row(
+//                 mainAxisAlignment: MainAxisAlignment.start,
+//                 children: [
+//                   Padding(
+//                     padding: const EdgeInsets.only(left: 58, top: 20),
+//                     child: Text('Add new user',
+//                         style: TextStyle(
+//                             color: blue,
+//                             fontSize: 15,
+//                             fontWeight: FontWeight.bold)),
+//                   ),
+//                 ],
+//               ),
+//               Container(
+//                   width: MediaQuery.of(context).size.width,
+//                   child: CustomContainer(
+//                       child: Column(children: [
+//                     Column(
+//                       children: [
+//                         SizedBox(height: 35),
+//                         Row(
+//                           children: [
+//                             Padding(
+//                               padding: const EdgeInsets.only(left: 30),
+//                               child: Text("Username",
+//                                   style: TextStyle(
+//                                       color: dark.withOpacity(0.8),
+//                                       fontSize: 25,
+//                                       fontWeight: FontWeight.bold)),
+//                             ),
+//                             CustomTextField()
+//                           ],
+//                         ),
+//                         SizedBox(height: 15),
+//                         Row(
+//                           children: [
+//                             Padding(
+//                               padding: const EdgeInsets.only(left: 30),
+//                               child: Text("Email",
+//                                   style: TextStyle(
+//                                       color: dark.withOpacity(0.8),
+//                                       fontSize: 25,
+//                                       fontWeight: FontWeight.bold)),
+//                             ),
+//                             CustomTextField()
+//                           ],
+//                         ),
+//                         SizedBox(height: 15),
+//                         Row(
+//                           children: [
+//                             Padding(
+//                               padding: const EdgeInsets.only(left: 30),
+//                               child: Text("Password",
+//                                   style: TextStyle(
+//                                       color: dark.withOpacity(0.8),
+//                                       fontSize: 25,
+//                                       fontWeight: FontWeight.bold)),
+//                             ),
+//                             CustomTextField()
+//                           ],
+//                         ),
+//                         SizedBox(height: 15),
+//                         Row(
+//                           children: [
+//                             Padding(
+//                               padding: const EdgeInsets.only(left: 30),
+//                               child: Text("No. Pegawai",
+//                                   style: TextStyle(
+//                                       color: dark.withOpacity(0.8),
+//                                       fontSize: 25,
+//                                       fontWeight: FontWeight.bold)),
+//                             ),
+//                             CustomTextField()
+//                           ],
+//                         ),
+//                         SizedBox(height: 15),
+//                         Row(
+//                           children: [
+//                             Padding(
+//                               padding: const EdgeInsets.only(left: 30),
+//                               child: Text("Line *",
+//                                   style: TextStyle(
+//                                       color: dark.withOpacity(0.8),
+//                                       fontSize: 25,
+//                                       fontWeight: FontWeight.bold)),
+//                             ),
+//                             CustomDropdown(
+//                                 dropdownItems: [
+//                                   DropdownMenuItem(
+//                                     value: "user",
+//                                     child: Text("user"),
+//                                   ),
+//                                   DropdownMenuItem(
+//                                     value: "admin",
+//                                     child: Text("admin"),
+//                                   ),
+//                                   DropdownMenuItem(
+//                                     value: "super admin",
+//                                     child: Text("super admin"),
+//                                   ),
+//                                 ],
+//                                 value: role,
+//                                 onChange: (a) {
+//                                   setState(() {
+//                                     role = a;
+//                                   });
+//                                 },
+//                                 hintText: "Role"),
+//                           ],
+//                         ),
+//                         SizedBox(
+//                           height: 20,
+//                         ),
+//                         Center(
+//                           child: InkWell(
+//                             onTap: () {},
+//                             child: Container(
+//                                 margin: EdgeInsets.all(25),
+//                                 decoration: BoxDecoration(
+//                                     color: active,
+//                                     borderRadius: BorderRadius.circular(10)),
+//                                 width: 120,
+//                                 child: Center(
+//                                   child: Padding(
+//                                       padding: const EdgeInsets.all(10),
+//                                       child: Text("Submit",
+//                                           style: TextStyle(
+//                                               color: light, fontSize: 15))),
+//                                 )),
+//                           ),
+//                         )
+//                       ],
+//                     )
+//                   ]))),
+//             ],
+//           ),
+//         ),
+                
+//               ],
+//             ),

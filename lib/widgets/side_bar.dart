@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:indlkt_proj/methods/auth_methods.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/dashboard_screen.dart';
-import 'package:indlkt_proj/screens/login_screen/login_screen.dart';
+
 import 'package:indlkt_proj/screens/product_acv_screens/product_acv_form.dart';
 import 'package:indlkt_proj/screens/user_screens/user_screen.dart';
+import 'package:indlkt_proj/screens/user_screens/widgets/add_user.dart';
 import 'package:sidebarx/sidebarx.dart';
 import '../constants/style.dart';
 import '../screens/data_master_screens/data_master_screen.dart';
+import '../screens/login_screen/login_screen.dart';
 import '../screens/product_acv_screens/product_acv_screen.dart';
 
 class SideBar extends StatefulWidget {
@@ -23,7 +25,8 @@ class _SideBarState extends State<SideBar> {
     ProductAcvScreen(),
     DataMasterScreen(),
     FormInputData(),
-    UserScreen()
+    UserScreen(),
+    AddUser()
   ];
 
   int selectedIndex = 0;
@@ -74,7 +77,33 @@ class _SideBarState extends State<SideBar> {
                 ],
               ),
             )
-          : null,
+          : selectedIndex == 4
+              ? Padding(
+                  padding: const EdgeInsets.only(right: 60, bottom: 30),
+                  child: ExpandableFab(
+                    distance: 80,
+                    childrenOffset: Offset(10, 10),
+                    backgroundColor: active,
+                    child: Icon(Icons.people_alt_outlined, color: light),
+                    collapsedFabSize: ExpandableFabSize.regular,
+                    expandedFabSize: ExpandableFabSize.regular,
+                    type: ExpandableFabType.up,
+                    children: [
+                      FloatingActionButton.small(
+                        backgroundColor: active,
+                        child: Icon(Icons.add),
+                        heroTag: null,
+                        onPressed: () {
+                          setState(() {
+                            selectedIndex = 5;
+                            selectedIndexDisplay = 3;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                )
+              : Container(),
       body: Row(
         children: [
           SidebarX(

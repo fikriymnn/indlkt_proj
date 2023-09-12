@@ -59,7 +59,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
     return AppBar(
         backgroundColor: widget.backgroundColor,
         titleTextStyle: TextStyle(color: Colors.white),
-        toolbarHeight: 85,
+        toolbarHeight: 95,
         actions: [
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -105,17 +105,24 @@ class _CustomAppBarState extends State<CustomAppBar> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'INVENTORY MANAGEMENT PT.INDOLAKTO',
-                  style: TextStyle(
-                      fontSize: mediaQuery * 0.02, fontWeight: FontWeight.bold),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Text(
+                    'INVENTORY MANAGEMENT PT.INDOLAKTO',
+                    style: TextStyle(
+                        fontSize: mediaQuery * 0.016,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
                 SizedBox(
                   height: 5,
                 ),
-                Text(
-                  widget.title,
-                  style: TextStyle(fontSize: mediaQuery * 0.02),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: Text(
+                    widget.title,
+                    style: TextStyle(fontSize: mediaQuery * 0.015),
+                  ),
                 )
               ],
             ),
