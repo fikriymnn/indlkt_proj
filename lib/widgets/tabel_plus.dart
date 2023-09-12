@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:indlkt_proj/screens/product_acv_screens/product_acv_form_edit.dart';
 import 'package:table_plus/table_plus.dart';
 
 import '../constants/style.dart';
@@ -87,69 +88,143 @@ class _tabel_plusState extends State<tabel_plus> {
                 showEditIcon: false,
                 placeholder: false,
               ),
-              DataCell(InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        backgroundColor: Colors.transparent,
-                        elevation: 0,
-                        content: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 85, right: 55, left: 38),
-                          child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height,
-                              child: detail_form(
-                                shift: objData.shift,
-                                departement: objData.departement,
-                                product: objData.product,
-                                line: objData.line,
-                                planingOutput: objData.planingOutput,
-                                actualOutput: objData.actualOutput,
-                                nominalSpeed: objData.nominalSpeed,
-                                totalHour: objData.totalHour,
-                                grossHour: objData.grossHour,
-                                netHour: objData.netHour,
-                                targetHout: objData.targetHour,
-                                le: objData.Le,
-                                lp: objData.Lp,
-                                bd: objData.Bd,
-                                dt: objData.Dt,
-                                date: objData.date,
-                                id: objData.id,
-                              )),
-                        ),
+              DataCell(Row(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            content: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 85, right: 55, left: 38),
+                              child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).size.height,
+                                  child: detail_form(
+                                    shift: objData.shift,
+                                    departement: objData.departement,
+                                    product: objData.product,
+                                    line: objData.line,
+                                    planingOutput: objData.planingOutput,
+                                    actualOutput: objData.actualOutput,
+                                    nominalSpeed: objData.nominalSpeed,
+                                    totalHour: objData.totalHour,
+                                    grossHour: objData.grossHour,
+                                    netHour: objData.netHour,
+                                    targetHout: objData.targetHour,
+                                    le: objData.Le,
+                                    lp: objData.Lp,
+                                    bd: objData.Bd,
+                                    dt: objData.Dt,
+                                    date: objData.date,
+                                    id: objData.id,
+                                  )),
+                            ),
+                          );
+                          ;
+                        },
                       );
-                      ;
                     },
-                  );
-                },
-                child: Container(
-                    decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                              blurRadius: 1, offset: Offset(0, 0), color: blue)
-                        ],
-                        border: Border.all(
-                          color: blue,
-                        ),
-                        color: selectedIndex == 4
-                            ? Color.fromARGB(255, 195, 225, 250)
-                            : blue,
-                        borderRadius: BorderRadius.circular(5)),
-                    width: 78,
-                    height: 36,
-                    child: Center(
-                        child: Text(
-                      "Detail",
-                      style: GoogleFonts.montserrat(
-                          textStyle: Theme.of(context).textTheme.displayMedium,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: selectedIndex == 4 ? dark : light),
-                    ))),
+                    child: Container(
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                  blurRadius: 1,
+                                  offset: Offset(0, 0),
+                                  color: blue)
+                            ],
+                            border: Border.all(
+                              color: blue,
+                            ),
+                            color: selectedIndex == 4
+                                ? Color.fromARGB(255, 195, 225, 250)
+                                : blue,
+                            borderRadius: BorderRadius.circular(5)),
+                        width: 78,
+                        height: 36,
+                        child: Center(
+                            child: Text(
+                          "Detail",
+                          style: GoogleFonts.montserrat(
+                              textStyle:
+                                  Theme.of(context).textTheme.displayMedium,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: selectedIndex == 4 ? dark : light),
+                        ))),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            content: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 85, right: 55, left: 38),
+                              child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).size.height,
+                                  child: FormEditData(
+                                    shift: objData.shift,
+                                    departement: objData.departement,
+                                    product: objData.product,
+                                    line: objData.line,
+                                    planingOutput: objData.planingOutput,
+                                    actualOutput: objData.actualOutput,
+                                    nominalSpeed: objData.nominalSpeed,
+                                    totalHour: objData.totalHour,
+                                    grossHour: objData.grossHour,
+                                    netHour: objData.netHour,
+                                    targetHout: objData.targetHour,
+                                    le: objData.Le,
+                                    lp: objData.Lp,
+                                    bd: objData.Bd,
+                                    dt: objData.Dt,
+                                    date: objData.date,
+                                    id: objData.id,
+                                  )),
+                            ),
+                          );
+                          ;
+                        },
+                      );
+                    },
+                    child: Container(
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                  blurRadius: 1,
+                                  offset: Offset(0, 0),
+                                  color: blue)
+                            ],
+                            border: Border.all(
+                              color: blue,
+                            ),
+                            color: selectedIndex == 4
+                                ? Color.fromARGB(255, 195, 225, 250)
+                                : blue,
+                            borderRadius: BorderRadius.circular(5)),
+                        width: 78,
+                        height: 36,
+                        child: Center(
+                            child: Text(
+                          "Edit",
+                          style: GoogleFonts.montserrat(
+                              textStyle:
+                                  Theme.of(context).textTheme.displayMedium,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: selectedIndex == 4 ? dark : light),
+                        ))),
+                  ),
+                ],
               ))
             ],
           ),

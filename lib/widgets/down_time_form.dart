@@ -78,7 +78,7 @@ class _DownTimeFormState extends State<DownTimeForm> {
                       child: CustomSearchableDropDown(
                         enabled: true,
                         items: widget.dropdownItemDT,
-                        label: 'Pilih DT...',
+                        label: widget.valueDT,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                             border: Border.all(
@@ -112,7 +112,7 @@ class _DownTimeFormState extends State<DownTimeForm> {
                       child: CustomSearchableDropDown(
                         enabled: widget.valueDT == null ? false : true,
                         items: widget.dropdownItemSubDT,
-                        label: 'Pilih Sub DT...',
+                        label: widget.valueSubDT,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                             border: Border.all(
