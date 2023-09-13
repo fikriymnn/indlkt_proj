@@ -29,7 +29,7 @@ class _SideBarState extends State<SideBar> {
     AddUser()
   ];
 
-  int selectedIndex = 0;
+  int selectedIndex = 4;
   int selectedIndexDisplay = 0;
 
   bool auth = true;
@@ -64,16 +64,16 @@ class _SideBarState extends State<SideBar> {
                       });
                     },
                   ),
-                  FloatingActionButton.small(
-                    backgroundColor: active,
-                    child: ImageIcon(
-                      AssetImage("assets/images/fab_logo2.png"),
-                      color: light,
-                      size: 20,
-                    ),
-                    heroTag: null,
-                    onPressed: () {},
-                  ),
+                  // FloatingActionButton.small(
+                  //   backgroundColor: active,
+                  //   child: ImageIcon(
+                  //     AssetImage("assets/images/fab_logo2.png"),
+                  //     color: light,
+                  //     size: 20,
+                  //   ),
+                  //   heroTag: null,
+                  //   onPressed: () {},
+                  // ),
                 ],
               ),
             )

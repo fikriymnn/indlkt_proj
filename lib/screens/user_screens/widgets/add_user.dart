@@ -23,6 +23,8 @@ class _AddUserState extends State<AddUser> {
 
   @override
   Widget build(BuildContext context) {
+    dynamic mediaQuery = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: CustomAppBar(title: "Users"),
       body: SingleChildScrollView(
@@ -63,7 +65,7 @@ class _AddUserState extends State<AddUser> {
                         width: MediaQuery.of(context).size.width * 0.5,
                         child: Container(
                           child: CustomContainer(
-                              height: MediaQuery.of(context).size.width * 0.53,
+                              height: MediaQuery.of(context).size.width * 0.57,
                               child: Column(children: [
                                 Column(
                                   children: [
@@ -83,8 +85,8 @@ class _AddUserState extends State<AddUser> {
                                           height: 65,
                                         ),
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 30),
+                                          padding: EdgeInsets.only(
+                                              right: mediaQuery * 0.11),
                                           child: Text("Nama Lengkap :",
                                               style: TextStyle(
                                                   color: dark.withOpacity(0.8),
@@ -101,8 +103,8 @@ class _AddUserState extends State<AddUser> {
                                     Column(
                                       children: [
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 30),
+                                          padding: EdgeInsets.only(
+                                              right: mediaQuery * 0.182),
                                           child: Text("Email :",
                                               style: TextStyle(
                                                   color: dark.withOpacity(0.8),
@@ -118,8 +120,8 @@ class _AddUserState extends State<AddUser> {
                                     Column(
                                       children: [
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 30),
+                                          padding: EdgeInsets.only(
+                                              right: mediaQuery * 0.151),
                                           child: Text("Password :",
                                               style: TextStyle(
                                                   color: dark.withOpacity(0.8),
@@ -135,8 +137,8 @@ class _AddUserState extends State<AddUser> {
                                     Column(
                                       children: [
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 30),
+                                          padding: EdgeInsets.only(
+                                              right: mediaQuery * 0.063),
                                           child: Text("No. Induk Kepegawaian :",
                                               style: TextStyle(
                                                   color: dark.withOpacity(0.8),
@@ -152,8 +154,8 @@ class _AddUserState extends State<AddUser> {
                                     Column(
                                       children: [
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 30),
+                                          padding: EdgeInsets.only(
+                                              right: mediaQuery * 0.135),
                                           child: Text("No. Telepon :",
                                               style: TextStyle(
                                                   color: dark.withOpacity(0.8),
@@ -169,8 +171,8 @@ class _AddUserState extends State<AddUser> {
                                     Column(
                                       children: [
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 30),
+                                          padding: EdgeInsets.only(
+                                              right: mediaQuery * 0.186),
                                           child: Text("Role :",
                                               style: TextStyle(
                                                   color: dark.withOpacity(0.8),

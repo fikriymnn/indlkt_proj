@@ -22,7 +22,7 @@ class _AfterLoginState extends State<AfterLogin> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                width: 1000,
+                width: 1200,
                 child: Text(
                   'INVENTORY MANAGEMENT PT.INDOLAKTO',
                   maxLines: 2,
@@ -60,9 +60,9 @@ class _AfterLoginState extends State<AfterLogin> {
                             width: 200,
                             child: Center(
                               child: Text(
-                                "SKM",
+                                "Productivity",
                                 style: TextStyle(
-                                    fontSize: 30,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                     color: light),
                               ),
@@ -70,20 +70,54 @@ class _AfterLoginState extends State<AfterLogin> {
                           )),
                       InkWell(
                           child: Container(
-                        color: active,
+                        decoration: BoxDecoration(
+                            color: active,
+                            borderRadius: BorderRadius.circular(10)),
                         height: 200,
                         width: 200,
                         child: Center(
-                          child: Text("SKM"),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: active,
+                                borderRadius: BorderRadius.circular(10)),
+                            height: 200,
+                            width: 200,
+                            child: Center(
+                              child: Text(
+                                "Utility",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: light),
+                              ),
+                            ),
+                          ),
                         ),
                       )),
                       InkWell(
                           child: Container(
-                        color: active,
+                        decoration: BoxDecoration(
+                            color: active,
+                            borderRadius: BorderRadius.circular(10)),
                         height: 200,
                         width: 200,
                         child: Center(
-                          child: Text("SKM"),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: active,
+                                borderRadius: BorderRadius.circular(10)),
+                            height: 200,
+                            width: 200,
+                            child: Center(
+                              child: Text(
+                                "WWTP",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: light),
+                              ),
+                            ),
+                          ),
                         ),
                       ))
                     ],

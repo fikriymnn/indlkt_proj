@@ -109,20 +109,20 @@ class _UserTableState extends State<UserTable> {
                               BoxShadow(
                                   blurRadius: 1,
                                   offset: Offset(0, 0),
-                                  color: blue)
+                                  color: edit)
                             ],
                             border: Border.all(
-                              color: blue,
+                              color: edit,
                             ),
                             color: selectedIndex == 4
                                 ? Color.fromARGB(255, 195, 225, 250)
-                                : blue,
+                                : edit,
                             borderRadius: BorderRadius.circular(5)),
                         width: 78,
                         height: 36,
                         child: Center(
                             child: Text(
-                          "Detail",
+                          "Edit",
                           style: GoogleFonts.montserrat(
                               textStyle:
                                   Theme.of(context).textTheme.displayMedium,
@@ -265,10 +265,10 @@ class _UserTableState extends State<UserTable> {
     super.initState();
 
     tableHeading.clear();
-    tableHeading.add("Email");
-    tableHeading.add("Password");
+    tableHeading.add("Nama Lengkap");
+    tableHeading.add("No.Kepegawaian");
+    tableHeading.add("No.Telepon");
     tableHeading.add("Role");
-    tableHeading.add("NIK");
     tableHeading.add("Action");
 
     for (var index = 0; index < tableHeading.length; index++) {
