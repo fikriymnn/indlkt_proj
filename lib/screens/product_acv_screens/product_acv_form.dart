@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:custom_searchable_dropdown/custom_searchable_dropdown.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dropdown_search/flutter_dropdown_search.dart';
 import 'package:indlkt_proj/widgets/custom_dropdown.dart';
@@ -12,6 +13,7 @@ import 'package:indlkt_proj/widgets/appbar.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../constants/style.dart';
+import '../../models/user_model.dart';
 import '../../widgets/breakdown_form.dart';
 import '../../widgets/custom_container.dart';
 import '../../widgets/custom_textfield.dart';
@@ -1511,6 +1513,14 @@ class _FormInputDataState extends State<FormInputData> {
                           Center(
                             child: InkWell(
                               onTap: () async {
+                                DocumentSnapshot userData =
+                                    await FirebaseFirestore.instance
+                                        .collection('akun')
+                                        .doc(FirebaseAuth
+                                            .instance.currentUser!.uid)
+                                        .get();
+                                UserModel userModel =
+                                    UserModel.fromSnap(userData);
                                 var uuid = Uuid();
                                 var id = uuid.v4();
                                 DateTime now = DateTime.now();
@@ -1593,6 +1603,7 @@ class _FormInputDataState extends State<FormInputData> {
                                       "net_hour": netHour,
                                       "type": type,
                                       "target_hour": targetHour,
+                                      "name": userModel.username,
                                       "le": (double.parse(le) * 100)
                                           .toStringAsFixed(3),
                                       "lp": (double.parse(lp) * 100)
@@ -1607,7 +1618,8 @@ class _FormInputDataState extends State<FormInputData> {
                                           int.parse(DateFormat.y().format(now)),
                                       "date":
                                           DateFormat('dd/MM/yy').format(now),
-                                      "createdAt": dateFix
+                                      "createdAt": dateFix,
+                                      "isEdited": false
                                     });
 
                                     for (int i = 0; i < bLength; i++) {
@@ -1636,6 +1648,7 @@ class _FormInputDataState extends State<FormInputData> {
                                           "bdMin": dbMin[i].text,
                                           "bdHour": bdHourList[i],
                                           "problem": problem[i].text,
+                                          "name": userModel.username,
                                           "week":
                                               int.parse(weekController.text),
                                           "top": "${mesin[i]}" + "${reason[i]}",
@@ -1674,6 +1687,7 @@ class _FormInputDataState extends State<FormInputData> {
                                           "std": std[i],
                                           "actMin": actMin[i].text,
                                           "actHour": actHourList[i],
+                                          "name": userModel.username,
                                           "week":
                                               int.parse(weekController.text),
                                           "bulan":
@@ -1706,6 +1720,7 @@ class _FormInputDataState extends State<FormInputData> {
                                           "idleDesc": idleDesc[i],
                                           "idleMin": idleMin[i].text,
                                           "idleHour": idleHourList[i],
+                                          "name": userModel.username,
                                           "week":
                                               int.parse(weekController.text),
                                           "bulan":

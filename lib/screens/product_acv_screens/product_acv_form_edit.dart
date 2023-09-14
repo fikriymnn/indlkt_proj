@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:custom_searchable_dropdown/custom_searchable_dropdown.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dropdown_search/flutter_dropdown_search.dart';
 import 'package:indlkt_proj/widgets/custom_dropdown.dart';
@@ -12,6 +13,7 @@ import 'package:indlkt_proj/widgets/appbar.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../constants/style.dart';
+import '../../models/user_model.dart';
 import '../../widgets/breakdown_form.dart';
 import '../../widgets/custom_container.dart';
 import '../../widgets/custom_textfield.dart';
@@ -40,7 +42,10 @@ class FormEditData extends StatefulWidget {
       le,
       lp,
       bd,
-      dt;
+      dt,
+      isEdited,
+      name,
+      week;
 
   const FormEditData(
       {super.key,
@@ -60,6 +65,9 @@ class FormEditData extends StatefulWidget {
       this.le,
       this.lp,
       this.bd,
+      this.isEdited,
+      this.name,
+      this.week,
       this.dt});
 
   @override
@@ -149,6 +157,7 @@ class _FormEditDataState extends State<FormEditData> {
     actualOutput = TextEditingController(text: widget.actualOutput);
     nominalSpeed = TextEditingController(text: widget.nominalSpeed);
     totalHour = TextEditingController(text: widget.totalHour);
+    weekController = TextEditingController(text: widget.week);
 
     getDataBreakdown();
     getDataDowntime();
@@ -196,6 +205,8 @@ class _FormEditDataState extends State<FormEditData> {
       if (querySnapshot.docs.isNotEmpty) {
         dataBreakdown = querySnapshot.docs.map((doc) => doc.data()).toList();
         bLength = dataBreakdown.length;
+        print("break" + bLength.toString());
+        print("data" + dataBreakdown.length.toString());
         for (var i = 0; i < dataBreakdown.length; i++) {
           mesin.add(dataBreakdown[i]["mesin"]);
 
@@ -1739,6 +1750,15 @@ class _FormEditDataState extends State<FormEditData> {
                           Center(
                             child: InkWell(
                               onTap: () async {
+                                User? user = FirebaseAuth.instance.currentUser;
+
+                                DocumentSnapshot userData =
+                                    await FirebaseFirestore.instance
+                                        .collection('akun')
+                                        .doc(user!.uid)
+                                        .get();
+                                UserModel userModel =
+                                    UserModel.fromSnap(userData);
                                 var uuid = Uuid();
                                 var id = uuid.v4();
                                 DateTime now = DateTime.now();
@@ -1817,7 +1837,9 @@ class _FormEditDataState extends State<FormEditData> {
                                       "total_hour": totalHour.text,
                                       "gross_hour": grossHour,
                                       "net_hour": netHour,
+                                      "name": userModel.username,
                                       "type": type,
+                                      "isEdited": true,
                                       "target_hour": targetHour,
                                       "le": (double.parse(le) * 100)
                                           .toStringAsFixed(3),
@@ -1847,6 +1869,7 @@ class _FormEditDataState extends State<FormEditData> {
                                           "line": line,
                                           "mesin": mesin[i],
                                           "reason": reason[i],
+                                          "name": userModel.username,
                                           "freq": freq[i].text,
                                           "bdMin": dbMin[i].text,
                                           "bdHour": bdHourList[i],
@@ -1877,6 +1900,7 @@ class _FormEditDataState extends State<FormEditData> {
                                           "line": line,
                                           "dt": downtime[i],
                                           "subDt": subDT[i],
+                                          "name": userModel.username,
                                           "std": std[i],
                                           "actMin": actMin[i].text,
                                           "actHour": actHourList[i],
@@ -1897,6 +1921,7 @@ class _FormEditDataState extends State<FormEditData> {
                                           "shift": shift,
                                           "departement": departement,
                                           "product": product,
+                                          "name": userModel.username,
                                           "line": line,
                                           "idleDesc": idleDesc[i],
                                           "idleMin": idleMin[i].text,
@@ -1907,110 +1932,246 @@ class _FormEditDataState extends State<FormEditData> {
                                       }
                                     }
 
-                                    FirebaseFirestore.instance
-                                        .collection("archive")
-                                        .doc(widget.id)
-                                        .set({
-                                      "uid": widget.id,
-                                      "laporan": widget.product,
-                                      "shift": widget.shift,
-                                      "departement": widget.departement,
-                                      "product": widget.product,
-                                      "line": widget.line,
-                                      "planing_output": widget.planingOutput,
-                                      "actual_output": widget.actualOutput,
-                                      "nominal_speed": widget.nominalSpeed,
-                                      "total_hour": widget.totalHour,
-                                      "gross_hour": widget.grossHour,
-                                      "net_hour": widget.netHour,
-                                      "target_hour": widget.targetHout,
-                                      "le": widget.le,
-                                      "lp": widget.lp,
-                                      "dt": widget.dt,
-                                      "bd": widget.bd,
-                                      "date":
-                                          DateFormat('dd/MM/yy').format(now),
-                                      "createdAt": dateFix
-                                    });
-
-                                    for (int i = 0;
-                                        i < dataBreakdown.length;
-                                        i++) {
+                                    if (widget.isEdited == false) {
                                       FirebaseFirestore.instance
                                           .collection("archive")
                                           .doc(widget.id)
-                                          .collection("breakdown")
-                                          .doc()
                                           .set({
-                                        "product_id": widget.id,
+                                        "uid": widget.id,
+                                        "laporan": widget.product,
+                                        "shift": widget.shift,
+                                        "departement": widget.departement,
+                                        "product": widget.product,
+                                        "line": widget.line,
+                                        "planing_output": widget.planingOutput,
+                                        "actual_output": widget.actualOutput,
+                                        "nominal_speed": widget.nominalSpeed,
+                                        "total_hour": widget.totalHour,
+                                        "name": widget.name,
+                                        "gross_hour": widget.grossHour,
+                                        "net_hour": widget.netHour,
+                                        "target_hour": widget.targetHout,
+                                        "le": widget.le,
+                                        "lp": widget.lp,
+                                        "dt": widget.dt,
+                                        "bd": widget.bd,
                                         "date":
                                             DateFormat('dd/MM/yy').format(now),
-                                        "shift": dataBreakdown[i]["shift"],
-                                        "departement": dataBreakdown[i]
-                                            ["departement"],
-                                        "product": dataBreakdown[i]["product"],
-                                        "line": dataBreakdown[i]["line"],
-                                        "mesin": dataBreakdown[i]["mesin"],
-                                        "reason": dataBreakdown[i]["reason"],
-                                        "freq": dataBreakdown[i]["freq"],
-                                        "bdMin": dataBreakdown[i]["bdMin"],
-                                        "bdHour": dataBreakdown[i]["bdHour"],
-                                        "problem": dataBreakdown[i]["problem"],
-                                        "top": dataBreakdown[i]["top"],
                                         "createdAt": dateFix
                                       });
+
+                                      for (int i = 0;
+                                          i < dataBreakdown.length;
+                                          i++) {
+                                        FirebaseFirestore.instance
+                                            .collection("archive")
+                                            .doc(widget.id)
+                                            .collection("breakdown")
+                                            .doc()
+                                            .set({
+                                          "product_id": widget.id,
+                                          "date": DateFormat('dd/MM/yy')
+                                              .format(now),
+                                          "shift": dataBreakdown[i]["shift"],
+                                          "departement": dataBreakdown[i]
+                                              ["departement"],
+                                          "product": dataBreakdown[i]
+                                              ["product"],
+                                          "line": dataBreakdown[i]["line"],
+                                          "mesin": dataBreakdown[i]["mesin"],
+                                          "reason": dataBreakdown[i]["reason"],
+                                          "freq": dataBreakdown[i]["freq"],
+                                          "bdMin": dataBreakdown[i]["bdMin"],
+                                          "bdHour": dataBreakdown[i]["bdHour"],
+                                          "problem": dataBreakdown[i]
+                                              ["problem"],
+                                          "top": dataBreakdown[i]["top"],
+                                          "name": widget.name,
+                                          "createdAt": dateFix
+                                        });
+                                      }
+
+                                      for (int i = 0;
+                                          i < dataDowntime.length;
+                                          i++) {
+                                        FirebaseFirestore.instance
+                                            .collection("archive")
+                                            .doc(widget.id)
+                                            .collection("downtime")
+                                            .doc()
+                                            .set({
+                                          "product_id": widget.id,
+                                          "date": DateFormat('dd/MM/yy')
+                                              .format(now),
+                                          "shift": dataDowntime[i]["shift"],
+                                          "departement": dataDowntime[i]
+                                              ["departement"],
+                                          "product": dataDowntime[i]["product"],
+                                          "line": dataDowntime[i]["line"],
+                                          "dt": dataDowntime[i]["dt"],
+                                          "subDt": dataDowntime[i]["subDt"],
+                                          "std": dataDowntime[i]["std"],
+                                          "name": widget.name,
+                                          "actMin": dataDowntime[i]["actMin"],
+                                          "actHour": dataDowntime[i]["actHour"],
+                                          "createdAt": dateFix
+                                        });
+                                      }
+                                      for (int i = 0;
+                                          i < dataIdle.length;
+                                          i++) {
+                                        var uuid = Uuid();
+                                        var idi = uuid.v4();
+
+                                        FirebaseFirestore.instance
+                                            .collection("archive")
+                                            .doc(widget.id)
+                                            .collection("idle_time")
+                                            .doc()
+                                            .set({
+                                          "product_id": widget.id,
+                                          "date": DateFormat('dd/MM/yy')
+                                              .format(now),
+                                          "shift": dataIdle[i]["shift"],
+                                          "departement": dataIdle[i]
+                                              ["departement"],
+                                          "product": dataIdle[i]["product"],
+                                          "line": dataIdle[i]["line"],
+                                          "idleDesc": dataIdle[i]["idleDesc"],
+                                          "idleMin": dataIdle[i]["idleMin"],
+                                          "name": widget.name,
+                                          "idleHour": dataIdle[i]["idleHour"],
+                                          "createdAt": dateFix
+                                        });
+                                      }
                                     }
 
-                                    for (int i = 0;
-                                        i < dataDowntime.length;
-                                        i++) {
-                                      FirebaseFirestore.instance
-                                          .collection("archive")
-                                          .doc(widget.id)
-                                          .collection("downtime")
-                                          .doc()
-                                          .set({
-                                        "product_id": widget.id,
-                                        "date":
-                                            DateFormat('dd/MM/yy').format(now),
-                                        "shift": dataDowntime[i]["shift"],
-                                        "departement": dataDowntime[i]
-                                            ["departement"],
-                                        "product": dataDowntime[i]["product"],
-                                        "line": dataDowntime[i]["line"],
-                                        "dt": dataDowntime[i]["dt"],
-                                        "subDt": dataDowntime[i]["subDt"],
-                                        "std": dataDowntime[i]["std"],
-                                        "actMin": dataDowntime[i]["actMin"],
-                                        "actHour": dataDowntime[i]["actHour"],
-                                        "createdAt": dateFix
-                                      });
-                                    }
-                                    for (int i = 0; i < dataIdle.length; i++) {
-                                      var uuid = Uuid();
-                                      var idi = uuid.v4();
+                                    if (bLength > dataBreakdown.length) {
+                                      for (int i = dataBreakdown.length;
+                                          i < bLength;
+                                          i++) {
+                                        var uuid = Uuid();
+                                        var idB = uuid.v4();
 
-                                      FirebaseFirestore.instance
-                                          .collection("archive")
-                                          .doc(widget.id)
-                                          .collection("idle_time")
-                                          .doc()
-                                          .set({
-                                        "product_id": widget.id,
-                                        "date":
-                                            DateFormat('dd/MM/yy').format(now),
-                                        "shift": dataDowntime[i]["shift"],
-                                        "departement": dataDowntime[i]
-                                            ["departement"],
-                                        "product": dataDowntime[i]["product"],
-                                        "line": dataDowntime[i]["line"],
-                                        "idleDesc": dataDowntime[i]["idleDesc"],
-                                        "idleMin": dataDowntime[i]["idleMin"],
-                                        "idleHour": dataDowntime[i]["idleHour"],
-                                        "createdAt": dateFix
-                                      });
+                                        if (mesin[i] != null ||
+                                            reason[i] != null ||
+                                            problem[i].text != "" ||
+                                            freq[i].text != "" ||
+                                            dbMin[i].text != "0") {
+                                          FirebaseFirestore.instance
+                                              .collection("breakdown")
+                                              .doc(idB)
+                                              .set({
+                                            "uid": idB,
+                                            "product_id": widget.id,
+                                            "date": DateFormat('dd/MM/yy')
+                                                .format(now),
+                                            "shift": shift,
+                                            "departement": departement,
+                                            "product": product,
+                                            "line": line,
+                                            "name": userModel.username,
+                                            "mesin": mesin[i],
+                                            "reason": reason[i],
+                                            "freq": freq[i].text,
+                                            "bdMin": dbMin[i].text,
+                                            "bdHour": bdHourList[i],
+                                            "problem": problem[i].text,
+                                            "week":
+                                                int.parse(weekController.text),
+                                            "top":
+                                                "${mesin[i]}" + "${reason[i]}",
+                                            "bulan":
+                                                DateFormat.MMMM().format(now),
+                                            "tahun": int.parse(
+                                                DateFormat.y().format(now)),
+                                            "createdAt": dateFix
+                                          });
+                                        } else {
+                                          print("no data");
+                                        }
+                                      }
                                     }
 
+                                    if (dLength > dataDowntime.length) {
+                                      for (int i = dataDowntime.length;
+                                          i < dLength;
+                                          i++) {
+                                        var uuid = Uuid();
+                                        var idd = uuid.v4();
+                                        if (downtime[i] != null ||
+                                            subDT[i] != null ||
+                                            std[i] != "" ||
+                                            actMin[i].text != "0") {
+                                          FirebaseFirestore.instance
+                                              .collection("downtime")
+                                              .doc(idd)
+                                              .set({
+                                            "uid": idd,
+                                            "product_id": widget.id,
+                                            "date": DateFormat('dd/MM/yy')
+                                                .format(now),
+                                            "shift": shift,
+                                            "departement": departement,
+                                            "product": product,
+                                            "line": line,
+                                            "dt": downtime[i],
+                                            "subDt": subDT[i],
+                                            "std": std[i],
+                                            "actMin": actMin[i].text,
+                                            "name": userModel.username,
+                                            "actHour": actHourList[i],
+                                            "week":
+                                                int.parse(weekController.text),
+                                            "bulan":
+                                                DateFormat.MMMM().format(now),
+                                            "tahun": int.parse(
+                                                DateFormat.y().format(now)),
+                                            "createdAt": dateFix
+                                          });
+                                        } else {
+                                          print("no data");
+                                        }
+                                      }
+                                    }
+
+                                    if (iLength > dataIdle.length) {
+                                      for (int i = dataIdle.length;
+                                          i < iLength;
+                                          i++) {
+                                        var uuid = Uuid();
+                                        var idi = uuid.v4();
+                                        if (idleDesc[i] != null ||
+                                            idleMin[i].text != "0") {
+                                          FirebaseFirestore.instance
+                                              .collection("idle_time")
+                                              .doc(idi)
+                                              .set({
+                                            "uid": idi,
+                                            "product_id": widget.id,
+                                            "date": DateFormat('dd/MM/yy')
+                                                .format(now),
+                                            "shift": shift,
+                                            "departement": departement,
+                                            "product": product,
+                                            "name": userModel.username,
+                                            "line": line,
+                                            "idleDesc": idleDesc[i],
+                                            "idleMin": idleMin[i].text,
+                                            "idleHour": idleHourList[i],
+                                            "week":
+                                                int.parse(weekController.text),
+                                            "bulan":
+                                                DateFormat.MMMM().format(now),
+                                            "tahun": int.parse(
+                                                DateFormat.y().format(now)),
+                                            "createdAt": dateFix
+                                          });
+                                        } else {
+                                          print("no data");
+                                        }
+                                      }
+                                    }
                                     setState(() {
                                       _isLoading = false;
                                     });
@@ -2064,20 +2225,6 @@ class _FormEditDataState extends State<FormEditData> {
         ),
       ),
     );
-  }
-
-  uploadBreakdown(idB, id, now, mesin, reason, freq, bdMin, bdHour, problem) {
-    FirebaseFirestore.instance.collection("breakdown").doc(idB).set({
-      "uid": idB,
-      "product_id": id,
-      "date": DateFormat('dd/MM/yy').format(now),
-      "mesin": mesin,
-      "reason": reason,
-      "freq": freq,
-      "bdMin": bdMin,
-      "bdHour": bdHour,
-      "problem": problem
-    });
   }
 }
 

@@ -119,6 +119,7 @@ class _tabel_plusState extends State<tabel_plus> {
                                     le: objData.Le,
                                     lp: objData.Lp,
                                     bd: objData.Bd,
+                                    name: objData.name,
                                     dt: objData.Dt,
                                     date: objData.date,
                                     id: objData.id,
@@ -172,24 +173,26 @@ class _tabel_plusState extends State<tabel_plus> {
                                   width: MediaQuery.of(context).size.width,
                                   height: MediaQuery.of(context).size.height,
                                   child: FormEditData(
-                                    shift: objData.shift,
-                                    departement: objData.departement,
-                                    product: objData.product,
-                                    line: objData.line,
-                                    planingOutput: objData.planingOutput,
-                                    actualOutput: objData.actualOutput,
-                                    nominalSpeed: objData.nominalSpeed,
-                                    totalHour: objData.totalHour,
-                                    grossHour: objData.grossHour,
-                                    netHour: objData.netHour,
-                                    targetHout: objData.targetHour,
-                                    le: objData.Le,
-                                    lp: objData.Lp,
-                                    bd: objData.Bd,
-                                    dt: objData.Dt,
-                                    date: objData.date,
-                                    id: objData.id,
-                                  )),
+                                      shift: objData.shift,
+                                      departement: objData.departement,
+                                      product: objData.product,
+                                      line: objData.line,
+                                      planingOutput: objData.planingOutput,
+                                      actualOutput: objData.actualOutput,
+                                      nominalSpeed: objData.nominalSpeed,
+                                      totalHour: objData.totalHour,
+                                      grossHour: objData.grossHour,
+                                      netHour: objData.netHour,
+                                      targetHout: objData.targetHour,
+                                      le: objData.Le,
+                                      lp: objData.Lp,
+                                      bd: objData.Bd,
+                                      dt: objData.Dt,
+                                      date: objData.date,
+                                      id: objData.id,
+                                      week: objData.week,
+                                      name: objData.name,
+                                      isEdited: objData.isEdited)),
                             ),
                           );
                           ;
@@ -298,7 +301,12 @@ class _tabel_plusState extends State<tabel_plus> {
                 : dataProduct[index]["total_hour"],
             id: dataProduct[index]["uid"] == null
                 ? "-"
-                : dataProduct[index]["uid"]));
+                : dataProduct[index]["uid"],
+            week: dataProduct[index]["week"] == null
+                ? "-"
+                : dataProduct[index]["week"].toString(),
+            isEdited: dataProduct[index]["isEdited"] == null ? "-" : dataProduct[index]["isEdited"],
+            name: dataProduct[index]["name"] == null ? "-" : dataProduct[index]["name"]));
 
     setState(() {
       searchNameList = names;
@@ -414,7 +422,10 @@ class Name {
       Lp,
       Dt,
       Bd,
+      name,
       id;
+
+  dynamic week, isEdited;
 
   Name(
       {required this.product,
@@ -425,6 +436,7 @@ class Name {
       required this.Bd,
       required this.Dt,
       required this.Le,
+      required this.week,
       required this.Lp,
       required this.actualOutput,
       required this.grossHour,
@@ -433,5 +445,7 @@ class Name {
       required this.planingOutput,
       required this.targetHour,
       required this.totalHour,
+      required this.isEdited,
+      required this.name,
       required this.id});
 }

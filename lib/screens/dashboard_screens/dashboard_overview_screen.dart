@@ -1737,36 +1737,29 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                           itemCount: output2.length >= 6 ? 5 : output2.length,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                StreamBuilder(
-                                    stream: FirebaseFirestore.instance
-                                        .collection('breakdown')
-                                        .where("top", isEqualTo: output2[index])
-                                        .snapshots(),
-                                    builder: (context, snapshot) {
-                                      final doc = snapshot.data!.docs;
-                                      if (!snapshot.hasData) {
-                                        return Text("no Data");
-                                      }
+                            return StreamBuilder(
+                                stream: FirebaseFirestore.instance
+                                    .collection('breakdown')
+                                    .where("top", isEqualTo: output2[index])
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  final doc = snapshot.data!.docs;
+                                  if (!snapshot.hasData) {
+                                    return Text("no Data");
+                                  }
 
-                                      var totalHour =
-                                          List.generate(doc.length, (index) {
-                                        double x =
-                                            double.parse(doc[index]['bdHour']);
+                                  var totalHour =
+                                      List.generate(doc.length, (index) {
+                                    double x =
+                                        double.parse(doc[index]['bdHour']);
 
-                                        return x;
-                                      }).reduce((a, b) => a + b);
-                                      return BreakdownItem(
-                                          title: doc[0]["mesin"],
-                                          desc: doc[0]["reason"],
-                                          number: totalHour.toStringAsFixed(2));
-                                    }),
-                                SizedBox(
-                                  height: 25,
-                                )
-                              ],
-                            );
+                                    return x;
+                                  }).reduce((a, b) => a + b);
+                                  return BreakdownItem(
+                                      title: doc[0]["mesin"],
+                                      desc: doc[0]["reason"],
+                                      number: totalHour.toStringAsFixed(2));
+                                });
                           }),
                     )
                   ],
