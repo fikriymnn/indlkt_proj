@@ -97,7 +97,6 @@ class _DashboardOverviewState extends State<DashboardOverview> {
   dynamic BdFixSacet = 0;
   dynamic BdFixTallCan = 0;
 
-  List<String> output2 = ["1", "2", "3", "4", "5"];
   Function? onClik;
 
   String selectedDateText(select) {
@@ -108,59 +107,145 @@ class _DashboardOverviewState extends State<DashboardOverview> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    topBreakdown(3);
+    topBreakdownProses();
+    topBreakdownPouch();
+    topBreakdownTallCan();
+    topBreakdownSacet();
     DataSkm();
     DataProduct();
   }
 
-  List dataBreakdown = [];
-  final map2 = <String, int>{};
+  List dataBreakdownProses = [];
+  final mapProses = <String, int>{};
+  List<String> outputProses = [];
+  List dataBreakdownPouch = [];
+  final mapPouch = <String, int>{};
+  List<String> outputPouch = [];
+  List dataBreakdownTallCan = [];
+  final mapTallCan = <String, int>{};
+  List<String> outputTallCan = [];
+  List dataBreakdownSacet = [];
+  final mapSacet = <String, int>{};
+  List<String> outputSacet = [];
 
-  void topBreakdown(type) async {
-    var a;
-    if (type == 0) {
-      a = await FirebaseFirestore.instance.collection("breakdown").get();
-    } else if (type == 1) {
-      a = await FirebaseFirestore.instance
-          .collection("breakdown")
-          .where("product", isEqualTo: "Process_SKM")
-          .get();
-    } else if (type == 2) {
-      a = await FirebaseFirestore.instance
-          .collection("breakdown")
-          .where("product", isEqualTo: "Filling_Packing_SKM_Pouch")
-          .get();
-    } else if (type == 3) {
-      a = await FirebaseFirestore.instance
-          .collection("breakdown")
-          .where("product", isEqualTo: "Filling_Packing_SKM_Tall_Can")
-          .get();
-    } else if (type == 4) {
-      a = await FirebaseFirestore.instance
-          .collection("breakdown")
-          .where("product", isEqualTo: "Filling_Packing_SKM_Sachet")
-          .get();
-    }
-    QuerySnapshot querySnapshot = a;
+  void topBreakdownProses() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("breakdown")
+        .where("product", isEqualTo: "Process_SKM")
+        .get();
 
     if (querySnapshot.docs.isNotEmpty) {
-      dataBreakdown = querySnapshot.docs.map((doc) => doc.data()).toList();
+      dataBreakdownProses =
+          querySnapshot.docs.map((doc) => doc.data()).toList();
 
-      var myList2 = List.generate(
-          dataBreakdown.length, (index) => dataBreakdown[index]["top"]);
+      var myList2 = List.generate(dataBreakdownProses.length,
+          (index) => dataBreakdownProses[index]["top"]);
 
       for (final m in myList2) {
         final letter = m;
-        map2[letter] = map2.containsKey(letter) ? map2[letter]! + 1 : 1;
+        mapProses[letter] =
+            mapProses.containsKey(letter) ? mapProses[letter]! + 1 : 1;
       }
 
       setState(() {
-        output2 = map2.keys.toList(growable: false);
-        output2.sort((k1, k2) => map2[k2]!.compareTo(map2[k1] as num));
+        outputProses = mapProses.keys.toList(growable: false);
+        outputProses
+            .sort((k1, k2) => mapProses[k2]!.compareTo(mapProses[k1] as num));
       });
     } else {
       setState(() {
-        output2 = [];
+        outputProses = [];
+      });
+    }
+  }
+
+  void topBreakdownPouch() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("breakdown")
+        .where("product", isEqualTo: "Filling_Packing_SKM_Pouch")
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      dataBreakdownPouch = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+      var myList2 = List.generate(dataBreakdownPouch.length,
+          (index) => dataBreakdownPouch[index]["top"]);
+
+      for (final m in myList2) {
+        final letter = m;
+        mapPouch[letter] =
+            mapPouch.containsKey(letter) ? mapPouch[letter]! + 1 : 1;
+      }
+
+      setState(() {
+        outputPouch = mapPouch.keys.toList(growable: false);
+        outputPouch
+            .sort((k1, k2) => mapPouch[k2]!.compareTo(mapPouch[k1] as num));
+      });
+    } else {
+      setState(() {
+        outputPouch = [];
+      });
+    }
+  }
+
+  void topBreakdownTallCan() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("breakdown")
+        .where("product", isEqualTo: "Filling_Packing_SKM_Tall_Can")
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      dataBreakdownTallCan =
+          querySnapshot.docs.map((doc) => doc.data()).toList();
+
+      var myList2 = List.generate(dataBreakdownTallCan.length,
+          (index) => dataBreakdownTallCan[index]["top"]);
+
+      for (final m in myList2) {
+        final letter = m;
+        mapTallCan[letter] =
+            mapTallCan.containsKey(letter) ? mapTallCan[letter]! + 1 : 1;
+      }
+
+      setState(() {
+        outputTallCan = mapTallCan.keys.toList(growable: false);
+        outputTallCan
+            .sort((k1, k2) => mapTallCan[k2]!.compareTo(mapTallCan[k1] as num));
+      });
+    } else {
+      setState(() {
+        outputTallCan = [];
+      });
+    }
+  }
+
+  void topBreakdownSacet() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("breakdown")
+        .where("product", isEqualTo: "Filling_Packing_SKM_Sachet")
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      dataBreakdownSacet = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+      var myList2 = List.generate(dataBreakdownSacet.length,
+          (index) => dataBreakdownSacet[index]["top"]);
+
+      for (final m in myList2) {
+        final letter = m;
+        mapSacet[letter] =
+            mapSacet.containsKey(letter) ? mapSacet[letter]! + 1 : 1;
+      }
+
+      setState(() {
+        outputSacet = mapSacet.keys.toList(growable: false);
+        outputSacet
+            .sort((k1, k2) => mapSacet[k2]!.compareTo(mapSacet[k1] as num));
+      });
+    } else {
+      setState(() {
+        outputSacet = [];
       });
     }
   }
@@ -807,6 +892,130 @@ class _DashboardOverviewState extends State<DashboardOverview> {
       }
     }
 
+    Widget breakdown(v) {
+      if (v == 1) {
+        return Container(
+          child: ListView.builder(
+              itemCount: outputProses.length >= 6 ? 5 : outputProses.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                if (outputProses[index].isNotEmpty) {
+                  return StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('breakdown')
+                          .where("top", isEqualTo: outputProses[index])
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        final doc = snapshot.data!.docs;
+                        if (!snapshot.hasData) {
+                          return Text("no Data");
+                        }
+
+                        var totalHour = List.generate(doc.length, (index) {
+                          double x = double.parse(doc[index]['bdHour']);
+
+                          return x;
+                        }).reduce((a, b) => a + b);
+                        return BreakdownItem(
+                            title: doc[0]["mesin"],
+                            desc: doc[0]["reason"],
+                            number: totalHour.toStringAsFixed(2));
+                      });
+                }
+              }),
+        );
+      } else if (v == 2) {
+        return Container(
+          child: ListView.builder(
+              itemCount: outputPouch.length >= 6 ? 5 : outputPouch.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('breakdown')
+                        .where("top", isEqualTo: outputPouch[index])
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      final doc = snapshot.data!.docs;
+                      if (!snapshot.hasData) {
+                        return Text("no Data");
+                      }
+
+                      var totalHour = List.generate(doc.length, (index) {
+                        double x = double.parse(doc[index]['bdHour']);
+
+                        return x;
+                      }).reduce((a, b) => a + b);
+                      return BreakdownItem(
+                          title: doc[0]["mesin"],
+                          desc: doc[0]["reason"],
+                          number: totalHour.toStringAsFixed(2));
+                    });
+              }),
+        );
+      } else if (v == 3) {
+        return Container(
+          child: ListView.builder(
+              itemCount: outputTallCan.length >= 6 ? 5 : outputTallCan.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('breakdown')
+                        .where("top", isEqualTo: outputTallCan[index])
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      final doc = snapshot.data!.docs;
+                      if (!snapshot.hasData) {
+                        return Text("no Data");
+                      }
+
+                      var totalHour = List.generate(doc.length, (index) {
+                        double x = double.parse(doc[index]['bdHour']);
+
+                        return x;
+                      }).reduce((a, b) => a + b);
+                      return BreakdownItem(
+                          title: doc[0]["mesin"],
+                          desc: doc[0]["reason"],
+                          number: totalHour.toStringAsFixed(2));
+                    });
+              }),
+        );
+      } else if (v == 4) {
+        return Container(
+          child: ListView.builder(
+              itemCount: outputSacet.length >= 6 ? 5 : outputSacet.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('breakdown')
+                        .where("top", isEqualTo: outputSacet[index])
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      final doc = snapshot.data!.docs;
+                      if (!snapshot.hasData) {
+                        return Text("no Data");
+                      }
+
+                      var totalHour = List.generate(doc.length, (index) {
+                        double x = double.parse(doc[index]['bdHour']);
+
+                        return x;
+                      }).reduce((a, b) => a + b);
+                      return BreakdownItem(
+                          title: doc[0]["mesin"],
+                          desc: doc[0]["reason"],
+                          number: totalHour.toStringAsFixed(2));
+                    });
+              }),
+        );
+      } else {
+        return Container();
+      }
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -1314,7 +1523,6 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                             setState(() {
                                               showProgress = 1;
                                             });
-                                            topBreakdown(1);
                                           },
                                           child: Column(
                                             children: [
@@ -1410,7 +1618,6 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                             setState(() {
                                               showProgress = 2;
                                             });
-                                            topBreakdown(2);
                                           },
                                           child: Column(
                                             children: [
@@ -1506,7 +1713,6 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                             setState(() {
                                               showProgress = 3;
                                             });
-                                            topBreakdown(3);
                                           },
                                           child: Column(
                                             children: [
@@ -1602,7 +1808,6 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                             setState(() {
                                               showProgress = 4;
                                             });
-                                            topBreakdown(4);
                                           },
                                           child: Column(
                                             children: [
@@ -1732,36 +1937,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 45),
-                    Container(
-                      child: ListView.builder(
-                          itemCount: output2.length >= 6 ? 5 : output2.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            return StreamBuilder(
-                                stream: FirebaseFirestore.instance
-                                    .collection('breakdown')
-                                    .where("top", isEqualTo: output2[index])
-                                    .snapshots(),
-                                builder: (context, snapshot) {
-                                  final doc = snapshot.data!.docs;
-                                  if (!snapshot.hasData) {
-                                    return Text("no Data");
-                                  }
-
-                                  var totalHour =
-                                      List.generate(doc.length, (index) {
-                                    double x =
-                                        double.parse(doc[index]['bdHour']);
-
-                                    return x;
-                                  }).reduce((a, b) => a + b);
-                                  return BreakdownItem(
-                                      title: doc[0]["mesin"],
-                                      desc: doc[0]["reason"],
-                                      number: totalHour.toStringAsFixed(2));
-                                });
-                          }),
-                    )
+                    breakdown(showProgress)
                   ],
                 ))
           ],

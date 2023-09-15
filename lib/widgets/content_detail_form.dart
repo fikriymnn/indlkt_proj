@@ -1238,25 +1238,6 @@ class _detail_formState extends State<detail_form> {
                                     SizedBox(height: 30),
                                   ],
                                 )),
-                            Center(
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 20),
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 60,
-                                  decoration: BoxDecoration(
-                                      color: blue,
-                                      borderRadius: BorderRadius.circular(3)),
-                                  child: Center(
-                                    child: Text("Archive",
-                                        style: TextStyle(
-                                            color: light,
-                                            fontSize: 40,
-                                            fontWeight: FontWeight.bold)),
-                                  ),
-                                ),
-                              ),
-                            ),
                             ContentDetailArchive(
                               id: widget.id,
                             )

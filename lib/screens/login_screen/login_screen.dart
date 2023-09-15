@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:indlkt_proj/screens/login_screen/widgets/chaptcha.dart';
+import 'package:indlkt_proj/screens/user_screens/widgets/add_user.dart';
 import 'package:indlkt_proj/widgets/side_bar.dart';
 import 'package:local_captcha/local_captcha.dart';
 import 'package:marquee/marquee.dart';
@@ -10,7 +11,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:quickalert/quickalert.dart';
 
 import '../../constants/style.dart';
+import '../../widgets/validasi.dart';
 import '../after_login_screens/after_login_screen.dart';
+import '../user_screens/widgets/forgot_user.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -68,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
             context,
             PageRouteBuilder(pageBuilder: (BuildContext context,
                 Animation animation, Animation secondaryAnimation) {
-              return AfterLogin();
+              return Validasi();
             }, transitionsBuilder: (BuildContext context,
                 Animation<double> animation,
                 Animation<double> secondaryAnimation,
@@ -506,39 +509,128 @@ class _LoginScreenState extends State<LoginScreen> {
                                             //   ),
                                             // ),
                                             Container(
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                              child: Column(
                                                 children: [
-                                                  InkWell(
-                                                    onTap: () {
-                                                      _submitFormOnLogin();
-                                                    },
-                                                    child: Container(
-                                                        height:
-                                                            mediaQueryWidth *
-                                                                0.037,
-                                                        width: mediaQueryWidth *
-                                                            0.186,
-                                                        decoration: BoxDecoration(
-                                                            color: blue,
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                    mediaQueryWidth *
-                                                                        0.008)),
-                                                        child: Center(
-                                                          child: Text(
-                                                            'Login',
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize:
-                                                                  mediaQueryWidth *
-                                                                      0.0104,
-                                                            ),
-                                                          ),
-                                                        )),
+                                                  SizedBox(
+                                                    height: 10,
                                                   ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          _submitFormOnLogin();
+                                                        },
+                                                        child: Container(
+                                                            height:
+                                                                mediaQueryWidth *
+                                                                    0.037,
+                                                            width:
+                                                                mediaQueryWidth *
+                                                                    0.186,
+                                                            decoration: BoxDecoration(
+                                                                color: blue,
+                                                                borderRadius:
+                                                                    BorderRadius.circular(
+                                                                        mediaQueryWidth *
+                                                                            0.008)),
+                                                            child: Center(
+                                                              child: Text(
+                                                                'login',
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize:
+                                                                      mediaQueryWidth *
+                                                                          0.0104,
+                                                                ),
+                                                              ),
+                                                            )),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                (BuildContext
+                                                                    context) {
+                                                              return AlertDialog(
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                elevation: 0,
+                                                                content: Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .only(
+                                                                        top: 85,
+                                                                        right:
+                                                                            55,
+                                                                        left:
+                                                                            38),
+                                                                    child: Container(
+                                                                        width: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width,
+                                                                        height: MediaQuery.of(context)
+                                                                            .size
+                                                                            .height,
+                                                                        child:
+                                                                            AddUser())),
+                                                              );
+                                                            },
+                                                          );
+                                                        },
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  top: 8.0),
+                                                          child: Container(
+                                                              height:
+                                                                  mediaQueryWidth *
+                                                                      0.037,
+                                                              width:
+                                                                  mediaQueryWidth *
+                                                                      0.186,
+                                                              decoration: BoxDecoration(
+                                                                  color: blue,
+                                                                  borderRadius:
+                                                                      BorderRadius.circular(
+                                                                          mediaQueryWidth *
+                                                                              0.008)),
+                                                              child: Center(
+                                                                child: Text(
+                                                                  'Register',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        mediaQueryWidth *
+                                                                            0.0104,
+                                                                  ),
+                                                                ),
+                                                              )),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  )
                                                 ],
                                               ),
                                             ),
@@ -553,7 +645,35 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   children: [
                                                     InkWell(
                                                       onTap: () {
-                                                        //forgot password screen
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                              context) {
+                                                            return AlertDialog(
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              elevation: 0,
+                                                              content: Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .only(
+                                                                      top: 85,
+                                                                      right: 55,
+                                                                      left: 38),
+                                                                  child: Container(
+                                                                      width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.6,
+                                                                      height: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .height,
+                                                                      child:
+                                                                          ForgotUser())),
+                                                            );
+                                                          },
+                                                        );
                                                       },
                                                       child: Text(
                                                         'Forgot Password',

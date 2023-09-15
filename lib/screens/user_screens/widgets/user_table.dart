@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cool_alert/cool_alert.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:indlkt_proj/screens/user_screens/widgets/edit_user.dart';
 import 'package:table_plus/table_plus.dart';
 
 import '../../../constants/style.dart';
+import '../../../models/user_model.dart';
 
 class UserTable extends StatefulWidget {
   const UserTable({super.key});
@@ -62,22 +65,27 @@ class _UserTableState extends State<UserTable> {
           (objData) => DataRow(
             cells: [
               DataCell(
-                Text(objData.departement),
+                Text(objData.userName),
                 showEditIcon: false,
                 placeholder: false,
               ),
               DataCell(
-                Text(objData.shift.toString()),
+                Text(objData.email),
                 showEditIcon: false,
                 placeholder: false,
               ),
               DataCell(
-                Text(objData.line.toString()),
+                Text(objData.nik),
                 showEditIcon: false,
                 placeholder: false,
               ),
               DataCell(
-                Text(objData.date.toString()),
+                Text(objData.noTelepon),
+                showEditIcon: false,
+                placeholder: false,
+              ),
+              DataCell(
+                Text(objData.role),
                 showEditIcon: false,
                 placeholder: false,
               ),
@@ -97,7 +105,14 @@ class _UserTableState extends State<UserTable> {
                               child: Container(
                                   width: MediaQuery.of(context).size.width,
                                   height: MediaQuery.of(context).size.height,
-                                  child: EditUser()),
+                                  child: EditUser(
+                                    email: objData.email,
+                                    id: objData.id,
+                                    namaLengkap: objData.userName,
+                                    noTelp: objData.noTelepon,
+                                    role: objData.role,
+                                    Nik: objData.nik,
+                                  )),
                             ),
                           );
                         },
@@ -136,18 +151,38 @@ class _UserTableState extends State<UserTable> {
                   ),
                   InkWell(
                     onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                              backgroundColor: Colors.transparent,
-                              elevation: 0,
-                              content: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 85, right: 55, left: 38),
-                                  child: Text("Delete Success")));
-                        },
-                      );
+                      CoolAlert.show(
+                          width: 500,
+                          context: context,
+                          type: CoolAlertType.confirm,
+                          text:
+                              "Jika di hapus maka akun tidak dapat di pakai kembali",
+                          title: "Yakin Untuk Menghapus Akun",
+                          onCancelBtnTap: () {},
+                          onConfirmBtnTap: () {
+                            try {
+                              FirebaseFirestore.instance
+                                  .collection("akun")
+                                  .doc(objData.id)
+                                  .delete();
+
+                              getData();
+                            } on FirebaseException catch (e) {
+                              CoolAlert.show(
+                                width: 500,
+                                context: context,
+                                type: CoolAlertType.error,
+                                text: e.message,
+                              );
+                            } catch (e) {
+                              CoolAlert.show(
+                                width: 500,
+                                context: context,
+                                type: CoolAlertType.error,
+                                text: e.toString(),
+                              );
+                            }
+                          });
                     },
                     child: Container(
                         decoration: BoxDecoration(
@@ -187,7 +222,7 @@ class _UserTableState extends State<UserTable> {
 
   getData() async {
     QuerySnapshot querySnapshot = await db
-        .collection("product")
+        .collection("akun")
         .orderBy("createdAt", descending: true)
         .get();
     setState(() {
@@ -201,54 +236,21 @@ class _UserTableState extends State<UserTable> {
     names = List.generate(
         dataProduct.length,
         (index) => Name(
-            product: dataProduct[index]["product"] == null
+            email: dataProduct[index]["email"] == null
                 ? "-"
-                : dataProduct[index]["product"],
-            departement: dataProduct[index]["departement"] == null
+                : dataProduct[index]["email"],
+            nik: dataProduct[index]["nik"] == null
                 ? "-"
-                : dataProduct[index]["departement"],
-            shift: dataProduct[index]["shift"] == null
+                : dataProduct[index]["nik"],
+            noTelepon: dataProduct[index]["noTelepon"] == null
                 ? "-"
-                : dataProduct[index]["shift"],
-            line: dataProduct[index]["line"] == null
+                : dataProduct[index]["noTelepon"],
+            role: dataProduct[index]["role"] == null
                 ? "-"
-                : dataProduct[index]["line"],
-            date: dataProduct[index]["date"] == null
+                : dataProduct[index]["role"],
+            userName: dataProduct[index]["userName"] == null
                 ? "-"
-                : dataProduct[index]["date"],
-            Bd: dataProduct[index]["bd"] == null
-                ? "-"
-                : dataProduct[index]["bd"],
-            Dt: dataProduct[index]["dt"] == null
-                ? "-"
-                : dataProduct[index]["dt"],
-            Le: dataProduct[index]["le"] == null
-                ? "-"
-                : dataProduct[index]["le"],
-            Lp: dataProduct[index]["lp"] == null
-                ? "-"
-                : dataProduct[index]["lp"],
-            actualOutput: dataProduct[index]["actual_output"] == null
-                ? "-"
-                : dataProduct[index]["actual_output"],
-            grossHour: dataProduct[index]["gross_hour"] == null
-                ? "-"
-                : dataProduct[index]["gross_hour"],
-            netHour: dataProduct[index]["net_hour"] == null
-                ? "-"
-                : dataProduct[index]["net_hour"],
-            nominalSpeed: dataProduct[index]["nominal_speed"] == null
-                ? "-"
-                : dataProduct[index]["nominal_speed"],
-            planingOutput: dataProduct[index]["planing_output"] == null
-                ? "-"
-                : dataProduct[index]["planing_output"],
-            targetHour: dataProduct[index]["target_hour"] == null
-                ? "-"
-                : dataProduct[index]["target_hour"],
-            totalHour: dataProduct[index]["total_hour"] == null
-                ? "-"
-                : dataProduct[index]["total_hour"],
+                : dataProduct[index]["userName"],
             id: dataProduct[index]["uid"] == null
                 ? "-"
                 : dataProduct[index]["uid"]));
@@ -266,6 +268,7 @@ class _UserTableState extends State<UserTable> {
 
     tableHeading.clear();
     tableHeading.add("Nama Lengkap");
+    tableHeading.add("Email");
     tableHeading.add("No.Kepegawaian");
     tableHeading.add("No.Telepon");
     tableHeading.add("Role");
@@ -281,26 +284,25 @@ class _UserTableState extends State<UserTable> {
             searchList.clear();
             for (int i = 0; i < names.length; i++) {
               if (index == 0 || index == 1) {
-                String data =
-                    index == 0 ? names[i].product : names[i].departement;
+                String data = index == 0 ? names[i].userName : names[i].email;
                 Name nameData = names[i];
                 if (data.toLowerCase().contains(value.toLowerCase())) {
                   searchList.add(nameData);
                 }
               } else if (index == 2) {
-                String shift = names[i].shift;
+                String shift = names[i].nik;
                 Name nameData = names[i];
                 if (shift.toString().contains(value)) {
                   searchList.add(nameData);
                 }
               } else if (index == 3) {
-                String line = names[i].line;
+                String line = names[i].noTelepon;
                 Name nameData = names[i];
                 if (line.toString().contains(value)) {
                   searchList.add(nameData);
                 }
               } else if (index == 4) {
-                String date = names[i].date;
+                String date = names[i].role;
                 Name nameData = names[i];
                 if (date.toString().contains(value)) {
                   searchList.add(nameData);
@@ -328,62 +330,40 @@ class _UserTableState extends State<UserTable> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: TablePlus(
-          exportFileName: "MyTableFile",
-          tabelHeadingList: tableHeading,
-          isExportCSVEnabled: false,
-          columnSpacing: MediaQuery.of(context).size.width * 0.08,
-          sortColumnIndex: 1,
-          isSearchEnabled: isSearchEnabled,
-          rows: dataRowsValues(),
-          columns: dataColumnValues(),
-          dataValues: names,
-          shareWidget: Container(),
+    return Column(
+      children: [
+        Expanded(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: TablePlus(
+              exportFileName: "MyTableFile",
+              tabelHeadingList: tableHeading,
+              isExportCSVEnabled: false,
+              columnSpacing: MediaQuery.of(context).size.width * 0.08,
+              sortColumnIndex: 1,
+              isSearchEnabled: isSearchEnabled,
+              rows: dataRowsValues(),
+              columns: dataColumnValues(),
+              dataValues: names,
+              shareWidget: Container(),
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 }
 
 class Name {
-  String product;
-  String departement;
-  String shift;
-  String line;
-  String date;
-  String planingOutput,
-      actualOutput,
-      nominalSpeed,
-      totalHour,
-      grossHour,
-      netHour,
-      targetHour,
-      Le,
-      Lp,
-      Dt,
-      Bd,
-      id;
+  String email, nik, noTelepon, role, id, userName;
 
-  Name(
-      {required this.product,
-      required this.departement,
-      required this.shift,
-      required this.line,
-      required this.date,
-      required this.Bd,
-      required this.Dt,
-      required this.Le,
-      required this.Lp,
-      required this.actualOutput,
-      required this.grossHour,
-      required this.netHour,
-      required this.nominalSpeed,
-      required this.planingOutput,
-      required this.targetHour,
-      required this.totalHour,
-      required this.id});
+  Name({
+    required this.nik,
+    required this.id,
+    required this.userName,
+    required this.noTelepon,
+    required this.email,
+    required this.role,
+  });
 }

@@ -16,32 +16,21 @@ class _AfterLoginState extends State<AfterLogin> {
     dynamic mediaQuery = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
-          color: blue,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("assets/images/afterlogin.png"),
+                  fit: BoxFit.cover)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                width: 1200,
-                child: Text(
-                  'INVENTORY MANAGEMENT PT.INDOLAKTO',
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: mediaQuery * 0.042,
-                      fontWeight: FontWeight.bold,
-                      color: light),
-                ),
-              ),
               SizedBox(
                 height: 30,
               ),
               Center(
                 child: Container(
                   height: 300,
-                  width: 900,
-                  decoration: BoxDecoration(
-                      color: light, borderRadius: BorderRadius.circular(15)),
+                  width: 1100,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -54,15 +43,15 @@ class _AfterLoginState extends State<AfterLogin> {
                           },
                           child: Container(
                             decoration: BoxDecoration(
-                                color: active,
+                                color: blue,
                                 borderRadius: BorderRadius.circular(10)),
                             height: 200,
-                            width: 200,
+                            width: 230,
                             child: Center(
                               child: Text(
                                 "Productivity",
                                 style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 30,
                                     fontWeight: FontWeight.bold,
                                     color: light),
                               ),
@@ -71,14 +60,14 @@ class _AfterLoginState extends State<AfterLogin> {
                       InkWell(
                           child: Container(
                         decoration: BoxDecoration(
-                            color: active,
+                            color: blue,
                             borderRadius: BorderRadius.circular(10)),
                         height: 200,
-                        width: 200,
+                        width: 230,
                         child: Center(
                           child: Container(
                             decoration: BoxDecoration(
-                                color: active,
+                                color: blue,
                                 borderRadius: BorderRadius.circular(10)),
                             height: 200,
                             width: 200,
@@ -86,7 +75,7 @@ class _AfterLoginState extends State<AfterLogin> {
                               child: Text(
                                 "Utility",
                                 style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 30,
                                     fontWeight: FontWeight.bold,
                                     color: light),
                               ),
@@ -97,14 +86,14 @@ class _AfterLoginState extends State<AfterLogin> {
                       InkWell(
                           child: Container(
                         decoration: BoxDecoration(
-                            color: active,
+                            color: blue,
                             borderRadius: BorderRadius.circular(10)),
                         height: 200,
-                        width: 200,
+                        width: 230,
                         child: Center(
                           child: Container(
                             decoration: BoxDecoration(
-                                color: active,
+                                color: blue,
                                 borderRadius: BorderRadius.circular(10)),
                             height: 200,
                             width: 200,
@@ -112,7 +101,7 @@ class _AfterLoginState extends State<AfterLogin> {
                               child: Text(
                                 "WWTP",
                                 style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 30,
                                     fontWeight: FontWeight.bold,
                                     color: light),
                               ),

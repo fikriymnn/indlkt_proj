@@ -158,6 +158,9 @@ class _tabel_plusState extends State<tabel_plus> {
                               color: selectedIndex == 4 ? dark : light),
                         ))),
                   ),
+                  SizedBox(
+                    width: 8,
+                  ),
                   InkWell(
                     onTap: () {
                       showDialog(
@@ -205,14 +208,14 @@ class _tabel_plusState extends State<tabel_plus> {
                               BoxShadow(
                                   blurRadius: 1,
                                   offset: Offset(0, 0),
-                                  color: blue)
+                                  color: edit)
                             ],
                             border: Border.all(
-                              color: blue,
+                              color: edit,
                             ),
                             color: selectedIndex == 4
                                 ? Color.fromARGB(255, 195, 225, 250)
-                                : blue,
+                                : edit,
                             borderRadius: BorderRadius.circular(5)),
                         width: 78,
                         height: 36,

@@ -1000,32 +1000,6 @@ class _FormEditDataState extends State<FormEditData> {
                                 ],
                               ),
                               SizedBox(height: 20),
-                              Row(children: [
-                                Flexible(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 30),
-                                        child: Text("Week *",
-                                            style: TextStyle(
-                                                color: dark.withOpacity(0.8),
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.bold)),
-                                      ),
-                                      CustomTextField(
-                                        hint: "Masukan week...",
-                                        controller: weekController,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Flexible(child: Container()),
-                                Flexible(child: Container()),
-                              ])
                             ],
                           ),
                           Padding(

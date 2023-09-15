@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:indlkt_proj/widgets/custom_textfield.dart';
+import 'package:indlkt_proj/widgets/validasi.dart';
 
 import '../../../constants/style.dart';
 import '../../../widgets/appbar.dart';
@@ -20,14 +23,94 @@ class _AddUserState extends State<AddUser> {
   TextEditingController password = TextEditingController();
   TextEditingController NIK = TextEditingController();
   TextEditingController noTelp = TextEditingController();
-  dynamic role;
+  String? role;
+  bool _isLoading = false;
+
+  void signUpUser() async {
+    if (namaLengkap == "" ||
+        email == "" ||
+        password == "" ||
+        NIK == "" ||
+        noTelp == "") {
+      CoolAlert.show(
+        width: 500,
+        context: context,
+        type: CoolAlertType.warning,
+        text: "Semua Field Tidak Boleh Kosong",
+      );
+    } else {
+      try {
+        setState(() {
+          _isLoading = true;
+        });
+
+        UserCredential cred = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+                email: email.text, password: password.text);
+
+        FirebaseFirestore.instance.collection("akun").doc(cred.user!.uid).set({
+          "createdAt": DateTime.now(),
+          "email": email.text,
+          "nik": NIK.text,
+          "role": "not active",
+          "uid": cred.user!.uid,
+          "userName": namaLengkap.text,
+          "noTelepon": noTelp.text
+        });
+
+        Navigator.pushAndRemoveUntil(
+            context,
+            PageRouteBuilder(pageBuilder: (BuildContext context,
+                Animation animation, Animation secondaryAnimation) {
+              return Validasi();
+            }, transitionsBuilder: (BuildContext context,
+                Animation<double> animation,
+                Animation<double> secondaryAnimation,
+                Widget child) {
+              return new ScaleTransition(
+                scale: animation,
+                child: child,
+              );
+            }),
+            (Route route) => false);
+        setState(() {
+          _isLoading = false;
+          email.clear();
+          NIK.clear();
+          role == null;
+          namaLengkap.clear();
+          password.clear();
+          noTelp.clear();
+        });
+      } on FirebaseException catch (e) {
+        setState(() {
+          _isLoading = false;
+        });
+        CoolAlert.show(
+          width: 500,
+          context: context,
+          type: CoolAlertType.error,
+          text: e.message.toString(),
+        );
+      } catch (e) {
+        setState(() {
+          _isLoading = false;
+        });
+        CoolAlert.show(
+          width: 500,
+          context: context,
+          type: CoolAlertType.error,
+          text: e.toString(),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     dynamic mediaQuery = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: CustomAppBar(title: "Users"),
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
@@ -46,15 +129,33 @@ class _AddUserState extends State<AddUser> {
                       width: 200,
                       image: AssetImage("assets/images/circle_bg2.png"))),
               Padding(
-                padding: const EdgeInsets.only(top: 20, right: 55, left: 38),
+                padding: const EdgeInsets.only(top: 5, right: 5, left: 5),
                 child: Column(
                   children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(right: 10),
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: const Icon(
+                              Icons.cancel_outlined,
+                              color: Colors.red,
+                              size: 35,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 50, top: 20),
-                          child: Text('Add new user',
+                          child: Text('Register',
                               style: TextStyle(
                                   color: blue,
                                   fontSize: 15,
@@ -76,7 +177,7 @@ class _AddUserState extends State<AddUser> {
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(left: 30),
-                                          child: Text("Tambah User",
+                                          child: Text("Register",
                                               style: TextStyle(
                                                   color: dark.withOpacity(0.8),
                                                   fontSize: 35,
@@ -169,47 +270,14 @@ class _AddUserState extends State<AddUser> {
                                       ],
                                     ),
                                     SizedBox(height: 23),
-                                    Column(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              right: mediaQuery * 0.186),
-                                          child: Text("Role :",
-                                              style: TextStyle(
-                                                  color: dark.withOpacity(0.8),
-                                                  fontSize: 25,
-                                                  fontWeight: FontWeight.bold)),
-                                        ),
-                                        CustomDropdown(
-                                            dropdownItems: [
-                                              DropdownMenuItem(
-                                                value: "user",
-                                                child: Text("user"),
-                                              ),
-                                              DropdownMenuItem(
-                                                value: "admin",
-                                                child: Text("admin"),
-                                              ),
-                                              DropdownMenuItem(
-                                                value: "super admin",
-                                                child: Text("super admin"),
-                                              ),
-                                            ],
-                                            value: role,
-                                            onChange: (a) {
-                                              setState(() {
-                                                role = a;
-                                              });
-                                            },
-                                            hintText: "Pilih Role..."),
-                                      ],
-                                    ),
                                     SizedBox(
                                       height: 30,
                                     ),
                                     Center(
                                       child: InkWell(
-                                        onTap: () {},
+                                        onTap: () async {
+                                          signUpUser();
+                                        },
                                         child: Container(
                                             margin: EdgeInsets.all(25),
                                             decoration: BoxDecoration(
@@ -221,10 +289,14 @@ class _AddUserState extends State<AddUser> {
                                               child: Padding(
                                                   padding:
                                                       const EdgeInsets.all(10),
-                                                  child: Text("Submit",
-                                                      style: TextStyle(
+                                                  child: _isLoading
+                                                      ? CircularProgressIndicator(
                                                           color: light,
-                                                          fontSize: 15))),
+                                                        )
+                                                      : Text("Submit",
+                                                          style: TextStyle(
+                                                              color: light,
+                                                              fontSize: 15))),
                                             )),
                                       ),
                                     )

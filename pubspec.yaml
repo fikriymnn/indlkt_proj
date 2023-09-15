@@ -66,6 +66,7 @@ dependencies:
   chart_components: ^1.0.1
   cool_alert: ^2.0.1
   firebase_core: ^2.15.1
+  giffy_dialog: ^2.0.0+2
 
 dev_dependencies:
   flutter_test:
