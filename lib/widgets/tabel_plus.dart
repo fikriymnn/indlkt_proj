@@ -122,6 +122,7 @@ class _tabel_plusState extends State<tabel_plus> {
                                     name: objData.name,
                                     dt: objData.Dt,
                                     date: objData.date,
+                                    nik: objData.nik,
                                     id: objData.id,
                                   )),
                             ),
@@ -195,6 +196,7 @@ class _tabel_plusState extends State<tabel_plus> {
                                       id: objData.id,
                                       week: objData.week,
                                       name: objData.name,
+                                      nik: objData.nik,
                                       isEdited: objData.isEdited)),
                             ),
                           );
@@ -309,7 +311,8 @@ class _tabel_plusState extends State<tabel_plus> {
                 ? "-"
                 : dataProduct[index]["week"].toString(),
             isEdited: dataProduct[index]["isEdited"] == null ? "-" : dataProduct[index]["isEdited"],
-            name: dataProduct[index]["name"] == null ? "-" : dataProduct[index]["name"]));
+            name: dataProduct[index]["name"] == null ? "-" : dataProduct[index]["name"],
+            nik: dataProduct[index]["nik"] == null ? "-" : dataProduct[index]["nik"]));
 
     setState(() {
       searchNameList = names;
@@ -388,21 +391,64 @@ class _tabel_plusState extends State<tabel_plus> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: TablePlus(
-          exportFileName: "MyTableFile",
-          tabelHeadingList: tableHeading,
-          isExportCSVEnabled: false,
-          columnSpacing: MediaQuery.of(context).size.width * 0.08,
-          sortColumnIndex: 1,
-          isSearchEnabled: isSearchEnabled,
-          rows: dataRowsValues(),
-          columns: dataColumnValues(),
-          dataValues: names,
-          shareWidget: Container(),
-        ),
+      child: Column(
+        children: [
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap: () {
+                    getData();
+                  },
+                  child: Container(
+                      decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                blurRadius: 1,
+                                offset: Offset(0, 0),
+                                color: blue)
+                          ],
+                          border: Border.all(
+                            color: blue,
+                          ),
+                          color: blue,
+                          borderRadius: BorderRadius.circular(5)),
+                      width: 78,
+                      height: 36,
+                      child: Center(
+                          child: Text(
+                        "Refresh",
+                        style: GoogleFonts.montserrat(
+                            textStyle:
+                                Theme.of(context).textTheme.displayMedium,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: light),
+                      ))),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: TablePlus(
+                exportFileName: "MyTableFile",
+                tabelHeadingList: tableHeading,
+                isExportCSVEnabled: false,
+                columnSpacing: MediaQuery.of(context).size.width * 0.08,
+                sortColumnIndex: 1,
+                isSearchEnabled: isSearchEnabled,
+                rows: dataRowsValues(),
+                columns: dataColumnValues(),
+                dataValues: names,
+                shareWidget: Container(),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -426,6 +472,7 @@ class Name {
       Dt,
       Bd,
       name,
+      nik,
       id;
 
   dynamic week, isEdited;
@@ -450,5 +497,6 @@ class Name {
       required this.totalHour,
       required this.isEdited,
       required this.name,
+      required this.nik,
       required this.id});
 }

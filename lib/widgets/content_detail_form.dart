@@ -32,6 +32,7 @@ class detail_form extends StatefulWidget {
       le,
       lp,
       bd,
+      nik,
       dt;
   const detail_form(
       {super.key,
@@ -50,6 +51,7 @@ class detail_form extends StatefulWidget {
       required this.lp,
       required this.bd,
       required this.dt,
+      required this.nik,
       required this.name,
       required this.date,
       required this.id});
@@ -134,6 +136,7 @@ class _detail_formState extends State<detail_form> {
     for (int i = 0; i < bLength; i++) reason.add(reasons);
 
     return Scaffold(
+      appBar: CustomAppBar(title: "Detail Data", viewTime: false),
       body: Container(
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
@@ -162,21 +165,6 @@ class _detail_formState extends State<detail_form> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: Container(
-                                      child: IconButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        icon: const Icon(
-                                          Icons.cancel_outlined,
-                                          color: Colors.red,
-                                          size: 35,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
                                   SizedBox(height: 20),
                                   Row(children: [
                                     Container(
@@ -184,6 +172,31 @@ class _detail_formState extends State<detail_form> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(10),
                                         child: Text(widget.name,
+                                            style: TextStyle(
+                                                color: light, fontSize: 17)),
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: blue,
+                                        borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(11),
+                                          bottomRight: Radius.circular(11),
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                              blurRadius: 5,
+                                              offset: Offset(0, 0),
+                                              color: dark.withOpacity(0.4))
+                                        ],
+                                      ),
+                                    )
+                                  ]),
+                                  SizedBox(height: 10),
+                                  Row(children: [
+                                    Container(
+                                      height: 40,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Text(widget.nik,
                                             style: TextStyle(
                                                 color: light, fontSize: 17)),
                                       ),

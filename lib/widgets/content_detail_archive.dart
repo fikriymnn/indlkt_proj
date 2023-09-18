@@ -42,6 +42,7 @@ class _ContentDetailArchiveState extends State<ContentDetailArchive> {
                 dynamic grossHour = doc[index]["gross_hour"];
                 dynamic netHour = doc[index]["net_hour"];
                 dynamic target = doc[index]["target_hour"];
+                dynamic nik = doc[index]["nik"];
                 dynamic lp = doc[index]["lp"];
                 dynamic le = doc[index]["le"];
                 dynamic dt = doc[index]["dt"];
@@ -98,6 +99,33 @@ class _ContentDetailArchiveState extends State<ContentDetailArchive> {
                                             child: Padding(
                                               padding: const EdgeInsets.all(10),
                                               child: Text(name,
+                                                  style: TextStyle(
+                                                      color: light,
+                                                      fontSize: 17)),
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: blue,
+                                              borderRadius:
+                                                  BorderRadius.circular(11),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    blurRadius: 5,
+                                                    offset: Offset(0, 0),
+                                                    color:
+                                                        dark.withOpacity(0.4))
+                                              ],
+                                            ),
+                                          )
+                                        ]),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(children: [
+                                          Container(
+                                            height: 40,
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(10),
+                                              child: Text(nik,
                                                   style: TextStyle(
                                                       color: light,
                                                       fontSize: 17)),

@@ -332,6 +332,40 @@ class _UserTableState extends State<UserTable> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: () {
+                  getData();
+                },
+                child: Container(
+                    decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 1, offset: Offset(0, 0), color: blue)
+                        ],
+                        border: Border.all(
+                          color: blue,
+                        ),
+                        color: blue,
+                        borderRadius: BorderRadius.circular(5)),
+                    width: 78,
+                    height: 36,
+                    child: Center(
+                        child: Text(
+                      "Refresh",
+                      style: GoogleFonts.montserrat(
+                          textStyle: Theme.of(context).textTheme.displayMedium,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: light),
+                    ))),
+              ),
+            ],
+          ),
+        ),
         Expanded(
           child: Container(
             width: MediaQuery.of(context).size.width,

@@ -8,7 +8,8 @@ import '../constants/style.dart';
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
   final Color backgroundColor = blue;
-  CustomAppBar({super.key, required String this.title});
+  final bool viewTime;
+  CustomAppBar({super.key, required String this.title, required this.viewTime});
 
   @override
   State<CustomAppBar> createState() => _CustomAppBarState();
@@ -61,42 +62,43 @@ class _CustomAppBarState extends State<CustomAppBar> {
         titleTextStyle: TextStyle(color: Colors.white),
         toolbarHeight: 95,
         actions: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                  height: 70,
-                  decoration: BoxDecoration(
-                    color: light,
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20)),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 10, left: 10),
-                    child: Column(
-                      children: [
-                        SizedBox(height: 12),
-                        Text(
-                          "${dateText}",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.black),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text("${timeText} WIB",
+          if (widget.viewTime == true)
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                    height: 70,
+                    decoration: BoxDecoration(
+                      color: light,
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20)),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 10, left: 10),
+                      child: Column(
+                        children: [
+                          SizedBox(height: 12),
+                          Text(
+                            "${dateText}",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                                color: Colors.black))
-                      ],
-                    ),
-                  )),
-            ],
-          ),
+                                fontSize: 20,
+                                color: Colors.black),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text("${timeText} WIB",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  color: Colors.black))
+                        ],
+                      ),
+                    )),
+              ],
+            ),
           SizedBox(width: 80)
         ],
         title: Row(children: [

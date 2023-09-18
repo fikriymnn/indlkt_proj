@@ -23,6 +23,8 @@ class downtimeDetail extends StatefulWidget {
       actHour,
       std,
       subDt,
+      nik,
+      name,
       dt;
 
   const downtimeDetail({
@@ -36,6 +38,8 @@ class downtimeDetail extends StatefulWidget {
     required this.actHour,
     required this.std,
     required this.subDt,
+    required this.nik,
+    required this.name,
     required this.dt,
   });
 
@@ -65,6 +69,7 @@ class _downtimeDetailState extends State<downtimeDetail> {
     double mediaQueryWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      appBar: CustomAppBar(title: "Detail Data", viewTime: false),
       body: Container(
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
@@ -89,25 +94,55 @@ class _downtimeDetailState extends State<downtimeDetail> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Row(children: [
+                              Container(
+                                height: 40,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Text(widget.name,
+                                      style: TextStyle(
+                                          color: light, fontSize: 17)),
+                                ),
+                                decoration: BoxDecoration(
+                                  color: blue,
+                                  borderRadius: BorderRadius.circular(11),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        blurRadius: 5,
+                                        offset: Offset(0, 0),
+                                        color: dark.withOpacity(0.4))
+                                  ],
+                                ),
+                              )
+                            ]),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(children: [
+                              Container(
+                                height: 40,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Text(widget.nik,
+                                      style: TextStyle(
+                                          color: light, fontSize: 17)),
+                                ),
+                                decoration: BoxDecoration(
+                                  color: blue,
+                                  borderRadius: BorderRadius.circular(11),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        blurRadius: 5,
+                                        offset: Offset(0, 0),
+                                        color: dark.withOpacity(0.4))
+                                  ],
+                                ),
+                              )
+                            ]),
                             Container(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: Container(
-                                      child: IconButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        icon: const Icon(
-                                          Icons.cancel_outlined,
-                                          color: Colors.red,
-                                          size: 35,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
                                   SizedBox(height: 20),
                                   Center(
                                     child: Column(

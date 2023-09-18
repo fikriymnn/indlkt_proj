@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:indlkt_proj/constants/style.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/detail_pouch.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/detail_proses.dart';
@@ -38,8 +39,8 @@ class _DashboardOverviewState extends State<DashboardOverview> {
   int selectedShift = 0;
   dynamic dropdownValue = 0;
   int showProgress = 0;
-  DateTime? _fromSelectedDate = DateTime.now();
-  DateTime? _toSelectedDate = DateTime.now();
+  DateTime? _fromSelectedDate = null;
+  DateTime? _toSelectedDate = null;
 
   int? FromFix;
   int? ToFix;
@@ -54,6 +55,12 @@ class _DashboardOverviewState extends State<DashboardOverview> {
   double LpSkm = 0;
   double BdSkm = 0;
   double DtSkm = 0;
+
+  //breakdown
+  List dataFilterBreakdownProses = [];
+  List dataFilterBreakdownPouch = [];
+  List dataFilterBreakdownTallCan = [];
+  List dataFilterBreakdownSacet = [];
 
 //data Chart
   List dataFilterProses = [];
@@ -131,15 +138,27 @@ class _DashboardOverviewState extends State<DashboardOverview> {
   void topBreakdownProses() async {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection("breakdown")
-        .where("product", isEqualTo: "Process_SKM")
+        .where("createdAt", isGreaterThanOrEqualTo: FromFix)
+        .where("createdAt", isLessThanOrEqualTo: ToFix)
         .get();
 
     if (querySnapshot.docs.isNotEmpty) {
       dataBreakdownProses =
           querySnapshot.docs.map((doc) => doc.data()).toList();
 
-      var myList2 = List.generate(dataBreakdownProses.length,
-          (index) => dataBreakdownProses[index]["top"]);
+      var data = [];
+      for (var i = 0; i < dataBreakdownProses.length; i++) {
+        if (dataBreakdownProses[i]["product"] == "Process_SKM") {
+          data.add(dataBreakdownProses[i]);
+        }
+      }
+      setState(() {
+        dataFilterBreakdownProses = data;
+      });
+
+      var myList2 = List.generate(dataFilterBreakdownProses.length,
+          (index) => dataFilterBreakdownProses[index]["top"]);
+      mapProses.clear();
 
       for (final m in myList2) {
         final letter = m;
@@ -162,14 +181,26 @@ class _DashboardOverviewState extends State<DashboardOverview> {
   void topBreakdownPouch() async {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection("breakdown")
-        .where("product", isEqualTo: "Filling_Packing_SKM_Pouch")
+        .where("createdAt", isGreaterThanOrEqualTo: FromFix)
+        .where("createdAt", isLessThanOrEqualTo: ToFix)
         .get();
 
     if (querySnapshot.docs.isNotEmpty) {
       dataBreakdownPouch = querySnapshot.docs.map((doc) => doc.data()).toList();
 
-      var myList2 = List.generate(dataBreakdownPouch.length,
-          (index) => dataBreakdownPouch[index]["top"]);
+      var data = [];
+      for (var i = 0; i < dataBreakdownPouch.length; i++) {
+        if (dataBreakdownPouch[i]["product"] == "Filling_Packing_SKM_Pouch") {
+          data.add(dataBreakdownPouch[i]);
+        }
+      }
+      setState(() {
+        dataFilterBreakdownPouch = data;
+      });
+
+      var myList2 = List.generate(dataFilterBreakdownPouch.length,
+          (index) => dataFilterBreakdownPouch[index]["top"]);
+      mapPouch.clear();
 
       for (final m in myList2) {
         final letter = m;
@@ -192,15 +223,28 @@ class _DashboardOverviewState extends State<DashboardOverview> {
   void topBreakdownTallCan() async {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection("breakdown")
-        .where("product", isEqualTo: "Filling_Packing_SKM_Tall_Can")
+        .where("createdAt", isGreaterThanOrEqualTo: FromFix)
+        .where("createdAt", isLessThanOrEqualTo: ToFix)
         .get();
 
     if (querySnapshot.docs.isNotEmpty) {
       dataBreakdownTallCan =
           querySnapshot.docs.map((doc) => doc.data()).toList();
 
-      var myList2 = List.generate(dataBreakdownTallCan.length,
-          (index) => dataBreakdownTallCan[index]["top"]);
+      var data = [];
+      for (var i = 0; i < dataBreakdownTallCan.length; i++) {
+        if (dataBreakdownTallCan[i]["product"] ==
+            "Filling_Packing_SKM_Tall_Can") {
+          data.add(dataBreakdownTallCan[i]);
+        }
+      }
+      setState(() {
+        dataFilterBreakdownTallCan = data;
+      });
+
+      var myList2 = List.generate(dataFilterBreakdownTallCan.length,
+          (index) => dataFilterBreakdownTallCan[index]["top"]);
+      mapTallCan.clear();
 
       for (final m in myList2) {
         final letter = m;
@@ -223,14 +267,26 @@ class _DashboardOverviewState extends State<DashboardOverview> {
   void topBreakdownSacet() async {
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection("breakdown")
-        .where("product", isEqualTo: "Filling_Packing_SKM_Sachet")
+        .where("createdAt", isGreaterThanOrEqualTo: FromFix)
+        .where("createdAt", isLessThanOrEqualTo: ToFix)
         .get();
 
     if (querySnapshot.docs.isNotEmpty) {
       dataBreakdownSacet = querySnapshot.docs.map((doc) => doc.data()).toList();
 
-      var myList2 = List.generate(dataBreakdownSacet.length,
-          (index) => dataBreakdownSacet[index]["top"]);
+      var data = [];
+      for (var i = 0; i < dataBreakdownSacet.length; i++) {
+        if (dataBreakdownSacet[i]["product"] == "Filling_Packing_SKM_Sachet") {
+          data.add(dataBreakdownSacet[i]);
+        }
+      }
+      setState(() {
+        dataFilterBreakdownSacet = data;
+      });
+
+      var myList2 = List.generate(dataFilterBreakdownSacet.length,
+          (index) => dataFilterBreakdownSacet[index]["top"]);
+      mapSacet.clear();
 
       for (final m in myList2) {
         final letter = m;
@@ -899,28 +955,32 @@ class _DashboardOverviewState extends State<DashboardOverview> {
               itemCount: outputProses.length >= 6 ? 5 : outputProses.length,
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                if (outputProses[index].isNotEmpty) {
-                  return StreamBuilder(
-                      stream: FirebaseFirestore.instance
-                          .collection('breakdown')
-                          .where("top", isEqualTo: outputProses[index])
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        final doc = snapshot.data!.docs;
-                        if (!snapshot.hasData) {
-                          return Text("no Data");
-                        }
+                if (outputProses != []) {
+                  return Container(
+                    child: StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection('breakdown')
+                            .where("top", isEqualTo: outputProses[index])
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          final doc = snapshot.data!.docs;
+                          if (!snapshot.hasData) {
+                            return Text("no Data");
+                          }
 
-                        var totalHour = List.generate(doc.length, (index) {
-                          double x = double.parse(doc[index]['bdHour']);
+                          var totalHour = List.generate(doc.length, (index) {
+                            double x = double.parse(doc[index]['bdHour']);
 
-                          return x;
-                        }).reduce((a, b) => a + b);
-                        return BreakdownItem(
-                            title: doc[0]["mesin"],
-                            desc: doc[0]["reason"],
-                            number: totalHour.toStringAsFixed(2));
-                      });
+                            return x;
+                          }).reduce((a, b) => a + b);
+                          return BreakdownItem(
+                              title: doc[0]["mesin"],
+                              desc: doc[0]["reason"],
+                              number: totalHour.toStringAsFixed(2));
+                        }),
+                  );
+                } else {
+                  return Container();
                 }
               }),
         );
@@ -1019,52 +1079,86 @@ class _DashboardOverviewState extends State<DashboardOverview> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 30,
-              decoration: BoxDecoration(
-                color: lightGrey,
-                boxShadow: [
-                  BoxShadow(
-                      blurRadius: 4,
-                      offset: Offset(0, 0),
-                      color: dark.withOpacity(0.4))
-                ],
-                border: Border.all(width: 1, color: blue),
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: () {
+                  topBreakdownProses();
+                  topBreakdownPouch();
+                  topBreakdownTallCan();
+                  topBreakdownSacet();
+                  DataSkm();
+                  DataProduct();
+                },
+                child: Container(
+                    decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 1, offset: Offset(0, 0), color: blue)
+                        ],
+                        border: Border.all(
+                          color: blue,
+                        ),
+                        color: blue,
+                        borderRadius: BorderRadius.circular(5)),
+                    width: 78,
+                    height: 36,
+                    child: Center(
+                        child: Text(
+                      "Refresh",
+                      style: GoogleFonts.montserrat(
+                          textStyle: Theme.of(context).textTheme.displayMedium,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: light),
+                    ))),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: 30,
+          decoration: BoxDecoration(
+            color: lightGrey,
+            boxShadow: [
+              BoxShadow(
+                  blurRadius: 4,
+                  offset: Offset(0, 0),
+                  color: dark.withOpacity(0.4))
+            ],
+            border: Border.all(width: 1, color: blue),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8, right: 8),
+            child: DropdownButton(
+                hint: Text("Pilih Nama Laporan *"),
+                underline: Container(),
                 borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8, right: 8),
-                child: DropdownButton(
-                    hint: Text("Pilih Nama Laporan *"),
-                    underline: Container(),
-                    borderRadius: BorderRadius.circular(10),
-                    value: SkmFill,
-                    onChanged: (e) {
-                      setState(() {
-                        SkmFill = e!;
-                      });
-                      dataSkmFilter();
-                    },
-                    items: [
-                      DropdownMenuItem(
-                        child: Text("All"),
-                        value: 1,
-                      ),
-                      DropdownMenuItem(
-                        child: Text("Proccess"),
-                        value: 2,
-                      ),
-                      DropdownMenuItem(
-                        child: Text("FillPack"),
-                        value: 3,
-                      ),
-                    ]),
-              ),
-            ),
-          ],
+                value: SkmFill,
+                onChanged: (e) {
+                  setState(() {
+                    SkmFill = e!;
+                  });
+                  dataSkmFilter();
+                },
+                items: [
+                  DropdownMenuItem(
+                    child: Text("All"),
+                    value: 1,
+                  ),
+                  DropdownMenuItem(
+                    child: Text("Proccess"),
+                    value: 2,
+                  ),
+                  DropdownMenuItem(
+                    child: Text("FillPack"),
+                    value: 3,
+                  ),
+                ]),
+          ),
         ),
         SizedBox(height: 10),
         Row(
@@ -1155,7 +1249,11 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                           }
                           String datetime = date.year.toString() + moon + day;
                           FromFix = int.parse(datetime);
-                          print(FromFix);
+
+                          topBreakdownProses();
+                          topBreakdownPouch();
+                          topBreakdownTallCan();
+                          topBreakdownSacet();
                           DataProduct();
                           DataSkm();
                         });
@@ -1228,7 +1326,10 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                           }
                           String datetime = date.year.toString() + moon + day;
                           ToFix = int.parse(datetime);
-                          print(ToFix);
+                          topBreakdownProses();
+                          topBreakdownPouch();
+                          topBreakdownTallCan();
+                          topBreakdownSacet();
                           DataProduct();
                           DataSkm();
                         });
@@ -1937,7 +2038,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 45),
-                    breakdown(showProgress)
+                    Expanded(child: breakdown(showProgress))
                   ],
                 ))
           ],

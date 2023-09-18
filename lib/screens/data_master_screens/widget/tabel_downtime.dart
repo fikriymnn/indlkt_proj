@@ -105,6 +105,8 @@ class _tabel_downtimeState extends State<tabel_downtime> {
                                   actMin: objData.actMin,
                                   actHour: objData.actHour,
                                   std: objData.STD,
+                                  name: objData.name,
+                                  nik: objData.nik,
                                   subDt: objData.subDt,
                                   dt: objData.dt)),
                         ),
@@ -188,7 +190,13 @@ class _tabel_downtimeState extends State<tabel_downtime> {
                 : dataDowntime[index]["actMin"],
             actHour: dataDowntime[index]["actHour"] == null
                 ? "-"
-                : dataDowntime[index]["actHour"]));
+                : dataDowntime[index]["actHour"],
+            name: dataDowntime[index]["name"] == null
+                ? "-"
+                : dataDowntime[index]["name"],
+            nik: dataDowntime[index]["nik"] == null
+                ? "-"
+                : dataDowntime[index]["nik"]));
 
     setState(() {
       searchNameList = names;
@@ -292,6 +300,7 @@ class Name {
   String STD;
   String actMin;
   String actHour;
+  dynamic name, nik;
 
   Name({
     required this.date,
@@ -302,6 +311,8 @@ class Name {
     required this.dt,
     required this.subDt,
     required this.STD,
+    required this.name,
+    required this.nik,
     required this.actMin,
     required this.actHour,
   });

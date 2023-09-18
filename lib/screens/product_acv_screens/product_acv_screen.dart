@@ -108,7 +108,7 @@ class _ProductAcvScreenState extends State<ProductAcvScreen> {
   Widget build(BuildContext context) {
     double mediaQueryHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: CustomAppBar(title: "Product Acv"),
+      appBar: CustomAppBar(title: "Product Acv", viewTime: true),
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,

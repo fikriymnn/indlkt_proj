@@ -148,7 +148,7 @@ class _FormInputDataState extends State<FormInputData> {
     for (int i = 0; i < iLength; i++) idleHourList.add(idleHourChild);
 
     return Scaffold(
-      appBar: CustomAppBar(title: "Input Data"),
+      appBar: CustomAppBar(title: "Input Data", viewTime: true),
       body: SingleChildScrollView(
         child: Stack(
           children: [
@@ -226,6 +226,7 @@ class _FormInputDataState extends State<FormInputData> {
                                         onChanged: (e) {
                                           setState(() {
                                             namaLaporan = e!;
+                                            line = null;
                                             if (namaLaporan == "Process_SKM") {
                                               bdMesinList =
                                                   DataBD().process_SKM_Mesin;
@@ -899,6 +900,7 @@ class _FormInputDataState extends State<FormInputData> {
                                                       onChangeMesin: (a) {
                                                         setState(() {
                                                           mesin[index] = a;
+
                                                           if (mesin[index] ==
                                                               "Dumper") {
                                                             reasonList[index] =
@@ -1604,6 +1606,7 @@ class _FormInputDataState extends State<FormInputData> {
                                       "type": type,
                                       "target_hour": targetHour,
                                       "name": userModel.username,
+                                      "nik": userModel.nik,
                                       "le": (double.parse(le) * 100)
                                           .toStringAsFixed(3),
                                       "lp": (double.parse(lp) * 100)
@@ -1649,6 +1652,7 @@ class _FormInputDataState extends State<FormInputData> {
                                           "bdHour": bdHourList[i],
                                           "problem": problem[i].text,
                                           "name": userModel.username,
+                                          "nik": userModel.nik,
                                           "week":
                                               int.parse(weekController.text),
                                           "top": "${mesin[i]}" + "${reason[i]}",
@@ -1688,6 +1692,7 @@ class _FormInputDataState extends State<FormInputData> {
                                           "actMin": actMin[i].text,
                                           "actHour": actHourList[i],
                                           "name": userModel.username,
+                                          "nik": userModel.nik,
                                           "week":
                                               int.parse(weekController.text),
                                           "bulan":
@@ -1721,6 +1726,7 @@ class _FormInputDataState extends State<FormInputData> {
                                           "idleMin": idleMin[i].text,
                                           "idleHour": idleHourList[i],
                                           "name": userModel.username,
+                                          "nik": userModel.nik,
                                           "week":
                                               int.parse(weekController.text),
                                           "bulan":

@@ -18,7 +18,7 @@ class _UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Users"),
+      appBar: CustomAppBar(title: "Users", viewTime: true),
       body: SingleChildScrollView(
         child: Stack(
           children: [

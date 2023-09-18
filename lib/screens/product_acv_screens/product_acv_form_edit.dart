@@ -45,6 +45,7 @@ class FormEditData extends StatefulWidget {
       dt,
       isEdited,
       name,
+      nik,
       week;
 
   const FormEditData(
@@ -67,6 +68,7 @@ class FormEditData extends StatefulWidget {
       this.bd,
       this.isEdited,
       this.name,
+      this.nik,
       this.week,
       this.dt});
 
@@ -380,7 +382,7 @@ class _FormEditDataState extends State<FormEditData> {
     for (int i = 0; i < iLength; i++) idleHourList.add(idleHourChild);
 
     return Scaffold(
-      appBar: CustomAppBar(title: "Input Data"),
+      appBar: CustomAppBar(title: "Edit Data", viewTime: false),
       body: SingleChildScrollView(
         child: Stack(
           children: [
@@ -575,8 +577,9 @@ class _FormEditDataState extends State<FormEditData> {
                                             controller: actualOutput,
                                             onChange: (value) {
                                               setState(() {
+                                                var nom = nominalSpeed.text;
                                                 var target = num.parse(value) /
-                                                    num.parse(nominalSpeeds);
+                                                    num.parse(nom);
 
                                                 targetHour =
                                                     target.toStringAsFixed(2);
@@ -687,9 +690,9 @@ class _FormEditDataState extends State<FormEditData> {
                                           controller: nominalSpeed,
                                           onChange: (value) {
                                             setState(() {
-                                              var target =
-                                                  num.parse(actualOutputs) /
-                                                      num.parse(value);
+                                              var act = actualOutput.text;
+                                              var target = num.parse(act) /
+                                                  num.parse(value);
                                               var speed = num.parse(value);
                                               nominalSpeeds = speed.toString();
                                               targetHour =
@@ -1812,6 +1815,7 @@ class _FormEditDataState extends State<FormEditData> {
                                       "gross_hour": grossHour,
                                       "net_hour": netHour,
                                       "name": userModel.username,
+                                      "nik": userModel.nik,
                                       "type": type,
                                       "isEdited": true,
                                       "target_hour": targetHour,
@@ -1844,6 +1848,7 @@ class _FormEditDataState extends State<FormEditData> {
                                           "mesin": mesin[i],
                                           "reason": reason[i],
                                           "name": userModel.username,
+                                          "nik": userModel.nik,
                                           "freq": freq[i].text,
                                           "bdMin": dbMin[i].text,
                                           "bdHour": bdHourList[i],
@@ -1875,6 +1880,7 @@ class _FormEditDataState extends State<FormEditData> {
                                           "dt": downtime[i],
                                           "subDt": subDT[i],
                                           "name": userModel.username,
+                                          "nik": userModel.nik,
                                           "std": std[i],
                                           "actMin": actMin[i].text,
                                           "actHour": actHourList[i],
@@ -1896,6 +1902,7 @@ class _FormEditDataState extends State<FormEditData> {
                                           "departement": departement,
                                           "product": product,
                                           "name": userModel.username,
+                                          "nik": userModel.nik,
                                           "line": line,
                                           "idleDesc": idleDesc[i],
                                           "idleMin": idleMin[i].text,
@@ -1922,6 +1929,7 @@ class _FormEditDataState extends State<FormEditData> {
                                         "nominal_speed": widget.nominalSpeed,
                                         "total_hour": widget.totalHour,
                                         "name": widget.name,
+                                        "nik": widget.nik,
                                         "gross_hour": widget.grossHour,
                                         "net_hour": widget.netHour,
                                         "target_hour": widget.targetHout,
@@ -1961,6 +1969,7 @@ class _FormEditDataState extends State<FormEditData> {
                                               ["problem"],
                                           "top": dataBreakdown[i]["top"],
                                           "name": widget.name,
+                                          "nik": widget.nik,
                                           "createdAt": dateFix
                                         });
                                       }
@@ -1986,6 +1995,7 @@ class _FormEditDataState extends State<FormEditData> {
                                           "subDt": dataDowntime[i]["subDt"],
                                           "std": dataDowntime[i]["std"],
                                           "name": widget.name,
+                                          "nik": widget.nik,
                                           "actMin": dataDowntime[i]["actMin"],
                                           "actHour": dataDowntime[i]["actHour"],
                                           "createdAt": dateFix
@@ -2014,6 +2024,7 @@ class _FormEditDataState extends State<FormEditData> {
                                           "idleDesc": dataIdle[i]["idleDesc"],
                                           "idleMin": dataIdle[i]["idleMin"],
                                           "name": widget.name,
+                                          "nik": widget.nik,
                                           "idleHour": dataIdle[i]["idleHour"],
                                           "createdAt": dateFix
                                         });
@@ -2045,6 +2056,7 @@ class _FormEditDataState extends State<FormEditData> {
                                             "product": product,
                                             "line": line,
                                             "name": userModel.username,
+                                            "nik": userModel.nik,
                                             "mesin": mesin[i],
                                             "reason": reason[i],
                                             "freq": freq[i].text,
@@ -2094,6 +2106,7 @@ class _FormEditDataState extends State<FormEditData> {
                                             "std": std[i],
                                             "actMin": actMin[i].text,
                                             "name": userModel.username,
+                                            "nik": userModel.nik,
                                             "actHour": actHourList[i],
                                             "week":
                                                 int.parse(weekController.text),
@@ -2129,6 +2142,7 @@ class _FormEditDataState extends State<FormEditData> {
                                             "departement": departement,
                                             "product": product,
                                             "name": userModel.username,
+                                            "nik": userModel.nik,
                                             "line": line,
                                             "idleDesc": idleDesc[i],
                                             "idleMin": idleMin[i].text,
