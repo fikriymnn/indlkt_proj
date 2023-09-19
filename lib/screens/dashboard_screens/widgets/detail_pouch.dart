@@ -23,6 +23,7 @@ class DetailPouch extends StatefulWidget {
 class _DetailPouchState extends State<DetailPouch> {
   @override
   Widget build(BuildContext context) {
+    var Skm = widget.Skm * 100;
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,7 +54,9 @@ class _DetailPouchState extends State<DetailPouch> {
                     width: 7,
                   ),
                   Text(
-                      "${widget.Ratarata.isNaN ? "-" : widget.Ratarata.toStringAsFixed(0)}/1204")
+                      "${widget.Skm.isNaN ? "%" : Skm.toStringAsFixed(3) + "%"}"
+                      // "${widget.Ratarata.isNaN ? "-" : widget.Ratarata.toStringAsFixed(0)}/1204"
+                      )
                 ],
               ),
             ],

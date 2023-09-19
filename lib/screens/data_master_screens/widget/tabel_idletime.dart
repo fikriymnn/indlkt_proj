@@ -96,6 +96,8 @@ class _tabel_idletimeState extends State<tabel_idletime> {
                                 idleMin: objData.idleMin,
                                 line: objData.line,
                                 product: objData.product,
+                                name: objData.name,
+                                nik: objData.nik,
                                 shift: objData.shift,
                               )),
                         ),
@@ -171,7 +173,11 @@ class _tabel_idletimeState extends State<tabel_idletime> {
                 : dataIdle[index]["idleMin"],
             idleHour: dataIdle[index]["idleHour"] == null
                 ? "-"
-                : dataIdle[index]["idleHour"]));
+                : dataIdle[index]["idleHour"],
+            name:
+                dataIdle[index]["name"] == null ? "-" : dataIdle[index]["name"],
+            nik:
+                dataIdle[index]["nik"] == null ? "-" : dataIdle[index]["nik"]));
 
     setState(() {
       searchNameList = names;
@@ -271,6 +277,7 @@ class Name {
   String idleDesc;
   String idleMin;
   String idleHour;
+  dynamic name, nik;
 
   Name({
     required this.date,
@@ -280,6 +287,8 @@ class Name {
     required this.line,
     required this.idleDesc,
     required this.idleMin,
+    required this.nik,
+    required this.name,
     required this.idleHour,
   });
 }

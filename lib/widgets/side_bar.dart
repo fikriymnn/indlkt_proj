@@ -1,12 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:indlkt_proj/methods/auth_methods.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/dashboard_screen.dart';
-import 'package:indlkt_proj/screens/login_screen/login_screen.dart';
+
 import 'package:indlkt_proj/screens/product_acv_screens/product_acv_form.dart';
+import 'package:indlkt_proj/screens/user_screens/user_screen.dart';
+import 'package:indlkt_proj/screens/user_screens/widgets/add_user.dart';
 import 'package:sidebarx/sidebarx.dart';
 import '../constants/style.dart';
+import '../models/user_model.dart';
 import '../screens/data_master_screens/data_master_screen.dart';
+import '../screens/login_screen/login_screen.dart';
 import '../screens/product_acv_screens/product_acv_screen.dart';
 
 class SideBar extends StatefulWidget {
@@ -21,11 +27,39 @@ class _SideBarState extends State<SideBar> {
     DashboardScreen(),
     ProductAcvScreen(),
     DataMasterScreen(),
-    FormInputData()
+    FormInputData(),
+    UserScreen(),
+    AddUser()
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getDataUser();
+    super.initState();
+  }
 
   int selectedIndex = 0;
   int selectedIndexDisplay = 0;
+
+  var role;
+  getDataUser() async {
+    DocumentSnapshot userData = await FirebaseFirestore.instance
+        .collection('akun')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    UserModel userModel = UserModel.fromSnap(userData);
+    role = userModel.role;
+    setState(() {
+      if (role == "user") {
+        selectedIndex = 3;
+        selectedIndexDisplay = 1;
+      } else {
+        selectedIndex = 0;
+        selectedIndexDisplay = 0;
+      }
+    });
+  }
 
   bool auth = true;
   @override
@@ -59,20 +93,20 @@ class _SideBarState extends State<SideBar> {
                       });
                     },
                   ),
-                  FloatingActionButton.small(
-                    backgroundColor: active,
-                    child: ImageIcon(
-                      AssetImage("assets/images/fab_logo2.png"),
-                      color: light,
-                      size: 20,
-                    ),
-                    heroTag: null,
-                    onPressed: () {},
-                  ),
+                  // FloatingActionButton.small(
+                  //   backgroundColor: active,
+                  //   child: ImageIcon(
+                  //     AssetImage("assets/images/fab_logo2.png"),
+                  //     color: light,
+                  //     size: 20,
+                  //   ),
+                  //   heroTag: null,
+                  //   onPressed: () {},
+                  // ),
                 ],
               ),
             )
-          : null,
+          : Container(),
       body: Row(
         children: [
           SidebarX(
@@ -192,42 +226,58 @@ class _SideBarState extends State<SideBar> {
                   )
                 : null,
             items: [
-              SidebarXItem(
-                  iconWidget: ImageIcon(
-                    AssetImage("assets/images/dashboard_logo.png"),
-                    size: 15,
-                  ),
-                  label: 'Dashboard',
-                  onTap: () {
-                    setState(() {
-                      selectedIndex = 0;
-                      selectedIndexDisplay = 0;
-                    });
-                  }),
-              SidebarXItem(
-                  iconWidget: ImageIcon(
-                    AssetImage("assets/images/production_logo.png"),
-                    size: 15,
-                  ),
-                  label: 'Production Acv',
-                  onTap: () {
-                    setState(() {
-                      selectedIndex = 1;
-                      selectedIndexDisplay = 1;
-                    });
-                  }),
-              SidebarXItem(
-                  iconWidget: ImageIcon(
-                    AssetImage("assets/images/master_logo.png"),
-                    size: 15,
-                  ),
-                  label: 'Data Master',
-                  onTap: () {
-                    setState(() {
-                      selectedIndex = 2;
-                      selectedIndexDisplay = 2;
-                    });
-                  }),
+              if (role != "user")
+                SidebarXItem(
+                    iconWidget: ImageIcon(
+                      AssetImage("assets/images/dashboard_logo.png"),
+                      size: 15,
+                    ),
+                    label: 'Dashboard',
+                    onTap: () {
+                      setState(() {
+                        selectedIndex = 0;
+                        selectedIndexDisplay = 0;
+                      });
+                    }),
+              if (role != "user")
+                SidebarXItem(
+                    iconWidget: ImageIcon(
+                      AssetImage("assets/images/production_logo.png"),
+                      size: 15,
+                    ),
+                    label: 'Production Acv',
+                    onTap: () {
+                      setState(() {
+                        selectedIndex = 1;
+                        selectedIndexDisplay = 1;
+                      });
+                    }),
+              if (role != "user")
+                SidebarXItem(
+                    iconWidget: ImageIcon(
+                      AssetImage("assets/images/master_logo.png"),
+                      size: 15,
+                    ),
+                    label: 'Data Master',
+                    onTap: () {
+                      setState(() {
+                        selectedIndex = 2;
+                        selectedIndexDisplay = 2;
+                      });
+                    }),
+              if (role == "super admin")
+                SidebarXItem(
+                    iconWidget: Icon(
+                      Icons.people_alt_outlined,
+                      size: 15,
+                    ),
+                    label: 'Users',
+                    onTap: () {
+                      setState(() {
+                        selectedIndex = 4;
+                        selectedIndexDisplay = 3;
+                      });
+                    }),
             ],
           ),
           Flexible(

@@ -48,7 +48,6 @@ dependencies:
   rive: ^0.11.3
   expandable_datatable: ^0.0.7
   table_plus: ^1.0.8
-  firebase_core: ^2.14.0
   cloud_firestore: ^4.8.1
   firebase_auth: ^4.6.3
   quickalert: ^1.0.1
@@ -66,7 +65,8 @@ dependencies:
   unique_simple_bar_chart: ^0.0.4
   chart_components: ^1.0.1
   cool_alert: ^2.0.1
-
+  firebase_core: ^2.15.1
+  giffy_dialog: ^2.0.0+2
 
 dev_dependencies:
   flutter_test:

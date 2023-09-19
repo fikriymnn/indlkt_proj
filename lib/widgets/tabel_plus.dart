@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:indlkt_proj/screens/product_acv_screens/product_acv_form_edit.dart';
 import 'package:table_plus/table_plus.dart';
 
 import '../constants/style.dart';
@@ -87,69 +88,151 @@ class _tabel_plusState extends State<tabel_plus> {
                 showEditIcon: false,
                 placeholder: false,
               ),
-              DataCell(InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        backgroundColor: Colors.transparent,
-                        elevation: 0,
-                        content: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 85, right: 55, left: 38),
-                          child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height,
-                              child: detail_form(
-                                shift: objData.shift,
-                                departement: objData.departement,
-                                product: objData.product,
-                                line: objData.line,
-                                planingOutput: objData.planingOutput,
-                                actualOutput: objData.actualOutput,
-                                nominalSpeed: objData.nominalSpeed,
-                                totalHour: objData.totalHour,
-                                grossHour: objData.grossHour,
-                                netHour: objData.netHour,
-                                targetHout: objData.targetHour,
-                                le: objData.Le,
-                                lp: objData.Lp,
-                                bd: objData.Bd,
-                                dt: objData.Dt,
-                                date: objData.date,
-                                id: objData.id,
-                              )),
-                        ),
+              DataCell(Row(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            content: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 85, right: 55, left: 38),
+                              child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).size.height,
+                                  child: detail_form(
+                                    shift: objData.shift,
+                                    departement: objData.departement,
+                                    product: objData.product,
+                                    line: objData.line,
+                                    planingOutput: objData.planingOutput,
+                                    actualOutput: objData.actualOutput,
+                                    nominalSpeed: objData.nominalSpeed,
+                                    totalHour: objData.totalHour,
+                                    grossHour: objData.grossHour,
+                                    netHour: objData.netHour,
+                                    targetHout: objData.targetHour,
+                                    le: objData.Le,
+                                    lp: objData.Lp,
+                                    bd: objData.Bd,
+                                    name: objData.name,
+                                    dt: objData.Dt,
+                                    date: objData.date,
+                                    nik: objData.nik,
+                                    id: objData.id,
+                                  )),
+                            ),
+                          );
+                          ;
+                        },
                       );
-                      ;
                     },
-                  );
-                },
-                child: Container(
-                    decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                              blurRadius: 1, offset: Offset(0, 0), color: blue)
-                        ],
-                        border: Border.all(
-                          color: blue,
-                        ),
-                        color: selectedIndex == 4
-                            ? Color.fromARGB(255, 195, 225, 250)
-                            : blue,
-                        borderRadius: BorderRadius.circular(5)),
-                    width: 78,
-                    height: 36,
-                    child: Center(
-                        child: Text(
-                      "Detail",
-                      style: GoogleFonts.montserrat(
-                          textStyle: Theme.of(context).textTheme.displayMedium,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: selectedIndex == 4 ? dark : light),
-                    ))),
+                    child: Container(
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                  blurRadius: 1,
+                                  offset: Offset(0, 0),
+                                  color: blue)
+                            ],
+                            border: Border.all(
+                              color: blue,
+                            ),
+                            color: selectedIndex == 4
+                                ? Color.fromARGB(255, 195, 225, 250)
+                                : blue,
+                            borderRadius: BorderRadius.circular(5)),
+                        width: 78,
+                        height: 36,
+                        child: Center(
+                            child: Text(
+                          "Detail",
+                          style: GoogleFonts.montserrat(
+                              textStyle:
+                                  Theme.of(context).textTheme.displayMedium,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: selectedIndex == 4 ? dark : light),
+                        ))),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            content: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 85, right: 55, left: 38),
+                              child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).size.height,
+                                  child: FormEditData(
+                                      shift: objData.shift,
+                                      departement: objData.departement,
+                                      product: objData.product,
+                                      line: objData.line,
+                                      planingOutput: objData.planingOutput,
+                                      actualOutput: objData.actualOutput,
+                                      nominalSpeed: objData.nominalSpeed,
+                                      totalHour: objData.totalHour,
+                                      grossHour: objData.grossHour,
+                                      netHour: objData.netHour,
+                                      targetHout: objData.targetHour,
+                                      le: objData.Le,
+                                      lp: objData.Lp,
+                                      bd: objData.Bd,
+                                      dt: objData.Dt,
+                                      date: objData.date,
+                                      id: objData.id,
+                                      week: objData.week,
+                                      name: objData.name,
+                                      nik: objData.nik,
+                                      isEdited: objData.isEdited)),
+                            ),
+                          );
+                          ;
+                        },
+                      );
+                    },
+                    child: Container(
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                  blurRadius: 1,
+                                  offset: Offset(0, 0),
+                                  color: edit)
+                            ],
+                            border: Border.all(
+                              color: edit,
+                            ),
+                            color: selectedIndex == 4
+                                ? Color.fromARGB(255, 195, 225, 250)
+                                : edit,
+                            borderRadius: BorderRadius.circular(5)),
+                        width: 78,
+                        height: 36,
+                        child: Center(
+                            child: Text(
+                          "Edit",
+                          style: GoogleFonts.montserrat(
+                              textStyle:
+                                  Theme.of(context).textTheme.displayMedium,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: selectedIndex == 4 ? dark : light),
+                        ))),
+                  ),
+                ],
               ))
             ],
           ),
@@ -223,7 +306,13 @@ class _tabel_plusState extends State<tabel_plus> {
                 : dataProduct[index]["total_hour"],
             id: dataProduct[index]["uid"] == null
                 ? "-"
-                : dataProduct[index]["uid"]));
+                : dataProduct[index]["uid"],
+            week: dataProduct[index]["week"] == null
+                ? "-"
+                : dataProduct[index]["week"].toString(),
+            isEdited: dataProduct[index]["isEdited"] == null ? "-" : dataProduct[index]["isEdited"],
+            name: dataProduct[index]["name"] == null ? "-" : dataProduct[index]["name"],
+            nik: dataProduct[index]["nik"] == null ? "-" : dataProduct[index]["nik"]));
 
     setState(() {
       searchNameList = names;
@@ -302,21 +391,64 @@ class _tabel_plusState extends State<tabel_plus> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: TablePlus(
-          exportFileName: "MyTableFile",
-          tabelHeadingList: tableHeading,
-          isExportCSVEnabled: false,
-          columnSpacing: MediaQuery.of(context).size.width * 0.08,
-          sortColumnIndex: 1,
-          isSearchEnabled: isSearchEnabled,
-          rows: dataRowsValues(),
-          columns: dataColumnValues(),
-          dataValues: names,
-          shareWidget: Container(),
-        ),
+      child: Column(
+        children: [
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap: () {
+                    getData();
+                  },
+                  child: Container(
+                      decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                blurRadius: 1,
+                                offset: Offset(0, 0),
+                                color: blue)
+                          ],
+                          border: Border.all(
+                            color: blue,
+                          ),
+                          color: blue,
+                          borderRadius: BorderRadius.circular(5)),
+                      width: 78,
+                      height: 36,
+                      child: Center(
+                          child: Text(
+                        "Refresh",
+                        style: GoogleFonts.montserrat(
+                            textStyle:
+                                Theme.of(context).textTheme.displayMedium,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: light),
+                      ))),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: TablePlus(
+                exportFileName: "MyTableFile",
+                tabelHeadingList: tableHeading,
+                isExportCSVEnabled: false,
+                columnSpacing: MediaQuery.of(context).size.width * 0.08,
+                sortColumnIndex: 1,
+                isSearchEnabled: isSearchEnabled,
+                rows: dataRowsValues(),
+                columns: dataColumnValues(),
+                dataValues: names,
+                shareWidget: Container(),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -339,7 +471,11 @@ class Name {
       Lp,
       Dt,
       Bd,
+      name,
+      nik,
       id;
+
+  dynamic week, isEdited;
 
   Name(
       {required this.product,
@@ -350,6 +486,7 @@ class Name {
       required this.Bd,
       required this.Dt,
       required this.Le,
+      required this.week,
       required this.Lp,
       required this.actualOutput,
       required this.grossHour,
@@ -358,5 +495,8 @@ class Name {
       required this.planingOutput,
       required this.targetHour,
       required this.totalHour,
+      required this.isEdited,
+      required this.name,
+      required this.nik,
       required this.id});
 }

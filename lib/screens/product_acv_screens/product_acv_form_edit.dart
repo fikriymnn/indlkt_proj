@@ -25,14 +25,58 @@ import '../../widgets/small_custom_dropdown.dart';
 import '../../widgets/small_custom_textfield.dart';
 import 'package:intl/intl.dart';
 
-class FormInputData extends StatefulWidget {
-  const FormInputData({super.key});
+class FormEditData extends StatefulWidget {
+  final dynamic shift,
+      departement,
+      date,
+      id,
+      product,
+      line,
+      planingOutput,
+      actualOutput,
+      nominalSpeed,
+      totalHour,
+      grossHour,
+      netHour,
+      targetHout,
+      le,
+      lp,
+      bd,
+      dt,
+      isEdited,
+      name,
+      nik,
+      week;
+
+  const FormEditData(
+      {super.key,
+      this.shift,
+      this.departement,
+      this.id,
+      this.product,
+      this.line,
+      this.planingOutput,
+      this.actualOutput,
+      this.nominalSpeed,
+      this.totalHour,
+      this.date,
+      this.grossHour,
+      this.netHour,
+      this.targetHout,
+      this.le,
+      this.lp,
+      this.bd,
+      this.isEdited,
+      this.name,
+      this.nik,
+      this.week,
+      this.dt});
 
   @override
-  State<FormInputData> createState() => _FormInputDataState();
+  State<FormEditData> createState() => _FormEditDataState();
 }
 
-class _FormInputDataState extends State<FormInputData> {
+class _FormEditDataState extends State<FormEditData> {
   //Breadkdown dropdown
   List<String>? bdMesinList = [""];
   List<String>? subDTList = [''];
@@ -41,6 +85,9 @@ class _FormInputDataState extends State<FormInputData> {
 
   var selected;
   late List selectedList;
+  List dataBreakdown = [];
+  List dataDowntime = [];
+  List dataIdle = [];
 
   //List data form
   bool _isLoading = false;
@@ -85,9 +132,62 @@ class _FormInputDataState extends State<FormInputData> {
   TextEditingController planningOutput = TextEditingController();
   TextEditingController weekController = TextEditingController();
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    namaLaporan = widget.product;
+    if (namaLaporan == "Process_SKM") {
+      bdMesinList = DataBD().process_SKM_Mesin;
+      lineList = Line().process;
+    } else if (namaLaporan == "Filling_Packing_SKM_Tall_Can") {
+      bdMesinList = DataBD().filling_SKM_Tall_Can;
+      lineList = Line().skm_can;
+    } else if (namaLaporan == "Filling_Packing_SKM_Sachet") {
+      bdMesinList = DataBD().filling_SKM_Sachet;
+      lineList = Line().skm_sachet;
+    } else if (namaLaporan == "Filling_Packing_SKM_Pouch") {
+      bdMesinList = DataBD().filling_SKM_Pouch;
+      lineList = Line().skm_pouch;
+    }
+
+    product = namaLaporan;
+    product = widget.product;
+    line = widget.line;
+    shift = widget.shift;
+    departement = widget.departement;
+    planningOutput = TextEditingController(text: widget.planingOutput);
+    actualOutput = TextEditingController(text: widget.actualOutput);
+    nominalSpeed = TextEditingController(text: widget.nominalSpeed);
+    totalHour = TextEditingController(text: widget.totalHour);
+    weekController = TextEditingController(text: widget.week);
+
+    getDataBreakdown();
+    getDataDowntime();
+    getDataIdle();
+
+    var gress = num.parse(totalHour.text) - num.parse(idleHourTotal!);
+
+    var net = gress - num.parse(actHourTotal!);
+    var target = num.parse(actualOutput.text) / num.parse(nominalSpeed.text);
+
+    grossHour = gress.toStringAsFixed(2);
+    netHour = net.toStringAsFixed(2);
+
+    targetHour = target.toStringAsFixed(2);
+    var leV = num.parse(targetHour) / num.parse(netHour);
+    var lpV = num.parse(targetHour) / num.parse(grossHour);
+    var dtV = num.parse(actHourTotal!) / num.parse(grossHour);
+    var bdV = num.parse(bdHourTotal!) / num.parse(netHour);
+    bd = bdV.toStringAsFixed(2);
+    dt = dtV.toStringAsFixed(2);
+    le = leV.toStringAsFixed(2);
+    lp = lpV.toStringAsFixed(2);
+
+    super.initState();
+  }
+
   //Breakdown
   int bLength = 0;
-
   String? mesins;
   String? reasons;
   var reasonLists = [""];
@@ -98,6 +198,51 @@ class _FormInputDataState extends State<FormInputData> {
   List<TextEditingController> freq = [];
   List<TextEditingController> dbMin = [];
   List<TextEditingController> problem = [];
+  getDataBreakdown() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("breakdown")
+        .where("product_id", isEqualTo: widget.id)
+        .get();
+    setState(() {
+      if (querySnapshot.docs.isNotEmpty) {
+        dataBreakdown = querySnapshot.docs.map((doc) => doc.data()).toList();
+        bLength = dataBreakdown.length;
+        print("break" + bLength.toString());
+        print("data" + dataBreakdown.length.toString());
+        for (var i = 0; i < dataBreakdown.length; i++) {
+          mesin.add(dataBreakdown[i]["mesin"]);
+
+          reason.add(dataBreakdown[i]["reason"]);
+          freq.add(TextEditingController(text: dataBreakdown[i]["freq"]));
+          dbMin.add(TextEditingController(text: dataBreakdown[i]["bdMin"]));
+          problem.add(TextEditingController(text: dataBreakdown[i]["problem"]));
+
+          var numberBd = num.parse(dbMin[i].text);
+          var aaBd = numberBd / 60;
+
+          bdHourList.add(aaBd.toStringAsFixed(2));
+          var integerBd = bdHourList.fold(
+              0.00,
+              (a, b) =>
+                  double.parse(a.toString()) + double.parse(b.toString()));
+
+          bdHourTotal = integerBd.toStringAsFixed(2);
+          var target =
+              num.parse(actualOutput.text) / num.parse(nominalSpeed.text);
+
+          targetHour = target.toStringAsFixed(2);
+          var leV = num.parse(targetHour) / num.parse(netHour);
+          var lpV = num.parse(targetHour) / num.parse(grossHour);
+          var dtV = num.parse(actHourTotal!) / num.parse(grossHour);
+          var bdV = num.parse(bdHourTotal!) / num.parse(netHour);
+          bd = bdV.toStringAsFixed(2);
+          dt = dtV.toStringAsFixed(2);
+          le = leV.toStringAsFixed(2);
+          lp = lpV.toStringAsFixed(2);
+        }
+      }
+    });
+  }
 
   //DownTime
   int dLength = 0;
@@ -111,6 +256,50 @@ class _FormInputDataState extends State<FormInputData> {
   List<String?> std = [];
   List<TextEditingController> actMin = [];
 
+  getDataDowntime() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("downtime")
+        .where("product_id", isEqualTo: widget.id)
+        .get();
+    setState(() {
+      if (querySnapshot.docs.isNotEmpty) {
+        dataDowntime = querySnapshot.docs.map((doc) => doc.data()).toList();
+        dLength = dataDowntime.length;
+        for (var i = 0; i < dataDowntime.length; i++) {
+          downtime.add(dataDowntime[i]["dt"]);
+
+          subDT.add(dataDowntime[i]["subDt"]);
+          std.add(dataDowntime[i]["std"]);
+          actMin.add(TextEditingController(text: dataDowntime[i]["actMin"]));
+
+          var numberDt = num.parse(actMin[i].text);
+
+          var aaDt = numberDt / 60;
+          actHourList.add(aaDt.toStringAsFixed(2));
+
+          var integerDt = actHourList.fold(
+              0.00,
+              (a, b) =>
+                  double.parse(a.toString()) + double.parse(b.toString()));
+          actHourTotal = integerDt.toStringAsFixed(2);
+
+          var target =
+              num.parse(actualOutput.text) / num.parse(nominalSpeed.text);
+
+          targetHour = target.toStringAsFixed(2);
+          var leV = num.parse(targetHour) / num.parse(netHour);
+          var lpV = num.parse(targetHour) / num.parse(grossHour);
+          var dtV = num.parse(actHourTotal!) / num.parse(grossHour);
+          var bdV = num.parse(bdHourTotal!) / num.parse(netHour);
+          bd = bdV.toStringAsFixed(2);
+          dt = dtV.toStringAsFixed(2);
+          le = leV.toStringAsFixed(2);
+          lp = lpV.toStringAsFixed(2);
+        }
+      }
+    });
+  }
+
   //IdleTime
   int iLength = 0;
 
@@ -118,6 +307,51 @@ class _FormInputDataState extends State<FormInputData> {
 
   List<String?> idleDesc = [];
   List<TextEditingController> idleMin = [];
+
+  getDataIdle() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("idle_time")
+        .where("product_id", isEqualTo: widget.id)
+        .get();
+    setState(() {
+      if (querySnapshot.docs.isNotEmpty) {
+        dataIdle = querySnapshot.docs.map((doc) => doc.data()).toList();
+        iLength = dataIdle.length;
+
+        for (var i = 0; i < dataIdle.length; i++) {
+          idleDesc.add(dataIdle[i]["idleDesc"]);
+
+          idleMin.add(TextEditingController(text: dataIdle[i]["idleMin"]));
+
+          var numberId = num.parse(idleMin[i].text);
+
+          var aaId = numberId / 60;
+          idleHourList.add(aaId.toStringAsFixed(2));
+
+          var integerId = idleHourList.fold(
+              0.00,
+              (a, b) =>
+                  double.parse(a.toString()) + double.parse(b.toString()));
+
+          idleHourTotal = integerId.toStringAsFixed(2);
+          var gros = num.parse(totalHour.text) - num.parse(idleHourTotal!);
+          var net = gros - num.parse(actHourTotal!);
+          netHour = net.toStringAsFixed(2);
+
+          grossHour = gros.toStringAsFixed(2);
+
+          var leV = num.parse(targetHour) / num.parse(netHour);
+          var lpV = num.parse(targetHour) / num.parse(grossHour);
+          var dtV = num.parse(actHourTotal!) / num.parse(grossHour);
+          var bdV = num.parse(bdHourTotal!) / num.parse(netHour);
+          bd = bdV.toStringAsFixed(2);
+          dt = dtV.toStringAsFixed(2);
+          le = leV.toStringAsFixed(2);
+          lp = lpV.toStringAsFixed(2);
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +382,7 @@ class _FormInputDataState extends State<FormInputData> {
     for (int i = 0; i < iLength; i++) idleHourList.add(idleHourChild);
 
     return Scaffold(
-      appBar: CustomAppBar(title: "Input Data", viewTime: true),
+      appBar: CustomAppBar(title: "Edit Data", viewTime: false),
       body: SingleChildScrollView(
         child: Stack(
           children: [
@@ -174,7 +408,7 @@ class _FormInputDataState extends State<FormInputData> {
                             color: Colors.grey,
                             fontSize: 15,
                             fontWeight: FontWeight.bold)),
-                    Text('Tambah Data Baru',
+                    Text('Edit Data',
                         style: TextStyle(
                             color: blue,
                             fontSize: 15,
@@ -226,7 +460,6 @@ class _FormInputDataState extends State<FormInputData> {
                                         onChanged: (e) {
                                           setState(() {
                                             namaLaporan = e!;
-                                            line = null;
                                             if (namaLaporan == "Process_SKM") {
                                               bdMesinList =
                                                   DataBD().process_SKM_Mesin;
@@ -344,8 +577,9 @@ class _FormInputDataState extends State<FormInputData> {
                                             controller: actualOutput,
                                             onChange: (value) {
                                               setState(() {
+                                                var nom = nominalSpeed.text;
                                                 var target = num.parse(value) /
-                                                    num.parse(nominalSpeeds);
+                                                    num.parse(nom);
 
                                                 targetHour =
                                                     target.toStringAsFixed(2);
@@ -456,9 +690,9 @@ class _FormInputDataState extends State<FormInputData> {
                                           controller: nominalSpeed,
                                           onChange: (value) {
                                             setState(() {
-                                              var target =
-                                                  num.parse(actualOutputs) /
-                                                      num.parse(value);
+                                              var act = actualOutput.text;
+                                              var target = num.parse(act) /
+                                                  num.parse(value);
                                               var speed = num.parse(value);
                                               nominalSpeeds = speed.toString();
                                               targetHour =
@@ -769,32 +1003,6 @@ class _FormInputDataState extends State<FormInputData> {
                                 ],
                               ),
                               SizedBox(height: 20),
-                              Row(children: [
-                                Flexible(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 30),
-                                        child: Text("Week *",
-                                            style: TextStyle(
-                                                color: dark.withOpacity(0.8),
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.bold)),
-                                      ),
-                                      CustomTextField(
-                                        hint: "Masukan week...",
-                                        controller: weekController,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Flexible(child: Container()),
-                                Flexible(child: Container()),
-                              ])
                             ],
                           ),
                           Padding(
@@ -900,7 +1108,6 @@ class _FormInputDataState extends State<FormInputData> {
                                                       onChangeMesin: (a) {
                                                         setState(() {
                                                           mesin[index] = a;
-
                                                           if (mesin[index] ==
                                                               "Dumper") {
                                                             reasonList[index] =
@@ -1119,17 +1326,17 @@ class _FormInputDataState extends State<FormInputData> {
                                                                     grossHour) -
                                                                 num.parse(
                                                                     actHourTotal!);
-                                                            var groos = num.parse(
-                                                                    totalHours) -
-                                                                num.parse(
-                                                                    idleHourTotal!);
+                                                            // var groos = num.parse(
+                                                            //         totalHours) -
+                                                            //     num.parse(
+                                                            //         idleHourTotal!);
 
                                                             netHour = net
                                                                 .toStringAsFixed(
                                                                     2);
 
-                                                            grossHour = groos
-                                                                .toString();
+                                                            // grossHour = groos
+                                                            //     .toString();
 
                                                             var leV = num.parse(
                                                                     targetHour) /
@@ -1365,7 +1572,8 @@ class _FormInputDataState extends State<FormInputData> {
                                                                     "-");
                                                           }
                                                         },
-                                                        valueSubDT: std[index],
+                                                        valueSubDT:
+                                                            subDT[index],
                                                         valueSTD: std[index]);
                                                   }),
                                               InkWell(
@@ -1443,16 +1651,20 @@ class _FormInputDataState extends State<FormInputData> {
                                                                     2);
 
                                                             var gros = num.parse(
-                                                                    totalHours) -
+                                                                    totalHour
+                                                                        .text) -
                                                                 num.parse(
                                                                     idleHourTotal!);
                                                             var net = gros -
                                                                 num.parse(
                                                                     actHourTotal!);
-                                                            netHour =
-                                                                net.toString();
-                                                            grossHour =
-                                                                gros.toString();
+                                                            netHour = net
+                                                                .toStringAsFixed(
+                                                                    2);
+
+                                                            grossHour = gros
+                                                                .toStringAsFixed(
+                                                                    2);
 
                                                             var leV = num.parse(
                                                                     targetHour) /
@@ -1515,11 +1727,12 @@ class _FormInputDataState extends State<FormInputData> {
                           Center(
                             child: InkWell(
                               onTap: () async {
+                                User? user = FirebaseAuth.instance.currentUser;
+
                                 DocumentSnapshot userData =
                                     await FirebaseFirestore.instance
                                         .collection('akun')
-                                        .doc(FirebaseAuth
-                                            .instance.currentUser!.uid)
+                                        .doc(user!.uid)
                                         .get();
                                 UserModel userModel =
                                     UserModel.fromSnap(userData);
@@ -1574,8 +1787,7 @@ class _FormInputDataState extends State<FormInputData> {
                                     planningOutput.text == "" ||
                                     actualOutput.text == "" ||
                                     nominalSpeed.text == "" ||
-                                    totalHour.text == "" ||
-                                    weekController.text == "") {
+                                    totalHour.text == "") {
                                   CoolAlert.show(
                                     width: 500,
                                     context: context,
@@ -1589,9 +1801,8 @@ class _FormInputDataState extends State<FormInputData> {
                                     });
                                     await FirebaseFirestore.instance
                                         .collection("product")
-                                        .doc(id)
-                                        .set({
-                                      "uid": id,
+                                        .doc(widget.id)
+                                        .update({
                                       "laporan": namaLaporan,
                                       "shift": shift,
                                       "departement": departement,
@@ -1603,10 +1814,11 @@ class _FormInputDataState extends State<FormInputData> {
                                       "total_hour": totalHour.text,
                                       "gross_hour": grossHour,
                                       "net_hour": netHour,
-                                      "type": type,
-                                      "target_hour": targetHour,
                                       "name": userModel.username,
                                       "nik": userModel.nik,
+                                      "type": type,
+                                      "isEdited": true,
+                                      "target_hour": targetHour,
                                       "le": (double.parse(le) * 100)
                                           .toStringAsFixed(3),
                                       "lp": (double.parse(lp) * 100)
@@ -1615,19 +1827,11 @@ class _FormInputDataState extends State<FormInputData> {
                                           .toStringAsFixed(3),
                                       "bd": (double.parse(bd) * 100)
                                           .toStringAsFixed(3),
-                                      "week": int.parse(weekController.text),
-                                      "bulan": DateFormat.MMMM().format(now),
-                                      "tahun":
-                                          int.parse(DateFormat.y().format(now)),
-                                      "date":
-                                          DateFormat('dd/MM/yy').format(now),
-                                      "createdAt": dateFix,
-                                      "isEdited": false
                                     });
 
-                                    for (int i = 0; i < bLength; i++) {
-                                      var uuid = Uuid();
-                                      var idB = uuid.v4();
+                                    for (int i = 0;
+                                        i < dataBreakdown.length;
+                                        i++) {
                                       if (mesin[i] != null ||
                                           reason[i] != null ||
                                           problem[i].text != "" ||
@@ -1635,39 +1839,30 @@ class _FormInputDataState extends State<FormInputData> {
                                           dbMin[i].text != "0") {
                                         FirebaseFirestore.instance
                                             .collection("breakdown")
-                                            .doc(idB)
-                                            .set({
-                                          "uid": idB,
-                                          "product_id": id,
-                                          "date": DateFormat('dd/MM/yy')
-                                              .format(now),
+                                            .doc(dataBreakdown[i]["uid"])
+                                            .update({
                                           "shift": shift,
                                           "departement": departement,
                                           "product": product,
                                           "line": line,
                                           "mesin": mesin[i],
                                           "reason": reason[i],
+                                          "name": userModel.username,
+                                          "nik": userModel.nik,
                                           "freq": freq[i].text,
                                           "bdMin": dbMin[i].text,
                                           "bdHour": bdHourList[i],
                                           "problem": problem[i].text,
-                                          "name": userModel.username,
-                                          "nik": userModel.nik,
-                                          "week":
-                                              int.parse(weekController.text),
                                           "top": "${mesin[i]}" + "${reason[i]}",
-                                          "bulan":
-                                              DateFormat.MMMM().format(now),
-                                          "tahun": int.parse(
-                                              DateFormat.y().format(now)),
-                                          "createdAt": dateFix
                                         });
                                       } else {
                                         print("no data");
                                       }
                                     }
 
-                                    for (int i = 0; i < dLength; i++) {
+                                    for (int i = 0;
+                                        i < dataDowntime.length;
+                                        i++) {
                                       var uuid = Uuid();
                                       var idd = uuid.v4();
                                       if (downtime[i] != null ||
@@ -1676,123 +1871,295 @@ class _FormInputDataState extends State<FormInputData> {
                                           actMin[i].text != "0") {
                                         FirebaseFirestore.instance
                                             .collection("downtime")
-                                            .doc(idd)
-                                            .set({
-                                          "uid": idd,
-                                          "product_id": id,
-                                          "date": DateFormat('dd/MM/yy')
-                                              .format(now),
+                                            .doc(dataDowntime[i]["uid"])
+                                            .update({
                                           "shift": shift,
                                           "departement": departement,
                                           "product": product,
                                           "line": line,
                                           "dt": downtime[i],
                                           "subDt": subDT[i],
+                                          "name": userModel.username,
+                                          "nik": userModel.nik,
                                           "std": std[i],
                                           "actMin": actMin[i].text,
                                           "actHour": actHourList[i],
-                                          "name": userModel.username,
-                                          "nik": userModel.nik,
-                                          "week":
-                                              int.parse(weekController.text),
-                                          "bulan":
-                                              DateFormat.MMMM().format(now),
-                                          "tahun": int.parse(
-                                              DateFormat.y().format(now)),
-                                          "createdAt": dateFix
                                         });
                                       } else {
                                         print("no data");
                                       }
                                     }
-                                    for (int i = 0; i < iLength; i++) {
+                                    for (int i = 0; i < dataIdle.length; i++) {
                                       var uuid = Uuid();
                                       var idi = uuid.v4();
                                       if (idleDesc[i] != null ||
                                           idleMin[i].text != "0") {
                                         FirebaseFirestore.instance
                                             .collection("idle_time")
-                                            .doc(idi)
-                                            .set({
-                                          "uid": idi,
-                                          "product_id": id,
-                                          "date": DateFormat('dd/MM/yy')
-                                              .format(now),
+                                            .doc(dataIdle[i]["uid"])
+                                            .update({
                                           "shift": shift,
                                           "departement": departement,
                                           "product": product,
+                                          "name": userModel.username,
+                                          "nik": userModel.nik,
                                           "line": line,
                                           "idleDesc": idleDesc[i],
                                           "idleMin": idleMin[i].text,
                                           "idleHour": idleHourList[i],
-                                          "name": userModel.username,
-                                          "nik": userModel.nik,
-                                          "week":
-                                              int.parse(weekController.text),
-                                          "bulan":
-                                              DateFormat.MMMM().format(now),
-                                          "tahun": int.parse(
-                                              DateFormat.y().format(now)),
-                                          "createdAt": dateFix
                                         });
                                       } else {
                                         print("no data");
                                       }
                                     }
 
-                                    setState(() {
-                                      namaLaporan = null;
-                                      shift = null;
-                                      departement = null;
-                                      product = null;
-                                      line = null;
-                                      planningOutput.clear();
-                                      actualOutput.clear();
-                                      nominalSpeed.clear();
-                                      totalHour.clear();
-                                      weekController.clear();
-                                      grossHour = "0";
-                                      netHour = "0";
-                                      targetHour = "0";
-                                      le = "0";
-                                      lp = "0";
-                                      dt = "0";
-                                      bd = "0";
+                                    if (widget.isEdited == false) {
+                                      FirebaseFirestore.instance
+                                          .collection("archive")
+                                          .doc(widget.id)
+                                          .set({
+                                        "uid": widget.id,
+                                        "laporan": widget.product,
+                                        "shift": widget.shift,
+                                        "departement": widget.departement,
+                                        "product": widget.product,
+                                        "line": widget.line,
+                                        "planing_output": widget.planingOutput,
+                                        "actual_output": widget.actualOutput,
+                                        "nominal_speed": widget.nominalSpeed,
+                                        "total_hour": widget.totalHour,
+                                        "name": widget.name,
+                                        "nik": widget.nik,
+                                        "gross_hour": widget.grossHour,
+                                        "net_hour": widget.netHour,
+                                        "target_hour": widget.targetHout,
+                                        "le": widget.le,
+                                        "lp": widget.lp,
+                                        "dt": widget.dt,
+                                        "bd": widget.bd,
+                                        "date":
+                                            DateFormat('dd/MM/yy').format(now),
+                                        "createdAt": dateFix
+                                      });
 
-                                      mesin.clear();
-                                      reason.clear();
-                                      problem.clear();
-                                      freq.clear();
-                                      downtime.clear();
-                                      subDT.clear();
-                                      std.clear();
-                                      idleDesc.clear();
-
-                                      for (var i = 0; i < bLength; i++) {
-                                        dbMin[i].text = "0";
-                                        bdHourList[i] = "0";
-                                        bdHourChild = "0";
-                                        bdHourTotal = "0";
+                                      for (int i = 0;
+                                          i < dataBreakdown.length;
+                                          i++) {
+                                        FirebaseFirestore.instance
+                                            .collection("archive")
+                                            .doc(widget.id)
+                                            .collection("breakdown")
+                                            .doc()
+                                            .set({
+                                          "product_id": widget.id,
+                                          "date": DateFormat('dd/MM/yy')
+                                              .format(now),
+                                          "shift": dataBreakdown[i]["shift"],
+                                          "departement": dataBreakdown[i]
+                                              ["departement"],
+                                          "product": dataBreakdown[i]
+                                              ["product"],
+                                          "line": dataBreakdown[i]["line"],
+                                          "mesin": dataBreakdown[i]["mesin"],
+                                          "reason": dataBreakdown[i]["reason"],
+                                          "freq": dataBreakdown[i]["freq"],
+                                          "bdMin": dataBreakdown[i]["bdMin"],
+                                          "bdHour": dataBreakdown[i]["bdHour"],
+                                          "problem": dataBreakdown[i]
+                                              ["problem"],
+                                          "top": dataBreakdown[i]["top"],
+                                          "name": widget.name,
+                                          "nik": widget.nik,
+                                          "createdAt": dateFix
+                                        });
                                       }
 
-                                      for (var i = 0; i < dLength; i++) {
-                                        actMin[i].text = "0";
-                                        actHourList[i] = "0";
-                                        actHourChild = "0";
-                                        actHourTotal = "0";
+                                      for (int i = 0;
+                                          i < dataDowntime.length;
+                                          i++) {
+                                        FirebaseFirestore.instance
+                                            .collection("archive")
+                                            .doc(widget.id)
+                                            .collection("downtime")
+                                            .doc()
+                                            .set({
+                                          "product_id": widget.id,
+                                          "date": DateFormat('dd/MM/yy')
+                                              .format(now),
+                                          "shift": dataDowntime[i]["shift"],
+                                          "departement": dataDowntime[i]
+                                              ["departement"],
+                                          "product": dataDowntime[i]["product"],
+                                          "line": dataDowntime[i]["line"],
+                                          "dt": dataDowntime[i]["dt"],
+                                          "subDt": dataDowntime[i]["subDt"],
+                                          "std": dataDowntime[i]["std"],
+                                          "name": widget.name,
+                                          "nik": widget.nik,
+                                          "actMin": dataDowntime[i]["actMin"],
+                                          "actHour": dataDowntime[i]["actHour"],
+                                          "createdAt": dateFix
+                                        });
                                       }
+                                      for (int i = 0;
+                                          i < dataIdle.length;
+                                          i++) {
+                                        var uuid = Uuid();
+                                        var idi = uuid.v4();
 
-                                      for (var i = 0; i < iLength; i++) {
-                                        idleMin[i].text = "0";
-                                        idleHourList[i] = "0";
-                                        idleHourChild = "0";
-                                        idleHourTotal = "0";
+                                        FirebaseFirestore.instance
+                                            .collection("archive")
+                                            .doc(widget.id)
+                                            .collection("idle_time")
+                                            .doc()
+                                            .set({
+                                          "product_id": widget.id,
+                                          "date": DateFormat('dd/MM/yy')
+                                              .format(now),
+                                          "shift": dataIdle[i]["shift"],
+                                          "departement": dataIdle[i]
+                                              ["departement"],
+                                          "product": dataIdle[i]["product"],
+                                          "line": dataIdle[i]["line"],
+                                          "idleDesc": dataIdle[i]["idleDesc"],
+                                          "idleMin": dataIdle[i]["idleMin"],
+                                          "name": widget.name,
+                                          "nik": widget.nik,
+                                          "idleHour": dataIdle[i]["idleHour"],
+                                          "createdAt": dateFix
+                                        });
                                       }
-                                      bLength = 0;
-                                      dLength = 0;
-                                      iLength = 0;
-                                    });
+                                    }
 
+                                    if (bLength > dataBreakdown.length) {
+                                      for (int i = dataBreakdown.length;
+                                          i < bLength;
+                                          i++) {
+                                        var uuid = Uuid();
+                                        var idB = uuid.v4();
+
+                                        if (mesin[i] != null ||
+                                            reason[i] != null ||
+                                            problem[i].text != "" ||
+                                            freq[i].text != "" ||
+                                            dbMin[i].text != "0") {
+                                          FirebaseFirestore.instance
+                                              .collection("breakdown")
+                                              .doc(idB)
+                                              .set({
+                                            "uid": idB,
+                                            "product_id": widget.id,
+                                            "date": DateFormat('dd/MM/yy')
+                                                .format(now),
+                                            "shift": shift,
+                                            "departement": departement,
+                                            "product": product,
+                                            "line": line,
+                                            "name": userModel.username,
+                                            "nik": userModel.nik,
+                                            "mesin": mesin[i],
+                                            "reason": reason[i],
+                                            "freq": freq[i].text,
+                                            "bdMin": dbMin[i].text,
+                                            "bdHour": bdHourList[i],
+                                            "problem": problem[i].text,
+                                            "week":
+                                                int.parse(weekController.text),
+                                            "top":
+                                                "${mesin[i]}" + "${reason[i]}",
+                                            "bulan":
+                                                DateFormat.MMMM().format(now),
+                                            "tahun": int.parse(
+                                                DateFormat.y().format(now)),
+                                            "createdAt": dateFix
+                                          });
+                                        } else {
+                                          print("no data");
+                                        }
+                                      }
+                                    }
+
+                                    if (dLength > dataDowntime.length) {
+                                      for (int i = dataDowntime.length;
+                                          i < dLength;
+                                          i++) {
+                                        var uuid = Uuid();
+                                        var idd = uuid.v4();
+                                        if (downtime[i] != null ||
+                                            subDT[i] != null ||
+                                            std[i] != "" ||
+                                            actMin[i].text != "0") {
+                                          FirebaseFirestore.instance
+                                              .collection("downtime")
+                                              .doc(idd)
+                                              .set({
+                                            "uid": idd,
+                                            "product_id": widget.id,
+                                            "date": DateFormat('dd/MM/yy')
+                                                .format(now),
+                                            "shift": shift,
+                                            "departement": departement,
+                                            "product": product,
+                                            "line": line,
+                                            "dt": downtime[i],
+                                            "subDt": subDT[i],
+                                            "std": std[i],
+                                            "actMin": actMin[i].text,
+                                            "name": userModel.username,
+                                            "nik": userModel.nik,
+                                            "actHour": actHourList[i],
+                                            "week":
+                                                int.parse(weekController.text),
+                                            "bulan":
+                                                DateFormat.MMMM().format(now),
+                                            "tahun": int.parse(
+                                                DateFormat.y().format(now)),
+                                            "createdAt": dateFix
+                                          });
+                                        } else {
+                                          print("no data");
+                                        }
+                                      }
+                                    }
+
+                                    if (iLength > dataIdle.length) {
+                                      for (int i = dataIdle.length;
+                                          i < iLength;
+                                          i++) {
+                                        var uuid = Uuid();
+                                        var idi = uuid.v4();
+                                        if (idleDesc[i] != null ||
+                                            idleMin[i].text != "0") {
+                                          FirebaseFirestore.instance
+                                              .collection("idle_time")
+                                              .doc(idi)
+                                              .set({
+                                            "uid": idi,
+                                            "product_id": widget.id,
+                                            "date": DateFormat('dd/MM/yy')
+                                                .format(now),
+                                            "shift": shift,
+                                            "departement": departement,
+                                            "product": product,
+                                            "name": userModel.username,
+                                            "nik": userModel.nik,
+                                            "line": line,
+                                            "idleDesc": idleDesc[i],
+                                            "idleMin": idleMin[i].text,
+                                            "idleHour": idleHourList[i],
+                                            "week":
+                                                int.parse(weekController.text),
+                                            "bulan":
+                                                DateFormat.MMMM().format(now),
+                                            "tahun": int.parse(
+                                                DateFormat.y().format(now)),
+                                            "createdAt": dateFix
+                                          });
+                                        } else {
+                                          print("no data");
+                                        }
+                                      }
+                                    }
                                     setState(() {
                                       _isLoading = false;
                                     });
@@ -1800,7 +2167,7 @@ class _FormInputDataState extends State<FormInputData> {
                                       width: 500,
                                       context: context,
                                       type: CoolAlertType.success,
-                                      text: "Data Berhasil di Upload",
+                                      text: "Data Berhasil di Edit",
                                     );
                                   } on FirebaseException catch (e) {
                                     CoolAlert.show(
@@ -1846,20 +2213,6 @@ class _FormInputDataState extends State<FormInputData> {
         ),
       ),
     );
-  }
-
-  uploadBreakdown(idB, id, now, mesin, reason, freq, bdMin, bdHour, problem) {
-    FirebaseFirestore.instance.collection("breakdown").doc(idB).set({
-      "uid": idB,
-      "product_id": id,
-      "date": DateFormat('dd/MM/yy').format(now),
-      "mesin": mesin,
-      "reason": reason,
-      "freq": freq,
-      "bdMin": bdMin,
-      "bdHour": bdHour,
-      "problem": problem
-    });
   }
 }
 

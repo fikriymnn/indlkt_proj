@@ -14,3 +14,4 @@ Color greenLP = Color(0xff6CDDBC);
 Color redDT = Color(0xffE23C5A);
 Color orangeBD = Color(0xffEF8D60);
 Color redSKM = Color(0xffE32727);
+Color edit = Color.fromARGB(255, 30, 156, 68);

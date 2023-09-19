@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/flutter_rounded_progress_bar.dart';
 import 'package:flutter_rounded_progress_bar/rounded_progress_bar_style.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:indlkt_proj/constants/style.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/detail_pouch.dart';
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/detail_proses.dart';
@@ -20,6 +21,8 @@ import 'package:indlkt_proj/screens/dashboard_screens/widgets/detail_sachet.dart
 import 'package:indlkt_proj/screens/dashboard_screens/widgets/detail_tall_can.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+
+import '../../widgets/custom_dropdown.dart';
 
 class DashboardOverview extends StatefulWidget {
   const DashboardOverview({super.key});
@@ -42,6 +45,23 @@ class _DashboardOverviewState extends State<DashboardOverview> {
   int? FromFix;
   int? ToFix;
 
+  List dataFilterSkm = [];
+  dynamic RatarataSkm = [];
+  dynamic RatarataSkmProses = [];
+  dynamic RatarataSkmFillpack = [];
+  List dataSkm = [];
+  double ProdActSkm = 0;
+  double LeSkm = 0;
+  double LpSkm = 0;
+  double BdSkm = 0;
+  double DtSkm = 0;
+
+  //breakdown
+  List dataFilterBreakdownProses = [];
+  List dataFilterBreakdownPouch = [];
+  List dataFilterBreakdownTallCan = [];
+  List dataFilterBreakdownSacet = [];
+
 //data Chart
   List dataFilterProses = [];
   List dataFilterPouch = [];
@@ -58,6 +78,11 @@ class _DashboardOverviewState extends State<DashboardOverview> {
   dynamic SkmFixPouch = 0;
   dynamic SkmFixSacet = 0;
   dynamic SkmFixTallCan = 0;
+
+  dynamic SkmFixProsesDetail = 0;
+  dynamic SkmFixPouchDetail = 0;
+  dynamic SkmFixSacetDetail = 0;
+  dynamic SkmFixTallCanDetail = 0;
 
   dynamic LeFixProses = 0;
   dynamic LeFixPouch = 0;
@@ -79,7 +104,6 @@ class _DashboardOverviewState extends State<DashboardOverview> {
   dynamic BdFixSacet = 0;
   dynamic BdFixTallCan = 0;
 
-  List<String> output2 = ["1", "2", "3", "4", "5"];
   Function? onClik;
 
   String selectedDateText(select) {
@@ -90,34 +114,196 @@ class _DashboardOverviewState extends State<DashboardOverview> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    topBreakdown();
+    topBreakdownProses();
+    topBreakdownPouch();
+    topBreakdownTallCan();
+    topBreakdownSacet();
+    DataSkm();
     DataProduct();
   }
 
-  List dataBreakdown = [];
-  final map2 = <String, int>{};
+  List dataBreakdownProses = [];
+  final mapProses = <String, int>{};
+  List<String> outputProses = [];
+  List dataBreakdownPouch = [];
+  final mapPouch = <String, int>{};
+  List<String> outputPouch = [];
+  List dataBreakdownTallCan = [];
+  final mapTallCan = <String, int>{};
+  List<String> outputTallCan = [];
+  List dataBreakdownSacet = [];
+  final mapSacet = <String, int>{};
+  List<String> outputSacet = [];
 
-  void topBreakdown() async {
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection("breakdown").get();
-    setState(() {
-      if (querySnapshot.docs.isNotEmpty) {
-        dataBreakdown = querySnapshot.docs.map((doc) => doc.data()).toList();
+  void topBreakdownProses() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("breakdown")
+        .where("createdAt", isGreaterThanOrEqualTo: FromFix)
+        .where("createdAt", isLessThanOrEqualTo: ToFix)
+        .get();
 
-        var myList2 = List.generate(
-            dataBreakdown.length, (index) => dataBreakdown[index]["top"]);
+    if (querySnapshot.docs.isNotEmpty) {
+      dataBreakdownProses =
+          querySnapshot.docs.map((doc) => doc.data()).toList();
 
-        for (final m in myList2) {
-          final letter = m;
-          map2[letter] = map2.containsKey(letter) ? map2[letter]! + 1 : 1;
+      var data = [];
+      for (var i = 0; i < dataBreakdownProses.length; i++) {
+        if (dataBreakdownProses[i]["product"] == "Process_SKM") {
+          data.add(dataBreakdownProses[i]);
         }
-
-        output2 = map2.keys.toList(growable: false);
-        output2.sort((k1, k2) => map2[k2]!.compareTo(map2[k1] as num));
-      } else {
-        output2 = [];
       }
-    });
+      setState(() {
+        dataFilterBreakdownProses = data;
+      });
+
+      var myList2 = List.generate(dataFilterBreakdownProses.length,
+          (index) => dataFilterBreakdownProses[index]["top"]);
+      mapProses.clear();
+
+      for (final m in myList2) {
+        final letter = m;
+        mapProses[letter] =
+            mapProses.containsKey(letter) ? mapProses[letter]! + 1 : 1;
+      }
+
+      setState(() {
+        outputProses = mapProses.keys.toList(growable: false);
+        outputProses
+            .sort((k1, k2) => mapProses[k2]!.compareTo(mapProses[k1] as num));
+      });
+    } else {
+      setState(() {
+        outputProses = [];
+      });
+    }
+  }
+
+  void topBreakdownPouch() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("breakdown")
+        .where("createdAt", isGreaterThanOrEqualTo: FromFix)
+        .where("createdAt", isLessThanOrEqualTo: ToFix)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      dataBreakdownPouch = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+      var data = [];
+      for (var i = 0; i < dataBreakdownPouch.length; i++) {
+        if (dataBreakdownPouch[i]["product"] == "Filling_Packing_SKM_Pouch") {
+          data.add(dataBreakdownPouch[i]);
+        }
+      }
+      setState(() {
+        dataFilterBreakdownPouch = data;
+      });
+
+      var myList2 = List.generate(dataFilterBreakdownPouch.length,
+          (index) => dataFilterBreakdownPouch[index]["top"]);
+      mapPouch.clear();
+
+      for (final m in myList2) {
+        final letter = m;
+        mapPouch[letter] =
+            mapPouch.containsKey(letter) ? mapPouch[letter]! + 1 : 1;
+      }
+
+      setState(() {
+        outputPouch = mapPouch.keys.toList(growable: false);
+        outputPouch
+            .sort((k1, k2) => mapPouch[k2]!.compareTo(mapPouch[k1] as num));
+      });
+    } else {
+      setState(() {
+        outputPouch = [];
+      });
+    }
+  }
+
+  void topBreakdownTallCan() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("breakdown")
+        .where("createdAt", isGreaterThanOrEqualTo: FromFix)
+        .where("createdAt", isLessThanOrEqualTo: ToFix)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      dataBreakdownTallCan =
+          querySnapshot.docs.map((doc) => doc.data()).toList();
+
+      var data = [];
+      for (var i = 0; i < dataBreakdownTallCan.length; i++) {
+        if (dataBreakdownTallCan[i]["product"] ==
+            "Filling_Packing_SKM_Tall_Can") {
+          data.add(dataBreakdownTallCan[i]);
+        }
+      }
+      setState(() {
+        dataFilterBreakdownTallCan = data;
+      });
+
+      var myList2 = List.generate(dataFilterBreakdownTallCan.length,
+          (index) => dataFilterBreakdownTallCan[index]["top"]);
+      mapTallCan.clear();
+
+      for (final m in myList2) {
+        final letter = m;
+        mapTallCan[letter] =
+            mapTallCan.containsKey(letter) ? mapTallCan[letter]! + 1 : 1;
+      }
+
+      setState(() {
+        outputTallCan = mapTallCan.keys.toList(growable: false);
+        outputTallCan
+            .sort((k1, k2) => mapTallCan[k2]!.compareTo(mapTallCan[k1] as num));
+      });
+    } else {
+      setState(() {
+        outputTallCan = [];
+      });
+    }
+  }
+
+  void topBreakdownSacet() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("breakdown")
+        .where("createdAt", isGreaterThanOrEqualTo: FromFix)
+        .where("createdAt", isLessThanOrEqualTo: ToFix)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      dataBreakdownSacet = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+      var data = [];
+      for (var i = 0; i < dataBreakdownSacet.length; i++) {
+        if (dataBreakdownSacet[i]["product"] == "Filling_Packing_SKM_Sachet") {
+          data.add(dataBreakdownSacet[i]);
+        }
+      }
+      setState(() {
+        dataFilterBreakdownSacet = data;
+      });
+
+      var myList2 = List.generate(dataFilterBreakdownSacet.length,
+          (index) => dataFilterBreakdownSacet[index]["top"]);
+      mapSacet.clear();
+
+      for (final m in myList2) {
+        final letter = m;
+        mapSacet[letter] =
+            mapSacet.containsKey(letter) ? mapSacet[letter]! + 1 : 1;
+      }
+
+      setState(() {
+        outputSacet = mapSacet.keys.toList(growable: false);
+        outputSacet
+            .sort((k1, k2) => mapSacet[k2]!.compareTo(mapSacet[k1] as num));
+      });
+    } else {
+      setState(() {
+        outputSacet = [];
+      });
+    }
   }
 
   void DataProduct() async {
@@ -254,7 +440,13 @@ class _DashboardOverviewState extends State<DashboardOverview> {
     LpFixProses = lpCuy / doc.length;
     DtFixProses = dtCuy / doc.length;
     BdFixProses = bdCuy / doc.length;
-    SkmFixProses = actualO / planingO;
+    SkmFixProsesDetail = actualO / planingO;
+    var SkmFixProsess = actualO / planingO;
+    if (SkmFixProsess > 1.00) {
+      SkmFixProses = 1.00;
+    } else {
+      SkmFixProses = SkmFixProsess;
+    }
     RatarataProses = actualO / doc.length;
   }
 
@@ -358,7 +550,13 @@ class _DashboardOverviewState extends State<DashboardOverview> {
     LpFixPouch = lpCuy / doc.length;
     DtFixPouch = dtCuy / doc.length;
     BdFixPouch = bdCuy / doc.length;
-    SkmFixPouch = actualO / planingO;
+    SkmFixPouchDetail = actualO / planingO;
+    var SkmFixPouchs = actualO / planingO;
+    if (SkmFixPouchs > 1.00) {
+      SkmFixPouch = 1.00;
+    } else {
+      SkmFixPouch = SkmFixPouchs;
+    }
     RatarataPouch = actualO / doc.length;
   }
 
@@ -462,7 +660,13 @@ class _DashboardOverviewState extends State<DashboardOverview> {
     LpFixSacet = lpCuy / doc.length;
     DtFixSacet = dtCuy / doc.length;
     BdFixSacet = bdCuy / doc.length;
-    SkmFixSacet = actualO / planingO;
+    SkmFixSacetDetail = actualO / planingO;
+    var SkmFixSacets = actualO / planingO;
+    if (SkmFixSacets > 1.00) {
+      SkmFixSacet = 1.00;
+    } else {
+      SkmFixSacet = SkmFixSacets;
+    }
     RatarataSacet = actualO / doc.length;
   }
 
@@ -566,8 +770,138 @@ class _DashboardOverviewState extends State<DashboardOverview> {
     LpFixTallCan = lpCuy / doc.length;
     DtFixTallCan = dtCuy / doc.length;
     BdFixTallCan = bdCuy / doc.length;
-    SkmFixTallCan = actualO / planingO;
+    SkmFixTallCanDetail = actualO / planingO;
+    var SkmFixTallCans = actualO / planingO;
+    if (SkmFixTallCans > 1.00) {
+      SkmFixTallCan = 1.00;
+    } else {
+      SkmFixTallCan = SkmFixTallCans;
+    }
     RatarataTallCan = actualO / doc.length;
+  }
+
+  int SkmFill = 1;
+
+  void DataSkm() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("product")
+        .where("createdAt", isGreaterThanOrEqualTo: FromFix)
+        .where("createdAt", isLessThanOrEqualTo: ToFix)
+        .get();
+    setState(() {
+      dataSkm = querySnapshot.docs.map((doc) => doc.data()).toList();
+      dataSkmFilter();
+    });
+  }
+
+  void dataSkmFilter() {
+    if (SkmFill == 1) {
+      var data = [];
+      for (var i = 0; i < dataSkm.length; i++) {
+        data.add(dataSkm[i]);
+      }
+      setState(() {
+        dataFilterSkm = data;
+      });
+    } else if (SkmFill == 2) {
+      var data = [];
+      for (var i = 0; i < dataSkm.length; i++) {
+        if (dataSkm[i]["type"] == "process") {
+          data.add(dataSkm[i]);
+        }
+      }
+      setState(() {
+        dataFilterSkm = data;
+      });
+    } else if (SkmFill == 3) {
+      var data = [];
+      for (var i = 0; i < dataSkm.length; i++) {
+        if (dataSkm[i]["type"] == "fillpack") {
+          data.add(dataSkm[i]);
+        }
+      }
+      setState(() {
+        dataFilterSkm = data;
+      });
+    }
+
+    // print(dataFilterProses);
+    DataSkmFix(dataFilterSkm);
+  }
+
+  void DataSkmFix(doc) {
+    var leCuy = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['le']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+    var lpCuy = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['lp']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+    var bdCuy = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['bd']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+    var dtCuy = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['dt']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+
+    var ActOutput = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['actual_output']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+    var PlaningOutput = List.generate(doc.length, (index) {
+      double x = double.parse(doc[index]['planing_output']);
+      String z = x.toStringAsFixed(0);
+      int a = int.parse(z);
+
+      return a;
+    }).fold(0, (p, c) => p + c);
+
+    if (leCuy == 0) {
+      LeSkm = 0;
+    } else {
+      LeSkm = leCuy / doc.length;
+    }
+
+    if (lpCuy == 0) {
+      LpSkm = 0;
+    } else {
+      LpSkm = lpCuy / doc.length;
+    }
+
+    if (dtCuy == 0) {
+      DtSkm = 0;
+    } else {
+      DtSkm = dtCuy / doc.length;
+    }
+    if (bdCuy == 0) {
+      BdSkm = 0;
+    } else {
+      BdSkm = bdCuy / doc.length;
+    }
+    if (ActOutput == 0 && PlaningOutput == 0) {
+      ProdActSkm = 0;
+    } else {
+      var Skm = ActOutput / PlaningOutput;
+      ProdActSkm = Skm * 100;
+    }
   }
 
   Widget build(BuildContext context) {
@@ -579,7 +913,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
           Dt: DtFixProses,
           Le: LeFixProses,
           Lp: LpFixProses,
-          Skm: SkmFixProses,
+          Skm: SkmFixProsesDetail,
           Ratarata: RatarataProses,
         );
       } else if (v == 2) {
@@ -588,7 +922,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
           Dt: DtFixPouch,
           Le: LeFixPouch,
           Lp: LpFixPouch,
-          Skm: SkmFixPouch,
+          Skm: SkmFixPouchDetail,
           Ratarata: RatarataPouch,
         );
       } else if (v == 3) {
@@ -597,7 +931,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
           Dt: DtFixTallCan,
           Le: LeFixTallCan,
           Lp: LpFixTallCan,
-          Skm: SkmFixTallCan,
+          Skm: SkmFixTallCanDetail,
           Ratarata: RatarataTallCan,
         );
       } else if (v == 4) {
@@ -606,8 +940,136 @@ class _DashboardOverviewState extends State<DashboardOverview> {
           Dt: DtFixSacet,
           Le: LeFixSacet,
           Lp: LpFixSacet,
-          Skm: SkmFixSacet,
+          Skm: SkmFixSacetDetail,
           Ratarata: RatarataSacet,
+        );
+      } else {
+        return Container();
+      }
+    }
+
+    Widget breakdown(v) {
+      if (v == 1) {
+        return Container(
+          child: ListView.builder(
+              itemCount: outputProses.length >= 6 ? 5 : outputProses.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                if (outputProses != []) {
+                  return Container(
+                    child: StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection('breakdown')
+                            .where("top", isEqualTo: outputProses[index])
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          final doc = snapshot.data!.docs;
+                          if (!snapshot.hasData) {
+                            return Text("no Data");
+                          }
+
+                          var totalHour = List.generate(doc.length, (index) {
+                            double x = double.parse(doc[index]['bdHour']);
+
+                            return x;
+                          }).reduce((a, b) => a + b);
+                          return BreakdownItem(
+                              title: doc[0]["mesin"],
+                              desc: doc[0]["reason"],
+                              number: totalHour.toStringAsFixed(2));
+                        }),
+                  );
+                } else {
+                  return Container();
+                }
+              }),
+        );
+      } else if (v == 2) {
+        return Container(
+          child: ListView.builder(
+              itemCount: outputPouch.length >= 6 ? 5 : outputPouch.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('breakdown')
+                        .where("top", isEqualTo: outputPouch[index])
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      final doc = snapshot.data!.docs;
+                      if (!snapshot.hasData) {
+                        return Text("no Data");
+                      }
+
+                      var totalHour = List.generate(doc.length, (index) {
+                        double x = double.parse(doc[index]['bdHour']);
+
+                        return x;
+                      }).reduce((a, b) => a + b);
+                      return BreakdownItem(
+                          title: doc[0]["mesin"],
+                          desc: doc[0]["reason"],
+                          number: totalHour.toStringAsFixed(2));
+                    });
+              }),
+        );
+      } else if (v == 3) {
+        return Container(
+          child: ListView.builder(
+              itemCount: outputTallCan.length >= 6 ? 5 : outputTallCan.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('breakdown')
+                        .where("top", isEqualTo: outputTallCan[index])
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      final doc = snapshot.data!.docs;
+                      if (!snapshot.hasData) {
+                        return Text("no Data");
+                      }
+
+                      var totalHour = List.generate(doc.length, (index) {
+                        double x = double.parse(doc[index]['bdHour']);
+
+                        return x;
+                      }).reduce((a, b) => a + b);
+                      return BreakdownItem(
+                          title: doc[0]["mesin"],
+                          desc: doc[0]["reason"],
+                          number: totalHour.toStringAsFixed(2));
+                    });
+              }),
+        );
+      } else if (v == 4) {
+        return Container(
+          child: ListView.builder(
+              itemCount: outputSacet.length >= 6 ? 5 : outputSacet.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('breakdown')
+                        .where("top", isEqualTo: outputSacet[index])
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      final doc = snapshot.data!.docs;
+                      if (!snapshot.hasData) {
+                        return Text("no Data");
+                      }
+
+                      var totalHour = List.generate(doc.length, (index) {
+                        double x = double.parse(doc[index]['bdHour']);
+
+                        return x;
+                      }).reduce((a, b) => a + b);
+                      return BreakdownItem(
+                          title: doc[0]["mesin"],
+                          desc: doc[0]["reason"],
+                          number: totalHour.toStringAsFixed(2));
+                    });
+              }),
         );
       } else {
         return Container();
@@ -617,109 +1079,98 @@ class _DashboardOverviewState extends State<DashboardOverview> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: () {
+                  topBreakdownProses();
+                  topBreakdownPouch();
+                  topBreakdownTallCan();
+                  topBreakdownSacet();
+                  DataSkm();
+                  DataProduct();
+                },
+                child: Container(
+                    decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 1, offset: Offset(0, 0), color: blue)
+                        ],
+                        border: Border.all(
+                          color: blue,
+                        ),
+                        color: blue,
+                        borderRadius: BorderRadius.circular(5)),
+                    width: 78,
+                    height: 36,
+                    child: Center(
+                        child: Text(
+                      "Refresh",
+                      style: GoogleFonts.montserrat(
+                          textStyle: Theme.of(context).textTheme.displayMedium,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: light),
+                    ))),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: 30,
+          decoration: BoxDecoration(
+            color: lightGrey,
+            boxShadow: [
+              BoxShadow(
+                  blurRadius: 4,
+                  offset: Offset(0, 0),
+                  color: dark.withOpacity(0.4))
+            ],
+            border: Border.all(width: 1, color: blue),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8, right: 8),
+            child: DropdownButton(
+                hint: Text("Pilih Nama Laporan *"),
+                underline: Container(),
+                borderRadius: BorderRadius.circular(10),
+                value: SkmFill,
+                onChanged: (e) {
+                  setState(() {
+                    SkmFill = e!;
+                  });
+                  dataSkmFilter();
+                },
+                items: [
+                  DropdownMenuItem(
+                    child: Text("All"),
+                    value: 1,
+                  ),
+                  DropdownMenuItem(
+                    child: Text("Proccess"),
+                    value: 2,
+                  ),
+                  DropdownMenuItem(
+                    child: Text("FillPack"),
+                    value: 3,
+                  ),
+                ]),
+          ),
+        ),
+        SizedBox(height: 10),
         Row(
           children: [
-            StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('product')
-                    .where("createdAt", isGreaterThanOrEqualTo: FromFix)
-                    .where("createdAt", isLessThanOrEqualTo: ToFix)
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  var Le, Lp, Bd, Dt, ActOutput, PlaningOutput, Skm;
-                  double LeFix, LpFix, BdFix, DtFix, SkmFix;
-                  if (!snapshot.hasData) {
-                    LeFix = 0.0;
-                    LpFix = 0.0;
-                    BdFix = 0.0;
-                    DtFix = 0.0;
-                    SkmFix = 0.0;
-                  } else {
-                    final doc = snapshot.data!.docs;
-
-                    Le = List.generate(doc.length, (index) {
-                      double x = double.parse(doc[index]['le']);
-                      String z = x.toStringAsFixed(0);
-                      int a = int.parse(z);
-
-                      return a;
-                    }).fold(0, (p, c) => p + c);
-                    Lp = List.generate(doc.length, (index) {
-                      double x = double.parse(doc[index]['lp']);
-                      String z = x.toStringAsFixed(0);
-                      int a = int.parse(z);
-
-                      return a;
-                    }).fold(0, (p, c) => p + c);
-                    Bd = List.generate(doc.length, (index) {
-                      double x = double.parse(doc[index]['bd']);
-                      String z = x.toStringAsFixed(0);
-                      int a = int.parse(z);
-
-                      return a;
-                    }).fold(0, (p, c) => p + c);
-                    Dt = List.generate(doc.length, (index) {
-                      double x = double.parse(doc[index]['dt']);
-                      String z = x.toStringAsFixed(0);
-                      int a = int.parse(z);
-
-                      return a;
-                    }).fold(0, (p, c) => p + c);
-
-                    ActOutput = List.generate(doc.length, (index) {
-                      double x = double.parse(doc[index]['actual_output']);
-                      String z = x.toStringAsFixed(0);
-                      int a = int.parse(z);
-
-                      return a;
-                    }).fold(0, (p, c) => p + c);
-                    PlaningOutput = List.generate(doc.length, (index) {
-                      double x = double.parse(doc[index]['planing_output']);
-                      String z = x.toStringAsFixed(0);
-                      int a = int.parse(z);
-
-                      return a;
-                    }).fold(0, (p, c) => p + c);
-
-                    if (Le == 0) {
-                      LeFix = 0;
-                    } else {
-                      LeFix = Le / doc.length;
-                    }
-
-                    if (Lp == 0) {
-                      LpFix = 0;
-                    } else {
-                      LpFix = Lp / doc.length;
-                    }
-
-                    if (Dt == 0) {
-                      DtFix = 0;
-                    } else {
-                      DtFix = Dt / doc.length;
-                    }
-                    if (Bd == 0) {
-                      BdFix = 0;
-                    } else {
-                      BdFix = Bd / doc.length;
-                    }
-                    if (ActOutput == 0 && PlaningOutput == 0) {
-                      SkmFix = 0;
-                    } else {
-                      Skm = ActOutput / PlaningOutput;
-                      SkmFix = Skm * 100;
-                    }
-                  }
-
-                  return DashboardCard(
-                      color: active,
-                      Product: "SKM",
-                      LE: LeFix.toStringAsFixed(0),
-                      LP: LpFix.toStringAsFixed(0),
-                      ProdAcv: SkmFix.toStringAsFixed(0),
-                      DT: DtFix.toStringAsFixed(0),
-                      BD: BdFix.toStringAsFixed(0));
-                }),
+            DashboardCard(
+                color: active,
+                Product: "SKM",
+                LE: LeSkm.toStringAsFixed(0),
+                LP: LpSkm.toStringAsFixed(0),
+                ProdAcv: ProdActSkm.toStringAsFixed(0),
+                DT: DtSkm.toStringAsFixed(0),
+                BD: BdSkm.toStringAsFixed(0)),
             SizedBox(width: width * 0.042),
             DashboardCard(
                 color: Color(0xff2BB8C1),
@@ -798,8 +1249,13 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                           }
                           String datetime = date.year.toString() + moon + day;
                           FromFix = int.parse(datetime);
-                          print(FromFix);
+
+                          topBreakdownProses();
+                          topBreakdownPouch();
+                          topBreakdownTallCan();
+                          topBreakdownSacet();
                           DataProduct();
+                          DataSkm();
                         });
                       },
                       child: Padding(
@@ -870,8 +1326,12 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                           }
                           String datetime = date.year.toString() + moon + day;
                           ToFix = int.parse(datetime);
-                          print(ToFix);
+                          topBreakdownProses();
+                          topBreakdownPouch();
+                          topBreakdownTallCan();
+                          topBreakdownSacet();
                           DataProduct();
+                          DataSkm();
                         });
                       },
                       child: Padding(
@@ -1578,43 +2038,7 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 45),
-                    Container(
-                      child: ListView.builder(
-                          itemCount: output2.length >= 6 ? 5 : output2.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                StreamBuilder(
-                                    stream: FirebaseFirestore.instance
-                                        .collection('breakdown')
-                                        .where("top", isEqualTo: output2[index])
-                                        .snapshots(),
-                                    builder: (context, snapshot) {
-                                      final doc = snapshot.data!.docs;
-                                      if (!snapshot.hasData) {
-                                        return Text("no Data");
-                                      }
-
-                                      var totalHour =
-                                          List.generate(doc.length, (index) {
-                                        double x =
-                                            double.parse(doc[index]['bdHour']);
-
-                                        return x;
-                                      }).reduce((a, b) => a + b);
-                                      return BreakdownItem(
-                                          title: doc[0]["mesin"],
-                                          desc: doc[0]["reason"],
-                                          number: totalHour.toStringAsFixed(2));
-                                    }),
-                                SizedBox(
-                                  height: 25,
-                                )
-                              ],
-                            );
-                          }),
-                    )
+                    Expanded(child: breakdown(showProgress))
                   ],
                 ))
           ],

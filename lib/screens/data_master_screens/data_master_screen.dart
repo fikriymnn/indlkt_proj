@@ -60,9 +60,7 @@ class _DataMasterScreenState extends State<DataMasterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: "Data Master",
-      ),
+      appBar: CustomAppBar(title: "Data Master", viewTime: true),
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,

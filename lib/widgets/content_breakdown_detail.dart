@@ -24,6 +24,8 @@ class breakdownDetail extends StatefulWidget {
       problem,
       freq,
       reason,
+      name,
+      nik,
       mesin;
 
   const breakdownDetail({
@@ -37,8 +39,10 @@ class breakdownDetail extends StatefulWidget {
     required this.bdHour,
     required this.problem,
     required this.freq,
+    required this.name,
     required this.reason,
     required this.mesin,
+    required this.nik,
   });
 
   @override
@@ -67,6 +71,7 @@ class _breakdownDetailState extends State<breakdownDetail> {
     double mediaQueryWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      appBar: CustomAppBar(title: "Detail Data", viewTime: false),
       body: Container(
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
@@ -91,25 +96,55 @@ class _breakdownDetailState extends State<breakdownDetail> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Row(children: [
+                              Container(
+                                height: 40,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Text(widget.name,
+                                      style: TextStyle(
+                                          color: light, fontSize: 17)),
+                                ),
+                                decoration: BoxDecoration(
+                                  color: blue,
+                                  borderRadius: BorderRadius.circular(11),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        blurRadius: 5,
+                                        offset: Offset(0, 0),
+                                        color: dark.withOpacity(0.4))
+                                  ],
+                                ),
+                              )
+                            ]),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(children: [
+                              Container(
+                                height: 40,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Text(widget.nik,
+                                      style: TextStyle(
+                                          color: light, fontSize: 17)),
+                                ),
+                                decoration: BoxDecoration(
+                                  color: blue,
+                                  borderRadius: BorderRadius.circular(11),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        blurRadius: 5,
+                                        offset: Offset(0, 0),
+                                        color: dark.withOpacity(0.4))
+                                  ],
+                                ),
+                              )
+                            ]),
                             Container(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: Container(
-                                      child: IconButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        icon: const Icon(
-                                          Icons.cancel_outlined,
-                                          color: Colors.red,
-                                          size: 35,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
                                   SizedBox(height: 20),
                                   Center(
                                     child: Column(

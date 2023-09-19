@@ -26,7 +26,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     double mediaQuery = MediaQuery.of(context).size.width;
     return Builder(builder: (context) {
       return Scaffold(
-          appBar: CustomAppBar(title: 'Dashboard'),
+          appBar: CustomAppBar(title: 'Dashboard', viewTime: true),
           floatingActionButton:
               IconButton(onPressed: () {}, icon: Icon(Icons.add)),
           body: SingleChildScrollView(

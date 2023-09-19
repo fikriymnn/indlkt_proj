@@ -69,7 +69,7 @@ class _IdleTimeFormState extends State<IdleTimeForm> {
                       child: CustomSearchableDropDown(
                         enabled: true,
                         items: widget.dropdownItemIdleDesc,
-                        label: 'Pilih Idle Desc...',
+                        label: widget.valueIdleDesc,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                             border: Border.all(

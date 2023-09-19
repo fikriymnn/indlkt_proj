@@ -84,11 +84,10 @@ class BreakdownFormState extends State<BreakdownForm> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10, right: 10),
                       child: CustomSearchableDropDown(
-                        // ignore: unnecessary_null_comparison
                         enabled:
                             widget.dropdownItemMesin == null ? false : true,
                         items: widget.dropdownItemMesin,
-                        label: 'Pilih Mesin...',
+                        label: widget.valueMesin,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                             border: Border.all(
@@ -123,7 +122,7 @@ class BreakdownFormState extends State<BreakdownForm> {
                       child: CustomSearchableDropDown(
                         enabled: widget.valueMesin == null ? false : true,
                         items: widget.dropdownItemReason,
-                        label: 'Pilih Reason...',
+                        label: widget.valueReason,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                             border: Border.all(

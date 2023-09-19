@@ -110,6 +110,8 @@ class _tabel_breakdownState extends State<tabel_breakdown> {
                                 bdHour: objData.bdHour,
                                 bdMin: objData.bdHourMin,
                                 freq: objData.freq,
+                                name: objData.name,
+                                nik: objData.nik,
                                 mesin: objData.mesin,
                                 problem: objData.problem,
                                 reason: objData.reasonBreakdown,
@@ -198,7 +200,13 @@ class _tabel_breakdownState extends State<tabel_breakdown> {
                 : dataBreakdown[index]["bdHour"],
             problem: dataBreakdown[index]["problem"] == null
                 ? "-"
-                : dataBreakdown[index]["problem"]));
+                : dataBreakdown[index]["problem"],
+            name: dataBreakdown[index]["name"] == null
+                ? "-"
+                : dataBreakdown[index]["name"],
+            nik: dataBreakdown[index]["nik"] == null
+                ? "-"
+                : dataBreakdown[index]["nik"]));
 
     setState(() {
       searchNameList = names;
@@ -310,6 +318,7 @@ class Name {
   String bdHourMin;
   String bdHour;
   String problem;
+  dynamic name, nik;
 
   Name(
       {required this.date,
@@ -322,5 +331,7 @@ class Name {
       required this.freq,
       required this.bdHourMin,
       required this.bdHour,
+      required this.name,
+      required this.nik,
       required this.problem});
 }

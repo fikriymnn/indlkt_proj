@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:indlkt_proj/screens/login_screen/widgets/chaptcha.dart';
+import 'package:indlkt_proj/screens/user_screens/widgets/add_user.dart';
 import 'package:indlkt_proj/widgets/side_bar.dart';
 import 'package:local_captcha/local_captcha.dart';
 import 'package:marquee/marquee.dart';
@@ -10,6 +11,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:quickalert/quickalert.dart';
 
 import '../../constants/style.dart';
+import '../../widgets/validasi.dart';
+import '../after_login_screens/after_login_screen.dart';
+import '../user_screens/widgets/forgot_user.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -67,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
             context,
             PageRouteBuilder(pageBuilder: (BuildContext context,
                 Animation animation, Animation secondaryAnimation) {
-              return SideBar();
+              return Validasi();
             }, transitionsBuilder: (BuildContext context,
                 Animation<double> animation,
                 Animation<double> secondaryAnimation,
@@ -324,6 +328,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       mediaQueryWidth * 0.0125),
                                               child: Container(
                                                 child: TextFormField(
+                                                  onEditingComplete: () {
+                                                    _submitFormOnLogin();
+                                                  },
                                                   obscureText: _obsecureText,
                                                   textInputAction:
                                                       TextInputAction.next,
@@ -370,171 +377,260 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 ),
                                               ),
                                             ),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                    left: mediaQueryWidth *
-                                                        0.0207,
-                                                    top: mediaQueryWidth *
-                                                        0.0081,
+                                            // Column(
+                                            //   crossAxisAlignment:
+                                            //       CrossAxisAlignment.start,
+                                            //   children: [
+                                            //     Padding(
+                                            //       padding: EdgeInsets.only(
+                                            //         left: mediaQueryWidth *
+                                            //             0.0207,
+                                            //         top: mediaQueryWidth *
+                                            //             0.0081,
+                                            //       ),
+                                            //       child: Text("Chaptcha",
+                                            //           style: GoogleFonts.rubik(
+                                            //             textStyle:
+                                            //                 Theme.of(context)
+                                            //                     .textTheme
+                                            //                     .displayMedium,
+                                            //             fontSize:
+                                            //                 mediaQueryWidth *
+                                            //                     0.008,
+                                            //           )),
+                                            //     ),
+                                            //     Padding(
+                                            //       padding: EdgeInsets.only(
+                                            //           bottom: mediaQueryWidth *
+                                            //               0.007),
+                                            //       child: Row(
+                                            //         mainAxisAlignment:
+                                            //             MainAxisAlignment
+                                            //                 .center,
+                                            //         children: [
+                                            //           LocalCaptcha(
+                                            //             key: ValueKey(
+                                            //                 _configFormData
+                                            //                     .toString()),
+                                            //             controller:
+                                            //                 _localCaptchaController,
+                                            //             height:
+                                            //                 mediaQueryWidth *
+                                            //                     0.0504,
+                                            //             width: mediaQueryWidth *
+                                            //                 0.142,
+                                            //             backgroundColor:
+                                            //                 Colors.grey[100]!,
+                                            //             chars: _configFormData
+                                            //                 .chars,
+                                            //             length: _configFormData
+                                            //                 .length,
+                                            //             fontSize: _configFormData
+                                            //                         .fontSize >
+                                            //                     0
+                                            //                 ? _configFormData
+                                            //                     .fontSize
+                                            //                 : null,
+                                            //             caseSensitive:
+                                            //                 _configFormData
+                                            //                     .caseSensitive,
+                                            //             codeExpireAfter:
+                                            //                 _configFormData
+                                            //                     .codeExpireAfter,
+                                            //           ),
+                                            //           InkWell(
+                                            //             onTap: () =>
+                                            //                 _localCaptchaController
+                                            //                     .refresh(),
+                                            //             child: Icon(
+                                            //                 Icons.repeat_sharp),
+                                            //           ),
+                                            //         ],
+                                            //       ),
+                                            //     ),
+                                            //   ],
+                                            // ),
+                                            // Padding(
+                                            //   padding: EdgeInsets.only(
+                                            //       left:
+                                            //           mediaQueryWidth * 0.0207,
+                                            //       right:
+                                            //           mediaQueryWidth * 0.0125,
+                                            //       bottom:
+                                            //           mediaQueryWidth * 0.0125),
+                                            //   child: TextFormField(
+                                            //     onEditingComplete: () {
+                                            //       _submitFormOnLogin();
+                                            //     },
+                                            //     decoration: InputDecoration(
+                                            //         enabledBorder:
+                                            //             OutlineInputBorder(
+                                            //                 borderSide:
+                                            //                     BorderSide(
+                                            //                         color:
+                                            //                             blue)),
+                                            //         hintText: 'Enter Chaptcha',
+                                            //         border: OutlineInputBorder(
+                                            //             borderRadius:
+                                            //                 BorderRadius.circular(
+                                            //                     mediaQueryWidth *
+                                            //                         0.008))),
+                                            //     validator: (value) {
+                                            //       if (value != null &&
+                                            //           value.isNotEmpty) {
+                                            //         if (value.length !=
+                                            //             _configFormData
+                                            //                 .length) {
+                                            //           return '* Code must be length of ${_configFormData.length}.';
+                                            //         }
+
+                                            //         final validation =
+                                            //             _localCaptchaController
+                                            //                 .validate(value);
+
+                                            //         switch (validation) {
+                                            //           case LocalCaptchaValidation
+                                            //                 .invalidCode:
+                                            //             return '* Invalid code.';
+                                            //           case LocalCaptchaValidation
+                                            //                 .codeExpired:
+                                            //             return '* Code expired.';
+                                            //           case LocalCaptchaValidation
+                                            //                 .valid:
+                                            //           default:
+                                            //             return null;
+                                            //         }
+                                            //       }
+
+                                            //       return '* Required field.';
+                                            //     },
+                                            //     onSaved: (value) =>
+                                            //         _inputCode = value ?? '',
+                                            //   ),
+                                            // ),
+                                            Container(
+                                              child: Column(
+                                                children: [
+                                                  SizedBox(
+                                                    height: 10,
                                                   ),
-                                                  child: Text("Chaptcha",
-                                                      style: GoogleFonts.rubik(
-                                                        textStyle:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .displayMedium,
-                                                        fontSize:
-                                                            mediaQueryWidth *
-                                                                0.008,
-                                                      )),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                      bottom: mediaQueryWidth *
-                                                          0.007),
-                                                  child: Row(
+                                                  Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
                                                             .center,
                                                     children: [
-                                                      LocalCaptcha(
-                                                        key: ValueKey(
-                                                            _configFormData
-                                                                .toString()),
-                                                        controller:
-                                                            _localCaptchaController,
-                                                        height:
-                                                            mediaQueryWidth *
-                                                                0.0504,
-                                                        width: mediaQueryWidth *
-                                                            0.142,
-                                                        backgroundColor:
-                                                            Colors.grey[100]!,
-                                                        chars: _configFormData
-                                                            .chars,
-                                                        length: _configFormData
-                                                            .length,
-                                                        fontSize: _configFormData
-                                                                    .fontSize >
-                                                                0
-                                                            ? _configFormData
-                                                                .fontSize
-                                                            : null,
-                                                        caseSensitive:
-                                                            _configFormData
-                                                                .caseSensitive,
-                                                        codeExpireAfter:
-                                                            _configFormData
-                                                                .codeExpireAfter,
-                                                      ),
                                                       InkWell(
-                                                        onTap: () =>
-                                                            _localCaptchaController
-                                                                .refresh(),
-                                                        child: Icon(
-                                                            Icons.repeat_sharp),
+                                                        onTap: () {
+                                                          _submitFormOnLogin();
+                                                        },
+                                                        child: Container(
+                                                            height:
+                                                                mediaQueryWidth *
+                                                                    0.037,
+                                                            width:
+                                                                mediaQueryWidth *
+                                                                    0.186,
+                                                            decoration: BoxDecoration(
+                                                                color: blue,
+                                                                borderRadius:
+                                                                    BorderRadius.circular(
+                                                                        mediaQueryWidth *
+                                                                            0.008)),
+                                                            child: Center(
+                                                              child: Text(
+                                                                'login',
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize:
+                                                                      mediaQueryWidth *
+                                                                          0.0104,
+                                                                ),
+                                                              ),
+                                                            )),
                                                       ),
                                                     ],
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                  left:
-                                                      mediaQueryWidth * 0.0207,
-                                                  right:
-                                                      mediaQueryWidth * 0.0125,
-                                                  bottom:
-                                                      mediaQueryWidth * 0.0125),
-                                              child: TextFormField(
-                                                onEditingComplete: () {
-                                                  _submitFormOnLogin();
-                                                },
-                                                decoration: InputDecoration(
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide(
-                                                                    color:
-                                                                        blue)),
-                                                    hintText: 'Enter Chaptcha',
-                                                    border: OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                mediaQueryWidth *
-                                                                    0.008))),
-                                                validator: (value) {
-                                                  if (value != null &&
-                                                      value.isNotEmpty) {
-                                                    if (value.length !=
-                                                        _configFormData
-                                                            .length) {
-                                                      return '* Code must be length of ${_configFormData.length}.';
-                                                    }
-
-                                                    final validation =
-                                                        _localCaptchaController
-                                                            .validate(value);
-
-                                                    switch (validation) {
-                                                      case LocalCaptchaValidation
-                                                            .invalidCode:
-                                                        return '* Invalid code.';
-                                                      case LocalCaptchaValidation
-                                                            .codeExpired:
-                                                        return '* Code expired.';
-                                                      case LocalCaptchaValidation
-                                                            .valid:
-                                                      default:
-                                                        return null;
-                                                    }
-                                                  }
-
-                                                  return '* Required field.';
-                                                },
-                                                onSaved: (value) =>
-                                                    _inputCode = value ?? '',
-                                              ),
-                                            ),
-                                            Container(
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  InkWell(
-                                                    onTap: () {
-                                                      _submitFormOnLogin();
-                                                    },
-                                                    child: Container(
-                                                        height:
-                                                            mediaQueryWidth *
-                                                                0.037,
-                                                        width: mediaQueryWidth *
-                                                            0.186,
-                                                        decoration: BoxDecoration(
-                                                            color: blue,
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                    mediaQueryWidth *
-                                                                        0.008)),
-                                                        child: Center(
-                                                          child: Text(
-                                                            'Login',
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize:
-                                                                  mediaQueryWidth *
-                                                                      0.0104,
-                                                            ),
-                                                          ),
-                                                        )),
+                                                  SizedBox(
+                                                    height: 10,
                                                   ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                (BuildContext
+                                                                    context) {
+                                                              return AlertDialog(
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                elevation: 0,
+                                                                content: Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .only(
+                                                                        top: 85,
+                                                                        right:
+                                                                            55,
+                                                                        left:
+                                                                            38),
+                                                                    child: Container(
+                                                                        width: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width,
+                                                                        height: MediaQuery.of(context)
+                                                                            .size
+                                                                            .height,
+                                                                        child:
+                                                                            AddUser())),
+                                                              );
+                                                            },
+                                                          );
+                                                        },
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  top: 8.0),
+                                                          child: Container(
+                                                              height:
+                                                                  mediaQueryWidth *
+                                                                      0.037,
+                                                              width:
+                                                                  mediaQueryWidth *
+                                                                      0.186,
+                                                              decoration: BoxDecoration(
+                                                                  color: blue,
+                                                                  borderRadius:
+                                                                      BorderRadius.circular(
+                                                                          mediaQueryWidth *
+                                                                              0.008)),
+                                                              child: Center(
+                                                                child: Text(
+                                                                  'Register',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        mediaQueryWidth *
+                                                                            0.0104,
+                                                                  ),
+                                                                ),
+                                                              )),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  )
                                                 ],
                                               ),
                                             ),
@@ -549,7 +645,35 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   children: [
                                                     InkWell(
                                                       onTap: () {
-                                                        //forgot password screen
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                              context) {
+                                                            return AlertDialog(
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              elevation: 0,
+                                                              content: Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .only(
+                                                                      top: 85,
+                                                                      right: 55,
+                                                                      left: 38),
+                                                                  child: Container(
+                                                                      width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.6,
+                                                                      height: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .height,
+                                                                      child:
+                                                                          ForgotUser())),
+                                                            );
+                                                          },
+                                                        );
                                                       },
                                                       child: Text(
                                                         'Forgot Password',
