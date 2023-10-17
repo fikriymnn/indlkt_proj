@@ -105,7 +105,7 @@ class _exportIdleTimeState extends State<exportIdleTime> {
   // ];
 
   void exportToCsv() async {
-    String title = "pluto_grid_export";
+    String title = "Report Idle Time";
 
     var exported = const Utf8Encoder()
         .convert(pluto_grid_export.PlutoGridExport.exportCSV(stateManager));

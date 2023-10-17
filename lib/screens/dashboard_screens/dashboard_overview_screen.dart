@@ -146,15 +146,51 @@ class _DashboardOverviewState extends State<DashboardOverview> {
       dataBreakdownProses =
           querySnapshot.docs.map((doc) => doc.data()).toList();
 
-      var data = [];
-      for (var i = 0; i < dataBreakdownProses.length; i++) {
-        if (dataBreakdownProses[i]["product"] == "Process_SKM") {
-          data.add(dataBreakdownProses[i]);
+      if (selectedShift == 0 && dropdownValue == 0) {
+        var data = [];
+        for (var i = 0; i < dataBreakdownProses.length; i++) {
+          if (dataBreakdownProses[i]["product"] == "Process_SKM") {
+            data.add(dataBreakdownProses[i]);
+          }
         }
+        setState(() {
+          dataFilterBreakdownProses = data;
+        });
+      } else if (selectedShift != 0 && dropdownValue == 0) {
+        var data = [];
+        for (var i = 0; i < dataBreakdownProses.length; i++) {
+          if (dataBreakdownProses[i]["shift"] == selectedShift.toString() &&
+              dataBreakdownProses[i]["product"] == "Process_SKM") {
+            data.add(dataBreakdownProses[i]);
+          }
+        }
+        setState(() {
+          dataFilterBreakdownProses = data;
+        });
+      } else if (selectedShift == 0 && dropdownValue != 0) {
+        var data = [];
+        for (var i = 0; i < dataBreakdownProses.length; i++) {
+          if (dataBreakdownProses[i]["line"] == dropdownValue.toString() &&
+              dataBreakdownProses[i]["product"] == "Process_SKM") {
+            data.add(dataBreakdownProses[i]);
+          }
+        }
+        setState(() {
+          dataFilterBreakdownProses = data;
+        });
+      } else if (selectedShift != 0 && dropdownValue != 0) {
+        var data = [];
+        for (var i = 0; i < dataBreakdownProses.length; i++) {
+          if (dataBreakdownProses[i]["line"] == dropdownValue.toString() &&
+              dataBreakdownProses[i]["shift"] == selectedShift.toString() &&
+              dataBreakdownProses[i]["product"] == "Process_SKM") {
+            data.add(dataBreakdownProses[i]);
+          }
+        }
+        setState(() {
+          dataFilterBreakdownProses = data;
+        });
       }
-      setState(() {
-        dataFilterBreakdownProses = data;
-      });
 
       var myList2 = List.generate(dataFilterBreakdownProses.length,
           (index) => dataFilterBreakdownProses[index]["top"]);
@@ -188,15 +224,51 @@ class _DashboardOverviewState extends State<DashboardOverview> {
     if (querySnapshot.docs.isNotEmpty) {
       dataBreakdownPouch = querySnapshot.docs.map((doc) => doc.data()).toList();
 
-      var data = [];
-      for (var i = 0; i < dataBreakdownPouch.length; i++) {
-        if (dataBreakdownPouch[i]["product"] == "Filling_Packing_SKM_Pouch") {
-          data.add(dataBreakdownPouch[i]);
+      if (selectedShift == 0 && dropdownValue == 0) {
+        var data = [];
+        for (var i = 0; i < dataBreakdownPouch.length; i++) {
+          if (dataBreakdownPouch[i]["product"] == "Filling_Packing_SKM_Pouch") {
+            data.add(dataBreakdownPouch[i]);
+          }
         }
+        setState(() {
+          dataFilterBreakdownPouch = data;
+        });
+      } else if (selectedShift != 0 && dropdownValue == 0) {
+        var data = [];
+        for (var i = 0; i < dataBreakdownPouch.length; i++) {
+          if (dataBreakdownPouch[i]["shift"] == selectedShift.toString() &&
+              dataBreakdownPouch[i]["product"] == "Filling_Packing_SKM_Pouch") {
+            data.add(dataBreakdownPouch[i]);
+          }
+        }
+        setState(() {
+          dataFilterBreakdownPouch = data;
+        });
+      } else if (selectedShift == 0 && dropdownValue != 0) {
+        var data = [];
+        for (var i = 0; i < dataBreakdownPouch.length; i++) {
+          if (dataBreakdownPouch[i]["line"] == dropdownValue.toString() &&
+              dataBreakdownPouch[i]["product"] == "Filling_Packing_SKM_Pouch") {
+            data.add(dataBreakdownPouch[i]);
+          }
+        }
+        setState(() {
+          dataFilterBreakdownPouch = data;
+        });
+      } else if (selectedShift != 0 && dropdownValue != 0) {
+        var data = [];
+        for (var i = 0; i < dataBreakdownPouch.length; i++) {
+          if (dataBreakdownPouch[i]["line"] == dropdownValue.toString() &&
+              dataBreakdownPouch[i]["shift"] == selectedShift.toString() &&
+              dataBreakdownPouch[i]["product"] == "Filling_Packing_SKM_Pouch") {
+            data.add(dataBreakdownPouch[i]);
+          }
+        }
+        setState(() {
+          dataFilterBreakdownPouch = data;
+        });
       }
-      setState(() {
-        dataFilterBreakdownPouch = data;
-      });
 
       var myList2 = List.generate(dataFilterBreakdownPouch.length,
           (index) => dataFilterBreakdownPouch[index]["top"]);
@@ -231,16 +303,55 @@ class _DashboardOverviewState extends State<DashboardOverview> {
       dataBreakdownTallCan =
           querySnapshot.docs.map((doc) => doc.data()).toList();
 
-      var data = [];
-      for (var i = 0; i < dataBreakdownTallCan.length; i++) {
-        if (dataBreakdownTallCan[i]["product"] ==
-            "Filling_Packing_SKM_Tall_Can") {
-          data.add(dataBreakdownTallCan[i]);
+      if (selectedShift == 0 && dropdownValue == 0) {
+        var data = [];
+        for (var i = 0; i < dataBreakdownTallCan.length; i++) {
+          if (dataBreakdownTallCan[i]["product"] ==
+              "Filling_Packing_SKM_Tall_Can") {
+            data.add(dataBreakdownTallCan[i]);
+          }
         }
+        setState(() {
+          dataFilterBreakdownTallCan = data;
+        });
+      } else if (selectedShift != 0 && dropdownValue == 0) {
+        var data = [];
+        for (var i = 0; i < dataBreakdownTallCan.length; i++) {
+          if (dataBreakdownTallCan[i]["shift"] == selectedShift.toString() &&
+              dataBreakdownTallCan[i]["product"] ==
+                  "Filling_Packing_SKM_Tall_Can") {
+            data.add(dataBreakdownTallCan[i]);
+          }
+        }
+        setState(() {
+          dataFilterBreakdownTallCan = data;
+        });
+      } else if (selectedShift == 0 && dropdownValue != 0) {
+        var data = [];
+        for (var i = 0; i < dataBreakdownTallCan.length; i++) {
+          if (dataBreakdownTallCan[i]["line"] == dropdownValue.toString() &&
+              dataBreakdownTallCan[i]["product"] ==
+                  "Filling_Packing_SKM_Tall_Can") {
+            data.add(dataBreakdownTallCan[i]);
+          }
+        }
+        setState(() {
+          dataFilterBreakdownTallCan = data;
+        });
+      } else if (selectedShift != 0 && dropdownValue != 0) {
+        var data = [];
+        for (var i = 0; i < dataBreakdownTallCan.length; i++) {
+          if (dataBreakdownTallCan[i]["line"] == dropdownValue.toString() &&
+              dataBreakdownTallCan[i]["shift"] == selectedShift.toString() &&
+              dataBreakdownTallCan[i]["product"] ==
+                  "Filling_Packing_SKM_Tall_Can") {
+            data.add(dataBreakdownTallCan[i]);
+          }
+        }
+        setState(() {
+          dataFilterBreakdownTallCan = data;
+        });
       }
-      setState(() {
-        dataFilterBreakdownTallCan = data;
-      });
 
       var myList2 = List.generate(dataFilterBreakdownTallCan.length,
           (index) => dataFilterBreakdownTallCan[index]["top"]);
@@ -274,15 +385,55 @@ class _DashboardOverviewState extends State<DashboardOverview> {
     if (querySnapshot.docs.isNotEmpty) {
       dataBreakdownSacet = querySnapshot.docs.map((doc) => doc.data()).toList();
 
-      var data = [];
-      for (var i = 0; i < dataBreakdownSacet.length; i++) {
-        if (dataBreakdownSacet[i]["product"] == "Filling_Packing_SKM_Sachet") {
-          data.add(dataBreakdownSacet[i]);
+      if (selectedShift == 0 && dropdownValue == 0) {
+        var data = [];
+        for (var i = 0; i < dataBreakdownSacet.length; i++) {
+          if (dataBreakdownSacet[i]["product"] ==
+              "Filling_Packing_SKM_Sachet") {
+            data.add(dataBreakdownSacet[i]);
+          }
         }
+        setState(() {
+          dataFilterBreakdownSacet = data;
+        });
+      } else if (selectedShift != 0 && dropdownValue == 0) {
+        var data = [];
+        for (var i = 0; i < dataBreakdownSacet.length; i++) {
+          if (dataBreakdownSacet[i]["shift"] == selectedShift.toString() &&
+              dataBreakdownSacet[i]["product"] ==
+                  "Filling_Packing_SKM_Sachet") {
+            data.add(dataBreakdownSacet[i]);
+          }
+        }
+        setState(() {
+          dataFilterBreakdownSacet = data;
+        });
+      } else if (selectedShift == 0 && dropdownValue != 0) {
+        var data = [];
+        for (var i = 0; i < dataBreakdownSacet.length; i++) {
+          if (dataBreakdownSacet[i]["line"] == dropdownValue.toString() &&
+              dataBreakdownSacet[i]["product"] ==
+                  "Filling_Packing_SKM_Sachet") {
+            data.add(dataBreakdownSacet[i]);
+          }
+        }
+        setState(() {
+          dataFilterBreakdownSacet = data;
+        });
+      } else if (selectedShift != 0 && dropdownValue != 0) {
+        var data = [];
+        for (var i = 0; i < dataBreakdownSacet.length; i++) {
+          if (dataBreakdownSacet[i]["line"] == dropdownValue.toString() &&
+              dataBreakdownSacet[i]["shift"] == selectedShift.toString() &&
+              dataBreakdownSacet[i]["product"] ==
+                  "Filling_Packing_SKM_Sachet") {
+            data.add(dataBreakdownSacet[i]);
+          }
+        }
+        setState(() {
+          dataFilterBreakdownSacet = data;
+        });
       }
-      setState(() {
-        dataFilterBreakdownSacet = data;
-      });
 
       var myList2 = List.generate(dataFilterBreakdownSacet.length,
           (index) => dataFilterBreakdownSacet[index]["top"]);
@@ -950,40 +1101,34 @@ class _DashboardOverviewState extends State<DashboardOverview> {
 
     Widget breakdown(v) {
       if (v == 1) {
-        return Container(
-          child: ListView.builder(
-              itemCount: outputProses.length >= 6 ? 5 : outputProses.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                if (outputProses != []) {
-                  return Container(
-                    child: StreamBuilder(
-                        stream: FirebaseFirestore.instance
-                            .collection('breakdown')
-                            .where("top", isEqualTo: outputProses[index])
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          final doc = snapshot.data!.docs;
-                          if (!snapshot.hasData) {
-                            return Text("no Data");
-                          }
+        return ListView.builder(
+            itemCount: outputProses.length >= 6 ? 5 : outputProses.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              if (outputProses != []) {
+                return StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('breakdown')
+                        .where("top", isEqualTo: outputProses[index])
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      final doc = snapshot.data!.docs;
+                      if (snapshot.data != null) {}
 
-                          var totalHour = List.generate(doc.length, (index) {
-                            double x = double.parse(doc[index]['bdHour']);
+                      var totalHour = List.generate(doc.length, (index) {
+                        double x = double.parse(doc[index]['bdHour'] ?? 0);
 
-                            return x;
-                          }).reduce((a, b) => a + b);
-                          return BreakdownItem(
-                              title: doc[0]["mesin"],
-                              desc: doc[0]["reason"],
-                              number: totalHour.toStringAsFixed(2));
-                        }),
-                  );
-                } else {
-                  return Container();
-                }
-              }),
-        );
+                        return x;
+                      }).reduce((a, b) => a + b);
+                      return BreakdownItem(
+                          title: doc[0]["mesin"] ?? "-",
+                          desc: doc[0]["reason"] ?? "-",
+                          number: totalHour.toStringAsFixed(2));
+                    });
+              } else {
+                return Container();
+              }
+            });
       } else if (v == 2) {
         return Container(
           child: ListView.builder(
@@ -1402,6 +1547,10 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                               dataPouchFilter();
                                               dataSacetFilter();
                                               dataTallCanFilter();
+                                              topBreakdownProses();
+                                              topBreakdownPouch();
+                                              topBreakdownTallCan();
+                                              topBreakdownSacet();
                                             },
                                             child: Padding(
                                               padding: EdgeInsets.only(
@@ -1432,6 +1581,10 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                               dataPouchFilter();
                                               dataSacetFilter();
                                               dataTallCanFilter();
+                                              topBreakdownProses();
+                                              topBreakdownPouch();
+                                              topBreakdownTallCan();
+                                              topBreakdownSacet();
                                             },
                                             child: Padding(
                                               padding: EdgeInsets.only(
@@ -1466,6 +1619,10 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                               dataPouchFilter();
                                               dataSacetFilter();
                                               dataTallCanFilter();
+                                              topBreakdownProses();
+                                              topBreakdownPouch();
+                                              topBreakdownTallCan();
+                                              topBreakdownSacet();
                                             },
                                             child: Padding(
                                               padding: EdgeInsets.only(
@@ -1507,6 +1664,10 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                         dataPouchFilter();
                                         dataSacetFilter();
                                         dataTallCanFilter();
+                                        topBreakdownProses();
+                                        topBreakdownPouch();
+                                        topBreakdownTallCan();
+                                        topBreakdownSacet();
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.only(
@@ -1557,6 +1718,10 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                                               dataPouchFilter();
                                               dataSacetFilter();
                                               dataTallCanFilter();
+                                              topBreakdownProses();
+                                              topBreakdownPouch();
+                                              topBreakdownTallCan();
+                                              topBreakdownSacet();
                                             },
                                             items: [
                                               DropdownMenuItem(

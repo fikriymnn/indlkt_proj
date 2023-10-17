@@ -280,7 +280,7 @@ class _tabel_downtimeState extends State<tabel_downtime> {
           exportFileName: "MyTableFile",
           tabelHeadingList: tableHeading,
           isExportCSVEnabled: false,
-          columnSpacing: MediaQuery.of(context).size.width * 0.08,
+          columnSpacing: MediaQuery.of(context).size.width * 0.06,
           sortColumnIndex: 1,
           isSearchEnabled: isSearchEnabled,
           rows: dataRowsValues(),

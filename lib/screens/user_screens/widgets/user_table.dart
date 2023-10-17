@@ -374,7 +374,7 @@ class _UserTableState extends State<UserTable> {
               exportFileName: "MyTableFile",
               tabelHeadingList: tableHeading,
               isExportCSVEnabled: false,
-              columnSpacing: MediaQuery.of(context).size.width * 0.08,
+              columnSpacing: MediaQuery.of(context).size.width * 0.05,
               sortColumnIndex: 1,
               isSearchEnabled: isSearchEnabled,
               rows: dataRowsValues(),

@@ -297,7 +297,7 @@ class _tabel_breakdownState extends State<tabel_breakdown> {
           exportFileName: "MyTableFile",
           tabelHeadingList: tableHeading,
           isExportCSVEnabled: false,
-          columnSpacing: MediaQuery.of(context).size.width * 0.06,
+          columnSpacing: MediaQuery.of(context).size.width * 0.03,
           sortColumnIndex: 1,
           isSearchEnabled: isSearchEnabled,
           rows: dataRowsValues(),
