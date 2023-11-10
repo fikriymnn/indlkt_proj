@@ -479,8 +479,13 @@ class _DashboardOverviewState extends State<DashboardOverview> {
 
         return a;
       }).fold(0, (p, c) => p + c);
+      var skmAllFixs = actualO / planingO;
 
-      SkmAllFix = actualO / planingO;
+      if (skmAllFixs > 1.00) {
+        SkmAllFix = 1.00;
+      } else {
+        SkmAllFix = skmAllFixs;
+      }
 
       dataProsesFilter();
       dataPouchFilter();
@@ -1152,8 +1157,8 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                         return x;
                       }).reduce((a, b) => a + b);
                       return BreakdownItem(
-                          title: doc[0]["mesin"],
-                          desc: doc[0]["reason"],
+                          title: doc[0]["mesin"] ?? "-",
+                          desc: doc[0]["reason"] ?? "-",
                           number: totalHour.toStringAsFixed(2));
                     });
               }),
@@ -1181,8 +1186,8 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                         return x;
                       }).reduce((a, b) => a + b);
                       return BreakdownItem(
-                          title: doc[0]["mesin"],
-                          desc: doc[0]["reason"],
+                          title: doc[0]["mesin"] ?? "-",
+                          desc: doc[0]["reason"] ?? "-",
                           number: totalHour.toStringAsFixed(2));
                     });
               }),
@@ -1210,8 +1215,8 @@ class _DashboardOverviewState extends State<DashboardOverview> {
                         return x;
                       }).reduce((a, b) => a + b);
                       return BreakdownItem(
-                          title: doc[0]["mesin"],
-                          desc: doc[0]["reason"],
+                          title: doc[0]["mesin"] ?? "-",
+                          desc: doc[0]["reason"] ?? "-",
                           number: totalHour.toStringAsFixed(2));
                     });
               }),

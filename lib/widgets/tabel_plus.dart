@@ -197,7 +197,10 @@ class _tabel_plusState extends State<tabel_plus> {
                                       week: objData.week,
                                       name: objData.name,
                                       nik: objData.nik,
-                                      isEdited: objData.isEdited)),
+                                      isEdited: objData.isEdited,
+                                      createdAt: objData.createdAt,
+                                      bulan: objData.bulan,
+                                      tahun: objData.tahun)),
                             ),
                           );
                           ;
@@ -312,7 +315,10 @@ class _tabel_plusState extends State<tabel_plus> {
                 : dataProduct[index]["week"].toString(),
             isEdited: dataProduct[index]["isEdited"] == null ? "-" : dataProduct[index]["isEdited"],
             name: dataProduct[index]["name"] == null ? "-" : dataProduct[index]["name"],
-            nik: dataProduct[index]["nik"] == null ? "-" : dataProduct[index]["nik"]));
+            nik: dataProduct[index]["nik"] == null ? "-" : dataProduct[index]["nik"],
+            bulan: dataProduct[index]["bulan"],
+            createdAt: dataProduct[index]["createdAt"],
+            tahun: dataProduct[index]["tahun"]));
 
     setState(() {
       searchNameList = names;
@@ -475,7 +481,7 @@ class Name {
       nik,
       id;
 
-  dynamic week, isEdited;
+  dynamic week, isEdited, tahun, createdAt, bulan;
 
   Name(
       {required this.product,
@@ -498,5 +504,8 @@ class Name {
       required this.isEdited,
       required this.name,
       required this.nik,
+      required this.tahun,
+      required this.bulan,
+      required this.createdAt,
       required this.id});
 }

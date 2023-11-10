@@ -46,7 +46,10 @@ class FormEditData extends StatefulWidget {
       isEdited,
       name,
       nik,
-      week;
+      week,
+      bulan,
+      tahun,
+      createdAt;
 
   const FormEditData(
       {super.key,
@@ -70,6 +73,9 @@ class FormEditData extends StatefulWidget {
       this.name,
       this.nik,
       this.week,
+      this.bulan,
+      this.tahun,
+      this.createdAt,
       this.dt});
 
   @override
@@ -203,6 +209,7 @@ class _FormEditDataState extends State<FormEditData> {
         .collection("breakdown")
         .where("product_id", isEqualTo: widget.id)
         .get();
+
     setState(() {
       if (querySnapshot.docs.isNotEmpty) {
         dataBreakdown = querySnapshot.docs.map((doc) => doc.data()).toList();
@@ -1937,9 +1944,8 @@ class _FormEditDataState extends State<FormEditData> {
                                         "lp": widget.lp,
                                         "dt": widget.dt,
                                         "bd": widget.bd,
-                                        "date":
-                                            DateFormat('dd/MM/yy').format(now),
-                                        "createdAt": dateFix
+                                        "date": widget.date,
+                                        "createdAt": widget.createdAt
                                       });
 
                                       for (int i = 0;
@@ -1970,7 +1976,7 @@ class _FormEditDataState extends State<FormEditData> {
                                           "top": dataBreakdown[i]["top"],
                                           "name": widget.name,
                                           "nik": widget.nik,
-                                          "createdAt": dateFix
+                                          "createdAt": widget.createdAt
                                         });
                                       }
 
@@ -1998,7 +2004,7 @@ class _FormEditDataState extends State<FormEditData> {
                                           "nik": widget.nik,
                                           "actMin": dataDowntime[i]["actMin"],
                                           "actHour": dataDowntime[i]["actHour"],
-                                          "createdAt": dateFix
+                                          "createdAt": widget.createdAt
                                         });
                                       }
                                       for (int i = 0;
@@ -2026,7 +2032,7 @@ class _FormEditDataState extends State<FormEditData> {
                                           "name": widget.name,
                                           "nik": widget.nik,
                                           "idleHour": dataIdle[i]["idleHour"],
-                                          "createdAt": dateFix
+                                          "createdAt": widget.createdAt
                                         });
                                       }
                                     }
@@ -2067,11 +2073,9 @@ class _FormEditDataState extends State<FormEditData> {
                                                 int.parse(weekController.text),
                                             "top":
                                                 "${mesin[i]}" + "${reason[i]}",
-                                            "bulan":
-                                                DateFormat.MMMM().format(now),
-                                            "tahun": int.parse(
-                                                DateFormat.y().format(now)),
-                                            "createdAt": dateFix
+                                            "bulan": widget.bulan,
+                                            "tahun": widget.tahun,
+                                            "createdAt": widget.createdAt,
                                           });
                                         } else {
                                           print("no data");
@@ -2110,11 +2114,9 @@ class _FormEditDataState extends State<FormEditData> {
                                             "actHour": actHourList[i],
                                             "week":
                                                 int.parse(weekController.text),
-                                            "bulan":
-                                                DateFormat.MMMM().format(now),
-                                            "tahun": int.parse(
-                                                DateFormat.y().format(now)),
-                                            "createdAt": dateFix
+                                            "bulan": widget.bulan,
+                                            "tahun": widget.tahun,
+                                            "createdAt": widget.createdAt,
                                           });
                                         } else {
                                           print("no data");
@@ -2149,11 +2151,9 @@ class _FormEditDataState extends State<FormEditData> {
                                             "idleHour": idleHourList[i],
                                             "week":
                                                 int.parse(weekController.text),
-                                            "bulan":
-                                                DateFormat.MMMM().format(now),
-                                            "tahun": int.parse(
-                                                DateFormat.y().format(now)),
-                                            "createdAt": dateFix
+                                            "bulan": widget.bulan,
+                                            "tahun": widget.tahun,
+                                            "createdAt": widget.createdAt,
                                           });
                                         } else {
                                           print("no data");
